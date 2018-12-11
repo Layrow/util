@@ -8,4 +8,7 @@ package com.niit.common.utils;
  * @since 1.0.0
  */
 public class HelloUtil {
+    public void setString(){
+
+    }
 }

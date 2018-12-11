@@ -8,4 +8,8 @@ package com.niit.common.utils;
  * @since 1.0.0
  */
 public class HelloUtil {
+
+    public void get() {
+        System.out.println("hello,world");
+    }
 }

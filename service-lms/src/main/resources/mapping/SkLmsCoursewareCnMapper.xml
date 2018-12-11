@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.niit.service.lms.dao.SkLmsCoursewareCnMapper">
+  <resultMap id="BaseResultMap" type="com.niit.service.lms.pojo.SkLmsCoursewareCn">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="courseware_title" jdbcType="VARCHAR" property="coursewareTitle" />
+    <result column="courseware_size" jdbcType="INTEGER" property="coursewareSize" />
+    <result column="courseware_url" jdbcType="VARCHAR" property="coursewareUrl" />
+    <result column="courseware_suffix" jdbcType="VARCHAR" property="coursewareSuffix" />
+    <result column="courseware_create_time" jdbcType="TIMESTAMP" property="coursewareCreateTime" />
+    <result column="courseware_status" jdbcType="INTEGER" property="coursewareStatus" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, courseware_title, courseware_size, courseware_url, courseware_suffix, courseware_create_time, 
+    courseware_status
+  </sql>
+
+  <!-- 查询所有 -->
+  <select id="selectAllWare" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    from sk_lms_courseware_cn
+    WHERE id in
+    (SELECT DISTINCT(cc.id) from sk_lms_courseware_cn cc JOIN sk_lms_batch_courseware_cn bcc on cc.id = bcc.courseware_id JOIN sk_lms_batch_cn bc ON bc.id=bcc.batch_id  where bc.faculty_id = #{facultyId,jdbcType=INTEGER})
+  </select>
+  <!-- 模糊查询 -->
+  <select id="selectAll"  resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    from sk_lms_courseware_cn
+    WHERE id in
+    (SELECT DISTINCT(cc.id) from sk_lms_courseware_cn cc JOIN sk_lms_batch_courseware_cn bcc on cc.id = bcc.courseware_id JOIN sk_lms_batch_cn bc ON bc.id=bcc.batch_id  where bc.faculty_id = #{facultyId,jdbcType=INTEGER})
+    AND  courseware_title like CONCAT('%',#{courseware_title},'%')
+  </select>
+  <!--查询班级下的课件-->
+  <select id="selectAllBatchWare" resultMap="BaseResultMap">
+    select
+    c.*
+    from  sk_lms_courseware_cn c    JOIN  sk_lms_batch_courseware_cn cc ON  c.id=cc.courseware_id
+    WHERE  cc.batch_id= #{batchId,jdbcType=INTEGER}
+  </select>
+  <select id="selectByCoursewareIdList" parameterType="java.util.List" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sk_lms_courseware_cn
+    where id IN
+    <foreach collection="list" item="courseware_id" open="("
+             separator="," close=")">
+      #{courseware_id}
+    </foreach>
+
+  </select>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sk_lms_courseware_cn
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sk_lms_courseware_cn
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.niit.service.lms.pojo.SkLmsCoursewareCn">
+    insert into sk_lms_courseware_cn (id, courseware_title, courseware_size, 
+      courseware_url, courseware_suffix, courseware_create_time, 
+      courseware_status)
+    values (#{id,jdbcType=INTEGER}, #{coursewareTitle,jdbcType=VARCHAR}, #{coursewareSize,jdbcType=INTEGER}, 
+      #{coursewareUrl,jdbcType=VARCHAR}, #{coursewareSuffix,jdbcType=VARCHAR}, #{coursewareCreateTime,jdbcType=TIMESTAMP}, 
+      #{coursewareStatus,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.niit.service.lms.pojo.SkLmsCoursewareCn">
+    insert into sk_lms_courseware_cn
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="coursewareTitle != null">
+        courseware_title,
+      </if>
+      <if test="coursewareSize != null">
+        courseware_size,
+      </if>
+      <if test="coursewareUrl != null">
+        courseware_url,
+      </if>
+      <if test="coursewareSuffix != null">
+        courseware_suffix,
+      </if>
+      <if test="coursewareCreateTime != null">
+        courseware_create_time,
+      </if>
+      <if test="coursewareStatus != null">
+        courseware_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="coursewareTitle != null">
+        #{coursewareTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="coursewareSize != null">
+        #{coursewareSize,jdbcType=INTEGER},
+      </if>
+      <if test="coursewareUrl != null">
+        #{coursewareUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="coursewareSuffix != null">
+        #{coursewareSuffix,jdbcType=VARCHAR},
+      </if>
+      <if test="coursewareCreateTime != null">
+        #{coursewareCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="coursewareStatus != null">
+        #{coursewareStatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.niit.service.lms.pojo.SkLmsCoursewareCn">
+    update sk_lms_courseware_cn
+    <set>
+      <if test="coursewareTitle != null">
+        courseware_title = #{coursewareTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="coursewareSize != null">
+        courseware_size = #{coursewareSize,jdbcType=INTEGER},
+      </if>
+      <if test="coursewareUrl != null">
+        courseware_url = #{coursewareUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="coursewareSuffix != null">
+        courseware_suffix = #{coursewareSuffix,jdbcType=VARCHAR},
+      </if>
+      <if test="coursewareCreateTime != null">
+        courseware_create_time = #{coursewareCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="coursewareStatus != null">
+        courseware_status = #{coursewareStatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.niit.service.lms.pojo.SkLmsCoursewareCn">
+    update sk_lms_courseware_cn
+    set courseware_title = #{coursewareTitle,jdbcType=VARCHAR},
+      courseware_size = #{coursewareSize,jdbcType=INTEGER},
+      courseware_url = #{coursewareUrl,jdbcType=VARCHAR},
+      courseware_suffix = #{coursewareSuffix,jdbcType=VARCHAR},
+      courseware_create_time = #{coursewareCreateTime,jdbcType=TIMESTAMP},
+      courseware_status = #{coursewareStatus,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

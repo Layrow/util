@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.niit.service.bbs.dao.SkBbsTopicMapper" >
+  <resultMap id="BaseResultMap" type="com.niit.service.bbs.pojo.SkBbsTopic" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_userid" property="createUserid" jdbcType="VARCHAR" />
+    <result column="viewcount" property="viewcount" jdbcType="INTEGER" />
+    <result column="isoffcial" property="isoffcial" jdbcType="INTEGER" />
+    <result column="istop" property="istop" jdbcType="INTEGER" />
+    <result column="isessence" property="isessence" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="section_id" property="sectionId" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.niit.service.bbs.pojo.SkBbsTopic" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, title, create_time, create_userid, viewcount, isoffcial, istop, isessence, status, 
+    section_id
+  </sql>
+  <sql id="Blob_Column_List" >
+    content
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sk_bbs_topic
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <!--分页显示全部-->
+  <select id="listAllTopic" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sk_bbs_topic
+    WHERE status=1
+    ORDER BY istop desc ,id desc
+  </select>
+
+  <!--分页显示指定栏目下的全部-->
+  <select id="listAllTopicInSection" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sk_bbs_topic
+    where section_id = #{sectionId,jdbcType=INTEGER} AND status=1
+    ORDER BY istop desc ,id desc
+  </select>
+
+  <!--分页模糊查询-->
+  <select id="likeSelectAll" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sk_bbs_topic
+    <where>
+      title  like CONCAT('%',#{title},'%')
+      <if test="key=='top'">
+        AND istop = 1
+      </if>
+      <if test="key=='essence'">
+        AND isessence = 1
+      </if>
+      <if test="key=='offcial'">
+        AND isoffcial = 1
+      </if>
+      <if test="key=='notoffcial'">
+        AND isoffcial = 0
+      </if>
+      <if test="key=='notessence'">
+        AND isessence = 0
+      </if>
+      <if test="key=='nottop'">
+        AND istop = 0
+      </if>
+      <if test="key=='all'">
+        and status in (0,1)
+      </if>
+      <if test="key=='unaudited'">
+        and status = 0
+      </if>
+      <if test="key=='audited'">
+        and status = 1
+      </if>
+    </where>
+    ORDER BY id desc
+  </select>
+  <!--分页查询指定用户下的所有帖子-->
+  <select id="listAllTopicByOwner" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sk_bbs_topic
+    where create_userid = #{createUserid,jdbcType=VARCHAR} and status=1
+    ORDER BY istop desc ,id desc
+  </select>
+
+  <!--删除帖子 根据帖子主键Id-->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sk_bbs_topic
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <!--管理批量删除帖子 根据帖子主键Id-->
+  <delete id="deleteByPrimaryKeyList" parameterType="java.util.List" >
+    delete from sk_bbs_topic
+    WHERE id IN
+    <foreach collection="list" item="id" open="("
+             separator="," close=")">
+      #{id}
+    </foreach>
+  </delete>
+
+  <insert id="insert" parameterType="com.niit.service.bbs.pojo.SkBbsTopic" >
+    insert into sk_bbs_topic (id, title, create_time, 
+      create_userid, viewcount, isoffcial, 
+      istop, isessence, status, 
+      section_id, content)
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createUserid,jdbcType=VARCHAR}, #{viewcount,jdbcType=INTEGER}, #{isoffcial,jdbcType=INTEGER}, 
+      #{istop,jdbcType=INTEGER}, #{isessence,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{sectionId,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR})
+  </insert>
+
+  <!--更新帖子的浏览量-->
+  <update id="updateViewCountByPrimaryKey" >
+    update sk_bbs_topic
+    set
+      viewcount = #{newCount,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!--增加,发表帖子-->
+  <insert id="insertSelective" parameterType="com.niit.service.bbs.pojo.SkBbsTopic" >
+    insert into sk_bbs_topic
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="createUserid != null" >
+        create_userid,
+      </if>
+      <if test="viewcount != null" >
+        viewcount,
+      </if>
+      <if test="isoffcial != null" >
+        isoffcial,
+      </if>
+      <if test="istop != null" >
+        istop,
+      </if>
+      <if test="isessence != null" >
+        isessence,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="sectionId != null" >
+        section_id,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserid != null" >
+        #{createUserid,jdbcType=VARCHAR},
+      </if>
+      <if test="viewcount != null" >
+        #{viewcount,jdbcType=INTEGER},
+      </if>
+      <if test="isoffcial != null" >
+        #{isoffcial,jdbcType=INTEGER},
+      </if>
+      <if test="istop != null" >
+        #{istop,jdbcType=INTEGER},
+      </if>
+      <if test="isessence != null" >
+        #{isessence,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="sectionId != null" >
+        #{sectionId,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <!--批量审查-->
+  <update id="doCheck" parameterType="java.util.List">
+    UPDATE sk_bbs_topic
+    set status=0
+    WHERE id IN
+    <foreach collection="list" item="id" open="("
+             separator="," close=")">
+      #{id}
+    </foreach>
+  </update>
+
+  <!--批量置顶-->
+  <update id="doTop" parameterType="java.util.List">
+    UPDATE sk_bbs_topic
+    set istop=1
+    WHERE id IN
+    <foreach collection="list" item="id" open="("
+             separator="," close=")">
+      #{id}
+    </foreach>
+  </update>
+
+  <!--批量加精-->
+  <update id="doEssence" parameterType="java.util.List">
+    UPDATE sk_bbs_topic
+    set isessence=1
+    WHERE id IN
+    <foreach collection="list" item="id" open="("
+             separator="," close=")">
+      #{id}
+    </foreach>
+  </update>
+  <!--批量官宣-->
+  <update id="doOffcial" parameterType="java.util.List">
+    UPDATE sk_bbs_topic
+    set isoffcial=1
+    WHERE id IN
+    <foreach collection="list" item="id" open="("
+             separator="," close=")">
+      #{id}
+    </foreach>
+  </update>
+
+  <!--取消之前的审查置顶加精之类的-->
+  <!--批量审查-->
+  <update id="doUnCheck" parameterType="java.util.List">
+    UPDATE sk_bbs_topic
+    set status=1
+    WHERE id IN
+    <foreach collection="list" item="id" open="("
+             separator="," close=")">
+      #{id}
+    </foreach>
+  </update>
+
+  <!--批量取消置顶-->
+  <update id="doUnTop" parameterType="java.util.List">
+    UPDATE sk_bbs_topic
+    set istop=0
+    WHERE id IN
+    <foreach collection="list" item="id" open="("
+             separator="," close=")">
+      #{id}
+    </foreach>
+  </update>
+
+  <!--批量取消加精-->
+  <update id="doUnEssence" parameterType="java.util.List">
+    UPDATE sk_bbs_topic
+    set isessence=0
+    WHERE id IN
+    <foreach collection="list" item="id" open="("
+             separator="," close=")">
+      #{id}
+    </foreach>
+  </update>
+
+  <!--修改帖子内容-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.niit.service.bbs.pojo.SkBbsTopic" >
+    update sk_bbs_topic
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserid != null" >
+        create_userid = #{createUserid,jdbcType=VARCHAR},
+      </if>
+      <if test="viewcount != null" >
+        viewcount = #{viewcount,jdbcType=INTEGER},
+      </if>
+      <if test="isoffcial != null" >
+        isoffcial = #{isoffcial,jdbcType=INTEGER},
+      </if>
+      <if test="istop != null" >
+        istop = #{istop,jdbcType=INTEGER},
+      </if>
+      <if test="isessence != null" >
+        isessence = #{isessence,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="sectionId != null" >
+        section_id = #{sectionId,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.niit.service.bbs.pojo.SkBbsTopic" >
+    update sk_bbs_topic
+    set title = #{title,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_userid = #{createUserid,jdbcType=VARCHAR},
+      viewcount = #{viewcount,jdbcType=INTEGER},
+      isoffcial = #{isoffcial,jdbcType=INTEGER},
+      istop = #{istop,jdbcType=INTEGER},
+      isessence = #{isessence,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      section_id = #{sectionId,jdbcType=INTEGER},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.niit.service.bbs.pojo.SkBbsTopic" >
+    update sk_bbs_topic
+    set title = #{title,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_userid = #{createUserid,jdbcType=VARCHAR},
+      viewcount = #{viewcount,jdbcType=INTEGER},
+      isoffcial = #{isoffcial,jdbcType=INTEGER},
+      istop = #{istop,jdbcType=INTEGER},
+      isessence = #{isessence,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      section_id = #{sectionId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

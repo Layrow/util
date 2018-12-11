@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.niit.service.lms.dao.SkLmsStudentsCnMapper">
+  <resultMap id="BaseResultMap" type="com.niit.service.lms.pojo.SkLmsStudentsCn">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="student_name" jdbcType="VARCHAR" property="studentName" />
+    <result column="student_eng_name" jdbcType="VARCHAR" property="studentEngName" />
+    <result column="student_user_id" jdbcType="VARCHAR" property="studentUserId" />
+    <result column="student_pwd" jdbcType="VARCHAR" property="studentPwd" />
+    <result column="student_school_id" jdbcType="VARCHAR" property="studentSchoolId" />
+    <result column="student_create_time" jdbcType="TIMESTAMP" property="studentCreateTime" />
+    <result column="student_status" jdbcType="INTEGER" property="studentStatus" />
+    <result column="student_login_id" jdbcType="VARCHAR" property="studentLoginId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, student_name, student_eng_name, student_user_id, student_pwd, student_school_id, 
+    student_create_time, student_status, student_login_id
+  </sql>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sk_lms_students_cn
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+
+
+  <!--根据学号查找学生-->
+  <select id="selectByStudentID" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sk_lms_students_cn
+    where student_school_id = #{studentSchoolId,jdbcType=VARCHAR}
+  </select>
+
+  <!--查询班级下的所有学生-->
+  <select id="selectAllStudentsByBatch" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sk_lms_students_cn
+    where  id  IN (
+      select student_id from sk_lms_bach_student_cn
+    where batch_id =#{batchId,jdbcType=INTEGER}
+    )
+  </select>
+    <!--查询班级下的所有学生数量-->
+    <select id="selectAllStudentsByBatchCount" resultType="int">
+       select
+        COUNT(*)
+        from sk_lms_students_cn
+        where  id  IN (
+        select student_id from sk_lms_bach_student_cn
+        where batch_id =#{batchId,jdbcType=INTEGER}
+        )
+    </select>
+
+  <!--分页查询当前班级所有学生-->
+  <select id="splitSelectAllStudents" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sk_lms_students_cn
+    where  id  IN (
+    select student_id from sk_lms_bach_student_cn
+    where batch_id =#{batchId,jdbcType=INTEGER}
+    ORDER BY id asc
+    )
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sk_lms_students_cn
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="com.niit.service.lms.pojo.SkLmsStudentsCn" >
+    insert into sk_lms_students_cn (id, student_name, student_eng_name, 
+      student_user_id, student_pwd, student_school_id, 
+      student_create_time, student_status, student_login_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{studentName,jdbcType=VARCHAR}, #{studentEngName,jdbcType=VARCHAR}, 
+      #{studentUserId,jdbcType=VARCHAR}, #{studentPwd,jdbcType=VARCHAR}, #{studentSchoolId,jdbcType=VARCHAR}, 
+      #{studentCreateTime,jdbcType=TIMESTAMP}, #{studentStatus,jdbcType=INTEGER}, #{studentLoginId,jdbcType=VARCHAR}
+      )
+  </insert>
+
+  <!--增加学生,此处比之前自动生成的代码 多了 一些 东西 在第一行,为了返回插入后的主键ID-->
+  <insert id="insertSelective" parameterType="com.niit.service.lms.pojo.SkLmsStudentsCn" useGeneratedKeys="true" keyProperty="id" keyColumn="id" >
+
+    insert into sk_lms_students_cn
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="studentName != null">
+        student_name,
+      </if>
+      <if test="studentEngName != null">
+        student_eng_name,
+      </if>
+      <if test="studentUserId != null">
+        student_user_id,
+      </if>
+      <if test="studentPwd != null">
+        student_pwd,
+      </if>
+      <if test="studentSchoolId != null">
+        student_school_id,
+      </if>
+      <if test="studentCreateTime != null">
+        student_create_time,
+      </if>
+      <if test="studentStatus != null">
+        student_status,
+      </if>
+      <if test="studentLoginId != null">
+        student_login_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="studentName != null">
+        #{studentName,jdbcType=VARCHAR},
+      </if>
+      <if test="studentEngName != null">
+        #{studentEngName,jdbcType=VARCHAR},
+      </if>
+      <if test="studentUserId != null">
+        #{studentUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="studentPwd != null">
+        #{studentPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="studentSchoolId != null">
+        #{studentSchoolId,jdbcType=VARCHAR},
+      </if>
+      <if test="studentCreateTime != null">
+        #{studentCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="studentStatus != null">
+        #{studentStatus,jdbcType=INTEGER},
+      </if>
+      <if test="studentLoginId != null">
+        #{studentLoginId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.niit.service.lms.pojo.SkLmsStudentsCn">
+    update sk_lms_students_cn
+    <set>
+      <if test="studentName != null">
+        student_name = #{studentName,jdbcType=VARCHAR},
+      </if>
+      <if test="studentEngName != null">
+        student_eng_name = #{studentEngName,jdbcType=VARCHAR},
+      </if>
+      <if test="studentUserId != null">
+        student_user_id = #{studentUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="studentPwd != null">
+        student_pwd = #{studentPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="studentSchoolId != null">
+        student_school_id = #{studentSchoolId,jdbcType=VARCHAR},
+      </if>
+      <if test="studentCreateTime != null">
+        student_create_time = #{studentCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="studentStatus != null">
+        student_status = #{studentStatus,jdbcType=INTEGER},
+      </if>
+      <if test="studentLoginId != null">
+        student_login_id = #{studentLoginId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.niit.service.lms.pojo.SkLmsStudentsCn">
+    update sk_lms_students_cn
+    set student_name = #{studentName,jdbcType=VARCHAR},
+      student_eng_name = #{studentEngName,jdbcType=VARCHAR},
+      student_user_id = #{studentUserId,jdbcType=VARCHAR},
+      student_pwd = #{studentPwd,jdbcType=VARCHAR},
+      student_school_id = #{studentSchoolId,jdbcType=VARCHAR},
+      student_create_time = #{studentCreateTime,jdbcType=TIMESTAMP},
+      student_status = #{studentStatus,jdbcType=INTEGER},
+      student_login_id = #{studentLoginId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

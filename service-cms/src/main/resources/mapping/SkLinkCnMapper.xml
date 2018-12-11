@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.niit.service.cms.dao.SkLinkCnMapper">
+    <resultMap id="BaseResultMap" type="com.niit.service.cms.pojo.SkLinkCn">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="user_tel" property="userTel" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="site_url" property="siteUrl" jdbcType="VARCHAR"/>
+        <result column="img_url" property="imgUrl" jdbcType="VARCHAR"/>
+        <result column="is_image" property="isImage" jdbcType="INTEGER"/>
+        <result column="sort_id" property="sortId" jdbcType="INTEGER"/>
+        <result column="is_lock" property="isLock" jdbcType="INTEGER"/>
+        <result column="add_time" property="addTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <!--冯永辉-->
+    <sql id="Base_Column_List">
+    id, title, user_name, user_tel, email, site_url, img_url, is_image, sort_id, is_lock, 
+    add_time
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from sk_link_cn
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <!--  分页模糊查询 -->
+    <select id="likeSelectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from sk_link_cn where  title  like CONCAT('%',#{title},'%') ORDER BY id ASC
+    </select>
+
+    <!--分页查询-->
+    <select id="listAllLink" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from sk_link_cn  ORDER BY id ASC
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sk_link_cn
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <!--批量删除-->
+    <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List">
+        DELETE FROM sk_link_cn
+        WHERE id IN
+        <foreach collection="list" item="id" open="("
+                 separator="," close=")">
+            #{id}
+        </foreach>
+
+    </delete>
+
+
+    <insert id="insert" parameterType="com.niit.service.cms.pojo.SkLinkCn">
+    insert into sk_link_cn (id, title, user_name, 
+      user_tel, email, site_url, 
+      img_url, is_image, sort_id, 
+      is_lock, add_time)
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
+      #{userTel,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{siteUrl,jdbcType=VARCHAR}, 
+      #{imgUrl,jdbcType=VARCHAR}, #{isImage,jdbcType=INTEGER}, #{sortId,jdbcType=INTEGER}, 
+      #{isLock,jdbcType=INTEGER}, #{addTime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="com.niit.service.cms.pojo.SkLinkCn">
+        insert into sk_link_cn
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="userTel != null">
+                user_tel,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="siteUrl != null">
+                site_url,
+            </if>
+            <if test="imgUrl != null">
+                img_url,
+            </if>
+            <if test="isImage != null">
+                is_image,
+            </if>
+            <if test="sortId != null">
+                sort_id,
+            </if>
+            <if test="isLock != null">
+                is_lock,
+            </if>
+            <if test="addTime != null">
+                add_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="userTel != null">
+                #{userTel,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="siteUrl != null">
+                #{siteUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="imgUrl != null">
+                #{imgUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="isImage != null">
+                #{isImage,jdbcType=INTEGER},
+            </if>
+            <if test="sortId != null">
+                #{sortId,jdbcType=INTEGER},
+            </if>
+            <if test="isLock != null">
+                #{isLock,jdbcType=INTEGER},
+            </if>
+            <if test="addTime != null">
+                #{addTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.niit.service.cms.pojo.SkLinkCn">
+        update sk_link_cn
+        <set>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="userTel != null">
+                user_tel = #{userTel,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="siteUrl != null">
+                site_url = #{siteUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="imgUrl != null">
+                img_url = #{imgUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="isImage != null">
+                is_image = #{isImage,jdbcType=INTEGER},
+            </if>
+            <if test="sortId != null">
+                sort_id = #{sortId,jdbcType=INTEGER},
+            </if>
+            <if test="isLock != null">
+                is_lock = #{isLock,jdbcType=INTEGER},
+            </if>
+            <if test="addTime != null">
+                add_time = #{addTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.niit.service.cms.pojo.SkLinkCn">
+    update sk_link_cn
+    set title = #{title,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      user_tel = #{userTel,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      site_url = #{siteUrl,jdbcType=VARCHAR},
+      img_url = #{imgUrl,jdbcType=VARCHAR},
+      is_image = #{isImage,jdbcType=INTEGER},
+      sort_id = #{sortId,jdbcType=INTEGER},
+      is_lock = #{isLock,jdbcType=INTEGER},
+      add_time = #{addTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <!--批量审查-->
+    <update id="doCheck" parameterType="java.util.List">
+        UPDATE sk_link_cn
+        set is_lock=1
+        WHERE id IN
+        <foreach collection="list" item="id" open="("
+                 separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+    <!--查询全部(分页) by yuwentao-->
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sk_link_cn
+    </select>
+
+</mapper>

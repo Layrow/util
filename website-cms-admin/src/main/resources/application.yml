@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: website-cms-admin
+
+#  cloud:
+#    config:
+#      uri: http://116.62.160.190:8888
+#  thymeleaf:
+#    cache: false
+#    prefix: classpath:/static/
+#    suffix: .html
+#    encoding: UTF-8
+#    content-type: text/html
+#    mode: LEGACYHTML5
+server:
+  port: 8081
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8761/eureka/

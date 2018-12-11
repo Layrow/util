@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.niit.service.bbs.dao.SkBbsSectionMapper" >
+  <resultMap id="BaseResultMap" type="com.niit.service.bbs.pojo.SkBbsSection" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="section_order" property="sectionOrder" jdbcType="INTEGER" />
+    <result column="icon" property="icon" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, section_order, icon, create_date
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sk_bbs_section
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+<!--搜索栏目名称,为修改提供服务-->
+  <select id="selectNameForEdit" resultType="java.lang.String" parameterType="java.lang.Integer" >
+    select
+    name
+    from sk_bbs_section
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <!--查询所有类别按照,排序值显示-->
+  <select id="doSelectAllInOrder" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from sk_bbs_section
+    order by section_order asc
+  </select>
+
+  <!--删除类别按照类别主键-->
+   <delete id="deleteByPrimaryKey" parameterType="java.util.List" >
+    delete from sk_bbs_section
+    WHERE id IN
+    <foreach collection="list" item="id" open="("
+             separator="," close=")">
+      #{id}
+    </foreach>
+  </delete>
+
+  <insert id="insert" parameterType="com.niit.service.bbs.pojo.SkBbsSection" >
+    insert into sk_bbs_section (id, name, section_order, 
+      icon, create_date)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{sectionOrder,jdbcType=INTEGER}, 
+      #{icon,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  <!--分页模糊查询栏目类别-->
+  <select id="likeSelectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sk_bbs_section where  name  like CONCAT('%',#{name},'%')
+    order by section_order asc
+  </select>
+
+  <!--添加栏目类别-->
+  <insert id="insertSelective" parameterType="com.niit.service.bbs.pojo.SkBbsSection" >
+    insert into sk_bbs_section
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="sectionOrder != null" >
+        section_order,
+      </if>
+      <if test="icon != null" >
+        icon,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sectionOrder != null" >
+        #{sectionOrder,jdbcType=INTEGER},
+      </if>
+      <if test="icon != null" >
+        #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <!--批量修改栏目排序值-->
+  <update id="doBatchUpdateSectionOrder" parameterType="java.util.List">
+    update sk_bbs_section  set section_order =
+    <foreach collection="list" item="item" index="index"
+             separator=" " open="case ID" close="end">
+      when #{item.id} then #{item.sectionOrder}
+    </foreach>
+    where id in
+    <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+      #{item.id}
+    </foreach>
+  </update>
+
+  <!--修改单个栏目信息-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.niit.service.bbs.pojo.SkBbsSection" >
+    update sk_bbs_section
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sectionOrder != null" >
+        section_order = #{sectionOrder,jdbcType=INTEGER},
+      </if>
+      <if test="icon != null" >
+        icon = #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.niit.service.bbs.pojo.SkBbsSection" >
+    update sk_bbs_section
+    set name = #{name,jdbcType=VARCHAR},
+      section_order = #{sectionOrder,jdbcType=INTEGER},
+      icon = #{icon,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

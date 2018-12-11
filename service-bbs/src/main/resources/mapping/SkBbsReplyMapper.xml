@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.niit.service.bbs.dao.SkBbsReplyMapper" >
+  <resultMap id="BaseResultMap" type="com.niit.service.bbs.pojo.SkBbsReply" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="reply_userid" property="replyUserid" jdbcType="VARCHAR" />
+    <result column="reply_time" property="replyTime" jdbcType="TIMESTAMP" />
+    <result column="reply_order" property="replyOrder" jdbcType="INTEGER" />
+    <result column="topic_id" property="topicId" jdbcType="INTEGER"/>
+    <result column="reply_status" property="replyStatus" jdbcType="INTEGER"/>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.niit.service.bbs.pojo.SkBbsReply" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, reply_userid, reply_time, reply_order, topic_id,reply_status
+  </sql>
+  <sql id="Blob_Column_List" >
+    content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sk_bbs_reply
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <!--查询已经审核的-->
+  <select id="selectAllStatus" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sk_bbs_reply
+    where reply_status = 1
+  </select>
+  <!--查询所有未审核的-->
+  <select id="selectAllNoStatus" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sk_bbs_reply
+    where reply_status = 0
+  </select>
+  <!--查询某个帖子的所有回复贴-->
+  <select id="selectAllReply" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from  sk_bbs_reply where topic_id=#{topic_id,jdbcType=INTEGER} order by reply_order asc
+  </select>
+  <!--查找某个帖子的所有回复帖总量-->
+  <select id="selectCount" parameterType="java.lang.Integer" resultType="java.lang.String">
+   select count(id)  from sk_bbs_reply  where topic_id=#{topicId,jdbcType=INTEGER}
+  </select>
+  <!--最新回复时间,回复人-->
+  <select  id="selectDate" resultType="map">
+
+    SELECT  reply_userid,MAX(reply_time) as time from  sk_bbs_reply  WHERE topic_id=#{topicId,jdbcType=INTEGER} AND reply_time=(SELECT MAX(reply_time) FROM sk_bbs_reply)
+
+</select>
+  <!--批量删除回帖-->
+  <delete id="deleteAd" parameterType="java.util.List">
+    <!-- delete from emp where empno in(7789,7790) -->
+    <!-- forEach : 用来循环 collection : 用来指定循环的数据的类型 可以填的值有：array,list,map item
+        : 循环中为每个循环的数据指定一个别名 index : 循环中循环的下标 open : 开始 close : 结束 separator : 数组中元素之间的分隔符 -->
+    delete from sk_bbs_reply where  id in
+    <foreach collection="list" item="id" open="("
+             separator="," close=")">
+      #{id}
+    </foreach>
+  </delete>
+  <!--批量审核-->
+  <update id="updateAd">
+    update sk_bbs_reply  set reply_status = 1 where id in
+    <foreach collection="list" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </update>
+  <!--查询所有回帖-->
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sk_bbs_reply  order  by  reply_order asc
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sk_bbs_reply
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.niit.service.bbs.pojo.SkBbsReply" >
+    insert into sk_bbs_reply (id, reply_userid, reply_time, 
+      reply_order, topic_id, content,reply_status
+      )
+    values (#{id,jdbcType=INTEGER}, #{replyUserid,jdbcType=VARCHAR}, #{replyTime,jdbcType=TIMESTAMP}, 
+      #{replyOrder,jdbcType=INTEGER}, #{topicId,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR},#{replyStatus,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.niit.service.bbs.pojo.SkBbsReply" >
+    insert into sk_bbs_reply
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="replyUserid != null" >
+        reply_userid,
+      </if>
+      <if test="replyTime != null" >
+        reply_time,
+      </if>
+      <if test="replyOrder != null" >
+        reply_order,
+      </if>
+      <if test="topicId != null" >
+        topic_id,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="replyStatus != null" >
+        reply_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="replyUserid != null" >
+        #{replyUserid,jdbcType=VARCHAR},
+      </if>
+      <if test="replyTime != null" >
+        #{replyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="replyOrder != null" >
+        #{replyOrder,jdbcType=INTEGER},
+      </if>
+      <if test="topicId != null" >
+        #{topicId,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="replyStatus != null" >
+        #{replyStatus,jdbcType=INTEGER}
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.niit.service.bbs.pojo.SkBbsReply" >
+    update sk_bbs_reply
+    <set >
+      <if test="replyUserid != null" >
+        reply_userid = #{replyUserid,jdbcType=VARCHAR},
+      </if>
+      <if test="replyTime != null" >
+        reply_time = #{replyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="replyOrder != null" >
+        reply_order = #{replyOrder,jdbcType=INTEGER},
+      </if>
+      <if test="topicId != null" >
+        topic_id = #{topicId,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="replyStatus != null" >
+        reply_status = #{replyStatus,jdbcType=INTEGER}
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.niit.service.bbs.pojo.SkBbsReply" >
+    update sk_bbs_reply
+    set reply_userid = #{replyUserid,jdbcType=VARCHAR},
+      reply_time = #{replyTime,jdbcType=TIMESTAMP},
+      reply_order = #{replyOrder,jdbcType=INTEGER},
+      topic_id = #{topicId,jdbcType=INTEGER},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.niit.service.bbs.pojo.SkBbsReply" >
+    update sk_bbs_reply
+    set reply_userid = #{replyUserid,jdbcType=VARCHAR},
+      reply_time = #{replyTime,jdbcType=TIMESTAMP},
+      reply_order = #{replyOrder,jdbcType=INTEGER},
+      topic_id = #{topicId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

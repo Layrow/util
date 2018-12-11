@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: website-bbs-admin
+  jackson:
+    date-format: yyyy-MM-dd  HH:mm:ss
+    time-zone: GMT+8
+#  cloud:
+#    config:
+#      uri: http://116.62.160.190:8888
+#  thymeleaf:
+#    cache: false
+#    prefix: classpath:/static/
+#    suffix: .html
+#    encoding: UTF-8
+#    content-type: text/html
+#    mode: LEGACYHTML5
+server:
+  port: 8085
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8761/eureka/

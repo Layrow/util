@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.niit.service.lms.dao.SkLmsHomeworkAnswerAttachmentCnMapper">
+  <resultMap id="BaseResultMap" type="com.niit.service.lms.pojo.SkLmsHomeworkAnswerAttachmentCn">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="answer_attachment_title" jdbcType="VARCHAR" property="answerAttachmentTitle" />
+    <result column="answer_attachment_url" jdbcType="VARCHAR" property="answerAttachmentUrl" />
+    <result column="answer_attachment_size" jdbcType="INTEGER" property="answerAttachmentSize" />
+    <result column="answer_attachment_suffix" jdbcType="VARCHAR" property="answerAttachmentSuffix" />
+    <result column="answer_attachment_create_time" jdbcType="TIMESTAMP" property="answerAttachmentCreateTime" />
+    <result column="homework_answer_id" jdbcType="INTEGER" property="homeworkAnswerId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, answer_attachment_title, answer_attachment_url, answer_attachment_size, answer_attachment_suffix, 
+    answer_attachment_create_time,homework_answer_id
+  </sql>
+
+  <select id="selectByHomeworkAnswerId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sk_lms_homework_answer_attachment_cn
+    where homework_answer_id = #{homeworkAnswerId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sk_lms_homework_answer_attachment_cn
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sk_lms_homework_answer_attachment_cn
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="deleteByHomeworkAnswerIdList" parameterType="java.util.List">
+    delete from sk_lms_homework_answer_attachment_cn
+    where id IN
+    <foreach collection="list" item="homework_answer_id" open="("
+             separator="," close=")">
+      #{homework_answer_id}
+    </foreach>
+  </delete>
+
+  <insert id="insert" parameterType="com.niit.service.lms.pojo.SkLmsHomeworkAnswerAttachmentCn">
+    insert into sk_lms_homework_answer_attachment_cn (id, answer_attachment_title, answer_attachment_url, 
+      answer_attachment_size, answer_attachment_suffix, 
+      answer_attachment_create_time,homework_answer_id)
+    values (#{id,jdbcType=INTEGER}, #{answerAttachmentTitle,jdbcType=VARCHAR}, #{answerAttachmentUrl,jdbcType=VARCHAR}, 
+      #{answerAttachmentSize,jdbcType=INTEGER}, #{answerAttachmentSuffix,jdbcType=VARCHAR}, 
+      #{answerAttachmentCreateTime,jdbcType=TIMESTAMP},#{homeworkAnswerId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.niit.service.lms.pojo.SkLmsHomeworkAnswerAttachmentCn">
+    insert into sk_lms_homework_answer_attachment_cn
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="answerAttachmentTitle != null">
+        answer_attachment_title,
+      </if>
+      <if test="answerAttachmentUrl != null">
+        answer_attachment_url,
+      </if>
+      <if test="answerAttachmentSize != null">
+        answer_attachment_size,
+      </if>
+      <if test="answerAttachmentSuffix != null">
+        answer_attachment_suffix,
+      </if>
+      <if test="answerAttachmentCreateTime != null">
+        answer_attachment_create_time,
+      </if>
+      <if test="homeworkAnswerId != null">
+        homework_answer_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="answerAttachmentTitle != null">
+        #{answerAttachmentTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="answerAttachmentUrl != null">
+        #{answerAttachmentUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="answerAttachmentSize != null">
+        #{answerAttachmentSize,jdbcType=INTEGER},
+      </if>
+      <if test="answerAttachmentSuffix != null">
+        #{answerAttachmentSuffix,jdbcType=VARCHAR},
+      </if>
+      <if test="answerAttachmentCreateTime != null">
+        #{answerAttachmentCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="homeworkAnswerId != null">
+        #{homework_answer_id,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.niit.service.lms.pojo.SkLmsHomeworkAnswerAttachmentCn">
+    update sk_lms_homework_answer_attachment_cn
+    <set>
+      <if test="answerAttachmentTitle != null">
+        answer_attachment_title = #{answerAttachmentTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="answerAttachmentUrl != null">
+        answer_attachment_url = #{answerAttachmentUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="answerAttachmentSize != null">
+        answer_attachment_size = #{answerAttachmentSize,jdbcType=INTEGER},
+      </if>
+      <if test="answerAttachmentSuffix != null">
+        answer_attachment_suffix = #{answerAttachmentSuffix,jdbcType=VARCHAR},
+      </if>
+      <if test="answerAttachmentCreateTime != null">
+        answer_attachment_create_time = #{answerAttachmentCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="homeworkAnswerId != null">
+        homework_answer_id = #{homeworkAnswerId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.niit.service.lms.pojo.SkLmsHomeworkAnswerAttachmentCn">
+    update sk_lms_homework_answer_attachment_cn
+    set answer_attachment_title = #{answerAttachmentTitle,jdbcType=VARCHAR},
+      answer_attachment_url = #{answerAttachmentUrl,jdbcType=VARCHAR},
+      answer_attachment_size = #{answerAttachmentSize,jdbcType=INTEGER},
+      answer_attachment_suffix = #{answerAttachmentSuffix,jdbcType=VARCHAR},
+      answer_attachment_create_time = #{answerAttachmentCreateTime,jdbcType=TIMESTAMP},
+      homework_answer_id = #{homeworkAnswerId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

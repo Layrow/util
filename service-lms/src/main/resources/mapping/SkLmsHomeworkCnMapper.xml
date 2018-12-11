@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.niit.service.lms.dao.SkLmsHomeworkCnMapper">
+  <resultMap id="BaseResultMap" type="com.niit.service.lms.pojo.SkLmsHomeworkCn">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="homework_title" jdbcType="VARCHAR" property="homeworkTitle" />
+    <result column="homework_create_time" jdbcType="TIMESTAMP" property="homeworkCreateTime" />
+    <result column="faculty_id" jdbcType="VARCHAR" property="facultyId" />
+    <result column="homework_status" jdbcType="INTEGER" property="homeworkStatus" />
+    <collection property="skLmsHomeworkAttachmentCn" resultMap="HomeworkAttachmentCnMap" />
+  </resultMap>
+
+  <resultMap id="BaseHomeworkMap" type="com.niit.service.lms.pojo.SkLmsHomeworkCn">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="homework_title" jdbcType="VARCHAR" property="homeworkTitle" />
+    <result column="homework_create_time" jdbcType="TIMESTAMP" property="homeworkCreateTime" />
+    <result column="faculty_id" jdbcType="VARCHAR" property="facultyId" />
+    <result column="homework_status" jdbcType="INTEGER" property="homeworkStatus" />
+    <result column="homework_content" jdbcType="LONGVARCHAR" property="homeworkContent" />
+  </resultMap>
+
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.niit.service.lms.pojo.SkLmsHomeworkCn">
+    <result column="homework_content" jdbcType="LONGVARCHAR" property="homeworkContent" />
+  </resultMap>
+  <resultMap id="HomeworkAttachmentCnMap" type="com.niit.service.lms.pojo.SkLmsHomeworkAttachmentCn">
+    <id column="bid" jdbcType="INTEGER" property="id" />
+    <result column="homework_attachment_url" jdbcType="VARCHAR" property="homeworkAttachmentUrl" />
+    <result column="homework_attachment_create_time" jdbcType="TIMESTAMP" property="homeworkAttachmentCreateTime" />
+    <result column="homework_attachment_size" jdbcType="INTEGER" property="homeworkAttachmentSize" />
+    <result column="homework_attachment_suffix" jdbcType="VARCHAR" property="homeworkAttachmentSuffix" />
+    <result column="homework_attachment_title" jdbcType="VARCHAR" property="homeworkAttachmentTitle" />
+    <result column="homework_id" jdbcType="INTEGER" property="homeworkId" />
+  </resultMap>
+
+  <resultMap id="BaseStudentMap" type="com.niit.service.lms.pojo.SkLmsStudentsCn">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="student_name" jdbcType="VARCHAR" property="studentName" />
+    <result column="student_eng_name" jdbcType="VARCHAR" property="studentEngName" />
+    <result column="student_user_id" jdbcType="VARCHAR" property="studentUserId" />
+    <result column="student_pwd" jdbcType="VARCHAR" property="studentPwd" />
+    <result column="student_school_id" jdbcType="VARCHAR" property="studentSchoolId" />
+    <result column="student_create_time" jdbcType="TIMESTAMP" property="studentCreateTime" />
+    <result column="student_status" jdbcType="INTEGER" property="studentStatus" />
+    <result column="student_login_id" jdbcType="VARCHAR" property="studentLoginId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, homework_title, homework_create_time, faculty_id, homework_status
+  </sql>
+  <sql id="Blob_Column_List">
+    homework_content
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sk_lms_homework_cn
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select
+    a.*,
+    b.id as bid,b.homework_attachment_url,b.homework_attachment_create_time,
+    b.homework_attachment_size,b.homework_attachment_suffix,b.homework_attachment_title,b.homework_id
+    from sk_lms_homework_cn a LEFT JOIN sk_lms_homework_attachment_cn b on b.homework_id = a.id
+    where a.id = #{id,jdbcType=INTEGER}
+  </select>
+
+
+  <select id="selectByHomeworkIdList" parameterType="java.util.List" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sk_lms_homework_cn
+    where id IN
+    <foreach collection="list" item="homework_id" open="("
+             separator="," close=")">
+      #{homework_id}
+    </foreach>
+
+  </select>
+
+  <!-- selectByfacultyId -->
+  <select id="selectByFacultyId" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sk_lms_homework_cn
+    where faculty_id = #{faculty_id,jdbcType=INTEGER}
+  </select>
+
+  <!-- 查询特定的作业都有哪些学生提交和那些学生未提交 -->
+  <select id="selectStudentByHomeworkId" resultType="java.util.LinkedHashMap">
+    select c.student_id,c.id as homework_answerId,d.student_name,d.student_eng_name,d.student_user_id,c.homework_answer_mark,c.homework_answer_comments
+    from sk_lms_homework_answer_cn c,sk_lms_students_cn d
+    where c.homework_id=#{arg1,jdbcType=INTEGER} and c.student_id=d.id and c.student_id in
+    (select b.student_id from sk_lms_batch_cn a,sk_lms_bach_student_cn b where a.id=#{arg0,jdbcType=INTEGER} and b.batch_id=a.id)
+    union
+    select b.student_id,null,d.student_name,d.student_eng_name,d.student_user_id,null,null from sk_lms_batch_cn a,sk_lms_bach_student_cn b,sk_lms_students_cn d
+    where a.id=#{arg0,jdbcType=INTEGER} and a.id=b.batch_id and d.id=b.student_id and b.student_id not in
+    (select c.student_id from sk_lms_homework_answer_cn c where c.homework_id=#{arg1,jdbcType=INTEGER} and c.student_id in (select b.student_id from sk_lms_batch_cn a,sk_lms_bach_student_cn b where a.id=#{arg0,jdbcType=INTEGER} and b.batch_id=a.id))
+  </select>
+
+  <!-- 查询特定的作业哪些学生没有提交 -->
+  <select id="selectNotdoStudentByHomeworkId" resultType="java.util.LinkedHashMap">
+      select b.student_id,d.student_name,d.student_eng_name,d.student_user_id,d.student_pwd,d.student_school_id,
+      d.student_create_time,d.student_status,d.student_login_id
+      from sk_lms_batch_cn a,sk_lms_bach_student_cn b,sk_lms_students_cn d
+      where a.id=#{arg0,jdbcType=INTEGER} and a.id=b.batch_id and d.id=b.student_id and b.student_id
+      not in (select c.student_id from sk_lms_homework_answer_cn c
+      where c.homework_id=#{arg1,jdbcType=INTEGER} and c.student_id in (select b.student_id from sk_lms_bach_student_cn b where b.batch_id = #{arg0,jdbcType=INTEGER}))
+
+
+  </select>
+
+  <!-- 查询某ID作业有多少人提交-->
+  <select id="selectFinishCountByHomeworkId" resultType="java.lang.Integer">
+    SELECT count(*) from sk_lms_homework_answer_cn a LEFT JOIN sk_lms_bach_student_cn b on a.student_id = b.student_id
+    WHERE homework_id = #{arg1} and a.student_id in (SELECT student_id from sk_lms_bach_student_cn WHERE batch_id = #{arg0})
+  </select>
+
+
+  <!-- 查询特定班级下的所有作业-->
+  <select id="selectHomeworkByBatchId" parameterType="java.lang.Integer" resultMap="BaseHomeworkMap">
+    SELECT
+    a.*
+    from sk_lms_homework_cn a RIGHT JOIN sk_lms_batch_homework_cn b on a.id = b.homework_id WHERE b.batch_id = #{batch_id,jdbcType=INTEGER}
+  </select>
+
+
+
+  <!-- selectByfacultyId -->
+  <select id="selectHomeworkByFacultyId" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select
+    a.*,
+    b.id as bid,b.homework_attachment_url,b.homework_attachment_create_time,
+    b.homework_attachment_size,b.homework_attachment_suffix,b.homework_attachment_title,b.homework_id
+    from sk_lms_homework_cn a LEFT JOIN sk_lms_homework_attachment_cn b on b.homework_id = a.id
+    where faculty_id = #{faculty_id,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sk_lms_homework_cn
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.niit.service.lms.pojo.SkLmsHomeworkCn">
+    insert into sk_lms_homework_cn (id, homework_title, homework_create_time,
+      faculty_id, homework_status, homework_content
+      )
+    values (#{id,jdbcType=INTEGER}, #{homeworkTitle,jdbcType=VARCHAR}, #{homeworkCreateTime,jdbcType=TIMESTAMP}, 
+      #{facultyId,jdbcType=VARCHAR}, #{homeworkStatus,jdbcType=INTEGER}, #{homeworkContent,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.niit.service.lms.pojo.SkLmsHomeworkCn" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+    insert into sk_lms_homework_cn
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="homeworkTitle != null">
+        homework_title,
+      </if>
+      <if test="homeworkCreateTime != null">
+        homework_create_time,
+      </if>
+      <if test="facultyId != null">
+        faculty_id,
+      </if>
+      <if test="homeworkStatus != null">
+        homework_status,
+      </if>
+      <if test="homeworkContent != null">
+        homework_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="homeworkTitle != null">
+        #{homeworkTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="homeworkCreateTime != null">
+        #{homeworkCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="facultyId != null">
+        #{facultyId,jdbcType=VARCHAR},
+      </if>
+      <if test="homeworkStatus != null">
+        #{homeworkStatus,jdbcType=INTEGER},
+      </if>
+      <if test="homeworkContent != null">
+        #{homeworkContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.niit.service.lms.pojo.SkLmsHomeworkCn">
+    update sk_lms_homework_cn
+    <set>
+      <if test="homeworkTitle != null">
+        homework_title = #{homeworkTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="homeworkCreateTime != null">
+        homework_create_time = #{homeworkCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="facultyId != null">
+        faculty_id = #{facultyId,jdbcType=VARCHAR},
+      </if>
+      <if test="homeworkStatus != null">
+        homework_status = #{homeworkStatus,jdbcType=INTEGER},
+      </if>
+      <if test="homeworkContent != null">
+        homework_content = #{homeworkContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.niit.service.lms.pojo.SkLmsHomeworkCn">
+    update sk_lms_homework_cn
+    set homework_title = #{homeworkTitle,jdbcType=VARCHAR},
+      homework_create_time = #{homeworkCreateTime,jdbcType=TIMESTAMP},
+      faculty_id = #{facultyId,jdbcType=VARCHAR},
+      homework_status = #{homeworkStatus,jdbcType=INTEGER},
+      homework_content = #{homeworkContent,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.niit.service.lms.pojo.SkLmsHomeworkCn">
+    update sk_lms_homework_cn
+    set homework_title = #{homeworkTitle,jdbcType=VARCHAR},
+      homework_create_time = #{homeworkCreateTime,jdbcType=TIMESTAMP},
+      faculty_id = #{facultyId,jdbcType=VARCHAR},
+      homework_status = #{homeworkStatus,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

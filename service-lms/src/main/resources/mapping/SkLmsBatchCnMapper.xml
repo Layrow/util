@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.niit.service.lms.dao.SkLmsBatchCnMapper">
+  <resultMap id="BaseResultMap" type="com.niit.service.lms.pojo.SkLmsBatchCn">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="batch_name" jdbcType="VARCHAR" property="batchName" />
+    <result column="batch_order" jdbcType="INTEGER" property="batchOrder" />
+    <result column="batch_start_time" jdbcType="TIMESTAMP" property="batchStartTime" />
+    <result column="batch_end_time" jdbcType="TIMESTAMP" property="batchEndTime" />
+    <result column="batch_create_time" jdbcType="TIMESTAMP" property="batchCreateTime" />
+    <result column="faculty_id" jdbcType="VARCHAR" property="facultyId" />
+    <result column="batch_status" jdbcType="INTEGER" property="batchStatus" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, batch_name, batch_order, batch_start_time, batch_end_time, batch_create_time, 
+    faculty_id, batch_status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sk_lms_batch_cn
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <!-- 返回batchList -->
+  <select id="selectByFacultyId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sk_lms_batch_cn
+    where faculty_id = #{faculty_id,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sk_lms_batch_cn
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.niit.service.lms.pojo.SkLmsBatchCn">
+    insert into sk_lms_batch_cn (id, batch_name, batch_order, 
+      batch_start_time, batch_end_time, batch_create_time, 
+      faculty_id, batch_status)
+    values (#{id,jdbcType=INTEGER}, #{batchName,jdbcType=VARCHAR}, #{batchOrder,jdbcType=INTEGER}, 
+      #{batchStartTime,jdbcType=TIMESTAMP}, #{batchEndTime,jdbcType=TIMESTAMP}, #{batchCreateTime,jdbcType=TIMESTAMP}, 
+      #{facultyId,jdbcType=VARCHAR}, #{batchStatus,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.niit.service.lms.pojo.SkLmsBatchCn">
+    insert into sk_lms_batch_cn
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="batchName != null">
+        batch_name,
+      </if>
+      <if test="batchOrder != null">
+        batch_order,
+      </if>
+      <if test="batchStartTime != null">
+        batch_start_time,
+      </if>
+      <if test="batchEndTime != null">
+        batch_end_time,
+      </if>
+      <if test="batchCreateTime != null">
+        batch_create_time,
+      </if>
+      <if test="facultyId != null">
+        faculty_id,
+      </if>
+      <if test="batchStatus != null">
+        batch_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="batchName != null">
+        #{batchName,jdbcType=VARCHAR},
+      </if>
+      <if test="batchOrder != null">
+        #{batchOrder,jdbcType=INTEGER},
+      </if>
+      <if test="batchStartTime != null">
+        #{batchStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="batchEndTime != null">
+        #{batchEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="batchCreateTime != null">
+        #{batchCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="facultyId != null">
+        #{facultyId,jdbcType=VARCHAR},
+      </if>
+      <if test="batchStatus != null">
+        #{batchStatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.niit.service.lms.pojo.SkLmsBatchCn">
+    update sk_lms_batch_cn
+    <set>
+      <if test="batchName != null">
+        batch_name = #{batchName,jdbcType=VARCHAR},
+      </if>
+      <if test="batchOrder != null">
+        batch_order = #{batchOrder,jdbcType=INTEGER},
+      </if>
+      <if test="batchStartTime != null">
+        batch_start_time = #{batchStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="batchEndTime != null">
+        batch_end_time = #{batchEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="batchCreateTime != null">
+        batch_create_time = #{batchCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="facultyId != null">
+        faculty_id = #{facultyId,jdbcType=VARCHAR},
+      </if>
+      <if test="batchStatus != null">
+        batch_status = #{batchStatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.niit.service.lms.pojo.SkLmsBatchCn">
+    update sk_lms_batch_cn
+    set batch_name = #{batchName,jdbcType=VARCHAR},
+      batch_order = #{batchOrder,jdbcType=INTEGER},
+      batch_start_time = #{batchStartTime,jdbcType=TIMESTAMP},
+      batch_end_time = #{batchEndTime,jdbcType=TIMESTAMP},
+      batch_create_time = #{batchCreateTime,jdbcType=TIMESTAMP},
+      faculty_id = #{facultyId,jdbcType=VARCHAR},
+      batch_status = #{batchStatus,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

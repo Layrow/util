@@ -1,0 +1,14 @@
+# maven
+target/
+
+# IntelliJ
+out/
+.idea/
+*.iml
+
+
+# User-specific stuff
+.idea/**/workspace.xml
+
+service-lms/src/test/
+website-lms-admin/src/test/

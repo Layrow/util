@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.niit.service.lms.dao.SkLmsHomeworkAnswerCnMapper">
+  <resultMap id="BaseResultMap" type="com.niit.service.lms.pojo.SkLmsHomeworkAnswerCn">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="homework_answer_create_time" jdbcType="TIMESTAMP" property="homeworkAnswerCreateTime" />
+    <result column="student_id" jdbcType="INTEGER" property="studentId" />
+    <result column="homework_answer_mark" jdbcType="INTEGER" property="homeworkAnswerMark" />
+    <result column="homework_answer_comments" jdbcType="VARCHAR" property="homeworkAnswerComments" />
+    <result column="homework_id" jdbcType="INTEGER" property="homeworkId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.niit.service.lms.pojo.SkLmsHomeworkAnswerCn">
+    <result column="homework_answer_content" jdbcType="LONGVARCHAR" property="homeworkAnswerContent" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, homework_answer_create_time, student_id, homework_answer_mark, homework_answer_comments,homework_id
+  </sql>
+  <sql id="Blob_Column_List">
+    homework_answer_content
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sk_lms_homework_answer_cn
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByStudentAndHomeworkId" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sk_lms_homework_answer_cn
+    where homework_id = #{arg0,jdbcType=INTEGER} AND student_id = #{arg1,jdbcType=INTEGER}
+  </select>
+
+  <!--查询作业回答的详细信息 -->
+  <select id="selectAnswerInfoByHomeIdAndStuId"  resultType="java.util.LinkedHashMap">
+    select a.id as homework_answerid,a.homework_id,a.student_id,a.homework_answer_mark,a.homework_answer_comments,a.homework_answer_content,
+    a.homework_answer_create_time,b.id as attachment_id,b.answer_attachment_title,b.answer_attachment_url,b.answer_attachment_size,b.answer_attachment_suffix,
+    b.answer_attachment_create_time,c.student_name
+    from sk_lms_homework_answer_cn a left join sk_lms_homework_answer_attachment_cn b on a.id = b.homework_answer_id left join sk_lms_students_cn c on c.id = a.student_id
+    where a.homework_id = #{arg1,jdbcType=INTEGER} and a.student_id = #{arg0,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sk_lms_homework_answer_cn
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.niit.service.lms.pojo.SkLmsHomeworkAnswerCn" >
+    insert into sk_lms_homework_answer_cn (id, homework_answer_create_time, student_id,
+      homework_answer_mark, homework_answer_comments,
+      homework_answer_content,homework_id)
+    values (#{id,jdbcType=INTEGER}, #{homeworkAnswerCreateTime,jdbcType=TIMESTAMP}, #{studentId,jdbcType=INTEGER},
+      #{homeworkAnswerMark,jdbcType=INTEGER}, #{homeworkAnswerComments,jdbcType=VARCHAR},
+      #{homeworkAnswerContent,jdbcType=LONGVARCHAR},#{homeworkId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.niit.service.lms.pojo.SkLmsHomeworkAnswerCn">
+    insert into sk_lms_homework_answer_cn
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="homeworkAnswerCreateTime != null">
+        homework_answer_create_time,
+      </if>
+      <if test="studentId != null">
+        student_id,
+      </if>
+      <if test="homeworkAnswerMark != null">
+        homework_answer_mark,
+      </if>
+      <if test="homeworkAnswerComments != null">
+        homework_answer_comments,
+      </if>
+      <if test="homeworkAnswerContent != null">
+        homework_answer_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="homeworkAnswerCreateTime != null">
+        #{homeworkAnswerCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="studentId != null">
+        #{studentId,jdbcType=INTEGER},
+      </if>
+      <if test="homeworkAnswerMark != null">
+        #{homeworkAnswerMark,jdbcType=INTEGER},
+      </if>
+      <if test="homeworkAnswerComments != null">
+        #{homeworkAnswerComments,jdbcType=VARCHAR},
+      </if>
+      <if test="homeworkAnswerContent != null">
+        #{homeworkAnswerContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.niit.service.lms.pojo.SkLmsHomeworkAnswerCn">
+    update sk_lms_homework_answer_cn
+    <set>
+      <if test="homeworkAnswerCreateTime != null">
+        homework_answer_create_time = #{homeworkAnswerCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="studentId != null">
+        student_id = #{studentId,jdbcType=INTEGER},
+      </if>
+      <if test="homeworkAnswerMark != null">
+        homework_answer_mark = #{homeworkAnswerMark,jdbcType=INTEGER},
+      </if>
+      <if test="homeworkAnswerComments != null">
+        homework_answer_comments = #{homeworkAnswerComments,jdbcType=VARCHAR},
+      </if>
+      <if test="homeworkAnswerContent != null">
+        homework_answer_content = #{homeworkAnswerContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="homeworkId != null">
+        homework_id = #{homeworkId,jdbcType=INTEGER}
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.niit.service.lms.pojo.SkLmsHomeworkAnswerCn">
+    update sk_lms_homework_answer_cn
+    set homework_answer_create_time = #{homeworkAnswerCreateTime,jdbcType=TIMESTAMP},
+      student_id = #{studentId,jdbcType=INTEGER},
+      homework_answer_mark = #{homeworkAnswerMark,jdbcType=INTEGER},
+      homework_answer_comments = #{homeworkAnswerComments,jdbcType=VARCHAR},
+      homework_answer_content = #{homeworkAnswerContent,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.niit.service.lms.pojo.SkLmsHomeworkAnswerCn">
+    update sk_lms_homework_answer_cn
+    set homework_answer_create_time = #{homeworkAnswerCreateTime,jdbcType=TIMESTAMP},
+      student_id = #{studentId,jdbcType=INTEGER},
+      homework_answer_mark = #{homeworkAnswerMark,jdbcType=INTEGER},
+      homework_answer_comments = #{homeworkAnswerComments,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

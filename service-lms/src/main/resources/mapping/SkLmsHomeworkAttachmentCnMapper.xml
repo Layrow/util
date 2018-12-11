@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.niit.service.lms.dao.SkLmsHomeworkAttachmentCnMapper">
+  <resultMap id="BaseResultMap" type="com.niit.service.lms.pojo.SkLmsHomeworkAttachmentCn">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="homework_attachment_url" jdbcType="VARCHAR" property="homeworkAttachmentUrl" />
+    <result column="homework_attachment_create_time" jdbcType="TIMESTAMP" property="homeworkAttachmentCreateTime" />
+    <result column="homework_attachment_size" jdbcType="INTEGER" property="homeworkAttachmentSize" />
+    <result column="homework_attachment_suffix" jdbcType="VARCHAR" property="homeworkAttachmentSuffix" />
+    <result column="homework_attachment_title" jdbcType="VARCHAR" property="homeworkAttachmentTitle" />
+    <result column="homework_id" jdbcType="INTEGER" property="homeworkId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, homework_attachment_url,homework_attachment_create_time, homework_attachment_size,
+    homework_attachment_suffix,homework_attachment_title,homework_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sk_lms_homework_attachment_cn
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <!-- 根据homework_id查询课件 -->
+  <select id="selectByHomeworkId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sk_lms_homework_attachment_cn
+    where homework_id = #{homework_id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sk_lms_homework_attachment_cn
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+<!--根据homework_id删除附件 -->
+  <delete id="deleteByHomeworkId" parameterType="java.lang.Integer">
+    delete from sk_lms_homework_attachment_cn
+    where homework_id = #{homework_id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.niit.service.lms.pojo.SkLmsHomeworkAttachmentCn">
+    insert into sk_lms_homework_attachment_cn (id, homework_attachment_url, homework_attachment_create_time, 
+      homework_attachment_size, homework_attachment_suffix, homework_attachment_title,
+      homework_id)
+    values (#{id,jdbcType=INTEGER}, #{homeworkAttachmentUrl,jdbcType=VARCHAR}, #{homeworkAttachmentCreateTime,jdbcType=TIMESTAMP}, 
+      #{homeworkAttachmentSize,jdbcType=INTEGER}, #{homeworkAttachmentSuffix,jdbcType=VARCHAR}, #{homeworkAttachmentTitle,jdbcType=VARCHAR},
+      #{homeworkId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.niit.service.lms.pojo.SkLmsHomeworkAttachmentCn">
+    insert into sk_lms_homework_attachment_cn
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="homeworkAttachmentUrl != null">
+        homework_attachment_url,
+      </if>
+      <if test="homeworkAttachmentCreateTime != null">
+        homework_attachment_create_time,
+      </if>
+      <if test="homeworkAttachmentSize != null">
+        homework_attachment_size,
+      </if>
+      <if test="homeworkAttachmentSuffix != null">
+        homework_attachment_suffix,
+      </if>
+      <if test="homeworkAttachmentTitle != null">
+        homework_attachment_title,
+      </if>
+      <if test="homeworkId != null">
+        homework_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="homeworkAttachmentUrl != null">
+        #{homeworkAttachmentUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="homeworkAttachmentCreateTime != null">
+        #{homeworkAttachmentCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="homeworkAttachmentSize != null">
+        #{homeworkAttachmentSize,jdbcType=INTEGER},
+      </if>
+      <if test="homeworkAttachmentSuffix != null">
+        #{homeworkAttachmentSuffix,jdbcType=VARCHAR},
+      </if>
+      <if test="homeworkAttachmentTitle != null">
+        #{homeworkAttachmentTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="homeworkId != null">
+        #{homeworkId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.niit.service.lms.pojo.SkLmsHomeworkAttachmentCn">
+    update sk_lms_homework_attachment_cn
+    <set>
+      <if test="homeworkAttachmentUrl != null">
+        homework_attachment_url = #{homeworkAttachmentUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="homeworkAttachmentCreateTime != null">
+        homework_attachment_create_time = #{homeworkAttachmentCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="homeworkAttachmentSize != null">
+        homework_attachment_size = #{homeworkAttachmentSize,jdbcType=INTEGER},
+      </if>
+      <if test="homeworkAttachmentSuffix != null">
+        homework_attachment_suffix = #{homeworkAttachmentSuffix,jdbcType=VARCHAR},
+      </if>
+      <if test="homeworkAttachmentTitle != null">
+        homework_attachment_title = #{homeworkAttachmentTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="homeworkId != null">
+        homework_id = #{homeworkId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.niit.service.lms.pojo.SkLmsHomeworkAttachmentCn">
+    update sk_lms_homework_attachment_cn
+    set homework_attachment_url = #{homeworkAttachmentUrl,jdbcType=VARCHAR},
+      homework_attachment_create_time = #{homeworkAttachmentCreateTime,jdbcType=TIMESTAMP},
+      homework_attachment_size = #{homeworkAttachmentSize,jdbcType=INTEGER},
+      homework_attachment_suffix = #{homeworkAttachmentSuffix,jdbcType=VARCHAR},
+      homework_attachment_title = #{homeworkAttachmentTitle,jdbcType=VARCHAR},
+      homework_id = #{homeworkId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

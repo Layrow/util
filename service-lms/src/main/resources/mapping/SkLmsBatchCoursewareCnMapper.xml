@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.niit.service.lms.dao.SkLmsBatchCoursewareCnMapper">
+  <resultMap id="BaseResultMap" type="com.niit.service.lms.pojo.SkLmsBatchCoursewareCn">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="batch_id" jdbcType="INTEGER" property="batchId" />
+    <result column="courseware_id" jdbcType="INTEGER" property="coursewareId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, batch_id, courseware_id
+  </sql>
+
+  <!-- 查询班级名称-->
+  <select id="selectClass" resultType="map">
+  select DISTINCT(b.batch_name), bc.batch_id
+  FROM sk_lms_batch_courseware_cn bc
+  RIGHT JOIN sk_lms_batch_cn b
+  on b.id=bc.batch_id
+  </select>
+
+  <select id="selectByBatchId" parameterType="java.lang.Integer" resultType="Integer">
+    select
+    a.courseware_id
+    from sk_lms_batch_courseware_cn a
+    where batch_id = #{batch_id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteAd" >
+    <!-- delete from emp where empno in(7789,7790) -->
+    <!-- forEach : 用来循环 collection : 用来指定循环的数据的类型 可以填的值有：array,list,map item
+        : 循环中为每个循环的数据指定一个别名 index : 循环中循环的下标 open : 开始 close : 结束 separator : 数组中元素之间的分隔符 -->
+    delete from sk_lms_batch_courseware_cn where  courseware_id = #{coursewareId,jdbcType=INTEGER}    AND  batch_id in
+    <foreach collection="list" item="batch_id" open="("
+             separator="," close=")">
+      #{batch_id}
+    </foreach>
+
+  </delete>
+  <select id="select" resultType="map">
+select batch_name,batch_id,1 as  link  from sk_lms_batch_courseware_cn a,sk_lms_batch_cn b where a.batch_id=b.id and a.courseware_id=#{coursewareId,jdbcType=INTEGER} AND b.faculty_id =#{facultyId,jdbcType=INTEGER}
+UNION
+select batch_name,id,0 as link from sk_lms_batch_cn  where id not in (select batch_id from sk_lms_batch_courseware_cn a,sk_lms_batch_cn b where a.batch_id=b.id and a.courseware_id=#{coursewareId,jdbcType=INTEGER}) AND faculty_id =#{facultyId,jdbcType=INTEGER}
+  </select>
+  <!--  查询所有班级 -->
+  <select id="selectAllBatch"  parameterType="java.lang.Integer"   resultType="map">
+    select  DISTINCT(batch_name) , id  from sk_lms_batch_cn where faculty_id = #{facultyId,jdbcType=INTEGER}
+  </select>
+  <!--  查询ID -->
+  <select id="selectId" parameterType="java.lang.Integer"  resultType="map">
+  SELECT  DISTINCT(c.batch_id) from sk_lms_batch_courseware_cn c left join sk_lms_batch_cn bc  on c.batch_id = bc.id  where  c.courseware_id =#{coursewareId,jdbcType=INTEGER} and bc.faculty_id = #{facultyId,jdbcType=INTEGER}
+  </select>
+  <!--批量添加进关联-->
+  <insert id="insertBatch" parameterType="java.util.List">
+    insert  into sk_lms_batch_courseware_cn(id, batch_id, courseware_id
+    )
+    values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (#{item.id},#{item.batchId},#{item.coursewareId})
+    </foreach>
+  </insert>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sk_lms_batch_courseware_cn
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sk_lms_batch_courseware_cn
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.niit.service.lms.pojo.SkLmsBatchCoursewareCn">
+    insert into sk_lms_batch_courseware_cn (id, batch_id, courseware_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{batchId,jdbcType=INTEGER}, #{coursewareId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.niit.service.lms.pojo.SkLmsBatchCoursewareCn">
+    insert into sk_lms_batch_courseware_cn
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="batchId != null">
+        batch_id,
+      </if>
+      <if test="coursewareId != null">
+        courseware_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="batchId != null">
+        #{batchId,jdbcType=INTEGER},
+      </if>
+      <if test="coursewareId != null">
+        #{coursewareId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.niit.service.lms.pojo.SkLmsBatchCoursewareCn">
+    update sk_lms_batch_courseware_cn
+    <set>
+      <if test="batchId != null">
+        batch_id = #{batchId,jdbcType=INTEGER},
+      </if>
+      <if test="coursewareId != null">
+        courseware_id = #{coursewareId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.niit.service.lms.pojo.SkLmsBatchCoursewareCn">
+    update sk_lms_batch_courseware_cn
+    set batch_id = #{batchId,jdbcType=INTEGER},
+      courseware_id = #{coursewareId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

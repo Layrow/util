@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.niit.service.cms.dao.SkAdContentMapper" >
+  <resultMap id="BaseResultMap" type="com.niit.service.cms.pojo.SkAdContent" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="ad_url" property="adUrl" jdbcType="VARCHAR" />
+    <result column="ad_href" property="adHref" jdbcType="VARCHAR" />
+    <result column="ad_order" property="adOrder" jdbcType="INTEGER" />
+    <result column="ad_status" property="adStatus" jdbcType="INTEGER" />
+    <result column="ad_id" property="adId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, ad_url, ad_href, ad_order, ad_status, ad_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sk_ad_content
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <!-- 批量删除广告 -->
+  <delete id="deleteMoreAdContent" parameterType="java.util.List">
+    <!-- delete from emp where empno in(7789,7790) -->
+    <!-- forEach : 用来循环 collection : 用来指定循环的数据的类型 可以填的值有：array,list,map item
+        : 循环中为每个循环的数据指定一个别名 index : 循环中循环的下标 open : 开始 close : 结束 separator : 数组中元素之间的分隔符 -->
+    delete from sk_ad_content where id in
+    <foreach collection="list" item="id" open="("
+             separator="," close=")">
+      #{id}
+    </foreach>
+  </delete>
+  <!-- 批量审核广告 -->
+  <update id="updateMoreAdContent" parameterType="java.util.List">
+    update sk_ad_content set ad_status = 1
+    where id in
+    <foreach collection="list" item="id" open="("
+             separator="," close=")">
+      #{id}
+    </foreach>
+  </update>
+  <!-- 查询特定广告位下的所有广告 order排序 status为1 或 status为0 -->
+  <select id="selectByAdId" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from sk_ad_content
+    where ad_id = #{ad_id}
+    <if test="ad_status!=null and ad_status!='' or 0 == ad_status ">
+      and ad_status = #{ad_status}
+    </if>
+    order by ad_order desc
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sk_ad_content
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <!-- 删除某个广告位下的所有广告 -->
+  <delete id="deleteByAdId" parameterType="java.lang.Integer" >
+    delete from sk_ad_content
+    where ad_id = #{ad_id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.niit.service.cms.pojo.SkAdContent" >
+    insert into sk_ad_content (id, ad_url, ad_href, 
+      ad_order, ad_status, ad_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{adUrl,jdbcType=VARCHAR}, #{adHref,jdbcType=VARCHAR}, 
+      #{adOrder,jdbcType=INTEGER}, #{adStatus,jdbcType=INTEGER}, #{adId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.niit.service.cms.pojo.SkAdContent" >
+    insert into sk_ad_content
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="adUrl != null" >
+        ad_url,
+      </if>
+      <if test="adHref != null" >
+        ad_href,
+      </if>
+      <if test="adOrder != null" >
+        ad_order,
+      </if>
+      <if test="adStatus != null" >
+        ad_status,
+      </if>
+      <if test="adId != null" >
+        ad_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="adUrl != null" >
+        #{adUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="adHref != null" >
+        #{adHref,jdbcType=VARCHAR},
+      </if>
+      <if test="adOrder != null" >
+        #{adOrder,jdbcType=INTEGER},
+      </if>
+      <if test="adStatus != null" >
+        #{adStatus,jdbcType=INTEGER},
+      </if>
+      <if test="adId != null" >
+        #{adId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.niit.service.cms.pojo.SkAdContent" >
+    update sk_ad_content
+    <set >
+      <if test="adUrl != null" >
+        ad_url = #{adUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="adHref != null" >
+        ad_href = #{adHref,jdbcType=VARCHAR},
+      </if>
+      <if test="adOrder != null" >
+        ad_order = #{adOrder,jdbcType=INTEGER},
+      </if>
+      <if test="adStatus != null" >
+        ad_status = #{adStatus,jdbcType=INTEGER},
+      </if>
+      <if test="adId != null" >
+        ad_id = #{adId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.niit.service.cms.pojo.SkAdContent" >
+    update sk_ad_content
+    set ad_url = #{adUrl,jdbcType=VARCHAR},
+      ad_href = #{adHref,jdbcType=VARCHAR},
+      ad_order = #{adOrder,jdbcType=INTEGER},
+      ad_status = #{adStatus,jdbcType=INTEGER},
+      ad_id = #{adId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

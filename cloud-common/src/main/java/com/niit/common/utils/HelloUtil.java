@@ -9,7 +9,12 @@ package com.niit.common.utils;
  */
 public class HelloUtil {
 
+
     public void get() {
         System.out.println("hello,world");
+    }
+
+    public void setString(){
+
     }
 }

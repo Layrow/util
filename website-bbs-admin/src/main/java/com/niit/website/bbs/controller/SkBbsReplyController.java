@@ -157,5 +157,10 @@ public class SkBbsReplyController {
     public PageInfo<SkBbsReply>  selectAllNoStatus(Integer currentPage, Integer pageSize){
         return skBbsReplyService.selectAllNoStatus( currentPage,pageSize);
     }
+    @GetMapping("/reply")
+    public PageInfo<SkBbsReply> selectReply(Integer currentPage, Integer pageSize, String replyUserId) {
+        PageInfo<SkBbsReply> pageInfo = skBbsReplyService.selectReply(currentPage, pageSize, replyUserId);
+        return pageInfo;
+    }
 
 }

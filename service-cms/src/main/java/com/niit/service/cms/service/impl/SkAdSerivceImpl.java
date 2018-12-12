@@ -1,5 +1,7 @@
 package com.niit.service.cms.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.niit.common.utils.Tools;
 import com.niit.service.cms.dao.SkAdContentMapper;
 import com.niit.service.cms.dao.SkAdMapper;
@@ -8,7 +10,6 @@ import com.niit.service.cms.pojo.SkAdContent;
 import com.niit.service.cms.service.SkAdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 /**
@@ -27,8 +28,12 @@ public class SkAdSerivceImpl implements SkAdService {
 
     // 查询所有广告位,默认查询所有的广告位，可以添加参数用来查询可用的广告位(status = 1)
     @Override
-    public List<SkAd> selectAllAdsense(Integer status) {
-        return skAdMapper.selectAllAdsense(status);
+    public PageInfo<SkAd> selectAllAdsense(Integer status,Integer currentPage,Integer pageSize) {
+        PageInfo<SkAd> pageInfo = null;
+        PageHelper.startPage(currentPage, pageSize);
+        List<SkAd> skAdList = skAdMapper.selectAllAdsense(status);
+        pageInfo = new PageInfo<>(skAdList);
+        return pageInfo;
     }
 
     // 批量删除广告位
@@ -36,6 +41,12 @@ public class SkAdSerivceImpl implements SkAdService {
     public int deleteMoreAd(String id) {
         List<String> list = Tools.getList(id);
         return skAdMapper.deleteMoreAd(list);
+    }
+
+    // 修改广告位
+    @Override
+    public int updateAd(SkAd skAd) {
+        return skAdMapper.updateByPrimaryKeySelective(skAd);
     }
 
     // 删除广告
@@ -50,9 +61,9 @@ public class SkAdSerivceImpl implements SkAdService {
         return skAdContentMapper.insertSelective(record);
     }
 
-    // 审核广告
+    // 修改广告内容
     @Override
-    public int updateByPrimaryKeySelective(SkAdContent record) {
+    public int updateAdContentByPrimaryKeySelective(SkAdContent record) {
         return skAdContentMapper.updateByPrimaryKeySelective(record);
     }
 
@@ -64,8 +75,12 @@ public class SkAdSerivceImpl implements SkAdService {
 
     // 查询特定广告位下的所有广告 order排序 status为1 或 status为0
     @Override
-    public List<SkAdContent> selectByAdId(Integer adId, Integer status) {
-        return skAdContentMapper.selectByAdId(adId,status);
+    public PageInfo<SkAdContent> selectByAdId(Integer adId, Integer status,Integer currentPage,Integer pageSize) {
+        PageInfo<SkAdContent> pageInfo = null;
+        PageHelper.startPage(currentPage, pageSize);
+        List<SkAdContent> skAdContentsList = skAdContentMapper.selectByAdId(adId, status);
+        pageInfo = new PageInfo<>(skAdContentsList);
+        return pageInfo;
     }
 
     // 新增广告位
@@ -86,6 +101,28 @@ public class SkAdSerivceImpl implements SkAdService {
     public int deleteMoreAdContent(String id) {
         List<String> list = Tools.getList(id);
         return skAdContentMapper.deleteMoreAdContent(list);
+    }
+
+    // 根据Title模糊查询
+    @Override
+    public PageInfo<SkAd> likeSelectAdAllByTitle(String title, Integer currentPage, Integer pageSize) {
+        PageInfo<SkAd> pageInfo = null;
+        PageHelper.startPage(currentPage, pageSize);
+        final List<SkAd> adList = skAdMapper.likeSelectAdAllByTitle(title);
+        pageInfo = new PageInfo<>(adList);
+        return pageInfo;
+    }
+
+    // 批量修改广告排序值
+    @Override
+    public int updateAdContentMoreSortId(List<SkAdContent> skAdContentList) {
+        return skAdContentMapper.updateAdContentMoreSortId(skAdContentList);
+    }
+
+    // 查询所有广告
+    @Override
+    public List<SkAdContent> selectAllAd() {
+        return skAdContentMapper.selectAllAd();
     }
 
 }

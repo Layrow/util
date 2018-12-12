@@ -18,6 +18,25 @@
     from sk_ad_content
     where id = #{id,jdbcType=INTEGER}
   </select>
+<!-- 查询所有广告 -->
+  <select id="selectAllAd" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from sk_ad_content order by ad_order desc
+  </select>
+  <!--批量修改排序值-->
+  <update id="updateAdContentMoreSortId" parameterType="java.util.List">
+    update sk_ad_content
+    set ad_order =
+    <foreach collection="list" item="item" index="index"
+             separator=" " open="case ID" close="end">
+      when #{item.id} then #{item.adOrder}
+    </foreach>
+    where id in
+    <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+      #{item.id}
+    </foreach>
+  </update>
   <!-- 批量删除广告 -->
   <delete id="deleteMoreAdContent" parameterType="java.util.List">
     <!-- delete from emp where empno in(7789,7790) -->

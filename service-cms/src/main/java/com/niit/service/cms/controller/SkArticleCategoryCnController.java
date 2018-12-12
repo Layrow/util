@@ -6,16 +6,13 @@ import com.niit.service.cms.pojo.SkArticleCategoryCn;
 import com.niit.service.cms.service.SkArticleCategoryCnService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
  * @ClassName SkArticleCategoryCnController
- * @Description ArticleCategoryCn 排序保存？
- * 查询栏目分类的时候，前端加载信息的时候按照sortId排序。更改sortId的时候，调用更新api进行更新，
- * 然后按照sortId重新排序，加载页面
+ * @Description ArticleCategoryCn
  * @Author liyuhao
  * @Date 2018/10/30 15:26
  **/
@@ -54,31 +51,10 @@ public class SkArticleCategoryCnController {
             e.printStackTrace();
         }
         return insertStatus;
-
     }
 
-
-
     /**
-     * @Description  根据ChannelId获取特定栏目类别
-     * @Date 2018/10/31 11:18
-     * @Param []
-     * @Return java.util.List<com.niit.service.cms.pojo.SkArticleCategoryCn>
-     **/
-//    @GetMapping("/articleCategory/{channelId}")
-//    public List<SkArticleCategoryCn> getAllCategoryByChannelId(@PathVariable Integer channelId) {
-//        List<SkArticleCategoryCn> skArticleCategoryCnList = null;
-//        try {
-//            skArticleCategoryCnList = skArticleCategoryCnService.selectArticleCategoryByChannelId(channelId);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return skArticleCategoryCnList;
-//    }
-
-
-    /**
-     * @Description 查询所有目录分类(包含层次结构) 查询速度太慢// TODO 改善查询速度？？？
+     * @Description 查询所有目录分类(包含树状结构)
      * @Date 2018/10/31 13:49
      * @Param []
      * @Return java.util.List<com.niit.service.cms.pojo.SkArticleCategoryCn>
@@ -121,6 +97,7 @@ public class SkArticleCategoryCnController {
         }
         return deleteStatus;
     }
+
     /**
      * @Description 根据父类id查询对应的子类
      * @Date 2018/11/30 9:32
@@ -131,12 +108,6 @@ public class SkArticleCategoryCnController {
     public List<SkArticleCategoryCn> getNextInfos(@PathVariable("parentId") Integer parentId) {
         return skArticleCategoryCnService.getNextInfos(parentId);
     }
-
-/*    // 查询所有
-    @GetMapping("/articleCategory")
-    public List<SkArticleCategoryCn> getAllSkArticleCategoryCn() {
-        return skArticleCategoryCnService.selectAllCategory();
-    }*/
 
     /**
      * @Description 更新多个排序id
@@ -149,10 +120,16 @@ public class SkArticleCategoryCnController {
         skArticleCategoryCnService.updateMoreSortId(skArticleCategoryCnList,locale);
     }
 
-    // 查询channel为1的，parent_id为0的栏目类别
+    /**
+     * @Description 查询channel为1的，parent_id为0的栏目类别
+     * @Date 2018/11/29 9:26
+     * @Param [locale]
+     * @Return java.util.List<com.niit.service.cms.pojo.SkArticleCategoryCn>
+     **/
     @GetMapping("/articleCategory")
     public List<SkArticleCategoryCn> selectNewsCategory(@RequestParam String locale) {
         return  skArticleCategoryCnService.selectNewsCategory(locale);
     }
+
 }
 

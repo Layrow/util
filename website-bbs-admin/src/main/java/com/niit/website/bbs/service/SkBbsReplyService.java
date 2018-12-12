@@ -24,6 +24,9 @@ public interface SkBbsReplyService {
     Map<String,Object> selectDate(Integer topicId);
 
     void deleteAd(String id);
+    //查询用户的所有回帖
+    PageInfo<SkBbsReply>  selectReply(Integer currentPage, Integer pageSize,String replyUserId);
+
 
     //查询所有回帖
     PageInfo<SkBbsReply> selectAll(Integer currentPage, Integer pageSize);

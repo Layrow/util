@@ -39,4 +39,7 @@ public interface SkBbsReplyService {
 
     //查询未审核
     PageInfo<SkBbsReply>  selectAllNoStatus(Integer currentPage, Integer pageSize);
+    //查询用户的所有回帖
+    PageInfo<SkBbsReply>  selectReply(Integer currentPage, Integer pageSize,String replyUserId);
+
 }

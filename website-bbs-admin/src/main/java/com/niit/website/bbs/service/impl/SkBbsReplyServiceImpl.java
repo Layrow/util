@@ -36,6 +36,10 @@ public class SkBbsReplyServiceImpl implements SkBbsReplyService {
     }
 
     @Override
+    public PageInfo<SkBbsReply> selectReply(Integer currentPage, Integer pageSize, String replyUserId) {
+        return restTemplate.getForObject("http://"+SERVICE_NAME+"/reply/reply?currentPage="+currentPage+"&pageSize="+pageSize+"&replyUserId="+replyUserId,PageInfo.class);
+    }
+    @Override
     public String selectCount(Integer topicId) {
         return restTemplate.getForObject("http://"+SERVICE_NAME+"/reply/count?topicId="+topicId,String.class);
     }

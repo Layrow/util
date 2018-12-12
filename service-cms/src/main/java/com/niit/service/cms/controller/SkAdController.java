@@ -1,12 +1,13 @@
 package com.niit.service.cms.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.niit.service.cms.pojo.SkAd;
 import com.niit.service.cms.pojo.SkAdContent;
 import com.niit.service.cms.service.SkAdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -26,6 +27,8 @@ public class SkAdController {
     // 添加广告位
     @PostMapping
     public Integer insertSelective(@RequestBody SkAd record) {
+        record.setCreateTime(new Date());
+        record.setStatus(1);
         Integer insertStatus = 0;
         try {
             insertStatus = skAdService.insert(record);
@@ -37,14 +40,15 @@ public class SkAdController {
 
     // 查询所有广告位,默认查询所有的广告位，可以添加参数用来查询不同状态的广告位
     @GetMapping
-    public List<SkAd> selectAllAdsense(@RequestParam(value = "status",required=false) Integer status) {
-        List<SkAd> selectAllAdsenseList = null;
+    public PageInfo<SkAd> selectAllAdsense(@RequestParam(value = "status",required=false) Integer status,@RequestParam("currentPage") Integer currentPage,
+                                           @RequestParam("pageSize") Integer pageSize) {
+        PageInfo<SkAd> pageInfo = null;
         try {
-            selectAllAdsenseList = skAdService.selectAllAdsense(status);
+            pageInfo = skAdService.selectAllAdsense(status,currentPage,pageSize);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return selectAllAdsenseList;
+        return pageInfo;
     }
 
     // 批量删除广告位
@@ -62,14 +66,15 @@ public class SkAdController {
 
     // 查询特定广告位下的所有广告 order排序 可以查询状态不同的广告位
     @GetMapping("/content")
-    public List<SkAdContent> selectByAdId(@RequestParam("adId")Integer adId,@RequestParam(value = "status",required=false) Integer status) {
-        List<SkAdContent> skAdContentList = null;
+    public PageInfo<SkAdContent> selectByAdId(@RequestParam("adId")Integer adId,@RequestParam(value = "status",required=false) Integer status,
+                                              @RequestParam("currentPage") Integer currentPage,@RequestParam("pageSize") Integer pageSize) {
+        PageInfo<SkAdContent> pageInfo = null;
         try {
-            skAdContentList = skAdService.selectByAdId(adId,status);
+            pageInfo = skAdService.selectByAdId(adId,status,currentPage,pageSize);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return skAdContentList;
+        return pageInfo;
     }
 
     // 批量删除广告
@@ -100,6 +105,7 @@ public class SkAdController {
     // 新增特定广告位下的广告
     @PostMapping("/content")
     public Integer insertAdContentSelective(@RequestBody SkAdContent skAdContent) {
+        skAdContent.setAdStatus(0);
         Integer insertStatus = 0;
         try {
             insertStatus = skAdService.insertAdContentSelective(skAdContent);
@@ -111,7 +117,7 @@ public class SkAdController {
 
     // 批量审核广告
     @PutMapping
-    public Integer updateAdContent(HttpServletRequest request) {
+    public Integer updateAdMoreContent(HttpServletRequest request) {
         String ids = request.getParameter("id");
         Integer updateStatus = 0;
         try {
@@ -120,6 +126,64 @@ public class SkAdController {
             e.printStackTrace();
         }
         return updateStatus;
+    }
+
+    // 修改广告内容
+    @PutMapping("/content")
+    public Integer updateAdCotent(@RequestBody SkAdContent skAdContent) {
+        Integer updateAdContentStatus = 0;
+        try {
+            updateAdContentStatus = skAdService.updateAdContentByPrimaryKeySelective(skAdContent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return updateAdContentStatus;
+    }
+
+    // 修改广告位内容
+    @PutMapping("/advert")
+    public Integer updateAd(@RequestBody SkAd skAd) {
+        Integer updateAdStatus = 0;
+        try {
+            updateAdStatus = skAdService.updateAd(skAd);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return updateAdStatus;
+    }
+
+    // 根据Title进行模糊查询
+    @PostMapping("/title")
+    public PageInfo<SkAd> likeSelectAdAllByTitle(@RequestParam("title") String title,
+                                                 @RequestParam("currentPage") Integer currentPage,
+                                                 @RequestParam("pageSize") Integer pageSize) {
+        PageInfo<SkAd> pageInfo = null;
+        try {
+            pageInfo = skAdService.likeSelectAdAllByTitle(title, currentPage, pageSize);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return pageInfo;
+    }
+
+    // 批量修改排序值
+    @PutMapping("/contents")
+    public Integer updateMoreAdOrder(@RequestBody List<SkAdContent> skAdContentList) {
+        Integer updateMoreStatus = 0;
+        try {
+            if (skAdContentList != null && !skAdContentList.isEmpty()) {
+                updateMoreStatus = skAdService.updateAdContentMoreSortId(skAdContentList);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return updateMoreStatus;
+    }
+
+    // 查询所有广告
+    @GetMapping("/contents")
+    public List<SkAdContent> selectAllAd() {
+        return skAdService.selectAllAd();
     }
 
 }

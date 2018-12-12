@@ -4,7 +4,6 @@ package com.niit.service.cms.dao;
 import com.niit.service.cms.pojo.SkAd;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
 
 @Mapper
@@ -28,5 +27,8 @@ public interface SkAdMapper {
 
     // 批量删除广告位
     int deleteMoreAd(List<String> list);
+
+    // 根据title模糊查询广告位
+    List<SkAd> likeSelectAdAllByTitle(String title);
 
 }

@@ -17,19 +17,12 @@
     from sk_ad
     where id = #{id,jdbcType=INTEGER}
   </select>
-<!--  &lt;!&ndash;批量修改&ndash;&gt;
-  <update id="updateMoreSortId" parameterType="java.util.List">
-    update sk_article_category_cn
-    set sort_id =
-    <foreach collection="list" item="item" index="index"
-             separator=" " open="case ID" close="end">
-      when #{item.id} then #{item.sortId}
-    </foreach>
-    where id in
-    <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
-      #{item.id}
-    </foreach>
-  </update>-->
+  <!--  分页模糊查询 -->
+  <select id="likeSelectAdAllByTitle" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sk_ad where  title  like CONCAT('%',#{title},'%')
+  </select>
   <!-- 批量删除广告位 -->
   <delete id="deleteMoreAd" parameterType="java.util.List">
     <!-- delete from emp where empno in(7789,7790) -->

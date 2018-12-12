@@ -15,6 +15,11 @@ import java.util.List;
  */
 public interface SkBbsTopicService {
 
+    /**
+     * 修改帖子
+     * @param record
+     * @return
+     */
     int updateTopic(SkBbsTopic record);
 
     /**
@@ -129,4 +134,11 @@ public interface SkBbsTopicService {
      * @return
      */
     boolean unEssence(String id);
+
+    /**
+     * 根据Id取得每个帖子
+     * @param id
+     * @return
+     */
+    SkBbsTopic getTopic(Integer id);
 }

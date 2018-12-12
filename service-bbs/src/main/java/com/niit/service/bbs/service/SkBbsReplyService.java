@@ -20,7 +20,7 @@ public interface SkBbsReplyService {
     String selectCount(Integer topicId);
     //查询帖子的所有回复帖
     PageInfo<SkBbsReply> selectAllReply(Integer topicId, Integer currentPage, Integer pageSize);
-
+    //最新回复日期
     Map<String,Object> selectDate(Integer topicId);
 
     void deleteAd(String id);

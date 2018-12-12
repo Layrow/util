@@ -25,6 +25,12 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
 
     @Resource
     RestTemplate restTemplate;
+
+    @Override
+    public SkBbsTopic getTopic(Integer id) {
+        return restTemplate.getForObject(URL+"get?id="+id,SkBbsTopic.class);
+    }
+
     @Override
     public boolean editOne(SkBbsTopic record) {
         try {

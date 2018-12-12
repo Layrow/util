@@ -180,5 +180,9 @@ public class SkBbsTopicController {
     public boolean unEssence(@RequestParam String id){
         return skBbsTopicService.unEssence(id);
     }
+    @GetMapping("/get")
+    public SkBbsTopic getTopic(@RequestParam Integer id){
+        return skBbsTopicService.getTopic(id);
+    };
 
 }

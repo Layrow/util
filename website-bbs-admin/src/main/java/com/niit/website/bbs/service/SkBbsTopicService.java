@@ -12,6 +12,7 @@ import com.niit.website.bbs.pojo.SkBbsTopic;
  * @since 1.0.0
  */
 public interface SkBbsTopicService {
+    SkBbsTopic getTopic(Integer id);
 
     /**
      * 单个修改帖子

@@ -107,6 +107,11 @@ public interface SkBbsTopicMapper {
      */
     boolean doUnEssence(List<String> ids);
 
+    /**
+     * 根据Id查询单个帖子
+     * @param id
+     * @return
+     */
     SkBbsTopic selectByPrimaryKey(Integer id);
 
     /**

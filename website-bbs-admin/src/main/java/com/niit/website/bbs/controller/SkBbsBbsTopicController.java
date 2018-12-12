@@ -20,6 +20,10 @@ import javax.annotation.Resource;
 public class SkBbsBbsTopicController {
     @Resource
     SkBbsTopicService skBbsTopicService;
+    @GetMapping("/getOne")
+    public SkBbsTopic getTopic(@RequestParam Integer id){
+        return  skBbsTopicService.getTopic(id);
+    }
 
     /**
      * 单个修改帖子

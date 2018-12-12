@@ -2,6 +2,7 @@ package com.niit.website.bbs.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.niit.website.bbs.pojo.SkBbsSection;
+import com.niit.website.bbs.pojo.SkBbsTopic;
 import com.niit.website.bbs.service.SkBbsSectionService;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +24,8 @@ public class SkBbsSectionController {
     @Resource
     SkBbsSectionService skBbsSectionService;
 
-    @GetMapping("getName")
+
+    @GetMapping("/getName")
     public String getName (@RequestParam Integer sectionId){
         return  skBbsSectionService.getName(sectionId);
     }

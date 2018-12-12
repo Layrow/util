@@ -176,4 +176,15 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
             return skBbsTopicMapper.doUnEssence(Tools.getList(id));
         }
     }
+
+    /**
+     * 根据Id取得每个帖子
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public SkBbsTopic getTopic(Integer id) {
+        return skBbsTopicMapper.selectByPrimaryKey(id);
+    }
 }

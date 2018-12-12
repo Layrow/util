@@ -52,6 +52,12 @@
     <include refid="Blob_Column_List" />
     from  sk_bbs_reply where topic_id=#{topic_id,jdbcType=INTEGER} order by reply_order asc
   </select>
+  <!--查询用户的所有回帖-->
+  <select id="selectReply" resultMap="BaseResultMap">
+    SELECT
+    re.*
+    FROM  sk_bbs_reply re JOIN  sk_bbs_topic  top  on re.topic_id=top.id WHERE re.reply_userid= #{replyUserid,jdbcType=VARCHAR}
+  </select>
   <!--查找某个帖子的所有回复帖总量-->
   <select id="selectCount" parameterType="java.lang.Integer" resultType="java.lang.String">
    select count(id)  from sk_bbs_reply  where topic_id=#{topicId,jdbcType=INTEGER}

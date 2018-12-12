@@ -38,6 +38,15 @@ public class SkBbsReplyServiceImpl implements SkBbsReplyService {
         return skBbsReplyMapper.selectCount(topicId);
 
     }
+    @Override
+    public PageInfo<SkBbsReply> selectReply(Integer currentPage, Integer pageSize,String replyUserId) {
+        PageInfo<SkBbsReply>  pageInfo = null;
+        PageHelper.startPage(currentPage, pageSize);
+        List<SkBbsReply> skBbsReplies = skBbsReplyMapper.selectReply(replyUserId);
+        pageInfo = new PageInfo<>(skBbsReplies);
+        return pageInfo;
+    }
+
 
     @Override
     public PageInfo<SkBbsReply> selectAllReply(Integer topicId, Integer currentPage, Integer pageSize) {

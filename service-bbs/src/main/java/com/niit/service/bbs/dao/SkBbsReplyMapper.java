@@ -45,6 +45,8 @@ public interface SkBbsReplyMapper {
 
     //查询未审核
     List<SkBbsReply>  selectAllNoStatus();
+    //查询用户的所有回帖
+    List<SkBbsReply>  selectReply(@Param("replyUserid") String replyUserId);
 
 
 

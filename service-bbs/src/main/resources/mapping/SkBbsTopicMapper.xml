@@ -95,6 +95,45 @@
     </where>
     ORDER BY id desc
   </select>
+  <!--栏目分页模糊查询-->
+  <select id="likeSelectInSection" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sk_bbs_topic
+    <where>
+      title  like CONCAT('%',#{title},'%') AND section_id=#{sectionId,jdbcType=INTEGER}
+      <if test="key=='top'">
+        AND istop = 1 and status=1
+      </if>
+      <if test="key=='essence'">
+        AND isessence = 1 and status=1
+      </if>
+      <if test="key=='offcial'">
+        AND isoffcial = 1 and status=1
+      </if>
+      <if test="key=='notoffcial'">
+        AND isoffcial = 0 and status=1
+      </if>
+      <if test="key=='notessence'">
+        AND isessence = 0 and status=1
+      </if>
+      <if test="key=='nottop'">
+        AND istop = 0 and status=1
+      </if>
+      <if test="key=='all'">
+        and status = 1
+      </if>
+      <if test="key=='unaudited'">
+        and status = 0 and status=1
+      </if>
+      <if test="key=='audited'">
+        and status = 1
+      </if>
+    </where>
+    ORDER BY id desc
+  </select>
   <!--分页查询指定用户下的所有帖子-->
   <select id="listAllTopicByOwner" resultMap="ResultMapWithBLOBs">
     select

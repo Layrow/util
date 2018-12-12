@@ -98,6 +98,26 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
         return pageInfo;
     }
 
+    /**
+     * 分页 模糊查询指定栏目下的帖子
+     *
+     * @param currentPage 当前页
+     * @param pageSize    页面大小
+     * @param title       查询关键字
+     * @param key
+     * @param sectionId
+     * @return
+     */
+    @Override
+    public PageInfo<SkBbsTopic> likeSectionAll(Integer currentPage, Integer pageSize, String title, Integer sectionId,String key) {
+        List<SkBbsTopic> list;
+        PageInfo<SkBbsTopic> pageInfo;
+        PageHelper.startPage(currentPage,pageSize);
+        list=skBbsTopicMapper.likeSelectInSection(title,sectionId,key);
+        pageInfo=new PageInfo<>(list);
+        return pageInfo;
+    }
+
     @Override
     public PageInfo<SkBbsTopic> listAllTopicByOwner(Integer currentPage, Integer pageSize, String userId) {
         List<SkBbsTopic> list;

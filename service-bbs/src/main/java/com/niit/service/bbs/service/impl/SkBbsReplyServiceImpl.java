@@ -2,6 +2,7 @@ package com.niit.service.bbs.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.niit.common.utils.BadWordUtil;
 import com.niit.common.utils.Tools;
 import com.niit.service.bbs.dao.SkBbsReplyMapper;
 import com.niit.service.bbs.service.SkBbsReplyService;
@@ -24,6 +25,10 @@ public class SkBbsReplyServiceImpl implements SkBbsReplyService {
 
     @Override
     public int insertSelective(SkBbsReply record) {
+
+        if (BadWordUtil.isContaintBadWord(record.getContent(), 2)){
+            record.setContent(BadWordUtil.replaceBadWord(record.getContent(),2,"*"));
+        }
         return skBbsReplyMapper.insertSelective(record);
     }
 

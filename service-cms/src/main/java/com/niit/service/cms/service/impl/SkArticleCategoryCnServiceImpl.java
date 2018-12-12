@@ -8,7 +8,6 @@ import com.niit.service.cms.pojo.SkArticleCategoryCn;
 import com.niit.service.cms.service.SkArticleCategoryCnService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.lang.reflect.Method;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -143,36 +142,6 @@ public class SkArticleCategoryCnServiceImpl implements SkArticleCategoryCnServic
         }
     }
 
-//    // 获取栏目基础节点树，在mapper中递归查询层级结构
-//    // 根据channelId查询栏目类别层级结构
-//    @Override
-//    public List<SkArticleCategoryCn> getNodeTree(Integer channelId, String locale) {
-//        switch (locale) {
-//            case "zh":
-////                List<SkArticleCategoryCn> list=skArticleCategoryCnMapper.getNodeTree(channelId);
-//                List<SkArticleCategoryCn> list = skArticleCategoryCnMapper.selectAll(channelId);
-//                List<SkArticleCategoryCn> pList = list.stream().filter(e -> e.getParentId() == 0).collect(Collectors.toList());
-//                list=sortCategory(pList, list);
-//                return list;
-//            case "en":
-//                Long time3 = System.currentTimeMillis();
-//                list=skArticleCategoryEnMapper.getNodeTree(channelId);
-//                Long time4 = System.currentTimeMillis();
-//                System.out.println("-------------en--------------" + (time3 - time4));
-//                return list;
-//            default:
-//                return skArticleCategoryCnMapper.getNodeTree(channelId);
-//        }
-//    }
-
-
-//    public void sortCategory(List<SkArticleCategoryCn> pList, List<SkArticleCategoryCn> totalList) {
-//        //把儿子插入父亲
-//        pList.stream().forEach(e -> e.setChildren(totalList.stream().filter(p -> p.getParentId().equals(e.getId())).collect(Collectors.toList())));
-//        //如果父亲的儿子不为空，那继续递归
-//        pList.stream().forEach(p -> sortCategory(p.getChildren().stream().filter(e->e.getId()!=null).collect(Collectors.toList()), totalList));
-//    }
-
     /**
      * @param
      * @Description 递归 给Category排成无限极树
@@ -197,7 +166,6 @@ public class SkArticleCategoryCnServiceImpl implements SkArticleCategoryCnServic
     }
 
     // 根据传来的ID，获取所有栏目ID(传来的ID和及其子孙ID)存储在set中 --zh
-    // 递归实现
     public void getAllChildrenCategoryCn(String id,Set categorySet) {
         categorySet.add(id);
         List<String> baseCategory = skArticleCategoryCnMapper.getBaseCategory(id);
@@ -208,7 +176,6 @@ public class SkArticleCategoryCnServiceImpl implements SkArticleCategoryCnServic
     }
 
     // 根据传来的ID，获取所有栏目ID(传来的ID和及其子孙ID)存储在set中 --en
-    // 递归实现
     public void getAllChildrenCategoryEn(String id,Set categorySet) {
         categorySet.add(id);
         List<String> baseCategory = skArticleCategoryEnMapper.getBaseCategory(id);

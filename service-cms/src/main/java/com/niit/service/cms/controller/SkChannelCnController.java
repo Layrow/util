@@ -4,7 +4,6 @@ import com.niit.service.cms.pojo.SkChannelCn;
 import com.niit.service.cms.service.SkChannelCnService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 /**
@@ -72,42 +71,6 @@ public class SkChannelCnController {
         }
         return updateStatus;
     }
-
-    /**
-     * @Description 删除单条channel
-     * @Date 2018/10/31 10:13
-     * @Param [id]
-     * @Return java.lang.String
-     **/
-    /*@DeleteMapping("/channel/{id}")
-    public Integer deleteChannelCn(@PathVariable("id") int id) {
-        Integer deleteStatus = 0;
-        try {
-            deleteStatus = skChannelCnService.deleteByPrimaryKey(id);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return deleteStatus;
-    }*/
-
-    /**
-     * @Description 批量删除channel 传入的参数不一样
-     * @Date 2018/10/31 10:36
-     * @Param [channelArr]
-     * @Return java.lang.String
-     **/
-    /*@DeleteMapping("/channel")
-    public Integer deleteMoreChannelCn(HttpServletRequest request) {
-        Integer deleteBatchStatus = 0;
-        // 获取多个id  1,2,3(String类型)
-        String id = request.getParameter("id");
-        try {
-            deleteBatchStatus = skChannelCnService.deleteMoreChannel(id);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return deleteBatchStatus;
-    }*/
 
     /**
      * @Description 批量删除channel 也能删除单条记录 访问形式skChannelCn/channel/9,10,11

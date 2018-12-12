@@ -1,9 +1,9 @@
 package com.niit.website.smartkids.service;
 
+import com.github.pagehelper.PageInfo;
 import com.niit.website.smartkids.pojo.SkAd;
 import com.niit.website.smartkids.pojo.SkAdContent;
 
-import java.util.List;
 
 /**
  * @Description
@@ -13,8 +13,8 @@ import java.util.List;
 public interface SkAdService {
 
     // 查询特定广告位下的所有广告 order排序 status为1 或 status为0
-    List<SkAdContent> selectByAdId(Integer adId, Integer status);
+    PageInfo<SkAdContent> selectByAdId(Integer adId, Integer status,Integer currentPage,Integer pageSize);
 
     // 查询所有广告位(可用/非可用)
-    List<SkAd> selectAllAdsense(Integer status);
+    PageInfo<SkAd> selectAllAdsense(Integer status,Integer currentPage,Integer pageSize);
 }

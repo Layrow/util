@@ -1,5 +1,7 @@
 package com.niit.website.cms.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class SkAd {
@@ -8,7 +10,7 @@ public class SkAd {
     private String title;
 
     private String content;
-
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     private Integer status;

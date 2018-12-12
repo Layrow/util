@@ -1,12 +1,12 @@
 package com.niit.website.cms.service.impl;
 
+import com.github.pagehelper.PageInfo;
 import com.niit.website.cms.pojo.SkAd;
 import com.niit.website.cms.pojo.SkAdContent;
 import com.niit.website.cms.service.SkAdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
 import java.util.List;
 
 /**
@@ -24,11 +24,11 @@ public class SkAdSerivceImpl implements SkAdService {
 
     // 查询所有广告位(可用/非可用)
     @Override
-    public List<SkAd> selectAllAdsense(Integer status) {
+    public PageInfo<SkAd> selectAllAdsense(Integer status,Integer currentPage,Integer pageSize) {
         if ("".equals(status) || status == null) {
-            return restTemplate.getForObject("http://" + SERVICE_NAME + "/ad",List.class);
+            return restTemplate.getForObject("http://" + SERVICE_NAME + "/ad?currentPage=" + currentPage + "&pageSize=" + pageSize,PageInfo.class);
         }
-        return restTemplate.getForObject("http://" + SERVICE_NAME + "/ad?status=" + status,List.class);
+        return restTemplate.getForObject("http://" + SERVICE_NAME + "/ad?status=" + status + "&currentPage=" + currentPage + "&pageSize=" + pageSize,PageInfo.class);
     }
 
     // 根据ID批量删除广告位
@@ -49,10 +49,16 @@ public class SkAdSerivceImpl implements SkAdService {
         restTemplate.postForObject("http://" + SERVICE_NAME + "/ad/content", record,String.class);
     }
 
-    // 审核广告
+    // 修改广告
     @Override
-    public void updateByPrimaryKeySelective(SkAdContent record) {
-        restTemplate.put("http://" + SERVICE_NAME + "/ad",record);
+    public void updateAdContentByPrimaryKeySelective(SkAdContent record) {
+        restTemplate.put("http://" + SERVICE_NAME + "/ad/content",record);
+    }
+
+    // 修改广告位
+    @Override
+    public void updateAd(SkAd skAd) {
+        restTemplate.put("http://" + SERVICE_NAME + "/ad/advert",skAd);
     }
 
     // 删除某个广告位下的所有广告
@@ -63,12 +69,11 @@ public class SkAdSerivceImpl implements SkAdService {
 
     // 查询特定广告位下的所有广告 order排序 status为1 或 status为0
     @Override
-    public List<SkAdContent> selectByAdId(Integer adId, Integer status) {
+    public PageInfo<SkAdContent> selectByAdId(Integer adId, Integer status,Integer currentPage,Integer pageSize) {
         if ("".equals(status) || status == null) {
-            return restTemplate.getForObject("http://" + SERVICE_NAME + "/ad/content?adId=" + adId, List.class);
+            return restTemplate.getForObject("http://" + SERVICE_NAME + "/ad/content?adId=" + adId + "&currentPage=" + currentPage + "&pageSize=" + pageSize, PageInfo.class);
         }
-        return restTemplate.getForObject("http://" + SERVICE_NAME + "/ad/content?adId=" + adId + "&status=" + status, List.class);
-
+        return restTemplate.getForObject("http://" + SERVICE_NAME + "/ad/content?adId=" + adId + "&status=" + status + "&currentPage=" + currentPage + "&pageSize=" + pageSize, PageInfo.class);
     }
 
     // 新增广告位
@@ -87,5 +92,23 @@ public class SkAdSerivceImpl implements SkAdService {
     @Override
     public void deleteMoreAdContent(String id) {
         restTemplate.delete("http://" + SERVICE_NAME + "/ad/content?id=" + id,id);
+    }
+
+    // 根据title进行模糊查询
+    @Override
+    public PageInfo<SkAd> likeSelectAdAllByTitle(String title, Integer currentPage, Integer pageSize) {
+        return restTemplate.postForObject("http://" + SERVICE_NAME + "/ad/title?title="+ title +"&currentPage=" + currentPage + "&pageSize=" + pageSize,null,PageInfo.class);
+    }
+
+    // 批量修改广告排序值
+    @Override
+    public void updateAdContentMoreSortId(List<SkAdContent> skAdContentList) {
+        restTemplate.put("http://" + SERVICE_NAME + "/ad/contents",skAdContentList);
+    }
+
+    // 查询所有广告
+    @Override
+    public List<SkAdContent> selectAllAd() {
+        return restTemplate.getForObject("http://" + SERVICE_NAME + "/ad/contents",List.class);
     }
 }

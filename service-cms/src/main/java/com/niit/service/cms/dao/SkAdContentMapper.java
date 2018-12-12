@@ -3,7 +3,6 @@ package com.niit.service.cms.dao;
 import com.niit.service.cms.pojo.SkAdContent;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
 
 @Mapper
@@ -33,4 +32,10 @@ public interface SkAdContentMapper {
 
     // 批量删除广告
     int deleteMoreAdContent(List<String> list);
+
+    // 批量修改排序值
+    int updateAdContentMoreSortId(List<SkAdContent> skAdContentList);
+
+    // 查询所有广告
+    List<SkAdContent> selectAllAd();
 }

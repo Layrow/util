@@ -11,8 +11,8 @@ import java.util.Map;
  * @Date 2018/10/30 20:01
  **/
 public interface SkArticleCategoryCnService {
-    Map<Integer, List<SkArticleCategoryCn>> getParentList(List<Integer> categoryIds, Integer channelId, String locale);
 
+    Map<Integer, List<SkArticleCategoryCn>> getParentList(List<Integer> categoryIds, Integer channelId, String locale);
 
     int deleteByPrimaryKey(String id);
 

@@ -1,5 +1,6 @@
 package com.niit.website.smartkids.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.niit.website.smartkids.pojo.SkAd;
 import com.niit.website.smartkids.pojo.SkAdContent;
 import com.niit.website.smartkids.service.SkAdService;
@@ -24,25 +25,27 @@ public class SkAdController {
 
     // 查询特定广告位下的所有广告 order排序 可以查询状态不同的广告位
     @GetMapping("/content")
-    public List<SkAdContent> selectByAdId(@RequestParam("adId")Integer adId, @RequestParam(defaultValue = "1") Integer status) {
-        List<SkAdContent> skAdContentList = null;
+    public PageInfo<SkAdContent> selectByAdId(@RequestParam("adId")Integer adId, @RequestParam(defaultValue = "1") Integer status,
+                                              @RequestParam("currentPage") Integer currentPage, @RequestParam("pageSize") Integer pageSize) {
+        PageInfo<SkAdContent> pageInfo = null;
         try {
-            skAdContentList = skAdService.selectByAdId(adId,status);
+            pageInfo = skAdService.selectByAdId(adId,status,currentPage,pageSize);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return skAdContentList;
+        return pageInfo;
     }
 
     // 查询所有广告位,默认查询所有的广告位，可以添加参数用来查询不同状态的广告位
     @GetMapping
-    public List<SkAd> selectAllAdsense(@RequestParam(defaultValue = "1") Integer status) {
-        List<SkAd> selectAllAdsenseList = null;
+    public PageInfo<SkAd> selectAllAdsense(@RequestParam(defaultValue = "1") Integer status, @RequestParam("currentPage") Integer currentPage,
+                                           @RequestParam("pageSize") Integer pageSize) {
+        PageInfo<SkAd> pageInfo = null;
         try {
-            selectAllAdsenseList = skAdService.selectAllAdsense(status);
+            pageInfo = skAdService.selectAllAdsense(status,currentPage,pageSize);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return selectAllAdsenseList;
+        return pageInfo;
     }
 }

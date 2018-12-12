@@ -7,6 +7,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 public interface SkBbsTopicMapper {
+
+    /**
+     * 模糊查询指定栏目下的帖子
+     * @param title
+     * @param sectionId
+     * @param key
+     * @return
+     */
+    List<SkBbsTopic>  likeSelectInSection(@Param("title") String title, @Param("sectionId") Integer sectionId,@Param("key") String key);
     /**
      * 删除帖子根据帖子的主键Id
      * @param id

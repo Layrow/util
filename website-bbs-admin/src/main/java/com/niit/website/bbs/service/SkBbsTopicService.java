@@ -76,6 +76,17 @@ public interface SkBbsTopicService {
     PageInfo<SkBbsTopic> likeSelectAll(Integer currentPage, Integer pageSize, String title,String key);
 
     /**
+     *
+     * @param currentPage
+     * @param pageSize
+     * @param title
+     * @param sectionId
+     * @param key
+     * @return
+     */
+    PageInfo<SkBbsTopic> likeSection(Integer currentPage, Integer pageSize, String title,Integer sectionId,String key);
+
+    /**
      * 分页查询,指定用户的所有发帖
      * @param userId 指定的用户Id
      * @param currentPage 当前页

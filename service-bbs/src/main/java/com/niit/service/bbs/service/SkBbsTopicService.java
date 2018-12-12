@@ -15,6 +15,8 @@ import java.util.List;
  */
 public interface SkBbsTopicService {
 
+
+
     /**
      * 修改帖子
      * @param record
@@ -68,6 +70,7 @@ public interface SkBbsTopicService {
      */
     PageInfo<SkBbsTopic>  listAllTopicInSection(Integer currentPage, Integer pageSize,Integer sectionId);
 
+
     /**
      * 分页 模糊查询
      * @param title  查询关键字
@@ -76,6 +79,16 @@ public interface SkBbsTopicService {
      * @return
      */
     PageInfo<SkBbsTopic> likeSelectAll(Integer currentPage, Integer pageSize,String title,String key);
+
+    /**
+     * 分页 模糊查询指定栏目下的帖子
+     * @param title  查询关键字
+     * @param currentPage 当前页
+     * @param pageSize  页面大小
+     * @param sectionId  栏目Id
+     * @return
+     */
+    PageInfo<SkBbsTopic> likeSectionAll(Integer currentPage, Integer pageSize,String title,Integer sectionId,String key);
 
     /**
      * 分页查询,指定用户的所有发帖

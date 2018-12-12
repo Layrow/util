@@ -152,6 +152,21 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
     }
 
     /**
+     * @param currentPage
+     * @param pageSize
+     * @param title
+     * @param sectionId
+     * @param key
+     * @return
+     */
+    @Override
+    public PageInfo<SkBbsTopic> likeSection(Integer currentPage, Integer pageSize, String title, Integer sectionId, String key) {
+        return restTemplate.postForObject(URL+"likeSection?currentPage="+currentPage+"&pageSize="
+                +pageSize+"&title="+title+"&sectionId="+sectionId+"&key="+key,null,PageInfo.class);
+    }
+
+
+    /**
      * 分页查询,指定用户的所有发帖
      *
      * @param currentPage 当前页

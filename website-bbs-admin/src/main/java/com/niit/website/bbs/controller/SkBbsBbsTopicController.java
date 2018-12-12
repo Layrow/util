@@ -101,6 +101,18 @@ public class SkBbsBbsTopicController {
                                          @RequestParam  String title,@RequestParam String key){
         return  skBbsTopicService.likeSelectAll(currentPage,pageSize,title,key);
     }
+    /**
+     * 模糊查询指定栏目下所有
+     * @param currentPage
+     * @param pageSize
+     * @param title
+     * @return
+     */
+    @PostMapping("/likeSection")
+    public PageInfo<SkBbsTopic> likeList(@RequestParam Integer currentPage,@RequestParam  Integer pageSize,
+                                         @RequestParam  String title,@RequestParam Integer sectionId,@RequestParam String key){
+        return  skBbsTopicService.likeSection(currentPage,pageSize,title,sectionId,key);
+    }
 
     /**
      * 根据用户Id来查询用户下的所有 帖子

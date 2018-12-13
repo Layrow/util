@@ -17,6 +17,17 @@ public class SkBbsReply {
 
     private String content;
 
+
+    private Integer replyStatus;
+
+    public Integer getReplyStatus() {
+        return replyStatus;
+    }
+
+    public void setReplyStatus(Integer replyStatus) {
+        this.replyStatus = replyStatus;
+    }
+
     public Integer getId() {
         return id;
     }

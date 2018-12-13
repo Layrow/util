@@ -32,7 +32,6 @@ public class BadWordUtil {
         BadWordUtil.words = readTxtByLine(filePath);
         addBadWordToHashMap(BadWordUtil.words);
     }
-
     public static Set<String> readTxtByLine(String path){
         Set<String> keyWordSet = new HashSet<>();
         File file=new File(path);

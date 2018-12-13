@@ -29,6 +29,13 @@ public interface SkBbsReplyMapper {
     //查看某个帖子的所有评论数
     String selectCount(Integer topicId);
 
+    /**
+     * 根据传递的Ids查询所有的回复贴
+     * @param ids
+     * @return
+     */
+    List<SkBbsReply>selectReplyByIds(List<Integer> ids);
+
     //最新回复时间
     Map<String,Object> selectDate(Integer topicId);
 

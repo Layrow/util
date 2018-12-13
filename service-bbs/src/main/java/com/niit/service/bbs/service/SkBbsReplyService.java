@@ -42,4 +42,6 @@ public interface SkBbsReplyService {
     //查询用户的所有回帖
     PageInfo<SkBbsReply>  selectReply(Integer currentPage, Integer pageSize,String replyUserId);
 
+
+    Map<Integer,List<Object>> replyInfo(Integer currentPage, Integer pageSize, Integer sectionId);
 }

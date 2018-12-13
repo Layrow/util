@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -25,6 +26,11 @@ public class SkBbsReplyController {
 
     @Autowired
     private SkBbsReplyService skBbsReplyService;
+
+    @PostMapping("/replyInfo")
+    public Map<Integer, List<Object>> replyInfo(@RequestParam Integer currentPage,@RequestParam  Integer pageSize,@RequestParam  Integer sectionId){
+        return skBbsReplyService.replyInfo(currentPage,pageSize,sectionId);
+    }
     /**
     * 功能描述:添加一个回帖 *  成功
     * @author huangwei

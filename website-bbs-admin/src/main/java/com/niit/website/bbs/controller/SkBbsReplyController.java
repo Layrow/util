@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 
@@ -24,6 +25,18 @@ public class SkBbsReplyController {
 
     @Autowired
     private SkBbsReplyService skBbsReplyService;
+
+    /**
+     * 回帖信息
+     * @param currentPage
+     * @param pageSize
+     * @param sectionId
+     * @return
+     */
+    @PostMapping("/replyInfo")
+    public Map<Integer, List<Object>> replyInfo(@RequestParam Integer currentPage, @RequestParam  Integer pageSize, @RequestParam  Integer sectionId){
+        return  skBbsReplyService.replyInfo(currentPage,pageSize,sectionId);
+    }
     /**
     * 功能描述:添加一个回帖  * 测试成功
     * @author huangwei

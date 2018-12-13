@@ -15,6 +15,9 @@ public interface SkAdService {
     // 查询所有广告位(可用/非可用)
     PageInfo<SkAd> selectAllAdsense(Integer status,Integer currentPage,Integer pageSize);
 
+    // 查询所有广告位(直接查询所有广告位信息)
+    List<SkAd> selectAllAdsenses();
+
     // 根据ID批量删除广告位
     int deleteMoreAd(String id);
 

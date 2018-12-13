@@ -45,6 +45,12 @@
       </if>
     </where>
   </select>
+  <!-- 查询所有广告位(用作无分页) -->
+  <select id="selectAllAdsenses" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sk_ad
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from sk_ad
     where id = #{id,jdbcType=INTEGER}

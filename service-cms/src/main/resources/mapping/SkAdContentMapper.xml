@@ -18,6 +18,7 @@
     from sk_ad_content
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <!-- 根据广告位Title模糊查询所有广告-->
   <select id="selectAllAd" resultType="java.util.LinkedHashMap">
     select b.id as adid,a.title adtitle,b.ad_url adurl,b.ad_href adhref,b.ad_order adorder,b.ad_status adstatus
     from sk_ad a join sk_ad_content b on a.id = b.ad_id

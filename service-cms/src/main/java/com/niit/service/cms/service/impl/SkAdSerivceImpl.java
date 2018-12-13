@@ -41,6 +41,12 @@ public class SkAdSerivceImpl implements SkAdService {
         return pageInfo;
     }
 
+    // 查询所有广告位
+    @Override
+    public List<SkAd> selectAllAdsenses() {
+        return skAdMapper.selectAllAdsenses();
+    }
+
     // 批量删除广告位
     @Override
     public int deleteMoreAd(String id) {

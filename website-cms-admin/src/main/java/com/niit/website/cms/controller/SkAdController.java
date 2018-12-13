@@ -164,4 +164,15 @@ public class SkAdController {
         return skAdService.selectAllAd(title,currentPage,pageSize);
     }
 
+    // 查询所有广告位
+    @GetMapping("/all")
+    public List<SkAd> selectAll() {
+        List<SkAd> skAdList = null;
+        try {
+            skAdList = skAdService.selectAllAdsenses();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return skAdList;
+    }
 }

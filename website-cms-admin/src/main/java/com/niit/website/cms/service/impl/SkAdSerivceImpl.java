@@ -31,6 +31,12 @@ public class SkAdSerivceImpl implements SkAdService {
         return restTemplate.getForObject("http://" + SERVICE_NAME + "/ad?status=" + status + "&currentPage=" + currentPage + "&pageSize=" + pageSize,PageInfo.class);
     }
 
+    // 查询所有广告位
+    @Override
+    public List<SkAd> selectAllAdsenses() {
+        return restTemplate.getForObject("http://" + SERVICE_NAME + "/ad/all",List.class);
+    }
+
     // 根据ID批量删除广告位
     @Override
     public void deleteMoreAd(String id) {

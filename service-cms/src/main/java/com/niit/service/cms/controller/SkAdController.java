@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * @ClassName SkAdController
- * @Description
+ * @Description 广告位和广告管理
  * @Author liyuhao
  * @Date 2018/12/11 9:44
  **/
@@ -186,6 +186,18 @@ public class SkAdController {
             @RequestParam("currentPage") Integer currentPage,
             @RequestParam("pageSize") Integer pageSize) {
         return skAdService.selectAllAd(title,currentPage,pageSize);
+    }
+
+    // 查询所有广告位
+    @GetMapping("/all")
+    public List<SkAd> selectAll() {
+        List<SkAd> skAdList = null;
+        try {
+            skAdList = skAdService.selectAllAdsenses();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return skAdList;
     }
 
 }

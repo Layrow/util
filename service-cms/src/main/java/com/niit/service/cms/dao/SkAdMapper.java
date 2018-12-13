@@ -25,6 +25,9 @@ public interface SkAdMapper {
     // 查询所有广告位(可用/非可用)
     List<SkAd> selectAllAdsense(@Param("status") Integer status);
 
+    // 查询所有广告位(直接查询所有广告位信息)
+    List<SkAd> selectAllAdsenses();
+
     // 批量删除广告位
     int deleteMoreAd(List<String> list);
 

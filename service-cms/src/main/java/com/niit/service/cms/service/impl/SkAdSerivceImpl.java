@@ -2,6 +2,8 @@ package com.niit.service.cms.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.niit.common.utils.Tools;
 import com.niit.service.cms.dao.SkAdContentMapper;
 import com.niit.service.cms.dao.SkAdMapper;
@@ -10,6 +12,9 @@ import com.niit.service.cms.pojo.SkAdContent;
 import com.niit.service.cms.service.SkAdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -121,8 +126,40 @@ public class SkAdSerivceImpl implements SkAdService {
 
     // 查询所有广告
     @Override
-    public List<SkAdContent> selectAllAd() {
-        return skAdContentMapper.selectAllAd();
+    public String selectAllAd(String title,Integer currentPage,Integer pageSize) {
+        PageInfo<LinkedHashMap<String, Object>> pageInfo = null;
+        PageHelper.startPage(currentPage, pageSize);
+        List<LinkedHashMap<String, Object>> linkedHashMaps = skAdContentMapper.selectAllAd(title);
+        pageInfo = new PageInfo<>(linkedHashMaps);
+        ArrayList<SkAdContent> listAdContent = new ArrayList<>();
+        ArrayList<String> listTitleList = new ArrayList<>();
+        HashMap<String, Object> map = new HashMap<>();
+        pageInfo.getList().forEach(x -> {
+            // 取得广告属性值
+            Integer adid = (Integer) x.get("adid");
+            String adtitle = (String) x.get("adtitle");
+            String adurl = (String) x.get("adurl");
+            String adhref = (String) x.get("adhref");
+            Integer adstatus = (Integer) x.get("adstatus");
+            Integer adorder = (Integer) x.get("adorder");
+            // 封装广告对象
+            SkAdContent skAdContent = new SkAdContent();
+            skAdContent.setId(adid);
+            skAdContent.setAdUrl(adurl);
+            skAdContent.setAdHref(adhref);
+            skAdContent.setAdStatus(adstatus);
+            skAdContent.setAdOrder(adorder);
+            // 封装完成之后，清空list
+            x.clear();
+            x.put("skAdContent", skAdContent);
+            listAdContent.add(skAdContent);
+            listTitleList.add(adtitle);
+        });
+        map.put("pageInfo", pageInfo);
+        map.put("listAdContentTitle",listTitleList);
+        Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
+        return gson.toJson(map);
     }
+
 
 }

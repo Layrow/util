@@ -3,6 +3,7 @@ package com.niit.service.cms.dao;
 import com.niit.service.cms.pojo.SkAdContent;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @Mapper
@@ -37,5 +38,6 @@ public interface SkAdContentMapper {
     int updateAdContentMoreSortId(List<SkAdContent> skAdContentList);
 
     // 查询所有广告
-    List<SkAdContent> selectAllAd();
+    List<LinkedHashMap<String,Object>> selectAllAd(@Param("title") String title);
+
 }

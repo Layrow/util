@@ -108,7 +108,10 @@ public class SkAdSerivceImpl implements SkAdService {
 
     // 查询所有广告
     @Override
-    public List<SkAdContent> selectAllAd() {
-        return restTemplate.getForObject("http://" + SERVICE_NAME + "/ad/contents",List.class);
+    public String selectAllAd(String title,Integer currentPage, Integer pageSize) {
+        return restTemplate.getForObject("http://" + SERVICE_NAME + "/ad/contents?title=" + title+ "&currentPage=" + currentPage + "&pageSize=" + pageSize,
+                                        String.class);
     }
+
+
 }

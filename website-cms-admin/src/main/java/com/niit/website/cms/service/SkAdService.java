@@ -4,7 +4,6 @@ package com.niit.website.cms.service;
 import com.github.pagehelper.PageInfo;
 import com.niit.website.cms.pojo.SkAd;
 import com.niit.website.cms.pojo.SkAdContent;
-
 import java.util.List;
 
 /**
@@ -54,6 +53,6 @@ public interface SkAdService {
     void updateAdContentMoreSortId(List<SkAdContent> skAdContentList);
 
     // 查询所有广告
-    List<SkAdContent> selectAllAd();
+    String selectAllAd(String title,Integer currentPage,Integer pageSize);
 
 }

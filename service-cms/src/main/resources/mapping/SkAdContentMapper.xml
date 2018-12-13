@@ -18,11 +18,15 @@
     from sk_ad_content
     where id = #{id,jdbcType=INTEGER}
   </select>
-<!-- 查询所有广告 -->
-  <select id="selectAllAd" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select
-    <include refid="Base_Column_List" />
-    from sk_ad_content order by ad_order desc
+  <select id="selectAllAd" resultType="java.util.LinkedHashMap">
+    select b.id as adid,a.title adtitle,b.ad_url adurl,b.ad_href adhref,b.ad_order adorder,b.ad_status adstatus
+    from sk_ad a join sk_ad_content b on a.id = b.ad_id
+    <where>
+      <if test="title!=null and title!= ''">
+        a.title like CONCAT('%',#{title},'%')
+      </if>
+    </where>
+    order by ad_order desc
   </select>
   <!--批量修改排序值-->
   <update id="updateAdContentMoreSortId" parameterType="java.util.List">

@@ -52,6 +52,6 @@ public interface SkAdService {
     int updateAdContentMoreSortId(List<SkAdContent> skAdContentList);
 
     // 查询所有广告
-    List<SkAdContent> selectAllAd();
+    String selectAllAd(String title,Integer currentPage,Integer pageSize);
 
 }

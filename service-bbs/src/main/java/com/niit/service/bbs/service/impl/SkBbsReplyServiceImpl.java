@@ -57,6 +57,50 @@ public class SkBbsReplyServiceImpl implements SkBbsReplyService {
         return pageInfo;
     }
 
+/*    @Override
+    public Map<Integer, List<Object>> selectReplyUserId(Integer currentPage, Integer pageSize, String replyUserId) {
+        return null;
+    }*/
+/*
+
+    @Override
+    public Map<Integer, List<Object>> selectReplyUserId(Integer currentPage, Integer pageSize,String replyUserId) {
+        List<SkBbsTopic> list;
+        PageHelper.startPage(currentPage,pageSize);
+        //帖子列表 并分页查询
+        list=skBbsTopicMapper.listAllTopicInSection(sectionId);
+
+        //把所有帖子的ID放入topicIds
+        List<Integer> topicIds=new LinkedList<>();
+        list.stream().forEach(e->topicIds.add(e.getId()));
+        List<SkBbsReply> replys = skBbsReplyMapper.selectReplyUserId(replyUserId);
+        Map<Integer, List<Object>> totalResult=new LinkedHashMap<>();
+        list.stream().forEach(e->{
+            //tempList用于存放回复总量、最新回复
+            List<Object> tempList=new LinkedList<>();
+            //找到与帖子ID对应的所有回复
+            List<SkBbsReply> matchedReplys=replys.stream().filter(p->p.getTopicId().equals(e.getId())).collect(Collectors.toList());
+            //运算出回复总量
+            Integer replysCount=matchedReplys.size();
+            //运算出最新回复实体
+            SkBbsReply lastedReply;
+            if(replysCount>0) {
+                lastedReply= matchedReplys.stream().sorted(Comparator.comparing(SkBbsReply::getReplyTime).reversed()).findFirst().get();
+            }else{
+                lastedReply=null;
+            }
+            //把回复总量、最新回复加入tempList
+            tempList.add(replysCount);
+            tempList.add(lastedReply);
+            //把tempList放入结果集，key是topicId
+            totalResult.put(e.getId(),tempList);
+        });
+        return totalResult;
+
+    }
+*/
+
+
     @Override
     public Map<Integer, List<Object>> replyInfo(Integer currentPage, Integer pageSize, Integer sectionId) {
         List<SkBbsTopic> list;
@@ -71,7 +115,6 @@ public class SkBbsReplyServiceImpl implements SkBbsReplyService {
 //        List<SkBbsReply> replys=skBbsReplyMapper.selectAll();
         //totalResult是最后的结果集，key是帖子ID，value是下面的tempList（存放回复总量、最新回复）
         Map<Integer, List<Object>> totalResult=new LinkedHashMap<>();
-
         list.stream().forEach(e->{
             //tempList用于存放回复总量、最新回复
             List<Object> tempList=new LinkedList<>();

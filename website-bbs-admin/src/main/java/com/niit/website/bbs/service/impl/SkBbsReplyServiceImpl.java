@@ -24,9 +24,9 @@ public class SkBbsReplyServiceImpl implements SkBbsReplyService {
 
 
     @Override
-    public Map<Integer, List<Object>> replyInfo(Integer currentPage, Integer pageSize, Integer sectionId) {
+    public String replyInfo(Integer currentPage, Integer pageSize, Integer sectionId) {
         return restTemplate.postForObject("http://" + SERVICE_NAME +
-                "/reply/replyInfo?currentPage="+currentPage+"&pageSize="+pageSize+"&sectionId="+sectionId,null,Map.class);
+                "/reply/replyInfo?currentPage="+currentPage+"&pageSize="+pageSize+"&sectionId="+sectionId,null,String.class);
     }
 
     @Override

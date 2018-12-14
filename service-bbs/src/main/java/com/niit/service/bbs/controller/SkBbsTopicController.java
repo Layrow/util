@@ -1,6 +1,8 @@
 package com.niit.service.bbs.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.niit.common.utils.NumberUtil;
 import com.niit.common.utils.Tools;
 import com.niit.service.bbs.pojo.SkBbsTopic;
@@ -8,6 +10,8 @@ import com.niit.service.bbs.service.SkBbsTopicService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 〈一句话功能简述〉<br>
@@ -196,5 +200,31 @@ public class SkBbsTopicController {
     public SkBbsTopic getTopic(@RequestParam Integer id){
         return skBbsTopicService.getTopic(id);
     };
+
+    /**
+    * 功能描述:查询所有最近回复
+    * @author huangwei
+    * @date :2018/12/14
+    * @params [currentPage, pageSize, replyUserId]
+    * @return java.util.Map<java.lang.Integer,java.util.List<java.lang.Object>>
+    */
+    @GetMapping("/replyId")
+    public String selectReplyUserIdAll(@RequestParam Integer currentPage,@RequestParam  Integer pageSize, String replyUserId){
+        Map<Integer, List<Object>> map = skBbsTopicService.selectReplyUserId(currentPage, pageSize, replyUserId);
+        Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
+        return gson.toJson(map);
+    }
+    /**
+     * 功能描述: 查询该用户回复的所有帖
+     * @author huangwei
+     * @date :2018/12/14
+     * @params
+     * @return
+     */
+    @GetMapping
+    public  PageInfo<SkBbsTopic>  selectAll(@RequestParam Integer currentPage,@RequestParam  Integer pageSize, String replyUserId){
+        PageInfo<SkBbsTopic> pageInfo = skBbsTopicService.selectReplyUserIds(currentPage, pageSize, replyUserId);
+        return pageInfo;
+    }
 
 }

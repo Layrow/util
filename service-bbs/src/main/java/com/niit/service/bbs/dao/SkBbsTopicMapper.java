@@ -133,4 +133,8 @@ public interface SkBbsTopicMapper {
     int updateByPrimaryKeyWithBLOBs(SkBbsTopic record);
 
     int updateByPrimaryKey(SkBbsTopic record);
+
+    List<SkBbsTopic>  selectReplyUserId(@Param("replyUserid") String replyUserId);
+    List<SkBbsTopic>  selectReplyUserIds(@Param("replyUserid") String replyUserId);
+
 }

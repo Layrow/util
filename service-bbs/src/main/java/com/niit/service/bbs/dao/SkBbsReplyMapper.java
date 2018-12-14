@@ -55,19 +55,7 @@ public interface SkBbsReplyMapper {
     //查询用户的所有回帖
     List<SkBbsReply>  selectReply(@Param("replyUserid") String replyUserId);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    List<SkBbsReply>  selectReplyUserId(@Param("replyUserid") String replyUserId);
 
 
 

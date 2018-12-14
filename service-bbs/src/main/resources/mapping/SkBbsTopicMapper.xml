@@ -178,7 +178,19 @@
       viewcount = #{newCount,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
-
+  <!--根据用户查找所有回帖-->
+  <select id="selectReplyUserId"  resultMap="BaseResultMap">
+   select
+    top.*
+    from  sk_bbs_reply  re join sk_bbs_topic  top ON re.topic_id=top.id  WHERE
+    re.reply_userid = #{replyUserid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectReplyUserIds"  resultMap="BaseResultMap">
+   select
+   distinct top.*
+    from  sk_bbs_reply  re join sk_bbs_topic  top ON re.topic_id=top.id  WHERE
+    re.reply_userid = #{replyUserid,jdbcType=VARCHAR}
+  </select>
   <!--增加,发表帖子-->
   <insert id="insertSelective" parameterType="com.niit.service.bbs.pojo.SkBbsTopic" >
     insert into sk_bbs_topic

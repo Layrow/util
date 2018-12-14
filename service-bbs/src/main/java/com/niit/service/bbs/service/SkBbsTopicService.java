@@ -2,8 +2,10 @@ package com.niit.service.bbs.service;
 
 import com.github.pagehelper.PageInfo;
 import com.niit.service.bbs.pojo.SkBbsTopic;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -154,4 +156,8 @@ public interface SkBbsTopicService {
      * @return
      */
     SkBbsTopic getTopic(Integer id);
+
+    Map<Integer, List<Object>> selectReplyUserId(Integer currentPage, Integer pageSize, String replyUserId);
+
+    PageInfo<SkBbsTopic>  selectReplyUserIds( Integer currentPage, Integer pageSize,String replyUserId);
 }

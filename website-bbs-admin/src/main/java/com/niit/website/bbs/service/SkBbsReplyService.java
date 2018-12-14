@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public interface SkBbsReplyService {
 
-    Map<Integer, List<Object>> replyInfo(Integer currentPage,Integer pageSize, Integer sectionId);
+    String replyInfo(Integer currentPage,Integer pageSize, Integer sectionId);
 
     int insertSelective(SkBbsReply skBbsReply);
 

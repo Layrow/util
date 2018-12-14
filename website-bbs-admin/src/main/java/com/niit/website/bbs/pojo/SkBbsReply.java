@@ -1,5 +1,7 @@
 package com.niit.website.bbs.pojo;
 
+
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
@@ -8,7 +10,8 @@ public class SkBbsReply {
     private Integer id;
 
     private String replyUserid;
-   @JsonFormat(pattern = "yyyy-mm-dd")
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date replyTime;
 
     private Integer replyOrder;
@@ -16,7 +19,6 @@ public class SkBbsReply {
     private Integer topicId;
 
     private String content;
-
 
     private Integer replyStatus;
 

@@ -8,8 +8,10 @@ public class SkBbsReply {
     private Integer id;
 
     private String replyUserid;
-    @JsonFormat(pattern = "yyyy-MM-dd")
+
+    @JsonFormat(pattern = "yyyy-MM-dd  HH:mm")
     private Date replyTime;
+
     private Integer replyOrder;
 
     private Integer topicId;

@@ -2,12 +2,15 @@ package com.niit.website.bbs.controller;
 
 
 import com.github.pagehelper.PageInfo;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.niit.website.bbs.pojo.SkBbsReply;
 import com.niit.website.bbs.service.SkBbsReplyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Type;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +38,17 @@ public class SkBbsReplyController {
      */
     @PostMapping("/replyInfo")
     public Map<Integer, List<Object>> replyInfo(@RequestParam Integer currentPage, @RequestParam  Integer pageSize, @RequestParam  Integer sectionId){
-        return  skBbsReplyService.replyInfo(currentPage,pageSize,sectionId);
+        String s = skBbsReplyService.replyInfo(currentPage, pageSize, sectionId);
+        Map<Integer, List<Object>> map = null;
+        Type type = new TypeToken< Map<Integer, List<Object>>>() {
+        }.getType();
+        Gson gson = new Gson();
+        if(s==null||s.isEmpty()){
+            return map;
+        }
+        map= gson.fromJson(s,type);
+        return map;
+
     }
     /**
     * 功能描述:添加一个回帖  * 测试成功

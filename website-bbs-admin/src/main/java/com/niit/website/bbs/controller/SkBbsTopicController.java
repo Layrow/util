@@ -1,11 +1,17 @@
 package com.niit.website.bbs.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.niit.website.bbs.pojo.SkBbsTopic;
 import com.niit.website.bbs.service.SkBbsTopicService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.lang.reflect.Type;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 〈一句话功能简述〉<br>
@@ -17,7 +23,7 @@ import javax.annotation.Resource;
 @RestController
 @CrossOrigin
 @RequestMapping("/topic")
-public class SkBbsBbsTopicController {
+public class SkBbsTopicController {
     @Resource
     SkBbsTopicService skBbsTopicService;
     @GetMapping("/getOne")
@@ -199,6 +205,30 @@ public class SkBbsBbsTopicController {
     public  boolean batchDel(@RequestParam String ids){
         return  skBbsTopicService.batchDel(ids);
     }
-
+    /**
+     * 功能描述: 查询该用户回复的所有帖
+     * @author huangwei
+     * @date :2018/12/14
+     * @params
+     * @return
+     */
+    @GetMapping
+    public  PageInfo<SkBbsTopic>  selectAll(@RequestParam Integer currentPage,@RequestParam  Integer pageSize, String replyUserId){
+        PageInfo<SkBbsTopic> pageInfo = skBbsTopicService.selectReplyUserIds(currentPage, pageSize, replyUserId);
+        return pageInfo;
+    }
+    @GetMapping("/replyId")
+    public Map<Integer, List<Object>> selectReplyUserIdAll(@RequestParam Integer currentPage,@RequestParam  Integer pageSize, String replyUserId){
+        String s = skBbsTopicService.selectReplyUserId(currentPage, pageSize, replyUserId);
+        Map<Integer, List<Object>> map = null;
+        Type type = new TypeToken< Map<Integer, List<Object>>>() {
+        }.getType();
+        Gson gson = new Gson();
+        if(s==null||s.isEmpty()){
+            return map;
+        }
+        map= gson.fromJson(s,type);
+        return map;
+    }
 
 }

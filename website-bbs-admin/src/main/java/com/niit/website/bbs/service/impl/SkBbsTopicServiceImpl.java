@@ -296,4 +296,15 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
             return  false;
         }
     }
+
+    @Override
+    public PageInfo<SkBbsTopic> selectReplyUserIds(Integer currentPage, Integer pageSize, String replyUserId) {
+        return restTemplate.getForObject("http://"+SERVICE_NAME+"/topic?currentPage="+currentPage+"&pageSize="+pageSize+"&replyUserId="+replyUserId,PageInfo.class);
+    }
+
+    @Override
+    public String selectReplyUserId(Integer currentPage, Integer pageSize, String replyUserId) {
+        return restTemplate.getForObject("http://"+SERVICE_NAME+"/topic/replyId?currentPage="+currentPage+"&pageSize="+pageSize+"&replyUserId="+replyUserId,String.class);
+    }
+
 }

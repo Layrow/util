@@ -2,6 +2,7 @@ package com.niit.service.bbs.service;
 
 import com.github.pagehelper.PageInfo;
 import com.niit.service.bbs.pojo.SkBbsReply;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -41,6 +42,8 @@ public interface SkBbsReplyService {
     PageInfo<SkBbsReply>  selectAllNoStatus(Integer currentPage, Integer pageSize);
     //查询用户的所有回帖
     PageInfo<SkBbsReply>  selectReply(Integer currentPage, Integer pageSize,String replyUserId);
+
+   // Map<Integer,List<Object>>  selectReplyUserId(Integer currentPage, Integer pageSize,String replyUserId);
 
 
     Map<Integer,List<Object>> replyInfo(Integer currentPage, Integer pageSize, Integer sectionId);

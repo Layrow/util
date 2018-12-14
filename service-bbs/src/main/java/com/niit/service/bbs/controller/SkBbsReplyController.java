@@ -1,6 +1,8 @@
 package com.niit.service.bbs.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.niit.service.bbs.pojo.SkBbsReply;
 import com.niit.service.bbs.service.SkBbsReplyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +30,12 @@ public class SkBbsReplyController {
     private SkBbsReplyService skBbsReplyService;
 
     @PostMapping("/replyInfo")
-    public Map<Integer, List<Object>> replyInfo(@RequestParam Integer currentPage,@RequestParam  Integer pageSize,@RequestParam  Integer sectionId){
-        return skBbsReplyService.replyInfo(currentPage,pageSize,sectionId);
+    public String replyInfo(@RequestParam Integer currentPage,@RequestParam  Integer pageSize,@RequestParam  Integer sectionId){
+        Map<Integer, List<Object>> map = skBbsReplyService.replyInfo(currentPage, pageSize, sectionId);
+
+        Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
+        return gson.toJson(map);
+
     }
     /**
     * 功能描述:添加一个回帖 *  成功
@@ -171,7 +177,5 @@ public class SkBbsReplyController {
     public PageInfo<SkBbsReply>  selectReply(Integer currentPage, Integer pageSize,String replyUserId){
         PageInfo<SkBbsReply> pageInfo = skBbsReplyService.selectReply(currentPage, pageSize, replyUserId);
         return  pageInfo;
-
     }
-
 }

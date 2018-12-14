@@ -4,6 +4,9 @@ package com.niit.website.bbs.service;
 import com.github.pagehelper.PageInfo;
 import com.niit.website.bbs.pojo.SkBbsTopic;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * 〈一句话功能简述〉<br>
  *
@@ -142,4 +145,9 @@ public interface SkBbsTopicService {
      * @return
      */
     boolean unEssence(String id);
+
+   // PageInfo<SkBbsTopic>  selectReplyUserIds( Integer currentPage, Integer pageSize,String replyUserId);
+    PageInfo<SkBbsTopic>  selectReplyUserIds( Integer currentPage, Integer pageSize,String replyUserId);
+    String selectReplyUserId(Integer currentPage, Integer pageSize, String replyUserId);
+
 }

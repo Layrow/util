@@ -1,17 +1,19 @@
 package com.niit.service.bbs.service.impl;
-
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.niit.common.utils.BadWordUtil;
 import com.niit.common.utils.Tools;
+import com.niit.service.bbs.dao.SkBbsReplyMapper;
 import com.niit.service.bbs.dao.SkBbsTopicMapper;
+import com.niit.service.bbs.pojo.SkBbsReply;
 import com.niit.service.bbs.pojo.SkBbsTopic;
 import com.niit.service.bbs.service.SkBbsTopicService;
 import org.springframework.stereotype.Service;
 
+
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 〈一句话功能简述〉<br>
@@ -25,6 +27,8 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
 
     @Resource
     SkBbsTopicMapper skBbsTopicMapper;
+    @Resource
+    private SkBbsReplyMapper skBbsReplyMapper;
 
     @Override
     public int updateTopic(SkBbsTopic record) {
@@ -207,4 +211,51 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
     public SkBbsTopic getTopic(Integer id) {
         return skBbsTopicMapper.selectByPrimaryKey(id);
     }
+
+    @Override
+    public Map<Integer, List<Object>> selectReplyUserId(Integer currentPage, Integer pageSize, String replyUserId) {
+        PageHelper.startPage(currentPage,pageSize);
+        //查询出该用户的所有贴子
+        List<SkBbsTopic> list = skBbsTopicMapper.selectReplyUserId(replyUserId);
+        LinkedList<Integer> topicId = new LinkedList<>();
+        list.stream().forEach(e->topicId.add(e.getId()));
+        //根据帖子id查出所有所有回复
+        List<SkBbsReply> replies = skBbsReplyMapper.selectReplyByIds(topicId);
+        Map<Integer, List<Object>> totalResult=new LinkedHashMap<>();
+        list.stream().forEach(e->{
+            //tempList用于存放回复总量、最新回复
+            List<Object> tempList=new LinkedList<>();
+            //找到与帖子ID对应的所有回复
+            List<SkBbsReply> matchedReplys=replies.stream().filter(p->p.getTopicId().equals(e.getId())).collect(Collectors.toList());
+            //运算出回复总量
+            Integer replysCount=matchedReplys.size();
+            //运算出最新回复实体
+            SkBbsReply lastedReply;
+            if(replysCount>0) {
+                lastedReply= matchedReplys.stream().sorted(Comparator.comparing(SkBbsReply::getReplyTime).reversed()).findFirst().get();
+            }else{
+                lastedReply=null;
+            }
+            //把回复总量、最新回复加入tempList
+            tempList.add(replysCount);
+            tempList.add(lastedReply);
+
+            //把tempList放入结果集，key是topicId
+            totalResult.put(e.getId(),tempList);
+            //totalResult.put(e.getId(),skBbsTopicMapper.selectReplyUserId(replyUserId));
+        });
+        return totalResult;
+
+    }
+
+    @Override
+    public PageInfo<SkBbsTopic> selectReplyUserIds(Integer currentPage, Integer pageSize, String replyUserId) {
+        PageInfo<SkBbsTopic>  pageInfo = null;
+        PageHelper.startPage(currentPage,pageSize);
+        List<SkBbsTopic> list = skBbsTopicMapper.selectReplyUserIds(replyUserId);
+        pageInfo = new PageInfo<>(list);
+        return pageInfo;
+    }
+
+
 }

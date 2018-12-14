@@ -20,11 +20,14 @@
   </select>
   <!-- 根据广告位Title模糊查询所有广告-->
   <select id="selectAllAd" resultType="java.util.LinkedHashMap">
-    select b.id as adid,a.title adtitle,b.ad_url adurl,b.ad_href adhref,b.ad_order adorder,b.ad_status adstatus
+    select b.id as bid,a.id as adid,a.title adtitle,b.ad_url adurl,b.ad_href adhref,b.ad_order adorder,b.ad_status adstatus
     from sk_ad a join sk_ad_content b on a.id = b.ad_id
     <where>
       <if test="title!=null and title!= ''">
         a.title like CONCAT('%',#{title},'%')
+      </if>
+      <if test="ad_status!=null and ad_status!='' or 0 == ad_status ">
+        and ad_status = #{ad_status}
       </if>
     </where>
     order by ad_order desc

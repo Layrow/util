@@ -35,7 +35,7 @@ public class SkAdController {
 
     // 查询所有广告位,默认查询所有的广告位，可以添加参数用来查询不同状态的广告位
     @GetMapping
-    public PageInfo<SkAd> selectAllAdsense(@RequestParam(defaultValue = "") Integer status,@RequestParam("currentPage") Integer currentPage,
+    public PageInfo<SkAd> selectAllAdsense(@RequestParam(value = "status",defaultValue = "") Integer status,@RequestParam("currentPage") Integer currentPage,
                                            @RequestParam("pageSize") Integer pageSize) {
         PageInfo<SkAd> pageInfo = null;
         try {
@@ -59,7 +59,7 @@ public class SkAdController {
 
     // 查询特定广告位下的所有广告 order排序 可以查询状态不同的广告位
     @GetMapping("/content")
-    public PageInfo<SkAdContent> selectByAdId(@RequestParam("adId")Integer adId, @RequestParam(defaultValue = "") Integer status,
+    public PageInfo<SkAdContent> selectByAdId(@RequestParam("adId")Integer adId, @RequestParam(value = "status",defaultValue = "") Integer status,
                                           @RequestParam("currentPage") Integer currentPage, @RequestParam("pageSize") Integer pageSize) {
         PageInfo<SkAdContent> pageInfo = null;
         try {
@@ -158,10 +158,11 @@ public class SkAdController {
 
     // 查询所有广告
     @GetMapping("/contents")
-    public String selectAllAd(@RequestParam(value = "title",defaultValue = "") String title,
+    public String selectAllAd(@RequestParam(value = "status",defaultValue = "")Integer status,
+                              @RequestParam(value = "title",defaultValue = "") String title,
                               @RequestParam("currentPage") Integer currentPage,
                               @RequestParam("pageSize") Integer pageSize) {
-        return skAdService.selectAllAd(title,currentPage,pageSize);
+        return skAdService.selectAllAd(status,title,currentPage,pageSize);
     }
 
     // 查询所有广告位

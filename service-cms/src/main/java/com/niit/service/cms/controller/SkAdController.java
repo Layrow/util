@@ -182,10 +182,10 @@ public class SkAdController {
 
     // 查询所有广告
     @GetMapping("/contents")
-    public String selectAllAd(@RequestParam(value = "title",defaultValue = "") String title,
+    public String selectAllAd(@RequestParam(value = "status",required=false) Integer status,@RequestParam(value = "title",defaultValue = "") String title,
             @RequestParam("currentPage") Integer currentPage,
             @RequestParam("pageSize") Integer pageSize) {
-        return skAdService.selectAllAd(title,currentPage,pageSize);
+        return skAdService.selectAllAd(status,title,currentPage,pageSize);
     }
 
     // 查询所有广告位

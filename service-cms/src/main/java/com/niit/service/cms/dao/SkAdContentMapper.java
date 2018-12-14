@@ -37,7 +37,7 @@ public interface SkAdContentMapper {
     // 批量修改排序值
     int updateAdContentMoreSortId(List<SkAdContent> skAdContentList);
 
-    // 查询所有广告
-    List<LinkedHashMap<String,Object>> selectAllAd(@Param("title") String title);
+    // 根据广告位Title模糊查询所有广告
+    List<LinkedHashMap<String,Object>> selectAllAd(@Param("ad_status") Integer status,@Param("title") String title);
 
 }

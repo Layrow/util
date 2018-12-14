@@ -55,7 +55,7 @@ public interface SkAdService {
     // 批量修改排序值
     void updateAdContentMoreSortId(List<SkAdContent> skAdContentList);
 
-    // 查询所有广告
-    String selectAllAd(String title,Integer currentPage,Integer pageSize);
+    // 根据广告位title模糊查询广告
+    String selectAllAd(Integer status,String title,Integer currentPage,Integer pageSize);
 
 }

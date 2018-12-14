@@ -132,10 +132,10 @@ public class SkAdSerivceImpl implements SkAdService {
 
     // 查询所有广告
     @Override
-    public String selectAllAd(String title,Integer currentPage,Integer pageSize) {
+    public String selectAllAd(Integer status,String title,Integer currentPage,Integer pageSize) {
         PageInfo<LinkedHashMap<String, Object>> pageInfo = null;
         PageHelper.startPage(currentPage, pageSize);
-        List<LinkedHashMap<String, Object>> linkedHashMaps = skAdContentMapper.selectAllAd(title);
+        List<LinkedHashMap<String, Object>> linkedHashMaps = skAdContentMapper.selectAllAd(status,title);
         pageInfo = new PageInfo<>(linkedHashMaps);
         ArrayList<SkAdContent> listAdContent = new ArrayList<>();
         ArrayList<String> listTitleList = new ArrayList<>();
@@ -143,6 +143,7 @@ public class SkAdSerivceImpl implements SkAdService {
         pageInfo.getList().forEach(x -> {
             // 取得广告属性值
             Integer adid = (Integer) x.get("adid");
+            Integer bid = (Integer) x.get("bid");
             String adtitle = (String) x.get("adtitle");
             String adurl = (String) x.get("adurl");
             String adhref = (String) x.get("adhref");
@@ -150,11 +151,13 @@ public class SkAdSerivceImpl implements SkAdService {
             Integer adorder = (Integer) x.get("adorder");
             // 封装广告对象
             SkAdContent skAdContent = new SkAdContent();
-            skAdContent.setId(adid);
+            skAdContent.setId(bid);
+            skAdContent.setAdId(adid);
             skAdContent.setAdUrl(adurl);
             skAdContent.setAdHref(adhref);
             skAdContent.setAdStatus(adstatus);
             skAdContent.setAdOrder(adorder);
+
             // 封装完成之后，清空list
             x.clear();
             x.put("skAdContent", skAdContent);

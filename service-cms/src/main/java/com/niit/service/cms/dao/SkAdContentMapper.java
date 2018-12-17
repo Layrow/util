@@ -20,6 +20,7 @@ public interface SkAdContentMapper {
     // 审核广告
     int updateByPrimaryKeySelective(SkAdContent record);
 
+    // 审核广告
     int updateByPrimaryKey(SkAdContent record);
 
     // 删除某个广告位下的所有广告

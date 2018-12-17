@@ -82,6 +82,8 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
         return  listInfo;
     }
 
+
+
     @Override
     public PageInfo<SkBbsTopic> listAllTopicInSection(Integer currentPage, Integer pageSize, Integer sectionId) {
         List<SkBbsTopic> list;

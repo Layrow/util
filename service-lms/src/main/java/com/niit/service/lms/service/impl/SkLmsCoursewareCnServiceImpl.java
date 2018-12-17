@@ -12,6 +12,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -114,6 +115,70 @@ public class SkLmsCoursewareCnServiceImpl implements SkLmsCoursewareCnService {
         }
         return 1;
     }
+
+    @Override
+    public int insert(File file, String fileName, boolean thumbMark) {
+        return 0;
+    }
+
+   /* @Override
+    public int insert(File file, String fileName, boolean thumbMark) {
+        FileClientPipelineFactory clientPipelineFactory = new FileClientPipelineFactory();
+        //辅助类。用于帮助我们创建NETTY服务
+        ClientBootstrap bootstrap = createClientBootstrap(clientPipelineFactory);
+        String strThumbMark = Constants.THUMB_MARK_NO;
+        if (thumbMark) {
+            strThumbMark = Constants.THUMB_MARK_YES;
+        }
+        //具体处理上传文件逻辑
+        uploadFile(bootstrap, FileClientContainer.getHost(),
+                FileClientContainer.getPort(), file, fileName, strThumbMark,
+                FileClientContainer.getUserName(),
+                FileClientContainer.getPassword());
+        Result result = clientPipelineFactory.getResult();
+        if ((result != null) && (result.isCode())) {
+            return result.getFilePath();
+        }
+        return null;
+    }
+    private static void uploadFile(ClientBootstrap bootstrap, String host,
+                                   int port, File file, String fileName, String thumbMark,
+                                   String userName, String pwd) {
+        //1.构建uri对象
+        URI uri = getUri(host, port);
+        //2.连接netty服务端
+        ChannelFuture future = bootstrap.connect(new InetSocketAddress(host,
+                port));
+        //3.异步获取Channel对象
+        Channel channel = future.awaitUninterruptibly().getChannel();
+        if (!future.isSuccess()) {
+            future.getCause().printStackTrace();
+            bootstrap.releaseExternalResources();
+            return;
+        }
+        //4.初始化文件上传句柄对象
+        WrapFileClientHandler handler = new UploadFileClientHandler(host, uri,
+                file, fileName, thumbMark, userName, pwd);
+        //5.获取Request对象
+        HttpRequest request = handler.getRequest();
+        //6.获取Http数据处理工厂
+        HttpDataFactory factory = getHttpDataFactory();
+        //7.进行数据的包装处理，主要是进行上传文件所需要的参数的设置，此时调用的句柄是具体的UploadFileClientHandler对象
+        HttpPostRequestEncoder bodyRequestEncoder = handler
+                .wrapRequestData(factory);
+        //8.把request写到管道中，传输给服务端
+        channel.write(request);
+        //9.做一些关闭资源的动作
+        if (bodyRequestEncoder.isChunked()) {
+            channel.write(bodyRequestEncoder).awaitUninterruptibly();
+        }
+        bodyRequestEncoder.cleanFiles();
+        channel.getCloseFuture().awaitUninterruptibly();
+        bootstrap.releaseExternalResources();
+        factory.cleanAllHttpDatas();
+    }
+    }*/
+
     @Override
     public String selectAllWare(Integer facultyId,int currentPage ,int pageSize) {
         HashMap<String, Object> map = new HashMap<>();

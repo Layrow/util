@@ -16,7 +16,7 @@ public interface SkBbsReplyService {
 
     String replyInfo(Integer currentPage,Integer pageSize, Integer sectionId);
 
-    int insertSelective(SkBbsReply skBbsReply);
+    int insertSelective(SkBbsReply record);
 
     int deleteByPrimaryKey(Integer id);
     //查询所有回复帖总数
@@ -41,5 +41,5 @@ public interface SkBbsReplyService {
 
     //查询未审核
     PageInfo<SkBbsReply>  selectAllNoStatus(Integer currentPage, Integer pageSize);
-
+    String  selectAll();
 }

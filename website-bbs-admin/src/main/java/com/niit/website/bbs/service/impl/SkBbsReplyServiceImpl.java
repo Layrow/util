@@ -30,8 +30,8 @@ public class SkBbsReplyServiceImpl implements SkBbsReplyService {
     }
 
     @Override
-    public int insertSelective(SkBbsReply skBbsReply) {
-        BaseResult baseResult = restTemplate.postForObject("http://" + SERVICE_NAME + "/reply", skBbsReply, BaseResult.class);
+    public int insertSelective(SkBbsReply record) {
+        BaseResult baseResult = restTemplate.postForObject("http://" + SERVICE_NAME + "/reply", record, BaseResult.class);
         return 1;
     }
 
@@ -92,6 +92,11 @@ public class SkBbsReplyServiceImpl implements SkBbsReplyService {
     @Override
     public PageInfo<SkBbsReply> selectAllNoStatus(Integer currentPage, Integer pageSize) {
         return restTemplate.getForObject("http://"+SERVICE_NAME+"/reply/NoStatus?currentPage="+currentPage+"&pageSize="+pageSize,PageInfo.class);
+    }
+
+    @Override
+    public String selectAll() {
+        return  restTemplate.getForObject("http://"+SERVICE_NAME+"/reply/replyAll",String.class);
     }
 
 }

@@ -1,5 +1,7 @@
 package com.niit.service.lms.service;
 
+import java.io.File;
+
 /**
  * @Auther: huangwei
  * @Date: 2018/11/8 15:51
@@ -11,6 +13,9 @@ public interface SkLmsCoursewareCnService {
     String selectAll(Integer facultyId, int currentPage, int pageSize, String courseware_title);
     //上传文件
     int insertSelective(String url);
+
+    int insert(File file, String fileName,
+               boolean thumbMark);
     //查询所有
     String  selectAllWare(Integer facultyId, int currentPage, int pageSize);
     //查询班级下的所有课件

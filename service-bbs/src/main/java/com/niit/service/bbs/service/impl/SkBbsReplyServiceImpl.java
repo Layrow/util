@@ -34,6 +34,8 @@ public class SkBbsReplyServiceImpl implements SkBbsReplyService {
         if (BadWordUtil.isContaintBadWord(record.getContent(), 2)){
             record.setContent(BadWordUtil.replaceBadWord(record.getContent(),2,"*"));
         }
+        record.setReplyTime(new Date());
+        record.setReplyStatus(1);
         return skBbsReplyMapper.insertSelective(record);
     }
 
@@ -108,6 +110,41 @@ public class SkBbsReplyServiceImpl implements SkBbsReplyService {
         //帖子列表 并分页查询
         list=skBbsTopicMapper.listAllTopicInSection(sectionId);
         //把所有帖子的ID放入topicIds
+        List<Integer> topicIds=new LinkedList<>();
+        list.stream().forEach(e->topicIds.add(e.getId()));
+        //根据topicIds查询相关所有回复
+        List<SkBbsReply> replys=skBbsReplyMapper.selectReplyByIds(topicIds);
+//        List<SkBbsReply> replys=skBbsReplyMapper.selectAll();
+        //totalResult是最后的结果集，key是帖子ID，value是下面的tempList（存放回复总量、最新回复）
+        Map<Integer, List<Object>> totalResult=new LinkedHashMap<>();
+        list.stream().forEach(e->{
+            //tempList用于存放回复总量、最新回复
+            List<Object> tempList=new LinkedList<>();
+            //找到与帖子ID对应的所有回复
+            List<SkBbsReply> matchedReplys=replys.stream().filter(p->p.getTopicId().equals(e.getId())).collect(Collectors.toList());
+            //运算出回复总量
+            Integer replysCount=matchedReplys.size();
+            //运算出最新回复实体
+            SkBbsReply lastedReply;
+            if(replysCount>0) {
+                lastedReply= matchedReplys.stream().sorted(Comparator.comparing(SkBbsReply::getReplyTime).reversed()).findFirst().get();
+            }else{
+                lastedReply=null;
+            }
+            //把回复总量、最新回复加入tempList
+            tempList.add(replysCount);
+            tempList.add(lastedReply);
+            //把tempList放入结果集，key是topicId
+            totalResult.put(e.getId(),tempList);
+        });
+        return totalResult;
+
+    }
+
+    @Override
+    public Map<Integer, List<Object>> selectAll() {
+        List<SkBbsTopic> list;
+        list = skBbsTopicMapper.listAllTopic();
         List<Integer> topicIds=new LinkedList<>();
         list.stream().forEach(e->topicIds.add(e.getId()));
         //根据topicIds查询相关所有回复

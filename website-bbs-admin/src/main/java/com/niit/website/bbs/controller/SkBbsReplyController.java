@@ -3,6 +3,7 @@ package com.niit.website.bbs.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.niit.website.bbs.pojo.SkBbsReply;
 import com.niit.website.bbs.service.SkBbsReplyService;
@@ -58,14 +59,10 @@ public class SkBbsReplyController {
     * @return int
     */
     @PostMapping
-    public String insertSelective(@RequestBody SkBbsReply skBbsReply) {
-        skBbsReply.setReplyTime(new Date());
-        int i = skBbsReplyService.insertSelective(skBbsReply);
-        if(i>0){
-            return  "回复成功";
+    public int insertSelective(@RequestBody SkBbsReply record) {
+        int i = skBbsReplyService.insertSelective(record);
+        return i;
 
-        }else
-            return "回复失败";
 
     }
     /**
@@ -187,6 +184,18 @@ public class SkBbsReplyController {
     public PageInfo<SkBbsReply> selectReply(Integer currentPage, Integer pageSize, String replyUserId) {
         PageInfo<SkBbsReply> pageInfo = skBbsReplyService.selectReply(currentPage, pageSize, replyUserId);
         return pageInfo;
+    }
+    @GetMapping("/replyAll")
+    public  Map<Integer, List<Object>>  selectAll(){
+        String s = skBbsReplyService.selectAll();
+        Map<Integer,List<Object>> map = null;
+        Type type = new TypeToken<Map<Integer,List<Object>>>(){}.getType();
+        Gson gson = new Gson();
+        if(s.isEmpty()||s==null){
+            return map;
+        }
+        map = gson.fromJson(s,type);
+        return map;
     }
 
 }

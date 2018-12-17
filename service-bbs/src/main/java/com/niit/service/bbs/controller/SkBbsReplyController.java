@@ -28,7 +28,13 @@ public class SkBbsReplyController {
 
     @Autowired
     private SkBbsReplyService skBbsReplyService;
-
+    /**
+    * 功能描述:查询一个版块下的所有回复
+    * @author huangwei
+    * @date :2018/12/17
+    * @params [currentPage, pageSize, sectionId]
+    * @return java.lang.String
+    */
     @PostMapping("/replyInfo")
     public String replyInfo(@RequestParam Integer currentPage,@RequestParam  Integer pageSize,@RequestParam  Integer sectionId){
         Map<Integer, List<Object>> map = skBbsReplyService.replyInfo(currentPage, pageSize, sectionId);
@@ -46,9 +52,8 @@ public class SkBbsReplyController {
     */
     @PostMapping
     public int insertSelective(@RequestBody SkBbsReply skBbsReply) {
-        skBbsReply.setReplyTime(new Date());
         int i = skBbsReplyService.insertSelective(skBbsReply);
-         return i;
+        return i;
 
     }
     /**
@@ -177,5 +182,12 @@ public class SkBbsReplyController {
     public PageInfo<SkBbsReply>  selectReply(Integer currentPage, Integer pageSize,String replyUserId){
         PageInfo<SkBbsReply> pageInfo = skBbsReplyService.selectReply(currentPage, pageSize, replyUserId);
         return  pageInfo;
+    }
+    @GetMapping("/replyAll")
+    public  String  selectAll(){
+        Map<Integer, List<Object>> map = skBbsReplyService.selectAll();
+        Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
+        return  gson.toJson(map);
+
     }
 }

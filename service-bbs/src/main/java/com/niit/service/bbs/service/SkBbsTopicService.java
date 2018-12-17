@@ -63,6 +63,7 @@ public interface SkBbsTopicService {
      */
     PageInfo<SkBbsTopic> listAllTopic(Integer currentPage, Integer pageSize);
 
+
     /**
      * 分页显示指定栏目下的帖子
      * @param sectionId  指定栏目Id

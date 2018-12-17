@@ -17,7 +17,7 @@ public class BadWordUtil {
     /**
      * 敏感词库的位置
      */
-    public static String filePath = "H:\\GeePlayerDownload\\dictionary.txt";
+    public static String filePath = "C:\\Users\\Administrator\\Desktop\\dictionary.txt";
     public static Set<String> words;
     public static Map<String,String> wordMap;
     /**

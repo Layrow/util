@@ -52,6 +52,14 @@
     <include refid="Blob_Column_List" />
     from  sk_bbs_reply where topic_id=#{topic_id,jdbcType=INTEGER} order by reply_order asc
   </select>
+  <!--查询所有的含有脏词的回复贴-->
+  <select id="selectAllDirtyReply" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from  sk_bbs_reply where  content like CONCAT('%*%')
+  </select>
   <!--查询用户的所有回帖-->
   <select id="selectReply" resultMap="BaseResultMap">
     SELECT

@@ -9,6 +9,8 @@ import java.util.Map;
 
 @Mapper
 public interface SkBbsReplyMapper {
+
+    List<SkBbsReply> selectAllDirtyReply();
     int deleteByPrimaryKey(Integer id);
 
     int insert(SkBbsReply record);

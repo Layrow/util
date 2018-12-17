@@ -152,6 +152,18 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
     }
 
     /**
+     * 分页 显示 带脏词的帖子
+     *
+     * @param currentPage 当前页
+     * @param pageSize    页面大小
+     * @return
+     */
+    @Override
+    public PageInfo<SkBbsTopic> selectAllDirty(Integer currentPage, Integer pageSize) {
+        return restTemplate.postForObject(URL+"dirty?currentPage="+currentPage+"&pageSize="+pageSize,null,PageInfo.class);
+    }
+
+    /**
      * @param currentPage
      * @param pageSize
      * @param title

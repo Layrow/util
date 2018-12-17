@@ -77,6 +77,13 @@ public interface SkBbsTopicService {
      * @return
      */
     PageInfo<SkBbsTopic> likeSelectAll(Integer currentPage, Integer pageSize, String title,String key);
+    /**
+     * 分页 显示 带脏词的帖子
+     * @param currentPage 当前页
+     * @param pageSize  页面大小
+     * @return
+     */
+    PageInfo<SkBbsTopic> selectAllDirty(Integer currentPage, Integer pageSize);
 
     /**
      *

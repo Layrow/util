@@ -95,6 +95,16 @@
     </where>
     ORDER BY istop desc ,id desc
   </select>
+  <!--分页查询含有脏词的帖子-->
+  <select id="selectAllDirty" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sk_bbs_topic
+    where
+      title  like CONCAT('%*%') or  content like CONCAT('%*%')
+  </select>
   <!--栏目分页模糊查询-->
   <select id="likeSelectInSection" resultMap="ResultMapWithBLOBs">
     select

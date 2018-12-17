@@ -82,6 +82,16 @@ public class SkBbsTopicController {
     public PageInfo<SkBbsTopic> listAll(@RequestParam Integer currentPage, @RequestParam Integer pageSize){
         return skBbsTopicService.listAllTopic(currentPage,pageSize);
     }
+    /**
+     * 全部查询脏词贴
+     * @param currentPage
+     * @param pageSize
+     * @return
+     */
+    @PostMapping("/dirty")
+    public PageInfo<SkBbsTopic> dirty(@RequestParam Integer currentPage, @RequestParam Integer pageSize){
+        return skBbsTopicService.selectAllDirty(currentPage,pageSize);
+    }
 
     /**
      * 根据栏目类别显示

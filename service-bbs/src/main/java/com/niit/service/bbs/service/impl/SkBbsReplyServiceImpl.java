@@ -29,6 +29,15 @@ public class SkBbsReplyServiceImpl implements SkBbsReplyService {
     private SkBbsTopicMapper skBbsTopicMapper;
 
     @Override
+    public PageInfo<SkBbsReply> selectDirtyReply(Integer currentPage, Integer pageSize) {
+        PageInfo<SkBbsReply>  pageInfo = null;
+        PageHelper.startPage(currentPage, pageSize);
+        List<SkBbsReply> skBbsReplies = skBbsReplyMapper.selectAllDirtyReply();
+        pageInfo = new PageInfo<>(skBbsReplies);
+        return pageInfo;
+    }
+
+    @Override
     public int insertSelective(SkBbsReply record) {
 
         if (BadWordUtil.isContaintBadWord(record.getContent(), 2)){

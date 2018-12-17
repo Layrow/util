@@ -42,6 +42,10 @@ public class SkBbsReplyController {
         return gson.toJson(map);
 
     }
+    @PostMapping("/dirtyReply")
+    public PageInfo<SkBbsReply> dirtyReply(Integer currentPage,Integer pageSize){
+        return  skBbsReplyService.selectDirtyReply(currentPage,pageSize);
+    }
     /**
     * 功能描述:添加一个回帖 *  成功
     * @author huangwei

@@ -27,9 +27,20 @@ public class SkBbsTopicController {
     @Resource
     SkBbsTopicService skBbsTopicService;
 
-    @PutMapping("edit")
+    @PutMapping("/edit")
     public boolean edit(@RequestBody SkBbsTopic topic){
         return skBbsTopicService.updateTopic(topic)>0;
+    }
+
+    /**
+     * 分页显示所有的脏词贴
+     * @param currentPage
+     * @param pageSize
+     * @return
+     */
+    @PostMapping("/dirty")
+    public PageInfo<SkBbsTopic> dirty(@RequestParam Integer currentPage,@RequestParam Integer pageSize){
+        return skBbsTopicService.selectAllDirty(currentPage,pageSize);
     }
 
     /**

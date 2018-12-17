@@ -32,8 +32,6 @@ public class SkBbsReplyController {
 
     /**
      * 回帖信息
-     * @param currentPage
-     * @param pageSize
      * @param sectionId
      * @return
      */
@@ -86,6 +84,11 @@ public class SkBbsReplyController {
     @GetMapping
     public PageInfo<SkBbsReply> selectAllReply(Integer topicId,Integer currentPage,Integer pageSize){
         PageInfo<SkBbsReply> pageInfo = skBbsReplyService.selectAllReply(topicId, currentPage, pageSize);
+        return pageInfo;
+    }
+    @PostMapping("/dirtyReply")
+    public PageInfo<SkBbsReply> dirtyReply(Integer currentPage,Integer pageSize){
+        PageInfo<SkBbsReply> pageInfo = skBbsReplyService.selectAllDirtyReply( currentPage, pageSize);
         return pageInfo;
     }
     /**

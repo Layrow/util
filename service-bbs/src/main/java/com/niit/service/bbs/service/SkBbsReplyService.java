@@ -14,6 +14,8 @@ import java.util.Map;
  */
 public interface SkBbsReplyService {
 
+    PageInfo<SkBbsReply>  selectDirtyReply(Integer currentPage, Integer pageSize);
+
     int insertSelective(SkBbsReply record);
 
     int deleteByPrimaryKey(Integer id);

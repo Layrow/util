@@ -56,6 +56,17 @@ public class SkBbsReplyServiceImpl implements SkBbsReplyService {
 
     }
 
+    /**
+     * @param currentPage
+     * @param pageSize
+     * @return
+     */
+    @Override
+    public PageInfo<SkBbsReply> selectAllDirtyReply(Integer currentPage, Integer pageSize) {
+        return restTemplate.postForObject("http://" + SERVICE_NAME +
+                "/reply/dirtyReply?currentPage="+currentPage+"&pageSize="+pageSize,null,PageInfo.class);
+    }
+
     @Override
     public Map<String, Object> selectDate(Integer topicId) {
         Map map = restTemplate.getForObject("http://" + SERVICE_NAME + "/reply/date?topicId=" + topicId, Map.class);

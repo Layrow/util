@@ -105,6 +105,23 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
     }
 
     /**
+     * 分页显示所有带脏词的帖子
+     *
+     * @param currentPage
+     * @param pageSize
+     * @return
+     */
+    @Override
+    public PageInfo<SkBbsTopic> selectAllDirty(Integer currentPage, Integer pageSize) {
+        List<SkBbsTopic> list;
+        PageInfo<SkBbsTopic> pageInfo;
+        PageHelper.startPage(currentPage,pageSize);
+        list=skBbsTopicMapper.selectAllDirty();
+        pageInfo=new PageInfo<>(list);
+        return pageInfo;
+    }
+
+    /**
      * 分页 模糊查询指定栏目下的帖子
      *
      * @param currentPage 当前页

@@ -93,7 +93,7 @@
         and status = 1
       </if>
     </where>
-    ORDER BY id desc
+    ORDER BY istop desc ,id desc
   </select>
   <!--栏目分页模糊查询-->
   <select id="likeSelectInSection" resultMap="ResultMapWithBLOBs">
@@ -132,7 +132,7 @@
         and status = 1
       </if>
     </where>
-    ORDER BY id desc
+    ORDER BY istop desc ,id desc
   </select>
   <!--分页查询指定用户下的所有帖子-->
   <select id="listAllTopicByOwner" resultMap="ResultMapWithBLOBs">

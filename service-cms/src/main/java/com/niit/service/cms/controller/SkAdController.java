@@ -133,7 +133,7 @@ public class SkAdController {
     public Integer updateAdCotent(@RequestBody SkAdContent skAdContent) {
         Integer updateAdContentStatus = 0;
         try {
-            updateAdContentStatus = skAdService.updateAdContentByPrimaryKeySelective(skAdContent);
+            updateAdContentStatus = skAdService.updateByPrimaryKey(skAdContent);
         } catch (Exception e) {
             e.printStackTrace();
         }

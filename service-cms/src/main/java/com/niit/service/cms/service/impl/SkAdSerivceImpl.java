@@ -74,8 +74,8 @@ public class SkAdSerivceImpl implements SkAdService {
 
     // 修改广告内容
     @Override
-    public int updateAdContentByPrimaryKeySelective(SkAdContent record) {
-        return skAdContentMapper.updateByPrimaryKeySelective(record);
+    public int updateByPrimaryKey(SkAdContent record) {
+        return skAdContentMapper.updateByPrimaryKey(record);
     }
 
     // 删除某个广告位下的所有广告

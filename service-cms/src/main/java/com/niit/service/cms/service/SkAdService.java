@@ -31,7 +31,7 @@ public interface SkAdService {
     int insertAdContentSelective(SkAdContent record);
 
     // 修改广告内容
-    int updateAdContentByPrimaryKeySelective(SkAdContent record);
+    int updateByPrimaryKey(SkAdContent record);
 
     // 删除某个广告位下的所有广告
     int deleteByAdId(Integer adId);

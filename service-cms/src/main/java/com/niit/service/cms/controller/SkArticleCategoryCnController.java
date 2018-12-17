@@ -117,7 +117,10 @@ public class SkArticleCategoryCnController {
      **/
     @PutMapping("/articleCategory/moreArticleCategory/{locale}")
     public void updateMoreSortId(@RequestBody List<SkArticleCategoryCn> skArticleCategoryCnList,@PathVariable String locale) {
-        skArticleCategoryCnService.updateMoreSortId(skArticleCategoryCnList,locale);
+        if (skArticleCategoryCnList != null && !skArticleCategoryCnList.isEmpty()) {
+            skArticleCategoryCnService.updateMoreSortId(skArticleCategoryCnList,locale);
+        }
+        return;
     }
 
     /**

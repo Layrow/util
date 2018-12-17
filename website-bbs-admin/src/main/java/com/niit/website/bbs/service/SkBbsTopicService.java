@@ -148,6 +148,6 @@ public interface SkBbsTopicService {
 
    // PageInfo<SkBbsTopic>  selectReplyUserIds( Integer currentPage, Integer pageSize,String replyUserId);
     PageInfo<SkBbsTopic>  selectReplyUserIds( Integer currentPage, Integer pageSize,String replyUserId);
-    String selectReplyUserId(Integer currentPage, Integer pageSize, String replyUserId);
+    String selectReplyUserId(String replyUserId);
 
 }

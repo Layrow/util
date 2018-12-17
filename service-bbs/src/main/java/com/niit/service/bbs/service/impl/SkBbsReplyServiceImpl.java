@@ -104,9 +104,8 @@ public class SkBbsReplyServiceImpl implements SkBbsReplyService {
 
 
     @Override
-    public Map<Integer, List<Object>> replyInfo(Integer currentPage, Integer pageSize, Integer sectionId) {
+    public Map<Integer, List<Object>> replyInfo(Integer sectionId) {
         List<SkBbsTopic> list;
-        PageHelper.startPage(currentPage,pageSize);
         //帖子列表 并分页查询
         list=skBbsTopicMapper.listAllTopicInSection(sectionId);
         //把所有帖子的ID放入topicIds

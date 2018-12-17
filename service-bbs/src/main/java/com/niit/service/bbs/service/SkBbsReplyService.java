@@ -46,6 +46,6 @@ public interface SkBbsReplyService {
    // Map<Integer,List<Object>>  selectReplyUserId(Integer currentPage, Integer pageSize,String replyUserId);
 
 
-    Map<Integer,List<Object>> replyInfo(Integer currentPage, Integer pageSize, Integer sectionId);
+    Map<Integer,List<Object>> replyInfo(Integer sectionId);
     Map<Integer,List<Object>> selectAll();
 }

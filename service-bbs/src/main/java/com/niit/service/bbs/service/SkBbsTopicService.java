@@ -158,7 +158,7 @@ public interface SkBbsTopicService {
      */
     SkBbsTopic getTopic(Integer id);
 
-    Map<Integer, List<Object>> selectReplyUserId(Integer currentPage, Integer pageSize, String replyUserId);
+    Map<Integer, List<Object>> selectReplyUserId(String replyUserId);
 
     PageInfo<SkBbsTopic>  selectReplyUserIds( Integer currentPage, Integer pageSize,String replyUserId);
 }

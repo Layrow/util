@@ -36,9 +36,8 @@ public class SkBbsReplyController {
     * @return java.lang.String
     */
     @PostMapping("/replyInfo")
-    public String replyInfo(@RequestParam Integer currentPage,@RequestParam  Integer pageSize,@RequestParam  Integer sectionId){
-        Map<Integer, List<Object>> map = skBbsReplyService.replyInfo(currentPage, pageSize, sectionId);
-
+    public String replyInfo(@RequestParam  Integer sectionId){
+        Map<Integer, List<Object>> map = skBbsReplyService.replyInfo( sectionId);
         Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
         return gson.toJson(map);
 
@@ -54,7 +53,6 @@ public class SkBbsReplyController {
     public int insertSelective(@RequestBody SkBbsReply skBbsReply) {
         int i = skBbsReplyService.insertSelective(skBbsReply);
         return i;
-
     }
     /**
     * 功能描述:删除自己回复的评论

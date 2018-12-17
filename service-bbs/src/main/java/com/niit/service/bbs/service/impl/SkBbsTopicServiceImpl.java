@@ -215,8 +215,7 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
     }
 
     @Override
-    public Map<Integer, List<Object>> selectReplyUserId(Integer currentPage, Integer pageSize, String replyUserId) {
-        PageHelper.startPage(currentPage,pageSize);
+    public Map<Integer, List<Object>> selectReplyUserId(String replyUserId) {
         //查询出该用户的所有贴子
         List<SkBbsTopic> list = skBbsTopicMapper.selectReplyUserId(replyUserId);
         LinkedList<Integer> topicId = new LinkedList<>();

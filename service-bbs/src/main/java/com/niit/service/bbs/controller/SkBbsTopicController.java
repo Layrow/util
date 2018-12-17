@@ -209,8 +209,8 @@ public class SkBbsTopicController {
     * @return java.util.Map<java.lang.Integer,java.util.List<java.lang.Object>>
     */
     @GetMapping("/replyId")
-    public String selectReplyUserIdAll(@RequestParam Integer currentPage,@RequestParam  Integer pageSize, String replyUserId){
-        Map<Integer, List<Object>> map = skBbsTopicService.selectReplyUserId(currentPage, pageSize, replyUserId);
+    public String selectReplyUserIdAll(@RequestParam String replyUserId){
+        Map<Integer, List<Object>> map = skBbsTopicService.selectReplyUserId(replyUserId);
         Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
         return gson.toJson(map);
     }

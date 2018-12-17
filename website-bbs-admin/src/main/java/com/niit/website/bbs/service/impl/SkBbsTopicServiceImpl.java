@@ -303,8 +303,8 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
     }
 
     @Override
-    public String selectReplyUserId(Integer currentPage, Integer pageSize, String replyUserId) {
-        return restTemplate.getForObject("http://"+SERVICE_NAME+"/topic/replyId?currentPage="+currentPage+"&pageSize="+pageSize+"&replyUserId="+replyUserId,String.class);
+    public String selectReplyUserId(String replyUserId) {
+        return restTemplate.getForObject("http://"+SERVICE_NAME+"/topic/replyId?replyUserId="+replyUserId,String.class);
     }
 
 }

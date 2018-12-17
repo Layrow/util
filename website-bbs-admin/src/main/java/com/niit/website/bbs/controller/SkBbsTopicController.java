@@ -218,8 +218,8 @@ public class SkBbsTopicController {
         return pageInfo;
     }
     @GetMapping("/replyId")
-    public Map<Integer, List<Object>> selectReplyUserIdAll(@RequestParam Integer currentPage,@RequestParam  Integer pageSize, String replyUserId){
-        String s = skBbsTopicService.selectReplyUserId(currentPage, pageSize, replyUserId);
+    public Map<Integer, List<Object>> selectReplyUserIdAll( String replyUserId){
+        String s = skBbsTopicService.selectReplyUserId(replyUserId);
         Map<Integer, List<Object>> map = null;
         Type type = new TypeToken< Map<Integer, List<Object>>>() {
         }.getType();

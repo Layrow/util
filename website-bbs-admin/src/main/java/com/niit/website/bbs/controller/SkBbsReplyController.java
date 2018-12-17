@@ -38,8 +38,8 @@ public class SkBbsReplyController {
      * @return
      */
     @PostMapping("/replyInfo")
-    public Map<Integer, List<Object>> replyInfo(@RequestParam Integer currentPage, @RequestParam  Integer pageSize, @RequestParam  Integer sectionId){
-        String s = skBbsReplyService.replyInfo(currentPage, pageSize, sectionId);
+    public Map<Integer, List<Object>> replyInfo(@RequestParam  Integer sectionId){
+        String s = skBbsReplyService.replyInfo(sectionId);
         Map<Integer, List<Object>> map = null;
         Type type = new TypeToken< Map<Integer, List<Object>>>() {
         }.getType();

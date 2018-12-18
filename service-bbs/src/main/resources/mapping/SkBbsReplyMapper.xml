@@ -180,10 +180,10 @@
         #{content,jdbcType=LONGVARCHAR},
       </if>
       <if test="replyStatus != null" >
-        #{replyStatus,jdbcType=INTEGER}
+        #{replyStatus,jdbcType=INTEGER},
       </if>
       <if test="hasbad != null" >
-        #{hasbad,jdbcType=INTEGER}
+        #{hasbad,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>

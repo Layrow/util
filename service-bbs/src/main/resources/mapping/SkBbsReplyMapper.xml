@@ -8,12 +8,13 @@
     <result column="reply_order" property="replyOrder" jdbcType="INTEGER" />
     <result column="topic_id" property="topicId" jdbcType="INTEGER"/>
     <result column="reply_status" property="replyStatus" jdbcType="INTEGER"/>
+    <result column="hasbad" property="hasbad" jdbcType="INTEGER" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.niit.service.bbs.pojo.SkBbsReply" extends="BaseResultMap" >
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, reply_userid, reply_time, reply_order, topic_id,reply_status
+    id, reply_userid, reply_time, reply_order, topic_id,reply_status,hasbad
   </sql>
   <sql id="Blob_Column_List" >
     content
@@ -124,11 +125,11 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.niit.service.bbs.pojo.SkBbsReply" >
-    insert into sk_bbs_reply (id, reply_userid, reply_time, 
-      reply_order, topic_id, content,reply_status
+    insert into sk_bbs_reply (id, reply_userid, reply_time,
+      reply_order, topic_id, content,reply_status,hasbad
       )
-    values (#{id,jdbcType=INTEGER}, #{replyUserid,jdbcType=VARCHAR}, #{replyTime,jdbcType=TIMESTAMP}, 
-      #{replyOrder,jdbcType=INTEGER}, #{topicId,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR},#{replyStatus,jdbcType=INTEGER}
+    values (#{id,jdbcType=INTEGER}, #{replyUserid,jdbcType=VARCHAR}, #{replyTime,jdbcType=TIMESTAMP},
+      #{replyOrder,jdbcType=INTEGER}, #{topicId,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR},#{replyStatus,jdbcType=INTEGER},#{hasbad,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.niit.service.bbs.pojo.SkBbsReply" >
@@ -155,6 +156,9 @@
       <if test="replyStatus != null" >
         reply_status,
       </if>
+      <if test="hasbad != null" >
+        hasbad,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -177,6 +181,9 @@
       </if>
       <if test="replyStatus != null" >
         #{replyStatus,jdbcType=INTEGER}
+      </if>
+      <if test="hasbad != null" >
+        #{hasbad,jdbcType=INTEGER}
       </if>
     </trim>
   </insert>

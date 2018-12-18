@@ -42,6 +42,7 @@ public class SkBbsReplyServiceImpl implements SkBbsReplyService {
 
         if (BadWordUtil.isContaintBadWord(record.getContent(), 2)){
             record.setContent(BadWordUtil.replaceBadWord(record.getContent(),2,"*"));
+            record.setHasbad(1);
         }
         record.setReplyTime(new Date());
         record.setReplyStatus(1);

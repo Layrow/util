@@ -40,10 +40,12 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
         record.setCreateTime(new Date());
         if (BadWordUtil.isContaintBadWord(record.getTitle(), 2)){
             record.setTitle(BadWordUtil.replaceBadWord(record.getTitle(),2,"*"));
+            record.setHasbad(1);
         }
         if (BadWordUtil.isContaintBadWord(record.getContent(), 2)){
             record.setContent(BadWordUtil.replaceBadWord(record.getContent(),2,"*"));
         }
+        record.setViewcount(0);
         record.setStatus(1);
         return skBbsTopicMapper.insertSelective(record);
     }

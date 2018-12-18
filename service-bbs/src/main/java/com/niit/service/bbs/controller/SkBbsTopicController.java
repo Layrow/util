@@ -76,12 +76,11 @@ public class SkBbsTopicController {
     /**
      * 修改帖子的浏览量
      * @param id
-     * @param newCount
      * @return
      */
     @PutMapping("/editViewCount")
-    public boolean editViewCount(@RequestParam Integer id,@RequestParam Integer newCount){
-        return skBbsTopicService.updateViewCountByPrimaryKey(id,newCount)>0;
+    public boolean editViewCount(@RequestParam Integer id){
+        return skBbsTopicService.updateViewCountByPrimaryKey(id)>0;
     }
 
     /**

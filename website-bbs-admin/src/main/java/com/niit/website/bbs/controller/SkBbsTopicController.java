@@ -68,8 +68,8 @@ public class SkBbsTopicController {
      * @return
      */
     @PutMapping("/editViewCount")
-    public boolean editViewCount(@RequestParam Integer id,@RequestParam Integer newCount){
-        return skBbsTopicService.updateViewCountByPrimaryKey(id,newCount)>0;
+    public boolean editViewCount(@RequestParam Integer id){
+        return skBbsTopicService.updateViewCountByPrimaryKey(id)>0;
     }
 
     /**

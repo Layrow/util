@@ -99,13 +99,12 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
      * 更新帖子浏览量
      *
      * @param id       帖子主键
-     * @param newCount 新的浏览量
      * @return
      */
     @Override
-    public int updateViewCountByPrimaryKey(Integer id, Integer newCount) {
+    public int updateViewCountByPrimaryKey(Integer id) {
         try {
-            restTemplate.put(URL+"editViewCount?id="+id+"&newCount="+newCount,String.class);
+            restTemplate.put(URL+"editViewCount?id="+id,String.class);
             return 1;
         }catch (Exception e){
             e.printStackTrace();

@@ -67,7 +67,9 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
     }
 
     @Override
-    public int updateViewCountByPrimaryKey(Integer id, Integer newCount) {
+    public int updateViewCountByPrimaryKey(Integer id) {
+        SkBbsTopic record=skBbsTopicMapper.selectByPrimaryKey(id);
+        Integer newCount=record.getViewcount()+1;
         return skBbsTopicMapper.updateViewCountByPrimaryKey(id,newCount);
     }
 

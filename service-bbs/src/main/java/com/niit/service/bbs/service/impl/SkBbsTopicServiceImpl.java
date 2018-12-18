@@ -38,12 +38,12 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
     @Override
     public int insertSelective(SkBbsTopic record) {
         record.setCreateTime(new Date());
-        if (BadWordUtil.isContaintBadWord(record.getTitle(), 2)){
+        if (BadWordUtil.isContaintBadWord(record.getTitle(), 2)||BadWordUtil.isContaintBadWord(record.getContent(), 2)){
             record.setTitle(BadWordUtil.replaceBadWord(record.getTitle(),2,"*"));
-            record.setHasbad(1);
-        }
-        if (BadWordUtil.isContaintBadWord(record.getContent(), 2)){
             record.setContent(BadWordUtil.replaceBadWord(record.getContent(),2,"*"));
+            record.setHasbad(1);
+        }else {
+            record.setHasbad(0);
         }
         record.setViewcount(0);
         record.setStatus(1);

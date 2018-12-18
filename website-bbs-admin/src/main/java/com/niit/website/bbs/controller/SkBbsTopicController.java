@@ -64,7 +64,6 @@ public class SkBbsTopicController {
     /**
      * 修改帖子的浏览量
      * @param id
-     * @param newCount
      * @return
      */
     @PutMapping("/editViewCount")

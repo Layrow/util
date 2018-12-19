@@ -122,12 +122,20 @@
     WHERE homework_id = #{arg1} and a.student_id in (SELECT student_id from sk_lms_bach_student_cn WHERE batch_id = #{arg0})
   </select>
 
+  <!-- 查询特定班级下的特定作业下的得分情况 -->
+  <select id="selectScore" resultType="java.util.LinkedHashMap">
+    select a.student_id,a.homework_answer_mark
+    from sk_lms_homework_answer_cn a
+    where homework_id = #{homeworkId} and student_id in
+    (select student_id from sk_lms_bach_student_cn where batch_id = #{batchId})
+  </select>
 
   <!-- 查询特定班级下的所有作业-->
   <select id="selectHomeworkByBatchId" parameterType="java.lang.Integer" resultMap="BaseHomeworkMap">
-    SELECT
+    select
     a.*
-    from sk_lms_homework_cn a RIGHT JOIN sk_lms_batch_homework_cn b on a.id = b.homework_id WHERE b.batch_id = #{batch_id,jdbcType=INTEGER}
+    from sk_lms_homework_cn a right join sk_lms_batch_homework_cn b on a.id = b.homework_id
+    where b.batch_id = #{batch_id,jdbcType=INTEGER} order by a.homework_create_time desc
   </select>
 
 

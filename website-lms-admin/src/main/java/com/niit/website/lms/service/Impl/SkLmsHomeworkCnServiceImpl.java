@@ -8,6 +8,8 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -89,6 +91,14 @@ public class SkLmsHomeworkCnServiceImpl implements SkLmsHomeworkCnService {
         ParameterizedTypeReference<String> typeRef = new ParameterizedTypeReference<String>() {
         };
         ResponseEntity<String> responseEntity = restTemplate.exchange("http://" + SERVICE_NAME + "/skLmsHomeworkCn/homework/batch/" + batchId, HttpMethod.GET, null, typeRef);
+        return responseEntity.getBody();
+    }
+
+    @Override
+    public String selectScore(Integer batchId, Integer homeworkId) {
+        ParameterizedTypeReference<String> typeRef = new ParameterizedTypeReference<String>() {
+        };
+        ResponseEntity<String> responseEntity = restTemplate.exchange("http://" + SERVICE_NAME + "/skLmsHomeworkCn/homework/score?batchId=" + batchId + "&homeworkId=" + homeworkId, HttpMethod.GET, null, typeRef);
         return responseEntity.getBody();
     }
 }

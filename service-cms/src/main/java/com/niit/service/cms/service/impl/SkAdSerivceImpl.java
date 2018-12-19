@@ -94,6 +94,16 @@ public class SkAdSerivceImpl implements SkAdService {
         return pageInfo;
     }
 
+    // 根据keycode查询
+    @Override
+    public PageInfo<SkAdContent> selectByKeycode(String keycode, Integer status, Integer currentPage, Integer pageSize) {
+        PageInfo<SkAdContent> pageInfo = null;
+        PageHelper.startPage(currentPage, pageSize);
+        List<SkAdContent> skAdContentsList = skAdContentMapper.selectByKeycode(keycode, status);
+        pageInfo = new PageInfo<>(skAdContentsList);
+        return pageInfo;
+    }
+
     // 新增广告位
     @Override
     public int insert(SkAd record) {

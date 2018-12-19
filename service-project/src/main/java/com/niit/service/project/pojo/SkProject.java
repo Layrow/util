@@ -1,5 +1,7 @@
 package com.niit.service.project.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class SkProject {
@@ -11,6 +13,7 @@ public class SkProject {
 
     private Integer viewCount;
 
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updatetime;
 
     private String comments;
@@ -30,6 +33,26 @@ public class SkProject {
     private Integer isTop;
 
     private Integer isRecommnd;
+
+    private Integer userId;
+
+    private String userName;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
 
     public Integer getId() {
         return id;

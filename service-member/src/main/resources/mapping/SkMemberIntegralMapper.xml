@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.niit.service.member.dao.SkMemberIntegralMapper" >
+  <resultMap id="BaseResultMap" type="com.niit.service.member.pojo.SkMemberIntegral" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="actions" property="actions" jdbcType="VARCHAR" />
+    <result column="operation" property="operation" jdbcType="INTEGER" />
+    <result column="numbers" property="numbers" jdbcType="INTEGER" />
+    <result column="operation_time" property="operationTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, user_name, actions, operation, numbers, operation_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sk_member_integral
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <!--查询用户的正积分-->
+  <select id="selectAddIntegral"  resultType="java.lang.Integer" parameterType="java.lang.Integer" >
+    select
+   sum(numbers)
+   FROM sk_member_integral
+  WHERE operation =1 AND user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <!--查询用户的负积分-->
+  <select id="selectDelIntegral"  resultType="java.lang.Integer" parameterType="java.lang.Integer" >
+    select
+   sum(numbers)
+   FROM sk_member_integral
+  WHERE operation =0 AND user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sk_member_integral
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.niit.service.member.pojo.SkMemberIntegral" >
+    insert into sk_member_integral (id, user_id, user_name, 
+      actions, operation, numbers, 
+      operation_time)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, 
+      #{actions,jdbcType=VARCHAR}, #{operation,jdbcType=INTEGER}, #{numbers,jdbcType=INTEGER}, 
+      #{operationTime,jdbcType=TIMESTAMP})
+  </insert>
+
+  <!--数据操作会影响基本统计-->
+  <insert id="insertSelective" parameterType="com.niit.service.member.pojo.SkMemberIntegral" >
+    insert into sk_member_integral
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="actions != null" >
+        actions,
+      </if>
+      <if test="operation != null" >
+        operation,
+      </if>
+      <if test="numbers != null" >
+        numbers,
+      </if>
+      <if test="operationTime != null" >
+        operation_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="actions != null" >
+        #{actions,jdbcType=VARCHAR},
+      </if>
+      <if test="operation != null" >
+        #{operation,jdbcType=INTEGER},
+      </if>
+      <if test="numbers != null" >
+        #{numbers,jdbcType=INTEGER},
+      </if>
+      <if test="operationTime != null" >
+        #{operationTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.niit.service.member.pojo.SkMemberIntegral" >
+    update sk_member_integral
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="actions != null" >
+        actions = #{actions,jdbcType=VARCHAR},
+      </if>
+      <if test="operation != null" >
+        operation = #{operation,jdbcType=INTEGER},
+      </if>
+      <if test="numbers != null" >
+        numbers = #{numbers,jdbcType=INTEGER},
+      </if>
+      <if test="operationTime != null" >
+        operation_time = #{operationTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.niit.service.member.pojo.SkMemberIntegral" >
+    update sk_member_integral
+    set user_id = #{userId,jdbcType=INTEGER},
+      user_name = #{userName,jdbcType=VARCHAR},
+      actions = #{actions,jdbcType=VARCHAR},
+      operation = #{operation,jdbcType=INTEGER},
+      numbers = #{numbers,jdbcType=INTEGER},
+      operation_time = #{operationTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

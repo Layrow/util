@@ -48,10 +48,9 @@ public interface SkBbsTopicService {
     /**
      * 更新帖子浏览量
      * @param id 帖子主键
-     * @param newCount 新的浏览量
      * @return
      */
-    int updateViewCountByPrimaryKey(Integer id, Integer newCount);
+    int updateViewCountByPrimaryKey(Integer id);
 
 
     /**

@@ -6,6 +6,7 @@ import com.niit.service.member.service.ISkMemberIntegralService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 /**
  * 〈一句话功能简述〉<br>
@@ -45,6 +46,13 @@ public class SkMemberIntegralServiceImpl implements ISkMemberIntegralService {
 
     @Override
     public boolean updateIntegral(SkMemberIntegral record) {
-        return false;
+      try{
+           record.setOperationTime(new Date());
+           skMemberIntegralMapper.insertSelective(record);
+           return  true;
+       }catch (Exception e){
+           e.printStackTrace();
+           return false;
+       }
     }
 }

@@ -1,11 +1,16 @@
-package com.niit.service.member.actionsenum;
+package com.niit.website.smartkids.actionenum;
 
 /**
- * 相关操作的枚举
+ * 〈一句话功能简述〉<br>
+ *
+ * @author 冯永辉
+ * @create 2018/12/19
+ * @since 1.0.0
  */
-public enum Actions {
+public enum  ActionsEnum {
+
     /**
-     *
+     * 操作枚举
      */
     POST_TOPIC(1, 50, "发表帖子"),
     DELETE_TOPIC(0, 50, "帖子被删除"),
@@ -36,7 +41,7 @@ public enum Actions {
      */
     private String action;
 
-    private Actions( int operation, int nums, String action) {
+    private ActionsEnum( int operation, int nums, String action) {
         this.operation = operation;
         this.nums = nums;
         this.action = action;

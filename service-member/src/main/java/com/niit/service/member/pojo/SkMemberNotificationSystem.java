@@ -1,5 +1,7 @@
 package com.niit.service.member.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class SkMemberNotificationSystem {
@@ -8,7 +10,7 @@ public class SkMemberNotificationSystem {
     private String content;
 
     private String title;
-
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:SS")
     private Date noticeTime;
 
     private Integer status;

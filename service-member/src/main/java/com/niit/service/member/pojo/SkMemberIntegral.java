@@ -1,5 +1,7 @@
 package com.niit.service.member.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class SkMemberIntegral {
@@ -14,7 +16,7 @@ public class SkMemberIntegral {
     private Integer operation;
 
     private Integer numbers;
-
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:SS")
     private Date operationTime;
 
     public Integer getId() {
@@ -38,7 +40,7 @@ public class SkMemberIntegral {
     }
 
     public void setUserName(String userName) {
-        this.userName = userName == null ? null : userName.trim();
+        this.userName = userName;
     }
 
     public String getActions() {
@@ -46,7 +48,7 @@ public class SkMemberIntegral {
     }
 
     public void setActions(String actions) {
-        this.actions = actions == null ? null : actions.trim();
+        this.actions = actions;
     }
 
     public Integer getOperation() {

@@ -1,10 +1,8 @@
 package com.niit.service.member.controller;
 
+import com.niit.service.member.pojo.SkMemberIntegral;
 import com.niit.service.member.service.ISkMemberIntegralService;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -25,5 +23,10 @@ public class SkMemberIntegralController {
     @PostMapping("/tatal")
     public int tatal(Integer uid){
         return  skMemberIntegralService.getMemberIntegral(uid);
+    }
+
+    @PostMapping("integral")
+    public boolean integral(@RequestBody SkMemberIntegral record){
+        return  skMemberIntegralService.updateIntegral(record);
     }
 }

@@ -1,5 +1,7 @@
 package com.niit.service.member.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class SkMemberNotificationOps {
@@ -8,7 +10,7 @@ public class SkMemberNotificationOps {
     private Integer userId;
 
     private String userName;
-
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:SS")
     private Date noticeTime;
 
     private Integer projectId;
@@ -38,7 +40,7 @@ public class SkMemberNotificationOps {
     }
 
     public void setUserName(String userName) {
-        this.userName = userName == null ? null : userName.trim();
+        this.userName = userName;
     }
 
     public Date getNoticeTime() {

@@ -9,7 +9,7 @@ spring:
     password: niit1234
 
 server:
-  port: 8880
+  port: 9527
 
   datasource:
     url: jdbc:mysql://118.178.227.169:3306/niit_samrtkids?serverTimezone=GMT

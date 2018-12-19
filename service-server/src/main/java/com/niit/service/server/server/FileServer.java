@@ -17,6 +17,10 @@ import java.util.concurrent.Executors;
 import com.niit.service.server.server.support.FileServerPipelineFactory;
 import org.jboss.netty.bootstrap.ServerBootstrap;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import javax.annotation.PostConstruct;
 
 /**
  * 
@@ -31,6 +35,7 @@ import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
  * </pre>
  * @author  <b>landyChris</b>
  */
+@Configuration
 public class FileServer {
 	private void run() {
 		ServerBootstrap bootstrap = new ServerBootstrap(
@@ -42,7 +47,7 @@ public class FileServer {
 		bootstrap.bind(new InetSocketAddress(FileServerContainer.getInstance()
 				.getPort()));
 	}
-
+	@PostConstruct
 	public void init() {
 		run();
 	}

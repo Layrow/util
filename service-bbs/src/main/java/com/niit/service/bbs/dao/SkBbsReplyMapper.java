@@ -61,6 +61,6 @@ public interface SkBbsReplyMapper {
 
     List<SkBbsReply>  selectReplyUserId(@Param("replyUserid") String replyUserId);
 
-    List<SkBbsTopic> selectAllTopicById (Integer id);
+    String selectAllTopicById (Integer id);
 
 }

@@ -238,7 +238,7 @@ public class SkBbsTopicController {
     }
     @GetMapping("/allTopic")
     public  String  selectAllTopic(){
-        Map<Integer, List<SkBbsTopic>> map = skBbsTopicService.selectAllTopicById();
+        Map<Integer, String> map = skBbsTopicService.selectAllTopicById();
         Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
         return gson.toJson(map);
 

@@ -14,6 +14,10 @@ package com.niit.service.server;
 import java.io.File;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
+
 /**
  * 
  *<pre><b><font color="blue">Account</font></b></pre>
@@ -27,6 +31,10 @@ import org.apache.commons.lang3.StringUtils;
  * </pre>
  * @author  <b>landyChris</b>
  */
+@Component
+@ConfigurationProperties(prefix = "com.niit.service.server.Account")
+@PropertySource(value = {"classpath:server.properties"},
+		ignoreResourceNotFound = false, encoding = "UTF-8", name = "server.properties")
 public class Account {
 	private String userName;
 	private String pwd;

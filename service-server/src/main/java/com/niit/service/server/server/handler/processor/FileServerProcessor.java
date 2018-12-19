@@ -16,5 +16,6 @@ import com.niit.service.server.Result;
 import com.niit.service.server.server.parse.RequestParam;
 
 public interface FileServerProcessor {
+
 	public Result process(RequestParam reqParams);
 }

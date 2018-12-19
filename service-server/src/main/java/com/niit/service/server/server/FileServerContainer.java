@@ -7,6 +7,10 @@ import com.niit.service.server.Constants;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,6 +30,10 @@ import java.util.Map;
  * </pre>
  * @author  <b>landyChris</b>
  */
+@Component
+@ConfigurationProperties(prefix = "com.niit.service.server.FileServerContainer")
+@PropertySource(value = {"classpath:server.properties"},
+		ignoreResourceNotFound = false, encoding = "UTF-8", name = "server.properties")
 public class FileServerContainer {
 	private static Log log = LogFactory.getLog(FileServerContainer.class);
 	/**
@@ -39,7 +47,7 @@ public class FileServerContainer {
 	private int port;
 	private static FileServerContainer instance;
 	private static Map<String, Account> AccountMap = new HashMap<String, Account>();
-
+    @Bean
 	public static FileServerContainer factoryMethod() {
 		log.info("初始化静态资源传输平台");
 		instance = new FileServerContainer();

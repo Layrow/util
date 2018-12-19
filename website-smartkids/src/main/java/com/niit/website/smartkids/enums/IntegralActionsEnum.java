@@ -1,4 +1,4 @@
-package com.niit.website.smartkids.actionenum;
+package com.niit.website.smartkids.enums;
 
 /**
  * 〈一句话功能简述〉<br>
@@ -7,7 +7,7 @@ package com.niit.website.smartkids.actionenum;
  * @create 2018/12/19
  * @since 1.0.0
  */
-public enum  ActionsEnum {
+public enum IntegralActionsEnum {
 
     /**
      * 操作枚举
@@ -41,7 +41,7 @@ public enum  ActionsEnum {
      */
     private String action;
 
-    private ActionsEnum( int operation, int nums, String action) {
+    private IntegralActionsEnum(int operation, int nums, String action) {
         this.operation = operation;
         this.nums = nums;
         this.action = action;

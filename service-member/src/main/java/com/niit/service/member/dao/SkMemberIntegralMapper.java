@@ -16,7 +16,18 @@ public interface SkMemberIntegralMapper {
      */
     int insertSelective(SkMemberIntegral record);
 
+    /**
+     * 查询正积分
+     * @param userId
+     * @return
+     */
     Integer selectAddIntegral(Integer userId);
+
+    /**
+     * 查询负积分
+     * @param userId
+     * @return
+     */
     Integer selectDelIntegral(Integer userId);
 
     SkMemberIntegral selectByPrimaryKey(Integer id);

@@ -22,6 +22,7 @@
     from sk_lms_courseware_cn
     WHERE id in
     (SELECT DISTINCT(cc.id) from sk_lms_courseware_cn cc JOIN sk_lms_batch_courseware_cn bcc on cc.id = bcc.courseware_id JOIN sk_lms_batch_cn bc ON bc.id=bcc.batch_id  where bc.faculty_id = #{facultyId,jdbcType=INTEGER})
+    ORDER BY c.courseware_create_time DESC
   </select>
   <!-- 模糊查询 -->
   <select id="selectAll"  resultMap="BaseResultMap">
@@ -37,7 +38,7 @@
     select
     c.*
     from  sk_lms_courseware_cn c    JOIN  sk_lms_batch_courseware_cn cc ON  c.id=cc.courseware_id
-    WHERE  cc.batch_id= #{batchId,jdbcType=INTEGER}
+    WHERE  cc.batch_id= #{batchId,jdbcType=INTEGER} ORDER BY c.courseware_create_time DESC
   </select>
   <select id="selectByCoursewareIdList" parameterType="java.util.List" resultMap="BaseResultMap">
     select

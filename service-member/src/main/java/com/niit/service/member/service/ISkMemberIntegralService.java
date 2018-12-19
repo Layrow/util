@@ -15,12 +15,11 @@ public interface ISkMemberIntegralService {
      * @param id
      * @return
      */
-    int getMemberIntegral(Integer id);
+    Integer getMemberIntegral(Integer id);
 
     /**
      * 添加用户的积分变动数据
      * @param record
-     * @param actionId 操作指代
      * @return
      */
     boolean updateIntegral(SkMemberIntegral record);

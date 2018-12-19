@@ -77,6 +77,19 @@ public class SkAdController {
         return pageInfo;
     }
 
+    // 根据keycode查询
+    @GetMapping("/content/key")
+    public PageInfo<SkAdContent> selectByKeycode(@RequestParam("keycode") String keycode,@RequestParam(value = "status",required=false) Integer status,
+                                              @RequestParam("currentPage") Integer currentPage,@RequestParam("pageSize") Integer pageSize) {
+        PageInfo<SkAdContent> pageInfo = null;
+        try {
+            pageInfo = skAdService.selectByKeycode(keycode,status,currentPage,pageSize);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return pageInfo;
+    }
+
     // 批量删除广告
     @DeleteMapping("/content")
     public Integer deleteAdContentByPrimaryKey(HttpServletRequest request) {

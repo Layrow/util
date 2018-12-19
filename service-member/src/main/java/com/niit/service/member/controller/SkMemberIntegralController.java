@@ -20,13 +20,13 @@ public class SkMemberIntegralController {
     @Resource
     ISkMemberIntegralService skMemberIntegralService;
 
-    @PostMapping("/tatal")
-    public int tatal(Integer uid){
-        return  skMemberIntegralService.getMemberIntegral(uid);
+    @GetMapping("/total")
+    public String tatal(Integer uid){
+        return  String.valueOf(skMemberIntegralService.getMemberIntegral(uid));
     }
 
-    @PostMapping("integral")
-    public boolean integral(@RequestBody SkMemberIntegral record){
-        return  skMemberIntegralService.updateIntegral(record);
+    @PostMapping("/integral")
+    public String integral(@RequestBody SkMemberIntegral record){
+        return  String.valueOf(skMemberIntegralService.updateIntegral(record));
     }
 }

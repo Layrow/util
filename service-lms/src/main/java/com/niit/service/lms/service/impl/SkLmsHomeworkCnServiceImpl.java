@@ -270,6 +270,14 @@ public class SkLmsHomeworkCnServiceImpl implements SkLmsHomeworkCnService {
         return gson.toJson(map);
     }
 
+    // 获得特定班级特定作业下的得分情况
+    @Override
+    public String selectScore(Integer batchId, Integer homeworkId) {
+        List<HashMap<String,Object>> maps = skLmsHomeworkCnMapper.selectScore(batchId, homeworkId);
+        Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
+        return gson.toJson(maps);
+    }
+
     // String --> List
     public List<String> getList(String id) {
         List<String> list = new ArrayList<String>();

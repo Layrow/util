@@ -27,7 +27,7 @@ public class SkMemberIntegralServiceImpl implements ISkMemberIntegralService {
      * @return
      */
     @Override
-    public int getMemberIntegral(Integer id) {
+    public Integer getMemberIntegral(Integer id) {
         //增加的分值
         Integer add = skMemberIntegralMapper.selectAddIntegral(id);
         //减少的分值
@@ -41,7 +41,7 @@ public class SkMemberIntegralServiceImpl implements ISkMemberIntegralService {
             del=0;
         }
         //总得分 奖励分-惩罚分
-        return (add-del);
+        return  add-del;
     }
 
     @Override
@@ -49,9 +49,11 @@ public class SkMemberIntegralServiceImpl implements ISkMemberIntegralService {
       try{
            record.setOperationTime(new Date());
            skMemberIntegralMapper.insertSelective(record);
+          System.out.println("添加了呀");
            return  true;
        }catch (Exception e){
            e.printStackTrace();
+          System.out.println("才出错了吗");
            return false;
        }
     }

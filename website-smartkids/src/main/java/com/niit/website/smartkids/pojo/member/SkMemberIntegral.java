@@ -1,4 +1,4 @@
-package com.niit.service.member.pojo;
+package com.niit.website.smartkids.pojo.member;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 

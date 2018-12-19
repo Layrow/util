@@ -76,6 +76,17 @@
     </if>
     order by ad_order desc
   </select>
+  <!-- 根据keycode查询特定广告位然后查询该广告位下的所有广告 order排序 status为1 或 status为0 -->
+  <select id="selectByKeycode" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from sk_ad_content
+    where ad_id in (select id from sk_ad WHERE keycode = #{keycode})
+    <if test="ad_status!=null and ad_status!='' or 0 == ad_status ">
+      and ad_status = #{ad_status}
+    </if>
+    order by ad_order desc
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from sk_ad_content
     where id = #{id,jdbcType=INTEGER}

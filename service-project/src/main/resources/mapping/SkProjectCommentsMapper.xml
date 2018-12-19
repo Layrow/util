@@ -7,9 +7,11 @@
     <result column="addtime" property="addtime" jdbcType="TIMESTAMP" />
     <result column="project_id" property="projectId" jdbcType="INTEGER" />
     <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, content, addtime, project_id, status
+    id, content, addtime, project_id, status, user_id, user_name
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -23,9 +25,9 @@
   </delete>
   <insert id="insert" parameterType="com.niit.service.project.pojo.SkProjectComments" >
     insert into sk_project_comments (id, content, addtime, 
-      project_id, status)
+      project_id, status, user_id, user_name)
     values (#{id,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{addtime,jdbcType=TIMESTAMP}, 
-      #{projectId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER})
+      #{projectId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER},#{userId,jdbcType=INTEGER},#{userName,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.niit.service.project.pojo.SkProjectComments" >
     insert into sk_project_comments
@@ -45,6 +47,12 @@
       <if test="status != null" >
         status,
       </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -61,6 +69,12 @@
       </if>
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -79,6 +93,12 @@
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
       </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -87,7 +107,9 @@
     set content = #{content,jdbcType=VARCHAR},
       addtime = #{addtime,jdbcType=TIMESTAMP},
       project_id = #{projectId,jdbcType=INTEGER},
-      status = #{status,jdbcType=INTEGER}
+      status = #{status,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
+      user_name = #{userName,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

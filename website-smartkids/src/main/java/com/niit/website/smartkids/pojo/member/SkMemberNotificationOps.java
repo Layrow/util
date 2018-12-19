@@ -1,24 +1,31 @@
-package com.niit.service.project.pojo;
+package com.niit.website.smartkids.pojo.member;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
 
-public class SkProjectComments {
+public class SkMemberNotificationOps {
     private Integer id;
-
-    private String content;
-
-    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date addtime;
-
-    private Integer projectId;
-
-    private Integer status;
 
     private Integer userId;
 
     private String userName;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:SS")
+    private Date noticeTime;
+
+    private Integer projectId;
+
+    private Integer operation;
+
+    private Integer status;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public Integer getUserId() {
         return userId;
@@ -36,28 +43,12 @@ public class SkProjectComments {
         this.userName = userName;
     }
 
-    public Integer getId() {
-        return id;
+    public Date getNoticeTime() {
+        return noticeTime;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
-    }
-
-    public Date getAddtime() {
-        return addtime;
-    }
-
-    public void setAddtime(Date addtime) {
-        this.addtime = addtime;
+    public void setNoticeTime(Date noticeTime) {
+        this.noticeTime = noticeTime;
     }
 
     public Integer getProjectId() {
@@ -66,6 +57,14 @@ public class SkProjectComments {
 
     public void setProjectId(Integer projectId) {
         this.projectId = projectId;
+    }
+
+    public Integer getOperation() {
+        return operation;
+    }
+
+    public void setOperation(Integer operation) {
+        this.operation = operation;
     }
 
     public Integer getStatus() {

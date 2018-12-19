@@ -16,11 +16,42 @@
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="is_top" property="isTop" jdbcType="INTEGER" />
     <result column="is_recommnd" property="isRecommnd" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, title, url, view_count, updatetime, comments, operation_desc, cover_img, category_id, 
-    fav_count, likes_count, status, is_top, is_recommnd
+    fav_count, likes_count, status, is_top, is_recommnd, user_id, user_name
   </sql>
+  <!--  分页模糊查询作品 -->
+  <select id="likeSelectProjectByTitle" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sk_project where  title  like CONCAT('%',#{arg1},'%')
+    <if test="arg0!=null and arg0!='' or 0 == arg0 ">
+      and status = #{arg0}
+    </if>
+  </select>
+  <!-- 批量审核作品 -->
+  <update id="updateMoreProject" parameterType="java.util.List">
+    update sk_project set status = 1
+    where id in
+    <foreach collection="list" item="id" open="("
+             separator="," close=")">
+      #{id}
+    </foreach>
+  </update>
+  <!-- 查询所有作品 -->
+    <select id="selectAllProject" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select
+        <include refid="Base_Column_List" />
+        from sk_project
+        <where>
+            <if test="status!=null and status!='' or 0 == status ">
+                status = #{status}
+            </if>
+        </where>
+    </select>
   <!-- 批量删除作品 -->
   <delete id="deleteMoreProject" parameterType="java.util.List">
     delete from sk_project where id in
@@ -29,6 +60,25 @@
       #{id}
     </foreach>
   </delete>
+  <!-- 按照时间或点赞数或浏览量查询 order排序 status为1 或 status为0 -->
+  <select id="selectByCategoryId" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from sk_project
+    where category_id = #{category_id}
+    <if test="status!=null and status!='' or 0 == status ">
+      and status = #{status}
+    </if>
+    <if test="likes_count!=null and likes_count !='' ">
+      order by likes_count desc
+    </if>
+    <if test="view_count!=null and view_count !='' ">
+      order by view_count desc
+    </if>
+    <if test="updatetime!=null and updatetime !='' ">
+      order by updatetime desc
+    </if>
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
@@ -44,12 +94,12 @@
       view_count, updatetime, comments, 
       operation_desc, cover_img, category_id, 
       fav_count, likes_count, status, 
-      is_top, is_recommnd)
+      is_top, is_recommnd, user_id, user_name)
     values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
       #{viewCount,jdbcType=INTEGER}, #{updatetime,jdbcType=TIMESTAMP}, #{comments,jdbcType=VARCHAR}, 
       #{operationDesc,jdbcType=VARCHAR}, #{coverImg,jdbcType=VARCHAR}, #{categoryId,jdbcType=INTEGER}, 
       #{favCount,jdbcType=INTEGER}, #{likesCount,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
-      #{isTop,jdbcType=INTEGER}, #{isRecommnd,jdbcType=INTEGER})
+      #{isTop,jdbcType=INTEGER}, #{isRecommnd,jdbcType=INTEGER},#{userId,jdbcType=INTEGER},#{userName,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.niit.service.project.pojo.SkProject" >
     insert into sk_project
@@ -96,6 +146,12 @@
       <if test="isRecommnd != null" >
         is_recommnd,
       </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -139,6 +195,12 @@
       </if>
       <if test="isRecommnd != null" >
         #{isRecommnd,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -184,6 +246,12 @@
       <if test="isRecommnd != null" >
         is_recommnd = #{isRecommnd,jdbcType=INTEGER},
       </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -201,7 +269,9 @@
       likes_count = #{likesCount,jdbcType=INTEGER},
       status = #{status,jdbcType=INTEGER},
       is_top = #{isTop,jdbcType=INTEGER},
-      is_recommnd = #{isRecommnd,jdbcType=INTEGER}
+      is_recommnd = #{isRecommnd,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
+      user_name = #{userName,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -237,5 +237,12 @@ public class SkBbsTopicController {
         PageInfo<SkBbsTopic> pageInfo = skBbsTopicService.selectReplyUserIds(currentPage, pageSize, replyUserId);
         return pageInfo;
     }
+    @GetMapping("/allTopic")
+    public  String  selectAllTopic(){
+        Map<Integer, List<SkBbsTopic>> map = skBbsTopicService.selectAllTopicById();
+        Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
+        return gson.toJson(map);
+
+    }
 
 }

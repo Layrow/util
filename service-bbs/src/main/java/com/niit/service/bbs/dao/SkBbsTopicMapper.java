@@ -143,4 +143,6 @@ public interface SkBbsTopicMapper {
     List<SkBbsTopic>  selectReplyUserId(@Param("replyUserid") String replyUserId);
     List<SkBbsTopic>  selectReplyUserIds(@Param("replyUserid") String replyUserId);
 
+
+
 }

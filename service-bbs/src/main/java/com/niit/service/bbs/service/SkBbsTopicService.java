@@ -18,7 +18,7 @@ import java.util.Map;
 public interface SkBbsTopicService {
 
 
-
+    Map<Integer,List<SkBbsTopic>>  selectAllTopicById();
     /**
      * 修改帖子
      * @param record

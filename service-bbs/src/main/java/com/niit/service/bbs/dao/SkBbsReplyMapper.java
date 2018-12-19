@@ -1,6 +1,7 @@
 package com.niit.service.bbs.dao;
 
 import com.niit.service.bbs.pojo.SkBbsReply;
+import com.niit.service.bbs.pojo.SkBbsTopic;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -11,6 +12,7 @@ import java.util.Map;
 public interface SkBbsReplyMapper {
 
     List<SkBbsReply> selectAllDirtyReply();
+
     int deleteByPrimaryKey(Integer id);
 
     int insert(SkBbsReply record);
@@ -59,6 +61,6 @@ public interface SkBbsReplyMapper {
 
     List<SkBbsReply>  selectReplyUserId(@Param("replyUserid") String replyUserId);
 
-
+    List<SkBbsTopic> selectAllTopicById (Integer id);
 
 }

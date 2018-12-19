@@ -1,4 +1,4 @@
-package com.niit.service.bbs.pojo;
+package com.niit.service.member.pojo;
 
 import java.util.Date;
 

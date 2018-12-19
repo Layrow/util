@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.niit.service.bbs.dao.SkMemberNotificationOpsMapper" >
-  <resultMap id="BaseResultMap" type="com.niit.service.bbs.pojo.SkMemberNotificationOps" >
+<mapper namespace="com.niit.service.member.dao.SkMemberNotificationOpsMapper" >
+  <resultMap id="BaseResultMap" type="com.niit.service.member.pojo.SkMemberNotificationOps" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="user_name" property="userName" jdbcType="VARCHAR" />
@@ -23,7 +23,7 @@
     delete from sk_member_notification_ops
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.niit.service.bbs.pojo.SkMemberNotificationOps" >
+  <insert id="insert" parameterType="com.niit.service.member.pojo.SkMemberNotificationOps" >
     insert into sk_member_notification_ops (id, user_id, user_name, 
       notice_time, project_id, operation, 
       status)
@@ -31,7 +31,7 @@
       #{noticeTime,jdbcType=TIMESTAMP}, #{projectId,jdbcType=INTEGER}, #{operation,jdbcType=INTEGER}, 
       #{status,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.niit.service.bbs.pojo.SkMemberNotificationOps" >
+  <insert id="insertSelective" parameterType="com.niit.service.member.pojo.SkMemberNotificationOps" >
     insert into sk_member_notification_ops
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -80,7 +80,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.niit.service.bbs.pojo.SkMemberNotificationOps" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.niit.service.member.pojo.SkMemberNotificationOps" >
     update sk_member_notification_ops
     <set >
       <if test="userId != null" >
@@ -104,7 +104,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.niit.service.bbs.pojo.SkMemberNotificationOps" >
+  <update id="updateByPrimaryKey" parameterType="com.niit.service.member.pojo.SkMemberNotificationOps" >
     update sk_member_notification_ops
     set user_id = #{userId,jdbcType=INTEGER},
       user_name = #{userName,jdbcType=VARCHAR},

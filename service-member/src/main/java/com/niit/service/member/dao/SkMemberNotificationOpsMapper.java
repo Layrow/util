@@ -1,6 +1,6 @@
-package com.niit.service.bbs.dao;
+package com.niit.service.member.dao;
 
-import com.niit.service.bbs.pojo.SkMemberNotificationOps;
+import com.niit.service.member.pojo.SkMemberNotificationOps;
 
 public interface SkMemberNotificationOpsMapper {
     int deleteByPrimaryKey(Integer id);

@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: service-client
+server:
+  port: 8887
+
+  datasource:
+    url: jdbc:mysql://118.178.227.169:3306/niit_samrtkids?serverTimezone=GMT
+    driver-class-name: com.mysql.jdbc.Driver
+    username: smartkids
+    password: niit1234
+  application:
+    name: service-client
+  cloud:
+    config:
+      uri: http://127.0.0.1:8888
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8761/eureka/
+upload:
+  userName: yt
+  password: yt
+  server:
+    port: 8886
+    host: 127.0.0.1
+
+
+
+

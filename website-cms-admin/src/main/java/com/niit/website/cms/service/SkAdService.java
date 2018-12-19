@@ -40,6 +40,9 @@ public interface SkAdService {
     // 查询特定广告位下的所有广告 order排序 status为1 或 status为0
     PageInfo<SkAdContent> selectByAdId(Integer adId, Integer status, Integer currentPage, Integer pageSize);
 
+    // 根据keycode查询广告 order排序 status为1 或 status为0
+    PageInfo<SkAdContent> selectByKeycode(String keycode, Integer status,Integer currentPage,Integer pageSize);
+
     // 添加广告位
     void insert(SkAd record);
 

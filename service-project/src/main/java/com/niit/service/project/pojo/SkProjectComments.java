@@ -1,5 +1,7 @@
 package com.niit.service.project.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class SkProjectComments {
@@ -7,11 +9,32 @@ public class SkProjectComments {
 
     private String content;
 
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date addtime;
 
     private Integer projectId;
 
     private Integer status;
+
+    private Integer userId;
+
+    private String userName;
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public Integer getId() {
         return id;

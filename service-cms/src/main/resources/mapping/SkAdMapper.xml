@@ -5,11 +5,12 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="keycode" property="keycode" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="status" property="status" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, title, content, create_time, status
+    id, title, content, keycode, create_time, status
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -56,9 +57,9 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.niit.service.cms.pojo.SkAd" >
-    insert into sk_ad (id, title, content, 
+    insert into sk_ad (id, title, keycode, content,
       create_time, status)
-    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR},#{keycode,jdbcType=VARCHAR},#{content,jdbcType=VARCHAR},
       #{createTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.niit.service.cms.pojo.SkAd" >
@@ -69,6 +70,9 @@
       </if>
       <if test="title != null" >
         title,
+      </if>
+      <if test="keycode != null" >
+        keycode,
       </if>
       <if test="content != null" >
         content,
@@ -87,6 +91,9 @@
       <if test="title != null" >
         #{title,jdbcType=VARCHAR},
       </if>
+      <if test="keycode != null" >
+        #{keycode,jdbcType=VARCHAR},
+      </if>
       <if test="content != null" >
         #{content,jdbcType=VARCHAR},
       </if>
@@ -104,6 +111,9 @@
       <if test="title != null" >
         title = #{title,jdbcType=VARCHAR},
       </if>
+      <if test="keycode != null" >
+        keycode = #{keycode,jdbcType=VARCHAR},
+      </if>
       <if test="content != null" >
         content = #{content,jdbcType=VARCHAR},
       </if>
@@ -119,6 +129,7 @@
   <update id="updateByPrimaryKey" parameterType="com.niit.service.cms.pojo.SkAd" >
     update sk_ad
     set title = #{title,jdbcType=VARCHAR},
+      keycode = #{keycode,jdbcType=VARCHAR},
       content = #{content,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       status = #{status,jdbcType=INTEGER}

@@ -29,6 +29,9 @@ public interface SkAdContentMapper {
     // 查询特定广告位下的所有广告 order排序 status为1 或 status为0
     List<SkAdContent> selectByAdId(@Param("ad_id") Integer adId, @Param("ad_status") Integer status);
 
+    // 根据keycode查询广告 order排序 status为1 或 status为0
+    List<SkAdContent> selectByKeycode(@Param("keycode")String keycode, @Param("ad_status") Integer status);
+
     // 批量审核广告
     int updateMoreAdContent(List<String> list);
 

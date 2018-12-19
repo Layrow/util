@@ -239,5 +239,19 @@ public class SkBbsTopicController {
         map= gson.fromJson(s,type);
         return map;
     }
+    @GetMapping("/allTopic")
+    public  Map<Integer, List<SkBbsTopic>> selectAllTopic(){
+        String s = skBbsTopicService.selectAllTopicById();
+        Map<Integer, List<SkBbsTopic>> map =null;
+        Type type = new TypeToken<Map<Integer, List<SkBbsTopic>>>() {
+        }.getType();
+        Gson gson = new Gson();
+        if(s.isEmpty()||s==null){
+            return map;
+        }
+        map= gson.fromJson(s,type);
+        return  map;
+
+    }
 
 }

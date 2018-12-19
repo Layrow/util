@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -29,6 +31,12 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
     @Override
     public SkBbsTopic getTopic(Integer id) {
         return restTemplate.getForObject(URL+"get?id="+id,SkBbsTopic.class);
+    }
+
+    @Override
+    public String selectAllTopicById() {
+
+        return restTemplate.getForObject("http://"+SERVICE_NAME+"/topic/allTopic",String.class);
     }
 
     @Override

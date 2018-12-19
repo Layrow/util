@@ -16,7 +16,12 @@
         <module>service-lms</module>
         <module>website-lms-admin</module>
         <module>website-smartkids</module>
+
+        <module>service-client</module>
+        <module>service-server</module>
+
         <module>service-member</module>
+
     </modules>
     <packaging>pom</packaging>
     <name>smartkids-parent</name>

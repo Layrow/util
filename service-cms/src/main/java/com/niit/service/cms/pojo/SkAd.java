@@ -10,6 +10,17 @@ public class SkAd {
     private String title;
 
     private String content;
+
+    private String keycode;
+
+    public String getKeycode() {
+        return keycode;
+    }
+
+    public void setKeycode(String keycode) {
+        this.keycode = keycode;
+    }
+
     @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 

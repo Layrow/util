@@ -24,7 +24,6 @@
   <sql id="Blob_Column_List" >
     content
   </sql>
-
   <!--根据Id查询单个帖子-->
   <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
     select 

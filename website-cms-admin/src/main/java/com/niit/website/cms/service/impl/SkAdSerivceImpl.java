@@ -82,6 +82,15 @@ public class SkAdSerivceImpl implements SkAdService {
         return restTemplate.getForObject("http://" + SERVICE_NAME + "/ad/content?adId=" + adId + "&status=" + status + "&currentPage=" + currentPage + "&pageSize=" + pageSize, PageInfo.class);
     }
 
+    // 根据keycode查询广告
+    @Override
+    public PageInfo<SkAdContent> selectByKeycode(String keycode, Integer status, Integer currentPage, Integer pageSize) {
+        if ("".equals(status) || status == null) {
+            return restTemplate.getForObject("http://" + SERVICE_NAME + "/ad/content/key?keycode=" + keycode + "&currentPage=" + currentPage + "&pageSize=" + pageSize, PageInfo.class);
+        }
+        return restTemplate.getForObject("http://" + SERVICE_NAME + "/ad/content/key?keycode=" + keycode + "&status=" + status + "&currentPage=" + currentPage + "&pageSize=" + pageSize, PageInfo.class);
+    }
+
     // 新增广告位
     @Override
     public void insert(SkAd record) {

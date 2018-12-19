@@ -31,6 +31,26 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
     private SkBbsReplyMapper skBbsReplyMapper;
 
     @Override
+    public Map<Integer, List<SkBbsTopic>> selectAllTopicById() {
+        //查询出所有回帖
+        List<SkBbsReply> skBbsReplies = skBbsReplyMapper.selectAll();
+        //查出所有回帖的ID
+        LinkedList<Integer> list = new LinkedList<>();
+        skBbsReplies.stream().forEach(e->list.add(e.getId()));
+        //根据回帖Id查询出相对应的帖子
+        //List<SkBbsTopic> topics = skBbsTopicMapper.selectAllTopicById(list);
+        Map<Integer, List<SkBbsTopic>> map=new LinkedHashMap<>();
+        skBbsReplies.stream().forEach(e->{
+            //key放入 回帖Id  value放入回帖对映的帖子
+            map.put(e.getId(),skBbsReplyMapper.selectAllTopicById(e.getId()));
+
+        });
+        return map;
+
+
+    }
+
+    @Override
     public int updateTopic(SkBbsTopic record) {
         return skBbsTopicMapper.updateByPrimaryKeySelective(record);
     }

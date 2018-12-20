@@ -54,6 +54,31 @@
     id, channel_id, title, parent_id, sort_id, link_url, img_url, content, seo_title,
     seo_keywords, seo_description, is_lock
   </sql>
+
+  <!-- 批量级联删除与ArticleCategoryCn相关的内容 -->
+  <delete id="deleteAboutArticleCategoryEn" parameterType="java.util.List">
+    <!-- delete from emp where empno in(7789,7790) -->
+    <!-- forEach : 用来循环 collection : 用来指定循环的数据的类型 可以填的值有：array,list,map item
+        : 循环中为每个循环的数据指定一个别名 index : 循环中循环的下标 open : 开始 close : 结束 separator : 数组中元素之间的分隔符 -->
+    DELETE
+    sk_article_category_en,
+    sk_channel_article_content_en,
+    sk_channel_article_goods_en,
+    sk_channel_article_news_en,
+    sk_channel_article_video_en
+    FROM
+    sk_article_category_en
+    LEFT JOIN sk_channel_article_content_en ON (sk_article_category_en.id = sk_channel_article_content_en.category_id)
+    LEFT JOIN sk_channel_article_goods_en ON (sk_article_category_en.id = sk_channel_article_goods_en.category_id)
+    LEFT JOIN sk_channel_article_news_en ON (sk_article_category_en.id = sk_channel_article_news_en.category_id)
+    LEFT JOIN sk_channel_article_video_en ON (sk_article_category_en.id = sk_channel_article_video_en.category_id)
+    WHERE
+    sk_article_category_en.id in
+    <foreach collection="list" item="id" open="("
+             separator="," close=")">
+      #{id}
+    </foreach>
+  </delete>
   <!--拿到所有父类栏目id-->
   <select id="getMainCategory" resultMap="BaseResultMap" parameterType="java.lang.Integer">
     SELECT

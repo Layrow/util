@@ -129,6 +129,28 @@
     delete from sk_bbs_reply
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  <!--删除栏目下的帖子的所有回复贴-->
+  <delete id="deleteReplyBySection" parameterType="java.util.List" >
+    delete from sk_bbs_reply
+    where topic_id in (
+        SELECT id
+        FROM sk_bbs_topic
+        WHERE section_id IN
+          <foreach collection="list" item="sectionId" open="("
+                   separator="," close=")">
+            #{sectionId,jdbcType=INTEGER}
+          </foreach>);
+  </delete>
+  <!--删除帖子的时候删除相关回帖-->
+  <delete id="deleteReplyByTopic" parameterType="java.util.List" >
+    delete from sk_bbs_reply
+    where topic_id IN
+    <foreach collection="list" item="topicId" open="("
+             separator="," close=")">
+      #{topicId,jdbcType=INTEGER}
+    </foreach>
+  </delete>
+
   <insert id="insert" parameterType="com.niit.service.bbs.pojo.SkBbsReply" >
     insert into sk_bbs_reply (id, reply_userid, reply_time,
       reply_order, topic_id, content,reply_status,hasbad

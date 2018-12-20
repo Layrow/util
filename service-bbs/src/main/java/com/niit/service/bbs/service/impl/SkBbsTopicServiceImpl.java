@@ -71,7 +71,16 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
 
     @Override
     public int deleteByPrimaryKey(Integer id) {
-        return skBbsTopicMapper.deleteByPrimaryKey(id);
+        try {
+            List<String> list= new ArrayList<>();
+            list.add(id.toString());
+            skBbsReplyMapper.deleteReplyByTopic(list);
+            skBbsTopicMapper.deleteByPrimaryKey(id);
+           return id;
+        }catch (Exception e){
+            e.printStackTrace();
+            return 0;
+        }
     }
 
     /**
@@ -82,7 +91,17 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
      */
     @Override
     public boolean deleteByPrimaryKeyList(List<String> id) {
-        return skBbsTopicMapper.deleteByPrimaryKeyList(id)>0;
+        try {
+            //删除所有的回帖
+            skBbsReplyMapper.deleteReplyByTopic(id);
+            //删除所有的帖子
+            skBbsTopicMapper.deleteByPrimaryKeyList(id);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return  false;
+        }
+
     }
 
     @Override

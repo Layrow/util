@@ -31,6 +31,7 @@
       #{noticeTime,jdbcType=TIMESTAMP}, #{projectId,jdbcType=INTEGER}, #{operation,jdbcType=INTEGER}, 
       #{status,jdbcType=INTEGER})
   </insert>
+  <!--添加一条用户通知-->
   <insert id="insertSelective" parameterType="com.niit.service.member.pojo.SkMemberNotificationOps" >
     insert into sk_member_notification_ops
     <trim prefix="(" suffix=")" suffixOverrides="," >

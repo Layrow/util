@@ -2,10 +2,12 @@ package com.niit.website.bbs.service.impl;
 
 import com.github.pagehelper.PageInfo;
 import com.niit.common.utils.Tools;
+import com.niit.service.uploader.ResultData;
 import com.niit.website.bbs.pojo.SkBbsTopic;
 import com.niit.website.bbs.service.SkBbsTopicService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -23,6 +25,7 @@ import java.util.Map;
 public class SkBbsTopicServiceImpl implements SkBbsTopicService {
 
     private static final  String SERVICE_NAME = "service-bbs";
+    private static  final String SERVICE_UPLOADER = "service-uploader";
     private static final  String URL="http://"+SERVICE_NAME+"/topic/";
 
     @Resource
@@ -31,6 +34,12 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
     @Override
     public SkBbsTopic getTopic(Integer id) {
         return restTemplate.getForObject(URL+"get?id="+id,SkBbsTopic.class);
+    }
+
+    @Override
+    public ResultData uploader(MultipartFile[] file, String fileType) {
+        return restTemplate.postForObject("http://"+SERVICE_UPLOADER+"/uploader/"+fileType,file,ResultData.class);
+
     }
 
     @Override

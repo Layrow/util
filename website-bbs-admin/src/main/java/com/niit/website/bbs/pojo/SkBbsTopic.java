@@ -27,6 +27,8 @@ public class SkBbsTopic {
 
     private String content;
 
+
+
     public Integer getId() {
         return id;
     }

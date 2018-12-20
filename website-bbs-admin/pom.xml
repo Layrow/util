@@ -111,6 +111,24 @@
             <version>5.1.7</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>com.niit</groupId>
+            <artifactId>service-uploader</artifactId>
+            <version>1.0.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.niit</groupId>
+            <artifactId>service-uploader</artifactId>
+            <version>1.0.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.niit</groupId>
+            <artifactId>service-uploader</artifactId>
+            <version>1.0.0</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>

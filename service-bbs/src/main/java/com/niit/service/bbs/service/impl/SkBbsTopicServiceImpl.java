@@ -31,7 +31,7 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
     private SkBbsReplyMapper skBbsReplyMapper;
 
     @Override
-    public Map<Integer, List<SkBbsTopic>> selectAllTopicById() {
+    public Map<Integer, String> selectAllTopicById() {
         //查询出所有回帖
         List<SkBbsReply> skBbsReplies = skBbsReplyMapper.selectAll();
         //查出所有回帖的ID
@@ -39,11 +39,10 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
         skBbsReplies.stream().forEach(e->list.add(e.getId()));
         //根据回帖Id查询出相对应的帖子
         //List<SkBbsTopic> topics = skBbsTopicMapper.selectAllTopicById(list);
-        Map<Integer, List<SkBbsTopic>> map=new LinkedHashMap<>();
+        Map<Integer, String> map=new LinkedHashMap<>();
         skBbsReplies.stream().forEach(e->{
             //key放入 回帖Id  value放入回帖对映的帖子
             map.put(e.getId(),skBbsReplyMapper.selectAllTopicById(e.getId()));
-
         });
         return map;
 

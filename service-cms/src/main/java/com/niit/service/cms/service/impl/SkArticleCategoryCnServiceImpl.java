@@ -114,6 +114,7 @@ public class SkArticleCategoryCnServiceImpl implements SkArticleCategoryCnServic
         return skArticleCategoryCnMapper.deleteMoreArticleCategoryCn(list);
     }
 
+
     @Override
     public List<SkArticleCategoryCn> selectArticleCategoryByChannelId(Integer channelId) {
         return skArticleCategoryCnMapper.selectArticleCategoryByChannelId(channelId);
@@ -185,7 +186,7 @@ public class SkArticleCategoryCnServiceImpl implements SkArticleCategoryCnServic
         });
     }
 
-    // 根据传来的ID，删除此ID和此ID下的子孙ID栏目类别
+    // 根据传来的ID，删除此ID和此ID下的子孙ID栏目类别 ,级联删除与栏目ID集相关的内容
     @Override
     public int deleteAllCategoryCn(String id,String locale) {
         Set<String> categorySet = new HashSet<>();
@@ -197,21 +198,21 @@ public class SkArticleCategoryCnServiceImpl implements SkArticleCategoryCnServic
                 });
                 // Set --> List
                 List list1 = new ArrayList(categorySet);
-                return skArticleCategoryCnMapper.deleteMoreArticleCategoryCn(list1);
+                return skArticleCategoryCnMapper.deleteAboutArticleCategoryCn(list1);
             case "en":
                 idList.forEach(x -> {
                     getAllChildrenCategoryEn(x,categorySet);
                 });
                 // Set --> List
                 List list2 = new ArrayList(categorySet);
-                return skArticleCategoryEnMapper.deleteMoreArticleCategoryCn(list2);
+                return skArticleCategoryEnMapper.deleteAboutArticleCategoryCn(list2);
             default:
                 idList.forEach(x -> {
                     getAllChildrenCategoryCn(x,categorySet);
                 });
                 // Set --> List
                 List list3 = new ArrayList(categorySet);
-                return skArticleCategoryCnMapper.deleteMoreArticleCategoryCn(list3);
+                return skArticleCategoryCnMapper.deleteAboutArticleCategoryCn(list3);
         }
     }
 

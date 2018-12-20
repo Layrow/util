@@ -5,7 +5,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.netflix.hystrix.EnableHystrix;
-import org.springframework.context.annotation.ImportResource;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 
@@ -14,7 +13,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableEurekaClient
 @EnableHystrix
 @EnableSpringBootMetricsCollector
-@ImportResource("classpath:applicationContext.xml")//读取applicationContext文件
 public class ServiceSERVERApplication {
 
     public static void main(String[] args) {

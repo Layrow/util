@@ -239,10 +239,10 @@ public class SkBbsTopicController {
         return map;
     }
     @GetMapping("/allTopic")
-    public  Map<Integer, List<SkBbsTopic>> selectAllTopic(){
+    public  Map<Integer, String> selectAllTopic(){
         String s = skBbsTopicService.selectAllTopicById();
-        Map<Integer, List<SkBbsTopic>> map =null;
-        Type type = new TypeToken<Map<Integer, List<SkBbsTopic>>>() {
+        Map<Integer, String> map =null;
+        Type type = new TypeToken<Map<Integer, String>>() {
         }.getType();
         Gson gson = new Gson();
         if(s.isEmpty()||s==null){

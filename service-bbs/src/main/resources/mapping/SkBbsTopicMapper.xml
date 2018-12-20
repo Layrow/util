@@ -160,6 +160,16 @@
     delete from sk_bbs_topic
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  <!--删除栏目的时候删除栏目下所有帖子-->
+  <delete id="deleteBySection" parameterType="java.util.List" >
+    delete from sk_bbs_topic
+    WHERE section_id IN
+    <foreach collection="list" item="sectionId" open="("
+             separator="," close=")">
+      #{sectionId,jdbcType=INTEGER}
+    </foreach>
+
+  </delete>
   <!--管理批量删除帖子 根据帖子主键Id-->
   <delete id="deleteByPrimaryKeyList" parameterType="java.util.List" >
     delete from sk_bbs_topic

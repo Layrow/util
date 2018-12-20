@@ -16,7 +16,7 @@ public class SkMemberIntegral {
     private Integer operation;
 
     private Integer numbers;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:SS")
     private Date operationTime;
 
     public Integer getId() {

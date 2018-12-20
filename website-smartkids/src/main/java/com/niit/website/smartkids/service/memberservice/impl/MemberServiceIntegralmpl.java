@@ -49,7 +49,6 @@ public class MemberServiceIntegralmpl implements IMemberItegralService {
      */
     @Override
     public String interAction(SkMemberIntegral record) {
-
             return restTemplate.postForObject(URL+"integral",record,String.class);
     }
 }

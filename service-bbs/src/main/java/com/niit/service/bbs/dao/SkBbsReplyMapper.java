@@ -15,6 +15,15 @@ public interface SkBbsReplyMapper {
 
     int deleteByPrimaryKey(Integer id);
 
+    int deleteReplyByTopic(@Param(value = "list") List<String> topicId);
+
+    /**
+     * 删除栏目下帖子的所有的回帖
+     * @param sectionId
+     * @return
+     */
+    int deleteReplyBySection(@Param(value = "list") List<String> sectionId);
+
     int insert(SkBbsReply record);
 
     SkBbsReply selectByPrimaryKey(Integer id);

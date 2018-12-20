@@ -49,11 +49,9 @@ public class SkMemberIntegralServiceImpl implements ISkMemberIntegralService {
       try{
            record.setOperationTime(new Date());
            skMemberIntegralMapper.insertSelective(record);
-          System.out.println("添加了呀");
            return  true;
        }catch (Exception e){
            e.printStackTrace();
-          System.out.println("才出错了吗");
            return false;
        }
     }

@@ -1,6 +1,7 @@
 package com.niit.service.bbs.dao;
 
 import com.niit.service.bbs.pojo.SkBbsReply;
+import com.niit.service.bbs.pojo.SkBbsTopic;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -11,7 +12,17 @@ import java.util.Map;
 public interface SkBbsReplyMapper {
 
     List<SkBbsReply> selectAllDirtyReply();
+
     int deleteByPrimaryKey(Integer id);
+
+    int deleteReplyByTopic(@Param(value = "list") List<String> topicId);
+
+    /**
+     * 删除栏目下帖子的所有的回帖
+     * @param sectionId
+     * @return
+     */
+    int deleteReplyBySection(@Param(value = "list") List<String> sectionId);
 
     int insert(SkBbsReply record);
 
@@ -59,6 +70,6 @@ public interface SkBbsReplyMapper {
 
     List<SkBbsReply>  selectReplyUserId(@Param("replyUserid") String replyUserId);
 
-
+    String selectAllTopicById (Integer id);
 
 }

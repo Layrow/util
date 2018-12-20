@@ -3,7 +3,10 @@ package com.niit.service.bbs.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.niit.common.utils.Tools;
+import com.niit.service.bbs.dao.SkBbsReplyMapper;
 import com.niit.service.bbs.dao.SkBbsSectionMapper;
+import com.niit.service.bbs.dao.SkBbsTopicMapper;
+import com.niit.service.bbs.pojo.SkBbsReply;
 import com.niit.service.bbs.pojo.SkBbsSection;
 import com.niit.service.bbs.service.SkBbsSectionService;
 import org.springframework.stereotype.Service;
@@ -23,6 +26,10 @@ import java.util.List;
 public class SkBbsSectionServiceImpl implements SkBbsSectionService {
     @Resource
     SkBbsSectionMapper skBbsSectionMapper;
+    @Resource
+    SkBbsTopicMapper skBbsTopicMapper;
+    @Resource
+    SkBbsReplyMapper skBbsReplyMapper;
 
     /**
      * 根据 栏目id查询栏目名称
@@ -44,7 +51,15 @@ public class SkBbsSectionServiceImpl implements SkBbsSectionService {
     @Override
     public boolean deleteSection(String id)
     {
-        return skBbsSectionMapper.deleteByPrimaryKey(Tools.getList(id))>0;
+       try {
+           skBbsReplyMapper.deleteReplyBySection(Tools.getList(id));
+           skBbsTopicMapper.deleteBySection(Tools.getList(id));
+           skBbsSectionMapper.deleteByPrimaryKey(Tools.getList(id));
+           return true;
+       }catch (Exception e){
+           e.printStackTrace();
+           return  false;
+       }
     }
 
     @Override

@@ -4,6 +4,9 @@ import com.niit.service.lms.service.SkLmsHomeworkCnService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.List;
+
 /**
  * @ClassName SkLmsHomeworkCnController
  * @Description
@@ -97,6 +100,12 @@ public class SkLmsHomeworkCnController {
     @GetMapping("/homework/stu")
     public String selectStudentByHomeworkId(Integer batchId, Integer homeworkId, Integer currentPage, Integer pageSize) {
         return skLmsHomeworkCnService.selectStudentByHomeworkId(batchId,homeworkId,currentPage,pageSize);
+    }
+
+    // 获得作业成绩情况
+    @GetMapping("/homework/score")
+    public String selectScore(Integer batchId,Integer homeworkId) {
+        return skLmsHomeworkCnService.selectScore(batchId, homeworkId);
     }
 
 }

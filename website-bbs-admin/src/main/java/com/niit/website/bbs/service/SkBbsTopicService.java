@@ -2,7 +2,9 @@ package com.niit.website.bbs.service;
 
 
 import com.github.pagehelper.PageInfo;
+import com.niit.service.uploader.ResultData;
 import com.niit.website.bbs.pojo.SkBbsTopic;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -16,6 +18,9 @@ import java.util.Map;
  */
 public interface SkBbsTopicService {
     SkBbsTopic getTopic(Integer id);
+
+
+    String selectAllTopicById();
 
     /**
      * 单个修改帖子
@@ -46,10 +51,9 @@ public interface SkBbsTopicService {
     /**
      * 更新帖子浏览量
      * @param id 帖子主键
-     * @param newCount 新的浏览量
      * @return
      */
-    int updateViewCountByPrimaryKey(Integer id, Integer newCount);
+    int updateViewCountByPrimaryKey(Integer id);
 
 
     /**

@@ -31,6 +31,25 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
     private SkBbsReplyMapper skBbsReplyMapper;
 
     @Override
+    public Map<Integer, String> selectAllTopicById() {
+        //查询出所有回帖
+        List<SkBbsReply> skBbsReplies = skBbsReplyMapper.selectAll();
+        //查出所有回帖的ID
+        LinkedList<Integer> list = new LinkedList<>();
+        skBbsReplies.stream().forEach(e->list.add(e.getId()));
+        //根据回帖Id查询出相对应的帖子
+        //List<SkBbsTopic> topics = skBbsTopicMapper.selectAllTopicById(list);
+        Map<Integer, String> map=new LinkedHashMap<>();
+        skBbsReplies.stream().forEach(e->{
+            //key放入 回帖Id  value放入回帖对映的帖子
+            map.put(e.getId(),skBbsReplyMapper.selectAllTopicById(e.getId()));
+        });
+        return map;
+
+
+    }
+
+    @Override
     public int updateTopic(SkBbsTopic record) {
         return skBbsTopicMapper.updateByPrimaryKeySelective(record);
     }
@@ -38,19 +57,30 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
     @Override
     public int insertSelective(SkBbsTopic record) {
         record.setCreateTime(new Date());
-        if (BadWordUtil.isContaintBadWord(record.getTitle(), 2)){
+        if (BadWordUtil.isContaintBadWord(record.getTitle(), 2)||BadWordUtil.isContaintBadWord(record.getContent(), 2)){
             record.setTitle(BadWordUtil.replaceBadWord(record.getTitle(),2,"*"));
-        }
-        if (BadWordUtil.isContaintBadWord(record.getContent(), 2)){
             record.setContent(BadWordUtil.replaceBadWord(record.getContent(),2,"*"));
+            record.setHasbad(1);
+        }else {
+            record.setHasbad(0);
         }
+        record.setViewcount(0);
         record.setStatus(1);
         return skBbsTopicMapper.insertSelective(record);
     }
 
     @Override
     public int deleteByPrimaryKey(Integer id) {
-        return skBbsTopicMapper.deleteByPrimaryKey(id);
+        try {
+            List<String> list= new ArrayList<>();
+            list.add(id.toString());
+            skBbsReplyMapper.deleteReplyByTopic(list);
+            skBbsTopicMapper.deleteByPrimaryKey(id);
+           return id;
+        }catch (Exception e){
+            e.printStackTrace();
+            return 0;
+        }
     }
 
     /**
@@ -61,11 +91,23 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
      */
     @Override
     public boolean deleteByPrimaryKeyList(List<String> id) {
-        return skBbsTopicMapper.deleteByPrimaryKeyList(id)>0;
+        try {
+            //删除所有的回帖
+            skBbsReplyMapper.deleteReplyByTopic(id);
+            //删除所有的帖子
+            skBbsTopicMapper.deleteByPrimaryKeyList(id);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return  false;
+        }
+
     }
 
     @Override
-    public int updateViewCountByPrimaryKey(Integer id, Integer newCount) {
+    public int updateViewCountByPrimaryKey(Integer id) {
+        SkBbsTopic record=skBbsTopicMapper.selectByPrimaryKey(id);
+        Integer newCount=record.getViewcount()+1;
         return skBbsTopicMapper.updateViewCountByPrimaryKey(id,newCount);
     }
 

@@ -2,12 +2,16 @@ package com.niit.website.bbs.service.impl;
 
 import com.github.pagehelper.PageInfo;
 import com.niit.common.utils.Tools;
+import com.niit.service.uploader.ResultData;
 import com.niit.website.bbs.pojo.SkBbsTopic;
 import com.niit.website.bbs.service.SkBbsTopicService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -29,6 +33,13 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
     @Override
     public SkBbsTopic getTopic(Integer id) {
         return restTemplate.getForObject(URL+"get?id="+id,SkBbsTopic.class);
+    }
+
+
+    @Override
+    public String selectAllTopicById() {
+
+        return restTemplate.getForObject("http://"+SERVICE_NAME+"/topic/allTopic",String.class);
     }
 
     @Override
@@ -99,13 +110,12 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
      * 更新帖子浏览量
      *
      * @param id       帖子主键
-     * @param newCount 新的浏览量
      * @return
      */
     @Override
-    public int updateViewCountByPrimaryKey(Integer id, Integer newCount) {
+    public int updateViewCountByPrimaryKey(Integer id) {
         try {
-            restTemplate.put(URL+"editViewCount?id="+id+"&newCount="+newCount,String.class);
+            restTemplate.put(URL+"editViewCount?id="+id,String.class);
             return 1;
         }catch (Exception e){
             e.printStackTrace();

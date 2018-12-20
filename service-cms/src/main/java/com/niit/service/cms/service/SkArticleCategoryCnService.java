@@ -29,6 +29,9 @@ public interface SkArticleCategoryCnService {
     // 批量删除栏目类别
     int deleteMoreArticleCategoryCn(String id);
 
+    // 级联删除与栏目相关的内容
+    // Integer deleteAboutArticleCategoryCn(String id);
+
     // 查询栏目类别节点树，查询所有栏目类别(包含层级关系)
     List<SkArticleCategoryCn> getNodeTree(Integer channelId,String locale);
 

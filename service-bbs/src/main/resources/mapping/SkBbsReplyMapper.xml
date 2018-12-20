@@ -8,12 +8,13 @@
     <result column="reply_order" property="replyOrder" jdbcType="INTEGER" />
     <result column="topic_id" property="topicId" jdbcType="INTEGER"/>
     <result column="reply_status" property="replyStatus" jdbcType="INTEGER"/>
+    <result column="hasbad" property="hasbad" jdbcType="INTEGER" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.niit.service.bbs.pojo.SkBbsReply" extends="BaseResultMap" >
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, reply_userid, reply_time, reply_order, topic_id,reply_status
+    id, reply_userid, reply_time, reply_order, topic_id,reply_status,hasbad
   </sql>
   <sql id="Blob_Column_List" >
     content
@@ -50,7 +51,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from  sk_bbs_reply where topic_id=#{topic_id,jdbcType=INTEGER} order by reply_order asc
+    from  sk_bbs_reply where topic_id=#{topic_id,jdbcType=INTEGER} order by reply_time DESC
   </select>
   <!--查询所有的含有脏词的回复贴-->
   <select id="selectAllDirtyReply" resultMap="BaseResultMap" >
@@ -114,6 +115,11 @@
       #{id}
     </foreach>
   </select>
+  <!--查询出来所有帖子-->
+  <select id="selectAllTopicById" resultType="java.lang.String">
+    select top.title  from  sk_bbs_reply  re join sk_bbs_topic  top ON re.topic_id=top.id  WHERE
+     re.id=#{id,jdbcType=INTEGER}
+</select>
   <!--根据用户查找所有回帖-->
   <select id="selectReplyUserId" >
      select top.*  from  sk_bbs_reply  re join sk_bbs_topic  top ON re.topic_id=top.id  WHERE
@@ -123,12 +129,34 @@
     delete from sk_bbs_reply
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  <!--删除栏目下的帖子的所有回复贴-->
+  <delete id="deleteReplyBySection" parameterType="java.util.List" >
+    delete from sk_bbs_reply
+    where topic_id in (
+        SELECT id
+        FROM sk_bbs_topic
+        WHERE section_id IN
+          <foreach collection="list" item="sectionId" open="("
+                   separator="," close=")">
+            #{sectionId,jdbcType=INTEGER}
+          </foreach>);
+  </delete>
+  <!--删除帖子的时候删除相关回帖-->
+  <delete id="deleteReplyByTopic" parameterType="java.util.List" >
+    delete from sk_bbs_reply
+    where topic_id IN
+    <foreach collection="list" item="topicId" open="("
+             separator="," close=")">
+      #{topicId,jdbcType=INTEGER}
+    </foreach>
+  </delete>
+
   <insert id="insert" parameterType="com.niit.service.bbs.pojo.SkBbsReply" >
-    insert into sk_bbs_reply (id, reply_userid, reply_time, 
-      reply_order, topic_id, content,reply_status
+    insert into sk_bbs_reply (id, reply_userid, reply_time,
+      reply_order, topic_id, content,reply_status,hasbad
       )
-    values (#{id,jdbcType=INTEGER}, #{replyUserid,jdbcType=VARCHAR}, #{replyTime,jdbcType=TIMESTAMP}, 
-      #{replyOrder,jdbcType=INTEGER}, #{topicId,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR},#{replyStatus,jdbcType=INTEGER}
+    values (#{id,jdbcType=INTEGER}, #{replyUserid,jdbcType=VARCHAR}, #{replyTime,jdbcType=TIMESTAMP},
+      #{replyOrder,jdbcType=INTEGER}, #{topicId,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR},#{replyStatus,jdbcType=INTEGER},#{hasbad,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.niit.service.bbs.pojo.SkBbsReply" >
@@ -155,6 +183,9 @@
       <if test="replyStatus != null" >
         reply_status,
       </if>
+      <if test="hasbad != null" >
+        hasbad,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -176,7 +207,10 @@
         #{content,jdbcType=LONGVARCHAR},
       </if>
       <if test="replyStatus != null" >
-        #{replyStatus,jdbcType=INTEGER}
+        #{replyStatus,jdbcType=INTEGER},
+      </if>
+      <if test="hasbad != null" >
+        #{hasbad,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>

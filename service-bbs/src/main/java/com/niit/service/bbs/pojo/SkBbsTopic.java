@@ -23,6 +23,8 @@ public class SkBbsTopic {
 
     private Integer status;
 
+    private Integer hasbad;
+
     private Integer sectionId;
 
     private String content;
@@ -97,6 +99,14 @@ public class SkBbsTopic {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getHasbad() {
+        return hasbad;
+    }
+
+    public void setHasbad(Integer hasbad) {
+        this.hasbad = hasbad;
     }
 
     public Integer getSectionId() {

@@ -3,6 +3,8 @@ package com.niit.service.cms.service;
 import com.github.pagehelper.PageInfo;
 import com.niit.service.cms.pojo.SkAd;
 import com.niit.service.cms.pojo.SkAdContent;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
@@ -38,6 +40,9 @@ public interface SkAdService {
 
     // 查询特定广告位下的所有广告 order排序 status为1 或 status为0
     PageInfo<SkAdContent> selectByAdId(Integer adId, Integer status,Integer currentPage,Integer pageSize);
+
+    // 根据keycode查询广告 order排序 status为1 或 status为0
+    PageInfo<SkAdContent> selectByKeycode(String keycode, Integer status,Integer currentPage,Integer pageSize);
 
     // 添加广告位
     int insert(SkAd record);

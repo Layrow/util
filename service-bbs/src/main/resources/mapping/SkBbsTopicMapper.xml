@@ -11,19 +11,19 @@
     <result column="istop" property="istop" jdbcType="INTEGER" />
     <result column="isessence" property="isessence" jdbcType="INTEGER" />
     <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="hasbad" property="hasbad" jdbcType="INTEGER" />
     <result column="section_id" property="sectionId" jdbcType="INTEGER" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.niit.service.bbs.pojo.SkBbsTopic" extends="BaseResultMap" >
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, title, create_time, create_userid, viewcount, isoffcial, istop, isessence, status, 
+    id, title, create_time, create_userid, viewcount, isoffcial, istop, isessence, status, hasbad,
     section_id
   </sql>
   <sql id="Blob_Column_List" >
     content
   </sql>
-
   <!--根据Id查询单个帖子-->
   <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
     select 
@@ -160,6 +160,16 @@
     delete from sk_bbs_topic
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  <!--删除栏目的时候删除栏目下所有帖子-->
+  <delete id="deleteBySection" parameterType="java.util.List" >
+    delete from sk_bbs_topic
+    WHERE section_id IN
+    <foreach collection="list" item="sectionId" open="("
+             separator="," close=")">
+      #{sectionId,jdbcType=INTEGER}
+    </foreach>
+
+  </delete>
   <!--管理批量删除帖子 根据帖子主键Id-->
   <delete id="deleteByPrimaryKeyList" parameterType="java.util.List" >
     delete from sk_bbs_topic
@@ -173,11 +183,11 @@
   <insert id="insert" parameterType="com.niit.service.bbs.pojo.SkBbsTopic" >
     insert into sk_bbs_topic (id, title, create_time, 
       create_userid, viewcount, isoffcial, 
-      istop, isessence, status, 
+      istop, isessence, status,hasbad,
       section_id, content)
-    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{createUserid,jdbcType=VARCHAR}, #{viewcount,jdbcType=INTEGER}, #{isoffcial,jdbcType=INTEGER}, 
-      #{istop,jdbcType=INTEGER}, #{isessence,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+      #{createUserid,jdbcType=VARCHAR}, #{viewcount,jdbcType=INTEGER}, #{isoffcial,jdbcType=INTEGER},
+      #{istop,jdbcType=INTEGER}, #{isessence,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{hasbad,jdbcType=INTEGER},
       #{sectionId,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR})
   </insert>
 
@@ -232,6 +242,9 @@
       <if test="status != null" >
         status,
       </if>
+      <if test="hasbad != null" >
+        hasbad,
+      </if>
       <if test="sectionId != null" >
         section_id,
       </if>
@@ -266,6 +279,9 @@
       </if>
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
+      </if>
+      <if test="hasbad != null" >
+        #{hasbad,jdbcType=INTEGER},
       </if>
       <if test="sectionId != null" >
         #{sectionId,jdbcType=INTEGER},

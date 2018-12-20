@@ -2,6 +2,7 @@ package com.niit.service.bbs.service;
 
 import com.github.pagehelper.PageInfo;
 import com.niit.service.bbs.pojo.SkBbsReply;
+import com.niit.service.bbs.pojo.SkBbsTopic;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -50,4 +51,6 @@ public interface SkBbsReplyService {
 
     Map<Integer,List<Object>> replyInfo(Integer sectionId);
     Map<Integer,List<Object>> selectAll();
+
+
 }

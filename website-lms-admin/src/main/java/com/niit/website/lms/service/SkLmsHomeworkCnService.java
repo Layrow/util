@@ -2,6 +2,7 @@ package com.niit.website.lms.service;
 
 import com.niit.website.lms.pojo.SkLmsHomeworkCn;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -24,5 +25,8 @@ public interface SkLmsHomeworkCnService {
     String selectStudentByHomeworkId(Integer batchId,Integer homeworkId,Integer currentPage,Integer pageSize);
     // 查询特定班级下的所有作业
     String selectHomeworkByBatchId(Integer batchId);
+
+    // 查询特定班级下的特定作业下的得分情况
+    String selectScore(Integer batchId, Integer homeworkId);
 
 }

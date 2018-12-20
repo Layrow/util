@@ -64,12 +64,11 @@ public class SkBbsTopicController {
     /**
      * 修改帖子的浏览量
      * @param id
-     * @param newCount
      * @return
      */
     @PutMapping("/editViewCount")
-    public boolean editViewCount(@RequestParam Integer id,@RequestParam Integer newCount){
-        return skBbsTopicService.updateViewCountByPrimaryKey(id,newCount)>0;
+    public boolean editViewCount(@RequestParam Integer id){
+        return skBbsTopicService.updateViewCountByPrimaryKey(id)>0;
     }
 
     /**
@@ -239,6 +238,20 @@ public class SkBbsTopicController {
         }
         map= gson.fromJson(s,type);
         return map;
+    }
+    @GetMapping("/allTopic")
+    public  Map<Integer, String> selectAllTopic(){
+        String s = skBbsTopicService.selectAllTopicById();
+        Map<Integer, String> map =null;
+        Type type = new TypeToken<Map<Integer, String>>() {
+        }.getType();
+        Gson gson = new Gson();
+        if(s.isEmpty()||s==null){
+            return map;
+        }
+        map= gson.fromJson(s,type);
+        return  map;
+
     }
 
 }

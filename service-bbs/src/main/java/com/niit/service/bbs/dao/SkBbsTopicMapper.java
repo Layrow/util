@@ -22,6 +22,13 @@ public interface SkBbsTopicMapper {
      * @return
      */
     List<SkBbsTopic>  selectAllDirty();
+
+    /**
+     * 删除栏目的时候,级联删除帖子
+     * @param sectionId
+     * @return
+     */
+    int deleteBySection(@Param(value = "list") List<String> sectionId);
     /**
      * 删除帖子根据帖子的主键Id
      * @param id
@@ -142,5 +149,7 @@ public interface SkBbsTopicMapper {
 
     List<SkBbsTopic>  selectReplyUserId(@Param("replyUserid") String replyUserId);
     List<SkBbsTopic>  selectReplyUserIds(@Param("replyUserid") String replyUserId);
+
+
 
 }

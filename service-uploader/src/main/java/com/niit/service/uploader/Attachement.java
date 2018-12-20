@@ -1,11 +1,16 @@
 package com.niit.service.uploader;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import java.io.Serializable;
+
 /**
  * @Auther: huangwei
  * @Date:2018/12/20 9:53
  * @Description:
  */
-public class Attachement {
+@JsonIgnoreProperties(value = {"handler","hibernateLazyInitializer","fieldHandler"})
+public class Attachement  implements Serializable {
     String attachementName;
     Double   attachementSize;
     String attachementSuffix;

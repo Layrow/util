@@ -25,7 +25,6 @@ import java.util.Map;
 public class SkBbsTopicServiceImpl implements SkBbsTopicService {
 
     private static final  String SERVICE_NAME = "service-bbs";
-    private static  final String SERVICE_UPLOADER = "service-uploader";
     private static final  String URL="http://"+SERVICE_NAME+"/topic/";
 
     @Resource
@@ -36,11 +35,6 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
         return restTemplate.getForObject(URL+"get?id="+id,SkBbsTopic.class);
     }
 
-    @Override
-    public ResultData uploader(MultipartFile[] file, String fileType) {
-        return restTemplate.postForObject("http://"+SERVICE_UPLOADER+"/uploader/"+fileType,file,ResultData.class);
-
-    }
 
     @Override
     public String selectAllTopicById() {

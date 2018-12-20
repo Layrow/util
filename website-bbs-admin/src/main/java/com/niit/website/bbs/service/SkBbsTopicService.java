@@ -19,7 +19,6 @@ import java.util.Map;
 public interface SkBbsTopicService {
     SkBbsTopic getTopic(Integer id);
 
-    ResultData  uploader(MultipartFile[] file,String fileType);
 
     String selectAllTopicById();
 

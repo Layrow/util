@@ -4,9 +4,11 @@ package com.niit.service.uploader;
 
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 import java.util.List;
-
+@JsonIgnoreProperties(value = {"handler","hibernateLazyInitializer","fieldHandler"})
 public class ResultData implements Serializable {
     private String status;
 

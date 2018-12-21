@@ -23,6 +23,7 @@
     select
     <include refid="Base_Column_List" />
     from sk_member_notification_system
+    order by notice_time desc
   </select>
   <!--删除一条系统-->
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >

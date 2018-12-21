@@ -15,18 +15,12 @@ public enum IntegralActionsEnum {
     POST_TOPIC(1, 50, "发表帖子"),
     DELETE_TOPIC(0, 50, "帖子被删除"),
     POST_REPLY(1, 20, "发表评论"),
-    DELETE_REPLY(0, 50, "评论被删除"),
     POSTTOP(1, 50, "置顶贴"),
-    POST_UPTOP(0, 50, "取消置顶贴"),
     POSTESSENCE(1, 50, "精华帖"),
-    POST_UNESSENCE(0, 50, "取消精华帖"),
     POST_BUY(1, 50, "购买"),
-    POST_LIKE(1, 50, "点赞"),
-    POST_UNLIKE(0, 50, "取消点赞"),
+    POST_LIKE(1, 50, "项目点赞"),
     POST_COLLECT(1, 50, "收藏"),
-    POST_UNCOLLECT(0, 50, "取消收藏"),
     POST_PROJECT(1, 50, "上传作品"),
-    POST_UNPROJECT(0, 50, "撤回作品"),
     DELETE_BAD(0, 50, "不雅言论");
     /**
      * 操作类型

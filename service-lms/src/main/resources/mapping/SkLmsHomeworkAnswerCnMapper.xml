@@ -18,6 +18,35 @@
   <sql id="Blob_Column_List">
     homework_answer_content
   </sql>
+  <!-- 查看指定学生的作业得分情况 -->
+  <select id="selectScoreByStudentId" resultType="java.util.HashMap">
+    select id,homework_answer_mark from sk_lms_homework_answer_cn where student_id = #{studentId}
+  </select>
+  <!-- 查询指定学生的作业提交情况-->
+  <select id="selectHomeworkSizeByStudentId" resultType="java.util.HashMap">
+    select count(b.homework_id) as totalsize,count(a.student_id) as commitsize from sk_lms_homework_answer_cn as a
+    right join(	select * from sk_lms_batch_homework_cn WHERE batch_id = #{arg0} ) as b
+	on a.homework_id = b.homework_id and a.student_id = #{arg1}
+  </select>
+  <!-- 班级作业情况分析 -->
+  <select id="selectBacthInfo" resultType="java.util.HashMap">
+    SELECT
+      COUNT(DISTINCT h.homework_id) as homework_total_count,
+      COUNT(DISTINCT a.id) as student_total_answer_count,
+      SUM(DISTINCT a.homework_answer_mark) as student_total_answer_mark,
+      s.id as student_id,
+      s.student_name,
+      s.student_eng_name,
+      s.student_user_id
+    FROM
+	  sk_lms_batch_homework_cn h
+    LEFT JOIN sk_lms_bach_student_cn bs on h.batch_id = bs.batch_id
+    LEFT JOIN sk_lms_students_cn s on bs.student_id = s.id
+    LEFT JOIN sk_lms_homework_answer_cn a ON s.id = a.student_id
+    WHERE h.batch_id = #{batchId}
+    GROUP BY s.id
+  </select>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />

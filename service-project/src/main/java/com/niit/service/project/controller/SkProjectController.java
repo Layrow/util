@@ -120,4 +120,21 @@ public class SkProjectController {
         }
         return pageInfo;
     }
+
+    // 按照置顶/推荐/点赞数 查询
+    @GetMapping("/type")
+    public PageInfo<SkProject> likeSelectProjectAll(@RequestParam(defaultValue = "",required = false) String title,
+                                                    @RequestParam(defaultValue = "",required = false) Integer status,
+                                                    @RequestParam Integer categoryId,
+                                                    @RequestParam(defaultValue ="")String orderBy,
+                                                    @RequestParam Integer currentPage,
+                                                    @RequestParam Integer pageSize) {
+        PageInfo<SkProject> pageInfo = null;
+        try {
+            pageInfo = skProjectService.likeSelectProjectAll(title,status,categoryId,orderBy, currentPage, pageSize);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return pageInfo;
+    }
 }

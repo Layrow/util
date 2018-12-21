@@ -2,6 +2,9 @@ package com.niit.service.lms.service;
 
 import com.niit.service.lms.pojo.SkLmsHomeworkAnswerCn;
 
+import java.util.HashMap;
+import java.util.List;
+
 /**
  * @Description
  * @Author liyuhao
@@ -13,4 +16,10 @@ public interface SkLmsHomeworkAnswerCnService {
     String selectAnswerInfoByHomeIdAndStuId(Integer studentId, Integer homeworkId);
 
     int updateByPrimaryKeySelective(SkLmsHomeworkAnswerCn record);
+
+    // 学生作业信息的分析
+    String selectStudentHomeworkInfo(Integer batchId, Integer studentId);
+
+    // 班级作业情况分析
+    String selectBacthInfo(Integer batchId);
 }

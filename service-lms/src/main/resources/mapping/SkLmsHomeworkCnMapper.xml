@@ -94,14 +94,21 @@
 
   <!-- 查询特定的作业都有哪些学生提交和那些学生未提交 -->
   <select id="selectStudentByHomeworkId" resultType="java.util.LinkedHashMap">
-    select c.student_id,c.id as homework_answerId,d.student_name,d.student_eng_name,d.student_user_id,c.homework_answer_mark,c.homework_answer_comments
-    from sk_lms_homework_answer_cn c,sk_lms_students_cn d
-    where c.homework_id=#{arg1,jdbcType=INTEGER} and c.student_id=d.id and c.student_id in
-    (select b.student_id from sk_lms_batch_cn a,sk_lms_bach_student_cn b where a.id=#{arg0,jdbcType=INTEGER} and b.batch_id=a.id)
-    union
-    select b.student_id,null,d.student_name,d.student_eng_name,d.student_user_id,null,null from sk_lms_batch_cn a,sk_lms_bach_student_cn b,sk_lms_students_cn d
-    where a.id=#{arg0,jdbcType=INTEGER} and a.id=b.batch_id and d.id=b.student_id and b.student_id not in
-    (select c.student_id from sk_lms_homework_answer_cn c where c.homework_id=#{arg1,jdbcType=INTEGER} and c.student_id in (select b.student_id from sk_lms_batch_cn a,sk_lms_bach_student_cn b where a.id=#{arg0,jdbcType=INTEGER} and b.batch_id=a.id))
+    SELECT
+	s.id student_id,a.id as homework_answerId,s.student_name,s.student_eng_name,s.student_user_id,a.homework_answer_mark,a.homework_answer_comments
+  FROM
+	sk_lms_students_cn s
+  LEFT OUTER JOIN sk_lms_homework_answer_cn a ON s.id = a.student_id
+  AND s.id IN (
+	SELECT
+		student_id
+	FROM
+		sk_lms_bach_student_cn
+	WHERE
+		batch_id = #{arg0,jdbcType=INTEGER}
+)
+AND a.homework_id = #{arg1,jdbcType=INTEGER}
+ORDER BY homework_answer_mark is NOT NULL, homework_answerID desc, homework_answer_mark asc
   </select>
 
   <!-- 查询特定的作业哪些学生没有提交 -->

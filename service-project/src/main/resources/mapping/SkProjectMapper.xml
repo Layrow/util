@@ -23,6 +23,31 @@
     id, title, url, view_count, updatetime, comments, operation_desc, cover_img, category_id, 
     fav_count, likes_count, status, is_top, is_recommnd, user_id, user_name
   </sql>
+  <!--  作品分类 -->
+  <select id="likeSelectProjectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sk_project
+    where category_id = #{category_id}
+    <if test="status!=null and status!='' or 0 == status ">
+      and status = #{status}
+    </if>
+    <if test="title!=null and title!=''">
+      AND title  like CONCAT('%',#{title},'%')
+    </if>
+    <if test="orderBy=='top'">
+      ORDER BY is_top DESC
+    </if>
+    <if test="orderBy=='recommnd'">
+      ORDER BY is_recommnd DESC
+    </if>
+    <if test="orderBy=='likeCounts'">
+      ORDER BY likes_count DESC
+    </if>
+    <if test="orderBy==null||orderBy==''">
+      ORDER BY is_recommnd DESC
+    </if>
+  </select>
   <!--  分页模糊查询作品 -->
   <select id="likeSelectProjectByTitle" resultMap="BaseResultMap">
     select

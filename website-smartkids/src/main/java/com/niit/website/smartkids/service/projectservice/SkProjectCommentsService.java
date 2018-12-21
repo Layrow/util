@@ -1,8 +1,6 @@
-package com.niit.service.project.service;
+package com.niit.website.smartkids.service.projectservice;
 
-import com.niit.service.project.pojo.SkProjectComments;
-
-import java.util.List;
+import com.niit.website.smartkids.pojo.project.SkProjectComments;
 
 /**
  * @Description

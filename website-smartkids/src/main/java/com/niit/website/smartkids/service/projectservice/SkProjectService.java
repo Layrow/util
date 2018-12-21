@@ -1,11 +1,7 @@
-package com.niit.service.project.service;
+package com.niit.website.smartkids.service.projectservice;
 
 import com.github.pagehelper.PageInfo;
-import com.niit.service.project.pojo.SkProject;
-import com.sun.xml.internal.bind.v2.model.core.ID;
-import org.apache.ibatis.annotations.Param;
-
-import java.util.List;
+import com.niit.website.smartkids.pojo.project.SkProject;
 
 /**
  * @Description
@@ -30,14 +26,14 @@ public interface SkProjectService {
     int deleteMoreProject(String id);
 
     // 查询所有作品
-    PageInfo<SkProject> selectAllProject(Integer status,Integer currentPage,Integer pageSize);
+    PageInfo<SkProject> selectAllProject(Integer status, Integer currentPage, Integer pageSize);
 
     // 批量审核作品
     Integer updateMoreProject(String id);
 
     // 根据title模糊查询作品
-    PageInfo<SkProject> likeSelectProjectByTitle(String status,String title,Integer currentPage,Integer pageSize);
+    PageInfo<SkProject> likeSelectProjectByTitle(String status, String title, Integer currentPage, Integer pageSize);
 
     // 按置顶，推荐进行查询
-    PageInfo<SkProject> likeSelectProjectAll(String title,Integer status,Integer categoryId,String orderBy,Integer currentPage,Integer pageSize);
+    PageInfo<SkProject> likeSelectProjectAll(String title, Integer status, Integer categoryId, String orderBy, Integer currentPage, Integer pageSize);
 }

@@ -1,5 +1,6 @@
 package com.niit.service.cms.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -24,7 +25,7 @@ public class SkLinkCn {
     private Integer sortId;
 
     private Integer isLock;
-
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:SS")
     private Date addTime;
 
     public Integer getId() {

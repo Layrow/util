@@ -23,11 +23,16 @@
     select
     <include refid="Base_Column_List" />
     from sk_member_notification_system
+    order by notice_time desc
   </select>
   <!--删除一条系统-->
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from sk_member_notification_system
-    where id = #{id,jdbcType=INTEGER}
+    where id IN
+    <foreach collection="list" item="id" open="("
+             separator="," close=")">
+      #{id}
+    </foreach>
   </delete>
   <insert id="insert" parameterType="com.niit.service.member.pojo.SkMemberNotificationSystem" >
     insert into sk_member_notification_system (id, content, title, 

@@ -27,7 +27,7 @@ public class SkMemberSysNotificationController {
         return  sysNotificationService.add(record);
     }
     @DeleteMapping("delete")
-    public boolean delete(@RequestParam Integer sId){
+    public boolean delete(@RequestParam String sId){
         return  sysNotificationService.delete(sId);
     }
     @PutMapping("edit")

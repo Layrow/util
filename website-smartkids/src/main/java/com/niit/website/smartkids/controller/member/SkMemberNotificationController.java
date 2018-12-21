@@ -37,7 +37,7 @@ public class SkMemberNotificationController {
      * @param nId
      * @return
      */
-    @DeleteMapping("/delete")
+
     public boolean delete(@RequestParam Integer nId){
         return notificationService.deleteNotification(nId);
     }

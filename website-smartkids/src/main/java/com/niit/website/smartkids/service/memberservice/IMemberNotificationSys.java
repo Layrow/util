@@ -25,7 +25,7 @@ public interface IMemberNotificationSys {
      * @param id
      * @return
      */
-    boolean delete(Integer id);
+    boolean delete(String id);
 
     /**
      * 修改一条系统通知

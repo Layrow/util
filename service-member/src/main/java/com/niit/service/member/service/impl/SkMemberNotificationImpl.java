@@ -33,7 +33,7 @@ public class SkMemberNotificationImpl implements ISkMemberNotificationService {
     public boolean insertNotification(SkMemberNotificationOps record) {
         try {
             record.setNoticeTime(new Date());
-            if ( notificationOpsMapper.insertSelective(record)>0){
+            if ( notificationOpsMapper.insert(record)>0){
                 return true;
             }
         }catch (Exception e){

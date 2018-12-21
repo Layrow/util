@@ -45,16 +45,16 @@
   </delete>
   <!--添加用户通知,防止重复插入-->
   <insert id="insert" parameterType="com.niit.service.member.pojo.SkMemberNotificationOps" >
-    insert into sk_member_notification_ops (user_id, user_name,
-      notice_time, project_id, operation, 
-      status)
+    insert into sk_member_notification_ops (user_id,user_name,notice_time,project_id,operation,status)
       SELECT #{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR},
       #{noticeTime,jdbcType=TIMESTAMP}, #{projectId,jdbcType=INTEGER}, #{operation,jdbcType=INTEGER},
       #{status,jdbcType=INTEGER}
     FROM DUAL
-    WHERE  NOT EXISTS (SELECT * FROM sk_member_notification_ops WHERE
-        user_id = #{userId,jdbcType=INTEGER}AND project_id = #{projectId,jdbcType=INTEGER}
-        and operation = #{operation,jdbcType=INTEGER})
+    WHERE  NOT EXISTS (
+        SELECT * FROM sk_member_notification_ops
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+          AND project_id = #{projectId,jdbcType=INTEGER}
+          and operation = #{operation,jdbcType=INTEGER})
   </insert>
   <!--添加一条用户通知-->
   <insert id="insertSelective" parameterType="com.niit.service.member.pojo.SkMemberNotificationOps" >

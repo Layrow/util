@@ -3,6 +3,8 @@ package com.niit.service.member.service;
 import com.github.pagehelper.PageInfo;
 import com.niit.service.member.pojo.SkMemberNotificationSystem;
 
+import java.util.List;
+
 /**
  * 〈一句话功能简述〉<br>
  *
@@ -20,11 +22,11 @@ public interface ISkMemberSysNotificationService {
     boolean add(SkMemberNotificationSystem record);
 
     /**
-     * 删除一条系统通知
+     * 删除条系统通知
      * @param id
      * @return
      */
-    boolean delete(Integer id);
+    boolean delete(String id);
 
     /**
      * 修改一条系统通知

@@ -44,11 +44,11 @@ public class MemberSysServiceImpl implements IMemberNotificationSys {
     /**
      * 删除一条系统通知
      *
-     * @param id
+     * @param sId
      * @return
      */
     @Override
-    public boolean delete(Integer sId) {
+    public boolean delete(String sId) {
         try {
             restTemplate.delete(URL+"delete?sId="+sId);
             return true;

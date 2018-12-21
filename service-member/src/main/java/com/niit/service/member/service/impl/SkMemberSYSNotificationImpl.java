@@ -2,6 +2,7 @@ package com.niit.service.member.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.niit.common.utils.Tools;
 import com.niit.service.member.dao.SkMemberNotificationSystemMapper;
 import com.niit.service.member.pojo.SkMemberNotificationOps;
 import com.niit.service.member.pojo.SkMemberNotificationSystem;
@@ -52,9 +53,9 @@ public class SkMemberSYSNotificationImpl implements ISkMemberSysNotificationServ
      * @return
      */
     @Override
-    public boolean delete(Integer id) {
+    public boolean delete(String id) {
         try {
-            if (systemMapper.deleteByPrimaryKey(id)>0){
+            if (systemMapper.deleteByPrimaryKey(Tools.getList(id))>0){
                 return true;
             }
         }catch (Exception e){

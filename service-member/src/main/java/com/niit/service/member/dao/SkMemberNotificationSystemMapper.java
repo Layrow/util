@@ -1,6 +1,7 @@
 package com.niit.service.member.dao;
 
 import com.niit.service.member.pojo.SkMemberNotificationSystem;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public interface SkMemberNotificationSystemMapper {
      * @param id
      * @return
      */
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(List<String> id);
 
     int insert(SkMemberNotificationSystem record);
 

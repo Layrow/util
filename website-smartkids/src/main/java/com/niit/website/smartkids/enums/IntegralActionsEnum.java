@@ -23,8 +23,8 @@ public enum IntegralActionsEnum {
     POST_BUY(1, 50, "购买"),
     POST_LIKE(1, 50, "点赞"),
     POST_UNLIKE(0, 50, "取消点赞"),
-    POST_COLLECT(1, 50, "收藏"),
-    POST_UNCOLLECT(0, 50, "取消收藏"),
+    POST_COLLECT(1, 50, "收藏作品"),
+    POST_UNCOLLECT(0, 50, "取消收藏作品"),
     POST_PROJECT(1, 50, "上传作品"),
     POST_UNPROJECT(0, 50, "撤回作品"),
     DELETE_BAD(0, 50, "不雅言论");

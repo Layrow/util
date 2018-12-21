@@ -1,9 +1,10 @@
-package com.niit.service.project.controller;
+package com.niit.website.cms.controller;
 
-import com.niit.service.project.pojo.SkProjectComments;
-import com.niit.service.project.service.SkProjectCommentsService;
+import com.niit.website.cms.pojo.SkProjectComments;
+import com.niit.website.cms.service.SkProjectCommentsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -22,38 +23,32 @@ public class SkProjectCommentsController {
 
     // insert
     @GetMapping
-    public Integer insertProjectComments(@RequestBody SkProjectComments skProjectComments) {
-        Integer insertStatus = 0;
+    public void insertProjectComments(@RequestBody SkProjectComments skProjectComments) {
         try {
-            insertStatus = skProjectCommentsService.insert(skProjectComments);
+            skProjectCommentsService.insert(skProjectComments);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return insertStatus;
     }
 
     // delete
     @DeleteMapping("/{id}")
-    public Integer deleteProjectComments(@PathVariable Integer id) {
-        Integer deleteStatus = 0;
+    public void deleteProjectComments(@PathVariable Integer id) {
         try {
-            deleteStatus = skProjectCommentsService.deleteByPrimaryKey(id);
+            skProjectCommentsService.deleteByPrimaryKey(id);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return deleteStatus;
     }
 
     // update
     @PutMapping
-    public Integer updateProjectComments(@RequestBody SkProjectComments skProjectComments) {
-        Integer updateStatus = 0;
+    public void updateProjectComments(@RequestBody SkProjectComments skProjectComments) {
         try {
-            updateStatus = skProjectCommentsService.updateByPrimaryKey(skProjectComments);
+            skProjectCommentsService.updateByPrimaryKey(skProjectComments);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return updateStatus;
     }
 
     // select
@@ -70,27 +65,23 @@ public class SkProjectCommentsController {
 
     // 批量审核作品留言
     @PutMapping("/more")
-    public Integer updateMoreProjectComment(HttpServletRequest request) {
+    public void updateMoreProjectComment(HttpServletRequest request) {
         String id = request.getParameter("id");
-        Integer updateStatus = 0;
         try {
-            updateStatus = skProjectCommentsService.updateMoreProjectComment(id);
+            skProjectCommentsService.updateMoreProjectComment(id);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return updateStatus;
     }
 
     // 批量删除作品留言
     @DeleteMapping("/more")
-    public Integer deleteMoreProjectComment(HttpServletRequest request) {
+    public void deleteMoreProjectComment(HttpServletRequest request) {
         String id = request.getParameter("id");
-        Integer deleteStatus = 0;
         try {
-            deleteStatus = skProjectCommentsService.deleteMoreProjectComment(id);
+            skProjectCommentsService.deleteMoreProjectComment(id);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return deleteStatus;
     }
 }

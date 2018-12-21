@@ -134,9 +134,9 @@
   </select>
   
    <!-- 查询channel为1的，parent_id为0的栏目类别 -->
-  <select id="selectNewsCategory" resultMap="BaseResultMap">
+  <select id="selectCategory" resultMap="BaseResultMap">
     select * from sk_article_category_en
-    where channel_id = 1 and parent_id = 0 order by sort_id desc
+    where channel_id = #{channelId} and parent_id = 0 order by sort_id desc
   </select>
 
   <!-- 根据栏目类别ID删除栏目类别-->

@@ -1,6 +1,7 @@
-package com.niit.website.smartkids.service.projectservice;
+package com.niit.website.cms.service;
 
-import com.niit.website.smartkids.pojo.project.SkProjectComments;
+
+import com.niit.website.cms.pojo.SkProjectComments;
 
 /**
  * @Description

@@ -21,7 +21,7 @@ public class MemberIntegralController {
     IMemberItegralService memberItegralService;
 
     @GetMapping("/total")
-    public String tatal(@RequestParam Integer uId){
+    public String total(@RequestParam Integer uId){
            return memberItegralService.getTatal(uId) ;
 
     }

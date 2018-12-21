@@ -1,7 +1,7 @@
-package com.niit.service.project.controller;
+package com.niit.website.smartkids.controller.project;
 
-import com.niit.service.project.pojo.SkProjectCategory;
-import com.niit.service.project.service.SkProjectCategoryService;
+import com.niit.website.smartkids.pojo.project.SkProjectCategory;
+import com.niit.website.smartkids.service.projectservice.SkProjectCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,25 +20,21 @@ public class SkProjectCategoryController {
     private SkProjectCategoryService skProjectCategoryService;
 
     @PostMapping
-    public Integer insert(@RequestBody SkProjectCategory skProjectCategory) {
-        Integer insertStatus = 0;
+    public void insert(@RequestBody SkProjectCategory skProjectCategory) {
         try {
-            insertStatus = skProjectCategoryService.insert(skProjectCategory);
+            skProjectCategoryService.insert(skProjectCategory);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return insertStatus;
     }
 
     @DeleteMapping("/{id}")
-    public Integer deleteProjectCategory(@PathVariable  Integer id) {
-        Integer deleteStatus = 0;
+    public void deleteProjectCategory(@PathVariable  Integer id) {
         try {
-            deleteStatus = skProjectCategoryService.deleteByPrimaryKey(id);
+            skProjectCategoryService.deleteByPrimaryKey(id);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return deleteStatus;
     }
 
     @GetMapping("/{id}")
@@ -53,13 +49,11 @@ public class SkProjectCategoryController {
     }
 
     @PutMapping
-    public Integer updateProjectCategory(@RequestBody SkProjectCategory skProjectCategory) {
-        Integer updateStatus = 0;
+    public void updateProjectCategory(@RequestBody SkProjectCategory skProjectCategory) {
         try {
-            updateStatus = skProjectCategoryService.updateByPrimaryKey(skProjectCategory);
+            skProjectCategoryService.updateByPrimaryKey(skProjectCategory);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return updateStatus;
     }
 }

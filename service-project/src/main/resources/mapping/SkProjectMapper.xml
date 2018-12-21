@@ -23,6 +23,11 @@
     id, title, url, view_count, updatetime, comments, operation_desc, cover_img, category_id, 
     fav_count, likes_count, status, is_top, is_recommnd, user_id, user_name
   </sql>
+  <!-- 查询某个用户下的作品 -->
+  <select id="selectProjectByUserId" resultMap="BaseResultMap">
+    select * from sk_project where user_id = #{userId}
+  </select>
+
   <!--  作品分类 -->
   <select id="likeSelectProjectAll" resultMap="BaseResultMap">
     select

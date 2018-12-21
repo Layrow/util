@@ -1,8 +1,8 @@
-package com.niit.service.project.controller;
+package com.niit.website.smartkids.controller.project;
 
 import com.github.pagehelper.PageInfo;
-import com.niit.service.project.pojo.SkProject;
-import com.niit.service.project.service.SkProjectService;
+import com.niit.website.smartkids.pojo.project.SkProject;
+import com.niit.website.smartkids.service.projectservice.SkProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,26 +24,23 @@ public class SkProjectController {
 
     // insert
     @PostMapping
-    public Integer insertProject(@RequestBody SkProject skProject) {
-        Integer insertStatus = 0;
+    public void insertProject(@RequestBody SkProject skProject) {
         try {
-            insertStatus = skProjectService.insert(skProject);
+            skProjectService.insert(skProject);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return insertStatus;
     }
 
     // delete
     @DeleteMapping("/delete")
-    public Integer deleteProject(Integer id) {
-        Integer deleteStatus = 0;
+    public void deleteProject(Integer id,Integer userId,String useName) {
+        // TODO 修改传递参数的方式
         try {
-            deleteStatus = skProjectService.deleteByPrimaryKey(id);
+            skProjectService.deleteByPrimaryKey(id,userId,useName);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return deleteStatus;
     }
 
     // select
@@ -60,27 +57,23 @@ public class SkProjectController {
 
     // update
     @PutMapping
-    public Integer updateProject(@RequestBody SkProject skProject) {
-        Integer updateStatus = 0;
+    public void updateProject(@RequestBody SkProject skProject) {
         try {
-            updateStatus = skProjectService.updateByPrimaryKey(skProject);
+            skProjectService.updateByPrimaryKey(skProject);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return updateStatus;
     }
 
     // delete more
     @DeleteMapping
-    public Integer deleteMoreProject(HttpServletRequest request) {
-        Integer deleteMoreStatus = 0;
+    public void deleteMoreProject(HttpServletRequest request) {
         String id = request.getParameter("id");
         try {
-            deleteMoreStatus = skProjectService.deleteMoreProject(id);
+            skProjectService.deleteMoreProject(id);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return deleteMoreStatus;
     }
 
     // select more
@@ -97,15 +90,13 @@ public class SkProjectController {
 
     // 批量审核作品
     @PutMapping("/more")
-    public Integer updateMoreProject(HttpServletRequest request) {
-        Integer updateStatus = 0;
+    public void updateMoreProject(HttpServletRequest request) {
         String id = request.getParameter("id");
         try {
-            updateStatus = skProjectService.updateMoreProject(id);
+            skProjectService.updateMoreProject(id);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return updateStatus;
     }
 
     // 根据title模糊查询作品

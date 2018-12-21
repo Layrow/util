@@ -1,7 +1,7 @@
-package com.niit.website.smartkids.service.projectservice.impl;
+package com.niit.website.cms.service.impl;
 
-import com.niit.website.smartkids.pojo.project.SkProjectCategory;
-import com.niit.website.smartkids.service.projectservice.SkProjectCategoryService;
+import com.niit.website.cms.pojo.SkProjectCategory;
+import com.niit.website.cms.service.SkProjectCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;

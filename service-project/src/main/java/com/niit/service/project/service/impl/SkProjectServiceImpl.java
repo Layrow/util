@@ -90,4 +90,14 @@ public class SkProjectServiceImpl implements SkProjectService {
         pageInfo = new PageInfo<>(skProjectList);
         return pageInfo;
     }
+
+    // 查询用户作品
+    @Override
+    public PageInfo<SkProject> selectProjectByUserId(Integer userId, Integer currentPage, Integer pageSize) {
+        PageInfo<SkProject> pageInfo = null;
+        PageHelper.startPage(currentPage, pageSize);
+        List<SkProject> skProjectList = skProjectMapper.selectProjectByUserId(userId);
+        pageInfo = new PageInfo<>(skProjectList);
+        return pageInfo;
+    }
 }

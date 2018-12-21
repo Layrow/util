@@ -45,4 +45,8 @@ public interface SkChannelArticleContentCnService {
     void  updateHo(String id,String locale);
     //批量修改
     int batchUp(List<SkChannelArticleContentCn> lis, String locale);
+
+    // 按照栏目类别ID并且status = 1
+    String selectContentByCategoryId(String locale,Integer categoryId,Integer currentPage,Integer pageSize);
 }
+

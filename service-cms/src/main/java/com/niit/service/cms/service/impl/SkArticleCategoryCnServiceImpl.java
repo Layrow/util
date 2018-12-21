@@ -234,14 +234,14 @@ public class SkArticleCategoryCnServiceImpl implements SkArticleCategoryCnServic
     }
 
     @Override
-    public List<SkArticleCategoryCn> selectNewsCategory(String locale) {
+    public List<SkArticleCategoryCn> selectNewsCategory(String locale,Integer channelId) {
         switch (locale) {
             case "zh":
-                return skArticleCategoryCnMapper.selectNewsCategory();
+                return skArticleCategoryCnMapper.selectCategory(channelId);
             case "en":
-                return skArticleCategoryEnMapper.selectNewsCategory();
+                return skArticleCategoryEnMapper.selectCategory(channelId);
             default:
-                return skArticleCategoryCnMapper.selectNewsCategory();
+                return skArticleCategoryCnMapper.selectCategory(channelId);
         }
     }
 

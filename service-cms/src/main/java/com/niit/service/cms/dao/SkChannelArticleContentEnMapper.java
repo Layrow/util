@@ -2,6 +2,7 @@ package com.niit.service.cms.dao;
 
 
 import com.niit.service.cms.pojo.SkChannelArticleContentCn;
+import com.niit.service.cms.pojo.SkChannelArticleNewsCn;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -50,4 +51,7 @@ public interface SkChannelArticleContentEnMapper {
     List<SkChannelArticleContentCn> selectAllByAudited();
     List<SkChannelArticleContentCn> selectAllByUnaudited();
     int batchUp(List<SkChannelArticleContentCn> lis);
+
+    // 按照栏目类别ID并且status = 1查找新闻
+    List<SkChannelArticleContentCn> selectContentByCategoryId(List<String> list);
 }

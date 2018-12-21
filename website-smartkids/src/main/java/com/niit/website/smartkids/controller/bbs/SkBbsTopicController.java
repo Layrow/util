@@ -22,7 +22,7 @@ import java.util.Map;
 @RestController
 @CrossOrigin
 @RequestMapping("/topic")
-public class SkBbsTopicController {
+public class SkBbsTopicController {;
     @Resource
     SkBbsTopicService skBbsTopicService;
     @GetMapping("/getOne")

@@ -16,13 +16,13 @@ import javax.annotation.Resource;
 @RestController
 @CrossOrigin
 @RequestMapping("/integral")
-public class MemberController {
+public class MemberIntegralController {
     @Resource
     IMemberItegralService memberItegralService;
 
     @GetMapping("/total")
-    public String tatal(@RequestParam Integer uid){
-           return memberItegralService.getTatal(uid) ;
+    public String tatal(@RequestParam Integer uId){
+           return memberItegralService.getTatal(uId) ;
 
     }
     @PostMapping("integral")

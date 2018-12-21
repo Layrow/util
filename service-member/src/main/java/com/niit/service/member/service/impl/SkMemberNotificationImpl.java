@@ -1,5 +1,6 @@
 package com.niit.service.member.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.niit.service.member.dao.SkMemberNotificationOpsMapper;
 import com.niit.service.member.pojo.SkMemberNotificationOps;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 〈一句话功能简述〉<br>
@@ -29,8 +31,8 @@ public class SkMemberNotificationImpl implements ISkMemberNotificationService {
      */
     @Override
     public boolean insertNotification(SkMemberNotificationOps record) {
-        record.setNoticeTime(new Date());
         try {
+            record.setNoticeTime(new Date());
             if ( notificationOpsMapper.insertSelective(record)>0){
                 return true;
             }
@@ -67,7 +69,14 @@ public class SkMemberNotificationImpl implements ISkMemberNotificationService {
      * @return
      */
     @Override
-    public PageInfo<SkMemberNotificationOps> listAll(Integer userId) {
-        return null;
+    public PageInfo<SkMemberNotificationOps> listAll(Integer currentPage, Integer pageSize,Integer userId) {
+        List<SkMemberNotificationOps> list;
+        PageInfo<SkMemberNotificationOps> listInfo;
+        PageHelper.startPage(currentPage,pageSize);
+        //执行SQL语句（list->分页后的数据）
+        list=notificationOpsMapper.selectAll(userId);
+        //把取到的list封装进PageInfo(PageInfo->分页信息+分页后的数据）
+        listInfo = new PageInfo<>(list);
+        return  listInfo;
     }
 }

@@ -25,7 +25,7 @@
     <include refid="Base_Column_List" />
     from sk_member_notification_ops
     where project_id IN (
-    ELECT id FROM sk_project WHERE user_id=#{userId,jdbcType=INTEGER}
+    SELECT id FROM sk_project WHERE user_id=#{userId,jdbcType=INTEGER}
     )
   </select>
   <!--删除通知-->

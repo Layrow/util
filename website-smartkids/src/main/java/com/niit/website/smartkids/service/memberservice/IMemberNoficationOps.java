@@ -1,7 +1,7 @@
-package com.niit.service.member.service;
+package com.niit.website.smartkids.service.memberservice;
 
 import com.github.pagehelper.PageInfo;
-import com.niit.service.member.pojo.SkMemberNotificationOps;
+import com.niit.website.smartkids.pojo.member.SkMemberNotificationOps;
 
 /**
  * 〈一句话功能简述〉<br>
@@ -10,7 +10,7 @@ import com.niit.service.member.pojo.SkMemberNotificationOps;
  * @create 2018/12/20
  * @since 1.0.0
  */
-public interface ISkMemberNotificationService {
+public interface IMemberNoficationOps {
     /**
      * 添加一条通知
      * @param record
@@ -20,18 +20,18 @@ public interface ISkMemberNotificationService {
 
     /**
      * 根据通知主键删除通知
-     * @param notificationId
+     * @param nId
      * @return
      */
-    boolean deleteNotification(Integer notificationId);
+    boolean deleteNotification(Integer nId);
 
     /**
      * 查询用户下的所有通知
-     * @param pageSize  页面大小
      * @param currentPage 当前页
-     * @param userId
+     * @param pageSize  页面大小
+     * @param uId
      * @return
      */
-    PageInfo<SkMemberNotificationOps> listAll(Integer currentPage, Integer pageSize,Integer userId);
+    PageInfo<SkMemberNotificationOps> listAll(Integer currentPage, Integer pageSize, Integer uId);
 
 }

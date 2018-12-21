@@ -39,7 +39,8 @@
   <!--  分页模糊查询 ByCategoryId -->
   <select id="likeSelectAllByCategoryId" resultMap="BaseResultMap">
     select
-    <include refid="Base_Column_List" />
+    <include refid="Base_Column_List" />,
+    <include refid="Blob_Column_List" />
     from sk_channel_article_content_en
     <where>
       <if test="list!=null and list.size>0">
@@ -84,12 +85,13 @@
   <!--  分页模糊查询 -->
   <select id="likeSelectAll" resultMap="BaseResultMap">
     select
-    <include refid="Base_Column_List" />
+    <include refid="Base_Column_List" />,
+    <include refid="Blob_Column_List" />
     from sk_channel_article_content_en where  title  like CONCAT('%',#{title},'%') ORDER BY sort_id DESC
   </select>
 
   <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
@@ -99,7 +101,8 @@
   <!-- 查找所有 进行分页 -->
   <select  id="selectAll" resultMap="BaseResultMap">
     select
-    <include refid="Base_Column_List" />
+    <include refid="Base_Column_List" />,
+    <include refid="Blob_Column_List" />
 
     from sk_channel_article_content_en ORDER BY sort_id DESC
 
@@ -117,34 +120,39 @@
   </update>
   <select  id="selectAllByHot" resultMap="BaseResultMap">
     select
-    <include refid="Base_Column_List" />
+    <include refid="Base_Column_List" />,
+    <include refid="Blob_Column_List" />
     from sk_channel_article_content_en WHERE is_hot = 1 ORDER BY sort_id DESC
 
   </select>
   <select  id="selectAllByRed" resultMap="BaseResultMap">
     select
-    <include refid="Base_Column_List" />
+    <include refid="Base_Column_List" />,
+    <include refid="Blob_Column_List" />
 
     from sk_channel_article_content_en WHERE is_red = 1 ORDER BY sort_id DESC
 
   </select>
   <select  id="selectAllByTop" resultMap="BaseResultMap">
     select
-    <include refid="Base_Column_List" />
+    <include refid="Base_Column_List" />,
+    <include refid="Blob_Column_List" />
 
     from sk_channel_article_content_en WHERE is_top = 1 ORDER BY sort_id DESC
 
   </select>
   <select  id="selectAllByAudited" resultMap="BaseResultMap">
     select
-    <include refid="Base_Column_List" />
+    <include refid="Base_Column_List" />,
+    <include refid="Blob_Column_List" />
 
     from sk_channel_article_content_en WHERE status = 1 ORDER BY sort_id DESC
 
   </select>
   <select  id="selectAllByUnaudited" resultMap="BaseResultMap">
     select
-    <include refid="Base_Column_List" />
+    <include refid="Base_Column_List" />,
+    <include refid="Blob_Column_List" />
 
     from sk_channel_article_content_en WHERE status = 0 ORDER BY sort_id DESC
 

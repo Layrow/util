@@ -2,7 +2,9 @@ package com.niit.website.bbs.service;
 
 
 import com.github.pagehelper.PageInfo;
+import com.niit.service.uploader.ResultData;
 import com.niit.website.bbs.pojo.SkBbsTopic;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -16,6 +18,7 @@ import java.util.Map;
  */
 public interface SkBbsTopicService {
     SkBbsTopic getTopic(Integer id);
+
 
     String selectAllTopicById();
 

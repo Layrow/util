@@ -2,10 +2,12 @@ package com.niit.website.bbs.service.impl;
 
 import com.github.pagehelper.PageInfo;
 import com.niit.common.utils.Tools;
+import com.niit.service.uploader.ResultData;
 import com.niit.website.bbs.pojo.SkBbsTopic;
 import com.niit.website.bbs.service.SkBbsTopicService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -32,6 +34,7 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
     public SkBbsTopic getTopic(Integer id) {
         return restTemplate.getForObject(URL+"get?id="+id,SkBbsTopic.class);
     }
+
 
     @Override
     public String selectAllTopicById() {

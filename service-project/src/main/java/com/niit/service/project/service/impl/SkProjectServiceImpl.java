@@ -1,6 +1,5 @@
 package com.niit.service.project.service.impl;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.niit.common.utils.Tools;
@@ -9,8 +8,6 @@ import com.niit.service.project.pojo.SkProject;
 import com.niit.service.project.service.SkProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import java.util.List;
 
 /**
@@ -80,6 +77,16 @@ public class SkProjectServiceImpl implements SkProjectService {
         PageInfo<SkProject> pageInfo = null;
         PageHelper.startPage(currentPage, pageSize);
         List<SkProject> skProjectList = skProjectMapper.likeSelectProjectByTitle(status,title);
+        pageInfo = new PageInfo<>(skProjectList);
+        return pageInfo;
+    }
+
+    // 按照置顶/推荐查询
+    @Override
+    public PageInfo<SkProject> likeSelectProjectAll(String title,Integer status,Integer categoryId,String orderBy,Integer currentPage,Integer pageSize) {
+        PageInfo<SkProject> pageInfo = null;
+        PageHelper.startPage(currentPage, pageSize);
+        List<SkProject> skProjectList = skProjectMapper.likeSelectProjectAll(title,status,categoryId,orderBy);
         pageInfo = new PageInfo<>(skProjectList);
         return pageInfo;
     }

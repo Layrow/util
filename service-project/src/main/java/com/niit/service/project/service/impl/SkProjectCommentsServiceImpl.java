@@ -1,10 +1,13 @@
 package com.niit.service.project.service.impl;
 
+import com.niit.common.utils.Tools;
 import com.niit.service.project.dao.SkProjectCommentsMapper;
 import com.niit.service.project.pojo.SkProjectComments;
 import com.niit.service.project.service.SkProjectCommentsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @ClassName SkProjectCommentsServiceImpl
@@ -40,5 +43,19 @@ public class SkProjectCommentsServiceImpl implements SkProjectCommentsService {
     @Override
     public int updateByPrimaryKey(SkProjectComments record) {
         return skProjectCommentsMapper.updateByPrimaryKey(record);
+    }
+
+    // 批量审核
+    @Override
+    public Integer updateMoreProjectComment(String id) {
+        List<String> list = Tools.getList(id);
+        return skProjectCommentsMapper.updateMoreProjectComment(list);
+    }
+
+    // 批量删除作品留言
+    @Override
+    public Integer deleteMoreProjectComment(String id) {
+        List<String> list = Tools.getList(id);
+        return skProjectCommentsMapper.deleteMoreProjectComment(list);
     }
 }

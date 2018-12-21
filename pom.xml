@@ -17,10 +17,10 @@
         <module>website-lms-admin</module>
         <module>website-smartkids</module>
 
-        <module>service-client</module>
-        <module>service-server</module>
+
 
         <module>service-member</module>
+        <module>service-uploader</module>
 
     </modules>
     <packaging>pom</packaging>

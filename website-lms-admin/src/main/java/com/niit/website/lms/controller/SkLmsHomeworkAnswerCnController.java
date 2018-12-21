@@ -33,4 +33,14 @@ public class SkLmsHomeworkAnswerCnController {
     public void updateAnswerInfo(@RequestBody SkLmsHomeworkAnswerCn skLmsHomeworkAnswerCn) {
         skLmsHomeworkAnswerCnService.updateByPrimaryKeySelective(skLmsHomeworkAnswerCn);
     }
+
+    @GetMapping("/analyse")
+    public String selectStudentHomeworkInfo(@RequestParam("batchId")  Integer batchId,@RequestParam("studentId") Integer studentId) {
+        return skLmsHomeworkAnswerCnService.selectStudentHomeworkInfo(batchId, studentId);
+    }
+
+    @GetMapping("/analyse/batch")
+    public String selectBatchInfo(@RequestParam("batchId") Integer batchId) {
+        return skLmsHomeworkAnswerCnService.selectBacthInfo(batchId);
+    }
 }

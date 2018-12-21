@@ -37,4 +37,7 @@ public interface SkProjectMapper {
 
     // 根据title模糊查询作品
     List<SkProject> likeSelectProjectByTitle(String status,String title);
+
+    // 按置顶，推荐进行查询
+    List<SkProject> likeSelectProjectAll(@Param("title")String title,@Param("status") Integer status,@Param("category_id") Integer categoryId,@Param("orderBy") String orderBy);
 }

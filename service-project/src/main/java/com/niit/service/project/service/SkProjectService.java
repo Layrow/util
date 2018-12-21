@@ -37,4 +37,7 @@ public interface SkProjectService {
 
     // 根据title模糊查询作品
     PageInfo<SkProject> likeSelectProjectByTitle(String status,String title,Integer currentPage,Integer pageSize);
+
+    // 按置顶，推荐进行查询
+    PageInfo<SkProject> likeSelectProjectAll(String title,Integer status,Integer categoryId,String orderBy,Integer currentPage,Integer pageSize);
 }

@@ -4,6 +4,8 @@ package com.niit.website.smartkids.service.bbsservice;
 import com.github.pagehelper.PageInfo;
 import com.niit.website.smartkids.pojo.bbs.SkBbsTopic;
 
+import java.util.List;
+
 /**
  * 〈一句话功能简述〉<br>
  *
@@ -15,6 +17,8 @@ public interface SkBbsTopicService {
     SkBbsTopic getTopic(Integer id);
 
     String selectAllTopicById();
+
+    List<String> listUserId(String id);
 
     /**
      * 单个修改帖子

@@ -14,12 +14,13 @@ public enum IntegralActionsEnum {
      */
     POST_TOPIC(1, 50, "发表帖子"),
     POST_REPLY(1, 20, "发表评论"),
-    POSTTOP(1, 50, "置顶贴"),
-    POSTESSENCE(1, 50, "精华帖"),
+    POST_TOP(1, 50, "置顶贴"),
+    POST_ESSENCE(1, 50, "精华帖"),
     POST_BUY(1, 50, "购买"),
     POST_COLLECT(1, 50, "收藏作品"),
     POST_LIKE(1, 50, "项目点赞"),
     POST_PROJECT(1, 50, "上传作品"),
+    POST_UNPROJECT(1, 50, "删除作品"),
     DELETE_BAD(0, 50, "不雅言论");
     /**
      * 操作类型

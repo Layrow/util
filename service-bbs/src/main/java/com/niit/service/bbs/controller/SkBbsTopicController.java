@@ -27,6 +27,11 @@ public class SkBbsTopicController {
     @Resource
     SkBbsTopicService skBbsTopicService;
 
+    /**
+     * 根据帖子Id查找所有的用户Id
+     * @param id
+     * @return
+     */
     @PostMapping("/listUserId")
     public List<Integer> getUserId(@RequestParam String id){
         return  skBbsTopicService.listUserId(Tools.getList(id));

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 
 /**
@@ -35,6 +36,11 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
     public String selectAllTopicById() {
 
         return restTemplate.getForObject("http://"+SERVICE_NAME+"/topic/allTopic",String.class);
+    }
+
+    @Override
+    public List<String> listUserId(String id) {
+        return restTemplate.postForObject(URL+"/listUserId?id="+id,null,List.class);
     }
 
     @Override

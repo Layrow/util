@@ -27,6 +27,11 @@ public class SkBbsTopicController {
     @Resource
     SkBbsTopicService skBbsTopicService;
 
+    @PostMapping("/listUserId")
+    public List<Integer> getUserId(@RequestParam String id){
+        return  skBbsTopicService.listUserId(Tools.getList(id));
+    }
+
     @PutMapping("/edit")
     public boolean edit(@RequestBody SkBbsTopic topic){
         return skBbsTopicService.updateTopic(topic)>0;

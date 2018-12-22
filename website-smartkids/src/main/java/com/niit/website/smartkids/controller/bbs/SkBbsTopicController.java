@@ -8,8 +8,6 @@ import com.niit.website.smartkids.pojo.bbs.SkBbsTopic;
 import com.niit.website.smartkids.pojo.member.SkMemberIntegral;
 import com.niit.website.smartkids.service.bbsservice.SkBbsTopicService;
 import com.niit.website.smartkids.service.memberservice.IMemberItegralService;
-import com.niit.website.smartkids.service.memberservice.IMemberNoficationOps;
-import com.niit.website.smartkids.service.memberservice.IMemberNotificationSys;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -177,6 +175,7 @@ public class SkBbsTopicController {;
      */
     @PutMapping("/top")
     public boolean top(@RequestParam String id){
+
         return skBbsTopicService.top(id);
     }
 

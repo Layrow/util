@@ -18,6 +18,12 @@ public interface SkBbsTopicMapper {
     List<SkBbsTopic>  likeSelectInSection(@Param("title") String title, @Param("sectionId") Integer sectionId,@Param("key") String key);
 
     /**
+     * 根据帖子Id找到用户的Id
+     * @param id
+     * @return
+     */
+    List<Integer> selectAllUserId(List<String> id);
+    /**
      * 查询所有带脏词的帖子
      * @return
      */

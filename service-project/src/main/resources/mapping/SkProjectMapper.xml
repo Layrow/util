@@ -49,6 +49,9 @@
     <if test="orderBy=='likeCounts'">
       ORDER BY likes_count DESC
     </if>
+    <if test="orderBy=='updateTime'">
+      ORDER BY updatetime DESC
+    </if>
     <if test="orderBy==null||orderBy==''">
       ORDER BY is_recommnd DESC
     </if>

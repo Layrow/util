@@ -115,7 +115,7 @@ public class SkProjectController {
     // 按照置顶/推荐/点赞数 查询
     @GetMapping("/type")
     public PageInfo<SkProject> likeSelectProjectAll(@RequestParam(defaultValue = "",required = false) String title,
-                                                    @RequestParam(defaultValue = "",required = false) Integer status,
+                                                    @RequestParam(defaultValue = "1",required = false) Integer status,
                                                     @RequestParam Integer categoryId,
                                                     @RequestParam(defaultValue ="")String orderBy,
                                                     @RequestParam Integer currentPage,

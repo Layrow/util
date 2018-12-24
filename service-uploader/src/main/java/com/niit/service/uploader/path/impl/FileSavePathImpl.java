@@ -20,10 +20,18 @@ public class FileSavePathImpl implements FileSavePath {
         return rootPath(type) + childPath();
     }
 
+
+
     @Override
     public String relativePath() {
         return childPath();
     }
+
+    @Override
+    public String Path(String type) {
+        return rootPath(type);
+    }
+
 
     private String childPath() {
         return childPath.getChildPath();

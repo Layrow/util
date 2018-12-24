@@ -88,11 +88,11 @@ public class SkChannelArticleVideoCnController {
      * @params [id]
      * @return com.niit.service.cms.pojo.SkChannelArticleVideoCn
      */
-   /* @GetMapping
-    public SkChannelArticleVideoCn selectByPrimaryKeyInfo(Integer id) {
-        SkChannelArticleVideoCn contentCn = skChannelArticleVideoCnService.selectByPrimaryKey(id);
+    @GetMapping("/id")
+    public SkChannelArticleVideoCn selectByPrimaryKeyInfo(@RequestParam Integer id,@RequestParam String locale) {
+        SkChannelArticleVideoCn contentCn = skChannelArticleVideoCnService.selectByPrimaryKey(id,locale);
         return contentCn;
-    }*/
+    }
     /**
      * 功能描述:查找所有
      * @author huangwei
@@ -200,6 +200,19 @@ public class SkChannelArticleVideoCnController {
 //        }
 //        return listInfo;
 //    }
+
+    // 按照栏目类别ID并且status = 1查找新闻
+    @GetMapping("/{locale}/{categoryId}")
+    public String selectNewsByCategoryId(@PathVariable("locale") String locale, @PathVariable("categoryId") Integer categoryId,
+                                         Integer currentPage, Integer pageSize) {
+        String info = null;
+        try {
+            info = skChannelArticleVideoCnService.selectVideoByCategoryId(locale, categoryId,currentPage,pageSize);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return info;
+    }
 
 
 }

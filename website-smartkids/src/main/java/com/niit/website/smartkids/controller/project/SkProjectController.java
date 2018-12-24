@@ -116,7 +116,7 @@ public class SkProjectController {
     @GetMapping("/type")
     public PageInfo<SkProject> likeSelectProjectAll(@RequestParam(defaultValue = "",required = false) String title,
                                                     @RequestParam(defaultValue = "1",required = false) Integer status,
-                                                    @RequestParam Integer categoryId,
+                                                    @RequestParam(defaultValue = "",required = false) Integer categoryId,
                                                     @RequestParam(defaultValue ="")String orderBy,
                                                     @RequestParam Integer currentPage,
                                                     @RequestParam Integer pageSize) {

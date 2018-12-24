@@ -42,4 +42,7 @@ public interface SkChannelArticleVideoCnService {
     void  updateRe(String id,String locale);
     //批量热门
     void  updateHo(String id,String locale);
+
+    // 按照栏目类别ID并且status = 1
+    String selectVideoByCategoryId(String locale,Integer categoryId,Integer currentPage,Integer pageSize);
 }

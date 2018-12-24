@@ -92,7 +92,7 @@ public class SkProjectServiceImpl implements SkProjectService {
 
     @Override
     public PageInfo<SkProject> likeSelectProjectAll(String title, Integer status, Integer categoryId, String orderBy, Integer currentPage, Integer pageSize) {
-        return restTemplate.getForObject("http://" + SERVICE_NAME + "/project/title?currentPage="
+        return restTemplate.getForObject("http://" + SERVICE_NAME + "/project/type?currentPage="
                 +currentPage + "&pageSize="+pageSize + "&status=" + status + "&title=" +title + "&categoryId=" +categoryId + "&orderBy=" + orderBy,PageInfo.class);
     }
 

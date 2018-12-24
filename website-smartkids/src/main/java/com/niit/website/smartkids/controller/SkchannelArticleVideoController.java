@@ -1,11 +1,11 @@
 package com.niit.website.smartkids.controller;
 
+import com.niit.website.smartkids.pojo.SkChannelArticleVideoCn;
 import com.niit.website.smartkids.service.SkchannelArticleVideoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @Description: java类作用描述
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @CrossOrigin
 @RestController
-@RequestMapping("/smartkids/video")
+@RequestMapping("/video")
 public class SkchannelArticleVideoController {
     @Autowired
     SkchannelArticleVideoService skchannelArticleVideoService;
@@ -29,6 +29,31 @@ public class SkchannelArticleVideoController {
         return 1;
     }
 
+    // 按照栏目类别ID并且status = 1查找新闻
+    @GetMapping("/{locale}/{categoryId}")
+    public String selectNewsByCategoryId(@PathVariable("locale") String locale, @PathVariable("categoryId") Integer categoryId,
+                                         Integer currentPage, Integer pageSize) {
+        String newsInfos = null;
+        try {
+            newsInfos = skchannelArticleVideoService.selectVideoByCategoryId(locale, categoryId,currentPage,pageSize);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return newsInfos;
+    }
+
+    // 查询channel特定的，parent_id为0的栏目类别
+    @GetMapping("/articleCategory")
+    public List<SkChannelArticleVideoCn> selectCategory(@RequestParam String locale, @RequestParam Integer channelId) {
+        return  skchannelArticleVideoService.selectCategory(locale,channelId);
+    }
+
+    // 根据ID查找
+    @GetMapping("/id")
+    public SkChannelArticleVideoCn selectByPrimaryKeyInfo(@RequestParam Integer id, @RequestParam String locale) {
+        SkChannelArticleVideoCn Cn = skchannelArticleVideoService.selectByPrimaryKeyInfo(id,locale);
+        return Cn;
+    }
 
 
 }

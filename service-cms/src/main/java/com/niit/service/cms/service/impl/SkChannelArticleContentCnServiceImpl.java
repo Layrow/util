@@ -142,11 +142,13 @@ public class SkChannelArticleContentCnServiceImpl implements SkChannelArticleCon
                 List<SkChannelArticleContentCn> newsCnList = skChannelArticleContentCnMapper.selectContentByCategoryId(cnList);
                 listInfo = new PageInfo<>(newsCnList);
                 listInfo.getList().forEach(x -> {
-                    Date time = x.getAddTime();
-                    SimpleDateFormat sdfDay = new SimpleDateFormat(
-                            "yyyy-MM-dd");
-                    // TODO 空指针
-                    String s = sdfDay.format(time);
+                    String s = null;
+                    if (x.getAddTime() != null) {
+                        Date time = x.getAddTime();
+                        SimpleDateFormat sdfDay = new SimpleDateFormat(
+                                "yyyy-MM-dd");
+                        s = sdfDay.format(time);
+                    }
                     addTimeList.add(s);
                 });
                 map.put("listInfo", listInfo);
@@ -158,10 +160,13 @@ public class SkChannelArticleContentCnServiceImpl implements SkChannelArticleCon
                 List<SkChannelArticleContentCn> newsEnList = skChannelArticleContentEnMapper.selectContentByCategoryId(enListID);
                 listInfo = new PageInfo<>(newsEnList);
                 listInfo.getList().forEach(x -> {
-                    Date time = x.getAddTime();
-                    SimpleDateFormat sdfDay = new SimpleDateFormat(
-                            "yyyy-MM-dd");
-                    String s = sdfDay.format(time);
+                    String s = null;
+                    if (x.getAddTime() != null) {
+                        Date time = x.getAddTime();
+                        SimpleDateFormat sdfDay = new SimpleDateFormat(
+                                "yyyy-MM-dd");
+                        s = sdfDay.format(time);
+                    }
                     addTimeList.add(s);
                 });
                 map.put("listInfo", listInfo);
@@ -173,10 +178,13 @@ public class SkChannelArticleContentCnServiceImpl implements SkChannelArticleCon
                 List<SkChannelArticleContentCn> newsList = skChannelArticleContentCnMapper.selectContentByCategoryId(cnList);
                 listInfo = new PageInfo<>(newsList);
                 listInfo.getList().forEach(x -> {
-                    Date time = x.getAddTime();
-                    SimpleDateFormat sdfDay = new SimpleDateFormat(
-                            "yyyy-MM-dd");
-                    String s = sdfDay.format(time);
+                    String s = null;
+                    if (x.getAddTime() != null) {
+                        Date time = x.getAddTime();
+                        SimpleDateFormat sdfDay = new SimpleDateFormat(
+                                "yyyy-MM-dd");
+                        s = sdfDay.format(time);
+                    }
                     addTimeList.add(s);
                 });
                 map.put("listInfo", listInfo);

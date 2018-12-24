@@ -49,4 +49,6 @@ public interface SkChannelArticleVideoEnMapper {
     void  updateRe(List<String> list);
     //批量热门
     void  updateHo(List<String> list);
+
+    List<SkChannelArticleVideoCn> selectVideoByCategoryId(List<String> list);
 }

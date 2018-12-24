@@ -33,13 +33,17 @@
     select
     <include refid="Base_Column_List" />
     from sk_project
-    where category_id = #{category_id}
-    <if test="status!=null and status!='' or 0 == status ">
-      and status = #{status}
-    </if>
-    <if test="title!=null and title!=''">
-      AND title  like CONCAT('%',#{title},'%')
-    </if>
+    <where>
+      <if test="categoryId!=null and categoryId!=''">
+        and category_id = #{categoryId}
+      </if>
+      <if test="status!=null and status!='' or 0 == status ">
+        and status = #{status}
+      </if>
+      <if test="title!=null and title!=''">
+        AND title  like CONCAT('%',#{title},'%')
+      </if>
+    </where>
     <if test="orderBy=='top'">
       ORDER BY is_top DESC
     </if>
@@ -55,6 +59,8 @@
     <if test="orderBy==null||orderBy==''">
       ORDER BY is_recommnd DESC
     </if>
+
+
   </select>
   <!--  分页模糊查询作品 -->
   <select id="likeSelectProjectByTitle" resultMap="BaseResultMap">

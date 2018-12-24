@@ -2,11 +2,14 @@ package com.niit.service.cms.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.niit.service.cms.dao.SkArticleCategoryCnMapper;
 import com.niit.service.cms.dao.SkArticleCategoryEnMapper;
 import com.niit.service.cms.dao.SkChannelArticleVideoCnMapper;
 import com.niit.service.cms.dao.SkChannelArticleVideoEnMapper;
 import com.niit.service.cms.pojo.SkArticleCategoryCn;
+import com.niit.service.cms.pojo.SkChannelArticleNewsCn;
 import com.niit.service.cms.pojo.SkChannelArticleVideoCn;
 import com.niit.service.cms.service.SkChannelArticleVideoCnService;
 import org.apache.ibatis.annotations.Param;
@@ -14,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -175,8 +179,107 @@ public class SkChannelArticleVideoCnServiceImpl  implements SkChannelArticleVide
     }
 
     @Override
+    public String selectVideoByCategoryId(String locale, Integer categoryId, Integer currentPage, Integer pageSize) {
+        Map<String,Object> map = new HashMap<>();
+        PageInfo<SkChannelArticleVideoCn> listInfo=null;
+        // 根据传来的ID，获取所有栏目ID(传来的ID和及其子孙ID)存储在set中 --en
+        // 递归实现
+        List<String> addTimeList = new ArrayList<>();
+        List<String> cnList = new ArrayList<>();
+        List<String> enListID = new ArrayList<>();
+        getAllChildrenCategoryCn(Integer.toString(categoryId),cnList);
+        getAllChildrenCategoryEn(Integer.toString(categoryId),enListID);
+        switch (locale) {
+            case "zh":
+                PageHelper.startPage(currentPage, pageSize);
+                List<SkChannelArticleVideoCn> newsCnList = skChannelArticleVideoCnMapper.selectVideoByCategoryId(cnList);
+                listInfo = new PageInfo<>(newsCnList);
+                listInfo.getList().forEach(x -> {
+                    String s = null;
+                    if (x.getAddTime() != null) {
+                        Date time = x.getAddTime();
+                        SimpleDateFormat sdfDay = new SimpleDateFormat(
+                                "yyyy-MM-dd");
+                        s = sdfDay.format(time);
+                    }
+                    addTimeList.add(s);
+                });
+                map.put("listInfo", listInfo);
+                map.put("addTimeList", addTimeList);
+                Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
+                return gson.toJson(map);
+            case "en":
+                PageHelper.startPage(currentPage, pageSize);
+                List<SkChannelArticleVideoCn> newsEnList = skChannelArticleVideoEnMapper.selectVideoByCategoryId(enListID);
+                listInfo = new PageInfo<>(newsEnList);
+                listInfo.getList().forEach(x -> {
+                    String s = null;
+                    if (x.getAddTime() != null) {
+                        Date time = x.getAddTime();
+                        SimpleDateFormat sdfDay = new SimpleDateFormat(
+                                "yyyy-MM-dd");
+                        s = sdfDay.format(time);
+                    }
+                    addTimeList.add(s);
+                });
+                map.put("listInfo", listInfo);
+                map.put("addTimeList", addTimeList);
+                Gson gsonEn = new GsonBuilder().enableComplexMapKeySerialization().create();
+                return gsonEn.toJson(map);
+            default:
+                PageHelper.startPage(currentPage, pageSize);
+                List<SkChannelArticleVideoCn> newsList = skChannelArticleVideoEnMapper.selectVideoByCategoryId(cnList);
+                listInfo = new PageInfo<>(newsList);
+                listInfo.getList().forEach(x -> {
+                    String s = null;
+                    if (x.getAddTime() != null) {
+                        Date time = x.getAddTime();
+                        SimpleDateFormat sdfDay = new SimpleDateFormat(
+                                "yyyy-MM-dd");
+                        s = sdfDay.format(time);
+                    }
+                    addTimeList.add(s);
+                });
+                map.put("listInfo", listInfo);
+                map.put("addTimeList", addTimeList);
+                Gson gsonCn = new GsonBuilder().enableComplexMapKeySerialization().create();
+                return gsonCn.toJson(map);
+        }
+    }
+
+    // 根据传来的ID，获取所有栏目ID(传来的ID和及其子孙ID)存储在list中 --zh
+    // 递归实现
+    public void getAllChildrenCategoryCn(String id,List<String> categoryList) {
+        categoryList.add(id);
+        List<String> baseCategory = cc.getBaseCategory(id);
+        baseCategory.forEach(x -> {
+            categoryList.add(x);
+            getAllChildrenCategoryCn(x,categoryList);
+        });
+    }
+
+    // 根据传来的ID，获取所有栏目ID(传来的ID和及其子孙ID)存储在list中 --en
+    // 递归实现
+    public void getAllChildrenCategoryEn(String id,List<String> categoryList) {
+        categoryList.add(id);
+        List<String> baseCategory = ce.getBaseCategory(id);
+        baseCategory.forEach(x -> {
+            categoryList.add(x);
+            getAllChildrenCategoryEn(x,categoryList);
+        });
+    }
+
+
+    @Override
     public SkChannelArticleVideoCn selectByPrimaryKey(Integer id,String locale) {
-        return skChannelArticleVideoCnMapper.selectByPrimaryKey(id);
+        switch (locale) {
+            case "zh":
+                return skChannelArticleVideoCnMapper.selectByPrimaryKey(id);
+            case "en":
+                return skChannelArticleVideoEnMapper.selectByPrimaryKey(id);
+            default:
+                return skChannelArticleVideoCnMapper.selectByPrimaryKey(id);
+        }
     }
 
     @Override

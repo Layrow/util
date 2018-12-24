@@ -1,5 +1,6 @@
 package com.niit.website.cms.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.niit.website.cms.pojo.SkProjectComments;
 import com.niit.website.cms.service.SkProjectCommentsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,5 +84,17 @@ public class SkProjectCommentsController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    // 查询所有作品留言
+    @GetMapping("/more")
+    public PageInfo<SkProjectComments> selectAllProjectComments(@RequestParam(required = false,defaultValue = "") Integer projectId, Integer currentPage, Integer pageSize) {
+        PageInfo<SkProjectComments> pageInfo = null;
+        try {
+            pageInfo = skProjectCommentsService.selectAllProjectComment(projectId,currentPage, pageSize);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return pageInfo;
     }
 }

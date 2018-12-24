@@ -1,5 +1,6 @@
 package com.niit.website.smartkids.service.projectservice;
 
+import com.github.pagehelper.PageInfo;
 import com.niit.website.smartkids.pojo.project.SkProjectComments;
 
 /**
@@ -26,5 +27,8 @@ public interface SkProjectCommentsService {
 
     // 批量删除
     void deleteMoreProjectComment(String id);
+
+    // 查询所有作品留言
+    PageInfo<SkProjectComments> selectAllProjectComment(Integer projectId, Integer currentPage, Integer pageSize);
 
 }

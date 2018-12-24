@@ -34,10 +34,9 @@ public class SkProjectController {
 
     // delete
     @DeleteMapping("/delete")
-    public void deleteProject(Integer id,Integer userId,String useName) {
-        // TODO 修改传递参数的方式
+    public void deleteProject(Integer id) {
         try {
-            skProjectService.deleteByPrimaryKey(id,userId,useName);
+            skProjectService.deleteByPrimaryKey(id);
         } catch (Exception e) {
             e.printStackTrace();
         }

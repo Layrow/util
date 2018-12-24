@@ -1,5 +1,6 @@
 package com.niit.service.project.service;
 
+import com.github.pagehelper.PageInfo;
 import com.niit.service.project.pojo.SkProjectComments;
 
 import java.util.List;
@@ -28,5 +29,8 @@ public interface SkProjectCommentsService {
 
     // 批量删除
     Integer deleteMoreProjectComment(String id);
+
+    // 查询所有作品留言
+    PageInfo<SkProjectComments> selectAllProjectComment(Integer projectId,Integer currentPage,Integer pageSize);
 
 }

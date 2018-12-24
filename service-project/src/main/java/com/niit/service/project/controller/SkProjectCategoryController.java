@@ -5,6 +5,8 @@ import com.niit.service.project.service.SkProjectCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @ClassName SkProjectCategoryController
  * @Description
@@ -61,5 +63,28 @@ public class SkProjectCategoryController {
             e.printStackTrace();
         }
         return updateStatus;
+    }
+
+    // 查询所有作品类别
+    @GetMapping("/all")
+    public List<SkProjectCategory> selectAllProjectCategory() {
+        List<SkProjectCategory> skProjectCategoryList = null;
+        try {
+            skProjectCategoryList = skProjectCategoryService.selectAllProjectCategory();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return skProjectCategoryList;
+    }
+
+    @DeleteMapping("/more")
+    public Integer deleteMoreProjectCategory(String id) {
+        Integer deleteStauts = 0;
+        try {
+            deleteStauts = skProjectCategoryService.deleteMoreProjectCategory(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return deleteStauts;
     }
 }

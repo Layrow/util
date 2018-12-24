@@ -12,10 +12,10 @@ import com.sun.xml.internal.bind.v2.TODO;
 public interface SkProjectService {
 
     // insert
-    void insert(SkProject record);
+    Integer insert(SkProject record);
 
     // delete
-    void deleteByPrimaryKey(Integer id, Integer userId, String userName);
+    void deleteByPrimaryKey(Integer id);
 
     // select
     SkProject selectByPrimaryKey(Integer id);
@@ -41,10 +41,4 @@ public interface SkProjectService {
     // 查询个人作品
     PageInfo<SkProject> selectProjectByUserId(Integer userId,Integer currentPage,Integer pageSize);
 
-    // TODO project
-    // 根据栏目ID查询相应的作品，状态码默认为1，orderBy排序 ，分页title模糊查询
-    // 发布作品 积分变更
-    // 删除作品 积分变更
-    // 点赞作品收藏作品 积分变更
-    // 重复点赞判断，积分变更通知
 }

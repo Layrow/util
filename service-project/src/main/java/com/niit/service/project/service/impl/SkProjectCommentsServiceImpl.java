@@ -1,5 +1,7 @@
 package com.niit.service.project.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.niit.common.utils.Tools;
 import com.niit.service.project.dao.SkProjectCommentsMapper;
 import com.niit.service.project.pojo.SkProjectComments;
@@ -57,5 +59,15 @@ public class SkProjectCommentsServiceImpl implements SkProjectCommentsService {
     public Integer deleteMoreProjectComment(String id) {
         List<String> list = Tools.getList(id);
         return skProjectCommentsMapper.deleteMoreProjectComment(list);
+    }
+
+    // 查询所有留言
+    @Override
+    public PageInfo<SkProjectComments> selectAllProjectComment(Integer projectId,Integer currentPage,Integer pageSize) {
+        PageInfo<SkProjectComments> pageInfo = null;
+        PageHelper.startPage(currentPage,pageSize);
+        List<SkProjectComments> list = skProjectCommentsMapper.selectAllProjectComment(projectId);
+        pageInfo = new PageInfo<>(list);
+        return pageInfo;
     }
 }

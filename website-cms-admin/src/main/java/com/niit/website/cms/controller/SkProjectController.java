@@ -77,7 +77,7 @@ public class SkProjectController {
 
     // select more
     @GetMapping("/more")
-    public PageInfo<SkProject> selectMoreProject(@RequestParam(defaultValue = "") Integer status, @RequestParam Integer currentPage, @RequestParam Integer pageSize) {
+    public PageInfo<SkProject> selectMoreProject(@RequestParam(value = "status",defaultValue = "",required = false) Integer status, @RequestParam Integer currentPage, @RequestParam Integer pageSize) {
         PageInfo<SkProject> pageInfo = null;
         try {
             pageInfo = skProjectService.selectAllProject(status,currentPage,pageSize);

@@ -1,26 +1,28 @@
 package com.niit.website.lms.pojo;
 
+import com.alibaba.excel.annotation.ExcelProperty;
+import com.alibaba.excel.metadata.BaseRowModel;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
 
-public class SkLmsStudentsCn {
+public class SkLmsStudentsCn extends BaseRowModel {
     private Integer id;
-
+    @ExcelProperty(value = "姓名" ,index = 0)
     private String studentName;
 
     private String studentEngName;
 
     private String studentUserId;
-
+    @ExcelProperty(value = "密码" ,index = 3)
     private String studentPwd;
-
+    @ExcelProperty(value = "学号" ,index = 1)
     private String studentSchoolId;
-    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:SS")
     private Date studentCreateTime;
 
     private Integer studentStatus;
-
+    @ExcelProperty(value = "账号" ,index = 2)
     private String studentLoginId;
 
     public Integer getId() {

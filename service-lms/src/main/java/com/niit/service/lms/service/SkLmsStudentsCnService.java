@@ -3,6 +3,8 @@ package com.niit.service.lms.service;
 import com.github.pagehelper.PageInfo;
 import com.niit.service.lms.pojo.SkLmsStudentsCn;
 
+import java.util.List;
+
 
 /**
  * 〈一句话功能简述〉<br>
@@ -59,6 +61,13 @@ public interface SkLmsStudentsCnService {
      * @return
      */
     String showStudents(Integer batchID);
+
+    /**
+     * 导出班级的所有的学生
+     * @param batchID
+     * @return
+     */
+    List<SkLmsStudentsCn> getAllStudents(Integer batchID);
 
     /**
      * 分页查询学生

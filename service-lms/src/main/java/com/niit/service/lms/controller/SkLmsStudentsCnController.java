@@ -1,11 +1,17 @@
 package com.niit.service.lms.controller;
 
+import com.alibaba.excel.EasyExcelFactory;
+import com.alibaba.excel.ExcelWriter;
+import com.alibaba.excel.metadata.Sheet;
 import com.github.pagehelper.PageInfo;
 import com.niit.service.lms.pojo.SkLmsStudentsCn;
 import com.niit.service.lms.service.SkLmsStudentsCnService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * 〈一句话功能简述〉<br>
@@ -73,7 +79,22 @@ public class SkLmsStudentsCnController {
         return studentsService.deleteStudentByID(id);
     }
 
-
+    @PostMapping("export")
+    public String export( @RequestParam Integer batchId){
+       try {
+           OutputStream out = new FileOutputStream("G:\\IDEA_Project\\Test/2018.xlsx");
+           ExcelWriter writer = EasyExcelFactory.getWriter(out);
+           Sheet sheet2 = new Sheet(1, 0, SkLmsStudentsCn.class);
+           sheet2.setSheetName("学生");
+           writer.write(studentsService.getAllStudents(batchId), sheet2);
+           writer.finish();
+           out.close();
+           return "true";
+       }catch (Exception e){
+           e.printStackTrace();
+           return "false";
+       }
+    }
 
     /**
      * 给客户端展示该班级下的所有学生,并返回学生数量

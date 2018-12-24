@@ -17,6 +17,12 @@ import com.niit.website.lms.pojo.SkLmsStudentsCn;
  */
 public interface SkLmsStudentsCnService {
     /**
+     * 导出班级下的所有学生的信息
+     * @param batchId  班级编号
+     * @return
+     */
+    boolean export(Integer batchId);
+    /**
      * 实现单个添加学生的功能
      * @param student
      * @return

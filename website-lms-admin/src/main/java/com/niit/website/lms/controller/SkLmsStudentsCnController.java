@@ -1,5 +1,8 @@
 package com.niit.website.lms.controller;
 
+import com.alibaba.excel.EasyExcelFactory;
+import com.alibaba.excel.ExcelWriter;
+import com.alibaba.excel.metadata.Sheet;
 import com.github.pagehelper.PageInfo;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -8,7 +11,13 @@ import com.niit.website.lms.service.SkLmsStudentsCnService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -24,6 +33,11 @@ import java.util.Map;
 public class SkLmsStudentsCnController {
     @Resource
     SkLmsStudentsCnService studentsService;
+
+    @PostMapping("/export")
+    public boolean export(@RequestParam Integer batchId){
+        return  studentsService.export(batchId);
+    }
     @PostMapping("/addOne")
     public boolean insert(@RequestBody SkLmsStudentsCn studentsCn, @RequestParam Integer batchId, @RequestParam String className){
         return  studentsService.addOne(studentsCn,batchId,className);
@@ -44,8 +58,18 @@ public class SkLmsStudentsCnController {
     public  boolean delete (@RequestParam Integer id){
         return studentsService.deleteStudentByID(id);
     }
+
     @GetMapping("/showAllStudents")
     public Map<String, Object> showStudents(Integer batchId){
+        return this.getStudnetsInfo(batchId);
+    }
+
+    /**
+     * 取得班级学生信息,班级学生对象和班级学生数量
+     * @param batchId
+     * @return
+     */
+    public   Map<String, Object> getStudnetsInfo(Integer batchId){
         Map<String, Object> totalMap = null;
         try {
             String totalString = studentsService.showStudents(batchId);
@@ -63,6 +87,7 @@ public class SkLmsStudentsCnController {
         }
         return totalMap;
     }
+
 
     @GetMapping("/splitShowAll")
     public PageInfo<SkLmsStudentsCn> splitShowAll(@RequestParam Integer batchId,@RequestParam  Integer currentPage,@RequestParam Integer pageSize){

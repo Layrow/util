@@ -24,6 +24,25 @@ public class SkLmsStudentsCnServiceImpl implements SkLmsStudentsCnService {
     final String SERVICE_NAME = "service-lms";
     @Resource
     RestTemplate restTemplate;
+
+    /**
+     * 导出班级下的所有学生的信息
+     *
+     * @param batchId 班级编号
+     * @return
+     */
+    @Override
+    public boolean export(Integer batchId) {
+       try {
+           restTemplate.postForObject("http://" + SERVICE_NAME +
+                   "/batch/students/export?batchId="+batchId,null,String.class);
+           return  true;
+       }catch (Exception e){
+           e.printStackTrace();
+           return false;
+       }
+    }
+
     /**
      * 实现单个添加学生的功能
      * @param student 添加的学生信息

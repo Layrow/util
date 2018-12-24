@@ -138,6 +138,17 @@ public class SkLmsStudentsCnServiceImpl implements SkLmsStudentsCnService {
     }
 
     /**
+     * 导出班级的所有的学生
+     *
+     * @param batchID
+     * @return
+     */
+    @Override
+    public List<SkLmsStudentsCn> getAllStudents(Integer batchID) {
+        return studentMapper.selectAllStudentsByBatch(batchID);
+    }
+
+    /**
      * 分页查询学生
      *
      * @param batchId     学生所在班级

@@ -47,13 +47,17 @@ public class SkProjectServiceImpl implements SkProjectService {
     // 批量删除作品
     @Override
     public void deleteMoreProject(String id) {
-        restTemplate.delete("http://" + SERVICE_NAME + "/project/{id}",id);
+        restTemplate.delete("http://" + SERVICE_NAME + "/project?id=" +id,id);
     }
 
     // 分页查找所有作品，状态码可选
     @Override
     public PageInfo<SkProject> selectAllProject(Integer status, Integer currentPage, Integer pageSize) {
-        return restTemplate.getForObject("http://" + SERVICE_NAME + "/project/more?currentPage=" + currentPage + "&pageSize=" + pageSize + "&status="+status, PageInfo.class);
+        if ("".equals(status) || status == null) {
+            return restTemplate.getForObject("http://" + SERVICE_NAME + "/project/more?currentPage=" + currentPage + "&pageSize=" + pageSize, PageInfo.class);
+
+        }
+        return restTemplate.getForObject("http://" + SERVICE_NAME + "/project/more?currentPage=" + currentPage + "&status="+status+"&pageSize=" + pageSize, PageInfo.class);
     }
 
     // 批量更改状态码

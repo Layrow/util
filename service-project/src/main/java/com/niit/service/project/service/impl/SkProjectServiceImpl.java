@@ -24,8 +24,9 @@ public class SkProjectServiceImpl implements SkProjectService {
 
     // insert
     @Override
-    public int insert(SkProject record) {
-        return skProjectMapper.insert(record);
+    public Integer insert(SkProject record) {
+        skProjectMapper.insert(record);
+        return record.getId();
     }
 
     // delete

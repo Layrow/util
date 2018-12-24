@@ -2,6 +2,8 @@ package com.niit.service.project.service;
 
 import com.niit.service.project.pojo.SkProjectCategory;
 
+import java.util.List;
+
 /**
  * @Description
  * @Author liyuhao
@@ -20,4 +22,10 @@ public interface SkProjectCategoryService {
 
     // update
     int updateByPrimaryKey(SkProjectCategory record);
+
+    // 查询所有的作品栏目类别
+    List<SkProjectCategory> selectAllProjectCategory();
+
+    // 批量删除
+    Integer deleteMoreProjectCategory(String id);
 }

@@ -5,6 +5,8 @@ import com.niit.website.smartkids.service.projectservice.SkProjectCategoryServic
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @ClassName SkProjectCategoryController
  * @Description
@@ -55,5 +57,17 @@ public class SkProjectCategoryController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    // 查询所有作品类别
+    @GetMapping("/all")
+    public List<SkProjectCategory> selectAllProjectCategory() {
+        List<SkProjectCategory> skProjectCategoryList = null;
+        try {
+            skProjectCategoryList = skProjectCategoryService.selectAllProjectCategory();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return skProjectCategoryList;
     }
 }

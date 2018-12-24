@@ -3,6 +3,8 @@ package com.niit.website.smartkids.service.projectservice;
 
 import com.niit.website.smartkids.pojo.project.SkProjectCategory;
 
+import java.util.List;
+
 /**
  * @Description
  * @Author liyuhao
@@ -21,4 +23,7 @@ public interface SkProjectCategoryService {
 
     // update
     void updateByPrimaryKey(SkProjectCategory record);
+
+    // 查询所有的作品栏目类别
+    List<SkProjectCategory> selectAllProjectCategory();
 }

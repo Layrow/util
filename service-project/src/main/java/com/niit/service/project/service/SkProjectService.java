@@ -15,7 +15,7 @@ import java.util.List;
 public interface SkProjectService {
 
     // insert
-    int insert(SkProject record);
+    Integer insert(SkProject record);
 
     // delete
     int deleteByPrimaryKey(Integer id);

@@ -13,6 +13,17 @@
   <sql id="Base_Column_List" >
     id, content, addtime, project_id, status, user_id, user_name
   </sql>
+  <!-- 查询所有留言 -->
+  <select id="selectAllProjectComment" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sk_project_comments
+    <where>
+      <if test="projectId!=null and projectId!=''">
+        project_id = #{projectId}
+      </if>
+    </where>
+  </select>
   <!-- 批量删除作品留言 -->
   <delete id="deleteMoreProjectComment" parameterType="java.util.List">
     delete from sk_project_comments where id in

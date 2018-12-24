@@ -1,5 +1,6 @@
 package com.niit.website.cms.service.impl;
 
+import com.github.pagehelper.PageInfo;
 import com.niit.website.cms.pojo.SkProjectComments;
 import com.niit.website.cms.service.SkProjectCommentsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,14 +40,25 @@ public class SkProjectCommentsServiceImpl implements SkProjectCommentsService {
         restTemplate.put("http://" + SERVICE_NAME + "/projectcomments",record);
     }
 
+    // 批量审核
     @Override
     public void updateMoreProjectComment(String id) {
         restTemplate.put("http://" + SERVICE_NAME + "/projectcomments/more?id=" + id,id);
     }
 
+    // 批量删除
     @Override
     public void deleteMoreProjectComment(String id) {
         restTemplate.delete("http://" + SERVICE_NAME + "/projectcomments/more?id="+id,id);
 
+    }
+
+    // 查询所有留言
+    @Override
+    public PageInfo<SkProjectComments> selectAllProjectComment(Integer projectId,Integer currentPage, Integer pageSize) {
+        if ("".equals(projectId) || projectId == null){
+            return restTemplate.getForObject("http://" + SERVICE_NAME + "/projectcomments/more?currentPage=" + currentPage +"&pageSize=" +pageSize,PageInfo.class);
+        }
+        return restTemplate.getForObject("http://" + SERVICE_NAME + "/projectcomments/more?currentPage=" + currentPage +"&pageSize=" +pageSize+"&projectId=" + projectId,PageInfo.class);
     }
 }

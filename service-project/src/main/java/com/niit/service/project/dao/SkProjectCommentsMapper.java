@@ -3,6 +3,7 @@ package com.niit.service.project.dao;
 
 import com.niit.service.project.pojo.SkProjectComments;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -25,4 +26,7 @@ public interface SkProjectCommentsMapper {
 
     // 批量删除
     Integer deleteMoreProjectComment(List<String> list);
+
+    // 查询所有留言
+    List<SkProjectComments> selectAllProjectComment(@Param("projectId") Integer projectId);
 }

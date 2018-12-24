@@ -128,7 +128,7 @@
     delete from sk_project
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.niit.service.project.pojo.SkProject" >
+  <insert id="insert" parameterType="com.niit.service.project.pojo.SkProject" useGeneratedKeys="true" keyProperty="id">
     insert into sk_project (id, title, url, 
       view_count, updatetime, comments, 
       operation_desc, cover_img, category_id, 

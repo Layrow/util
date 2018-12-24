@@ -3,6 +3,8 @@ package com.niit.website.cms.service;
 
 import com.niit.website.cms.pojo.SkProjectCategory;
 
+import java.util.List;
+
 /**
  * @Description
  * @Author liyuhao
@@ -21,4 +23,10 @@ public interface SkProjectCategoryService {
 
     // update
     void updateByPrimaryKey(SkProjectCategory record);
+
+    // 查询所有的作品栏目类别
+    List<SkProjectCategory> selectAllProjectCategory();
+
+    // 批量删除
+    void deleteMoreProjectCategory(String id);
 }

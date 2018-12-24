@@ -1,5 +1,6 @@
 package com.niit.website.smartkids.service.projectservice.impl;
 
+import com.github.pagehelper.PageInfo;
 import com.niit.website.smartkids.pojo.project.SkProjectComments;
 import com.niit.website.smartkids.service.projectservice.SkProjectCommentsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,5 +49,11 @@ public class SkProjectCommentsServiceImpl implements SkProjectCommentsService {
     public void deleteMoreProjectComment(String id) {
         restTemplate.delete("http://" + SERVICE_NAME + "/projectcomments/more?id="+id,id);
 
+    }
+
+    // 查询所有留言
+    @Override
+    public PageInfo<SkProjectComments> selectAllProjectComment(Integer projectId, Integer currentPage, Integer pageSize) {
+        return restTemplate.getForObject("http://" + SERVICE_NAME + "/projectcomments/more?currentPage=" + currentPage +"&pageSize=" +pageSize+"&projectId=" + projectId,PageInfo.class);
     }
 }

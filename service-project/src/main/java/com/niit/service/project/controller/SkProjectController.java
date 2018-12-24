@@ -25,13 +25,8 @@ public class SkProjectController {
     // insert
     @PostMapping
     public Integer insertProject(@RequestBody SkProject skProject) {
-        Integer insertStatus = 0;
-        try {
-            insertStatus = skProjectService.insert(skProject);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return insertStatus;
+        // 自增主键
+        return skProjectService.insert(skProject);
     }
 
     // delete

@@ -21,6 +21,7 @@ import java.util.List;
  * @author huangwei
  * @date 2018/11/1
  */
+@CrossOrigin
 @RestController
 @RequestMapping("/video")
 public class SkChannelArticleVideoCnController {

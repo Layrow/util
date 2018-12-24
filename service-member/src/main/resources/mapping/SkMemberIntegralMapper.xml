@@ -39,11 +39,11 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.niit.service.member.pojo.SkMemberIntegral" >
-    insert into sk_member_integral (id, user_id, user_name, 
+    insert into sk_member_integral (id, user_id, user_name,
       actions, operation, numbers, 
       operation_time)
-    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, 
-      #{actions,jdbcType=VARCHAR}, #{operation,jdbcType=INTEGER}, #{numbers,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR},
+      #{actions,jdbcType=VARCHAR}, #{operation,jdbcType=INTEGER}, #{numbers,jdbcType=INTEGER},
       #{operationTime,jdbcType=TIMESTAMP})
   </insert>
 

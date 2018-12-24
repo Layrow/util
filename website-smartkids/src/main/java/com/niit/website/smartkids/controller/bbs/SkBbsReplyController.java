@@ -4,11 +4,15 @@ package com.niit.website.smartkids.controller.bbs;
 import com.github.pagehelper.PageInfo;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.niit.website.smartkids.enums.IntegralActionsEnum;
 import com.niit.website.smartkids.pojo.bbs.SkBbsReply;
+import com.niit.website.smartkids.pojo.member.SkMemberIntegral;
 import com.niit.website.smartkids.service.bbsservice.SkBbsReplyService;
+import com.niit.website.smartkids.service.memberservice.IMemberItegralService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Type;
 import java.util.List;
@@ -27,6 +31,8 @@ public class SkBbsReplyController {
 
     @Autowired
     private SkBbsReplyService skBbsReplyService;
+    @Resource
+    IMemberItegralService memberItegralService;
 
     /**
      * 回帖信息
@@ -55,7 +61,11 @@ public class SkBbsReplyController {
     * @return int
     */
     @PostMapping
-    public int insertSelective(@RequestBody SkBbsReply record) {
+    public int insertSelective(@RequestBody SkBbsReply record, @RequestBody SkMemberIntegral integral) {
+        integral.setActions(IntegralActionsEnum.POST_REPLY.getAction());
+        integral.setOperation(IntegralActionsEnum.POST_REPLY.getOperation());
+        integral.setNumbers(IntegralActionsEnum.POST_REPLY.getNums());
+        memberItegralService.interAction(integral);
         int i = skBbsReplyService.insertSelective(record);
         return i;
 

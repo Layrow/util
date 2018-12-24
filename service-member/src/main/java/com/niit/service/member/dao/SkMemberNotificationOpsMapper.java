@@ -20,13 +20,14 @@ public interface SkMemberNotificationOpsMapper {
      */
     List<SkMemberNotificationOps> selectAll(Integer userId);
 
-    int insert(SkMemberNotificationOps record);
-
     /**
      * 添加一条通知
      * @param record
      * @return
      */
+    int insert(SkMemberNotificationOps record);
+
+
     int insertSelective(SkMemberNotificationOps record);
 
     SkMemberNotificationOps selectByPrimaryKey(Integer id);

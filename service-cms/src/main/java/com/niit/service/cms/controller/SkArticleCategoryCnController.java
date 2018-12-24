@@ -124,14 +124,14 @@ public class SkArticleCategoryCnController {
     }
 
     /**
-     * @Description 查询channel为1的，parent_id为0的栏目类别
+     * @Description 查询channel特定的，parent_id为0的栏目类别
      * @Date 2018/11/29 9:26
      * @Param [locale]
      * @Return java.util.List<com.niit.service.cms.pojo.SkArticleCategoryCn>
      **/
     @GetMapping("/articleCategory")
-    public List<SkArticleCategoryCn> selectNewsCategory(@RequestParam String locale) {
-        return  skArticleCategoryCnService.selectNewsCategory(locale);
+    public List<SkArticleCategoryCn> selectCategory(@RequestParam String locale,@RequestParam Integer channelId) {
+        return  skArticleCategoryCnService.selectNewsCategory(locale,channelId);
     }
 
 }

@@ -3,20 +3,31 @@ spring:
     name: service-project
 
 
+#  datasource:
+#    driver-class-name: com.mysql.jdbc.Driver
+#    url: jdbc:mysql://118.178.227.169:3306/niit_samrtkids?useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=GMT%2B8&amp;useSSL=false
+#    username: smartkids
+#    password: niit1234
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://118.178.227.169:3306/niit_samrtkids?useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=GMT%2B8&amp;useSSL=false
-    username: smartkids
-    password: niit1234
+    url: jdbc:mysql://localhost:3306/niit_samrtkids?useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=GMT%2B8&amp;useSSL=false
+    username: root
+    password: etoak
 
 server:
   port: 8087
 
+#  datasource:
+#    url: jdbc:mysql://118.178.227.169:3306/niit_samrtkids?serverTimezone=GMT
+#    driver-class-name: com.mysql.jdbc.Driver
+#    username: smartkids
+#    password: niit1234
+
   datasource:
-    url: jdbc:mysql://118.178.227.169:3306/niit_samrtkids?serverTimezone=GMT
+    url: jdbc:mysql://localhost:3306/niit_samrtkids?serverTimezone=GMT
     driver-class-name: com.mysql.jdbc.Driver
-    username: smartkids
-    password: niit1234
+    username: root
+    password: etoak
   application:
     name: service-project
   cloud:

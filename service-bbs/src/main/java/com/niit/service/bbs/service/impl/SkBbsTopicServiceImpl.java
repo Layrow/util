@@ -30,6 +30,17 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
     @Resource
     private SkBbsReplyMapper skBbsReplyMapper;
 
+    /**
+     * 通过传来的帖子Id 找到用户Id
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public List<Integer> listUserId(List<String> id) {
+        return skBbsTopicMapper.selectAllUserId(id);
+    }
+
     @Override
     public Map<Integer, String> selectAllTopicById() {
         //查询出所有回帖

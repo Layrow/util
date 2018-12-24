@@ -20,6 +20,7 @@ import java.util.List;
  * @author huangwei
  * @date 2018/11/1
  */
+@CrossOrigin
 @RestController
 @RequestMapping("/content")
 public class SkchannelArticleContentCnController {
@@ -92,14 +93,12 @@ public class SkchannelArticleContentCnController {
      * @date 2018/11/1
      * @params [id]
      */
-/*
 
-    @GetMapping("/{id}")
-    public SkChannelArticleContentCn selectByPrimaryKeyInfo(@PathVariable("id") Integer id) {
-        SkChannelArticleContentCn contentCn = skChannelArticleContentCnService.selectByPrimaryKey(id);
+    @GetMapping("/id")
+    public SkChannelArticleContentCn selectByPrimaryKeyInfo(Integer id,@RequestParam String locale) {
+        SkChannelArticleContentCn contentCn = skChannelArticleContentCnService.selectByPrimaryKey(id,locale);
         return contentCn;
     }
-*/
     /**
      * 功能描述:查找所有
      *
@@ -194,6 +193,17 @@ public class SkchannelArticleContentCnController {
 //        return listInfo;
 //    }
 
-
+    // 按照栏目类别ID并且status = 1查找新闻
+    @GetMapping("/{locale}/{categoryId}")
+    public String selectNewsByCategoryId(@PathVariable("locale") String locale, @PathVariable("categoryId") Integer categoryId,
+                                         Integer currentPage, Integer pageSize) {
+        String info = null;
+        try {
+            info = skChannelArticleContentCnService.selectContentByCategoryId(locale, categoryId,currentPage,pageSize);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return info;
+    }
 
 }

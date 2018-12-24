@@ -27,9 +27,11 @@ public interface ISkMemberNotificationService {
 
     /**
      * 查询用户下的所有通知
+     * @param pageSize  页面大小
+     * @param currentPage 当前页
      * @param userId
      * @return
      */
-    PageInfo<SkMemberNotificationOps> listAll(Integer userId);
+    PageInfo<SkMemberNotificationOps> listAll(Integer currentPage, Integer pageSize,Integer userId);
 
 }

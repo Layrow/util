@@ -3,12 +3,17 @@ package com.niit.website.smartkids.controller.bbs;
 import com.github.pagehelper.PageInfo;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.niit.website.smartkids.enums.IntegralActionsEnum;
 import com.niit.website.smartkids.pojo.bbs.SkBbsTopic;
+import com.niit.website.smartkids.pojo.member.SkMemberIntegral;
 import com.niit.website.smartkids.service.bbsservice.SkBbsTopicService;
+import com.niit.website.smartkids.service.memberservice.IMemberItegralService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -22,9 +27,13 @@ import java.util.Map;
 @RestController
 @CrossOrigin
 @RequestMapping("/topic")
-public class SkBbsTopicController {
+public class SkBbsTopicController {;
     @Resource
     SkBbsTopicService skBbsTopicService;
+    @Resource
+    IMemberItegralService memberItegralService;
+
+
     @GetMapping("/getOne")
     public SkBbsTopic getTopic(@RequestParam Integer id){
         return  skBbsTopicService.getTopic(id);
@@ -45,8 +54,11 @@ public class SkBbsTopicController {
      * @return
      */
     @PostMapping("/add")
-    public boolean insert(@RequestBody SkBbsTopic topic){
-
+    public boolean insert(@RequestBody SkBbsTopic topic, @RequestBody SkMemberIntegral integral){
+        integral.setActions(IntegralActionsEnum.POST_TOPIC.getAction());
+        integral.setOperation(IntegralActionsEnum.POST_TOPIC.getOperation());
+        integral.setNumbers(IntegralActionsEnum.POST_TOPIC.getNums());
+        memberItegralService.interAction(integral);
         return skBbsTopicService.insertSelective(topic);
     }
 
@@ -166,8 +178,25 @@ public class SkBbsTopicController {
      */
     @PutMapping("/top")
     public boolean top(@RequestParam String id){
+        List<Integer> ids=new ArrayList<>();
+        List<String> list= skBbsTopicService.listUserId(id);
+        Iterator<String> iterator= list.iterator();
+        while (iterator.hasNext()){
+            ids.add(Integer.parseInt(iterator.next()));
+        }
+        Integer [] tids= (Integer[]) ids.toArray(new Integer[ids.size()]);
+        SkMemberIntegral integral =null;
+        for (Integer item: tids) {
+            integral=new SkMemberIntegral();
+            integral.setUserId(item);
+            integral.setActions(IntegralActionsEnum.POST_TOP.getAction());
+            integral.setOperation(IntegralActionsEnum.POST_TOP.getOperation());
+            integral.setNumbers(IntegralActionsEnum.POST_TOP.getNums());
+            memberItegralService.interAction(integral);
+        }
         return skBbsTopicService.top(id);
     }
+
 
     /**
      * 批量加精
@@ -176,6 +205,22 @@ public class SkBbsTopicController {
      */
     @PutMapping("/essence")
     public boolean essence(@RequestParam String id){
+        List<Integer> ids=new ArrayList<>();
+       List<String> list= skBbsTopicService.listUserId(id);
+       Iterator<String> iterator= list.iterator();
+        while (iterator.hasNext()){
+            ids.add(Integer.parseInt(iterator.next()));
+        }
+        Integer [] tids= (Integer[]) ids.toArray(new Integer[ids.size()]);
+        SkMemberIntegral integral =null;
+        for (Integer item: tids) {
+            integral=new SkMemberIntegral();
+            integral.setUserId(item);
+            integral.setActions(IntegralActionsEnum.POST_ESSENCE.getAction());
+            integral.setOperation(IntegralActionsEnum.POST_ESSENCE.getOperation());
+            integral.setNumbers(IntegralActionsEnum.POST_ESSENCE.getNums());
+            memberItegralService.interAction(integral);
+        }
         return skBbsTopicService.essence(id);
     }
 

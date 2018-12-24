@@ -57,6 +57,7 @@
     seo_keywords, seo_description, is_lock
   </sql>
 
+
   <!--拿到所有父类栏目id-->
   <select id="getMainCategory" resultMap="BaseResultMap" parameterType="java.lang.Integer">
     SELECT
@@ -125,10 +126,10 @@
     WHERE parent_id = #{parent_id}
   </select>
   
-   <!-- 查询channel为1的，parent_id为0的栏目类别 -->
-  <select id="selectNewsCategory" resultMap="BaseResultMap">
+   <!-- 查询channel特定的，parent_id为0的栏目类别 -->
+  <select id="selectCategory" resultMap="BaseResultMap">
     select * from sk_article_category_cn
-    where channel_id = 1 and parent_id = 0 order by sort_id desc
+    where channel_id = #{channelId} and parent_id = 0 order by sort_id desc
   </select>
 
   <!-- 根据ChannelId获取特定栏目类别 -->

@@ -19,7 +19,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequestMapping(value = "/news")
-public class SkChannelArticleNewsCnController {
+public class  SkChannelArticleNewsCnController {
 
     @Autowired
     private SkChannelArticleNewsCnService skChannelArticleNewsCnService;
@@ -38,10 +38,10 @@ public class SkChannelArticleNewsCnController {
         return newsInfos;
     }
 
-    // 查询channel为1的，parent_id为0的栏目类别
+    // 查询channel特定的，parent_id为0的栏目类别
     @GetMapping("/articleCategory")
-    public List<SkArticleCategoryCn> selectNewsCategory(@RequestParam String locale) {
-        return  skChannelArticleNewsCnService.selectNewsCategory(locale);
+    public List<SkArticleCategoryCn> selectCategory(@RequestParam String locale,@RequestParam Integer channelId) {
+        return  skChannelArticleNewsCnService.selectCategory(locale,channelId);
     }
 
     // 根据ID查找

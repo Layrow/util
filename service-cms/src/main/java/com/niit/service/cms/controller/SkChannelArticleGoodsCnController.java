@@ -44,7 +44,7 @@ public class SkChannelArticleGoodsCnController {
 
     /**
      * @param channelId, locale
-     * @Description TODO
+     * @Description
      * @author yuwentao
      */
     @GetMapping(value = "/main_category_article_count")

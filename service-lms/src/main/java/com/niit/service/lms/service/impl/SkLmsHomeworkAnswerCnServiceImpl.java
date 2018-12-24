@@ -57,4 +57,23 @@ public class SkLmsHomeworkAnswerCnServiceImpl implements SkLmsHomeworkAnswerCnSe
     public int updateByPrimaryKeySelective(SkLmsHomeworkAnswerCn record) {
         return skLmsHomeworkAnswerCnMapper.updateByPrimaryKeySelective(record);
     }
+
+    // 学生作业信息的分析
+    @Override
+    public String selectStudentHomeworkInfo(Integer batchId, Integer studentId) {
+        HashMap<String, Object> map = new HashMap<>();
+        List<HashMap<String, Object>> scoreList = skLmsHomeworkAnswerCnMapper.selectScoreByStudentId(studentId);
+        List<HashMap<String, Object>> homeworkList = skLmsHomeworkAnswerCnMapper.selectHomeworkSizeByStudentId(batchId, studentId);
+        map.put("scoreList",scoreList);
+        map.put("homeworkList", homeworkList);
+        Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
+        return gson.toJson(map);
+    }
+
+    @Override
+    public String selectBacthInfo(Integer batchId) {
+        List<HashMap<String, Object>> maps = skLmsHomeworkAnswerCnMapper.selectBacthInfo(batchId);
+        Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
+        return gson.toJson(maps);
+    }
 }

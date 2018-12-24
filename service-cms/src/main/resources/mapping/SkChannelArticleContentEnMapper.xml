@@ -35,7 +35,17 @@
   <sql id="Blob_Column_List" >
     content
   </sql>
-
+  <!-- 查询特定栏目下的头条新闻和非头条新闻，先显示头条新闻再显示非头条新闻，分别按照sort排序 (分页显示) -->
+  <select id="selectContentByCategoryId" resultMap="BaseResultMap">
+    select * from sk_channel_article_content_en s
+    where s.status = 1
+    and category_id IN
+    <foreach collection="list" item="category_id" open="("
+             separator="," close=")">
+      #{category_id}
+    </foreach>
+    order by is_top desc,sort_id desc
+  </select>
   <!--  分页模糊查询 ByCategoryId -->
   <select id="likeSelectAllByCategoryId" resultMap="BaseResultMap">
     select

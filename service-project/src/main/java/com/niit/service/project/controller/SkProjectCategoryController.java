@@ -20,7 +20,7 @@ public class SkProjectCategoryController {
     private SkProjectCategoryService skProjectCategoryService;
 
     @PostMapping
-    public Integer insert(SkProjectCategory skProjectCategory) {
+    public Integer insert(@RequestBody SkProjectCategory skProjectCategory) {
         Integer insertStatus = 0;
         try {
             insertStatus = skProjectCategoryService.insert(skProjectCategory);
@@ -53,7 +53,7 @@ public class SkProjectCategoryController {
     }
 
     @PutMapping
-    public Integer updateProjectCategory(SkProjectCategory skProjectCategory) {
+    public Integer updateProjectCategory(@RequestBody SkProjectCategory skProjectCategory) {
         Integer updateStatus = 0;
         try {
             updateStatus = skProjectCategoryService.updateByPrimaryKey(skProjectCategory);

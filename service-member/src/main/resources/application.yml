@@ -8,14 +8,15 @@ spring:
     username: smartkids
     password: niit1234
 
+#  datasource:
+#    driver-class-name: com.mysql.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/niit_samrtkids?useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=GMT%2B8&amp;useSSL=false
+#    username: root
+#    password: 1105
+
 server:
   port: 9527
 
-  datasource:
-    url: jdbc:mysql://118.178.227.169:3306/niit_samrtkids?serverTimezone=GMT
-    driver-class-name: com.mysql.jdbc.Driver
-    username: smartkids
-    password: niit1234
   application:
     name: service-member
   cloud:

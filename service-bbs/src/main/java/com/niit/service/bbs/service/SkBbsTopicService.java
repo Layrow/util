@@ -16,6 +16,12 @@ import java.util.Map;
  * @since 1.0.0
  */
 public interface SkBbsTopicService {
+    /**
+     * 通过传来的帖子Id 找到用户Id
+     * @param id
+     * @return
+     */
+    List<Integer> listUserId(List<String> id);
 
 
     Map<Integer,String>  selectAllTopicById();

@@ -4,6 +4,7 @@ import com.niit.service.project.pojo.SkProjectComments;
 import com.niit.service.project.service.SkProjectCommentsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @ClassName SkProjectCommentsController
@@ -19,8 +20,9 @@ public class SkProjectCommentsController {
     @Autowired
     private SkProjectCommentsService skProjectCommentsService;
 
+    // insert
     @GetMapping
-    public Integer insertProjectComments(SkProjectComments skProjectComments) {
+    public Integer insertProjectComments(@RequestBody SkProjectComments skProjectComments) {
         Integer insertStatus = 0;
         try {
             insertStatus = skProjectCommentsService.insert(skProjectComments);
@@ -30,6 +32,7 @@ public class SkProjectCommentsController {
         return insertStatus;
     }
 
+    // delete
     @DeleteMapping("/{id}")
     public Integer deleteProjectComments(@PathVariable Integer id) {
         Integer deleteStatus = 0;
@@ -41,8 +44,9 @@ public class SkProjectCommentsController {
         return deleteStatus;
     }
 
+    // update
     @PutMapping
-    public Integer updateProjectComments(SkProjectComments skProjectComments) {
+    public Integer updateProjectComments(@RequestBody SkProjectComments skProjectComments) {
         Integer updateStatus = 0;
         try {
             updateStatus = skProjectCommentsService.updateByPrimaryKey(skProjectComments);
@@ -52,6 +56,7 @@ public class SkProjectCommentsController {
         return updateStatus;
     }
 
+    // select
     @GetMapping("/{id}")
     public SkProjectComments selectProjectComments(@PathVariable Integer id) {
         SkProjectComments skProjectComments = null;
@@ -61,5 +66,31 @@ public class SkProjectCommentsController {
             e.printStackTrace();
         }
         return skProjectComments;
+    }
+
+    // 批量审核作品留言
+    @PutMapping("/more")
+    public Integer updateMoreProjectComment(HttpServletRequest request) {
+        String id = request.getParameter("id");
+        Integer updateStatus = 0;
+        try {
+            updateStatus = skProjectCommentsService.updateMoreProjectComment(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return updateStatus;
+    }
+
+    // 批量删除作品留言
+    @DeleteMapping("/more")
+    public Integer deleteMoreProjectComment(HttpServletRequest request) {
+        String id = request.getParameter("id");
+        Integer deleteStatus = 0;
+        try {
+            deleteStatus = skProjectCommentsService.deleteMoreProjectComment(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return deleteStatus;
     }
 }

@@ -2,6 +2,8 @@ package com.niit.service.project.service;
 
 import com.niit.service.project.pojo.SkProjectComments;
 
+import java.util.List;
+
 /**
  * @Description
  * @Author liyuhao
@@ -20,4 +22,11 @@ public interface SkProjectCommentsService {
 
     // update
     int updateByPrimaryKey(SkProjectComments record);
+
+    // 批量审核
+    Integer updateMoreProjectComment(String id);
+
+    // 批量删除
+    Integer deleteMoreProjectComment(String id);
+
 }

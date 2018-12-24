@@ -24,7 +24,7 @@ public class SkProjectController {
 
     // insert
     @PostMapping
-    public Integer insertProject(SkProject skProject) {
+    public Integer insertProject(@RequestBody SkProject skProject) {
         Integer insertStatus = 0;
         try {
             insertStatus = skProjectService.insert(skProject);
@@ -35,8 +35,8 @@ public class SkProjectController {
     }
 
     // delete
-    @DeleteMapping("/{id}")
-    public Integer deleteProject(@PathVariable Integer id) {
+    @DeleteMapping("/delete")
+    public Integer deleteProject(Integer id) {
         Integer deleteStatus = 0;
         try {
             deleteStatus = skProjectService.deleteByPrimaryKey(id);
@@ -60,7 +60,7 @@ public class SkProjectController {
 
     // update
     @PutMapping
-    public Integer updateProject(SkProject skProject) {
+    public Integer updateProject(@RequestBody SkProject skProject) {
         Integer updateStatus = 0;
         try {
             updateStatus = skProjectService.updateByPrimaryKey(skProject);
@@ -119,5 +119,28 @@ public class SkProjectController {
             e.printStackTrace();
         }
         return pageInfo;
+    }
+
+    // 按照置顶/推荐/点赞数 查询
+    @GetMapping("/type")
+    public PageInfo<SkProject> likeSelectProjectAll(@RequestParam(defaultValue = "",required = false) String title,
+                                                    @RequestParam(defaultValue = "",required = false) Integer status,
+                                                    @RequestParam Integer categoryId,
+                                                    @RequestParam(defaultValue ="")String orderBy,
+                                                    @RequestParam Integer currentPage,
+                                                    @RequestParam Integer pageSize) {
+        PageInfo<SkProject> pageInfo = null;
+        try {
+            pageInfo = skProjectService.likeSelectProjectAll(title,status,categoryId,orderBy, currentPage, pageSize);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return pageInfo;
+    }
+
+    // 查询用户作品
+    @GetMapping("/user")
+    public PageInfo<SkProject> selectProject(Integer userId,Integer currentPage,Integer pageSize) {
+        return skProjectService.selectProjectByUserId(userId, currentPage, pageSize);
     }
 }

@@ -26,9 +26,9 @@ public class SkChannelArticleNewsCnServiceImpl implements SkChannelArticleNewsCn
     }
 
     @Override
-    public List<SkArticleCategoryCn> selectNewsCategory(String locale) {
+    public List<SkArticleCategoryCn> selectCategory(String locale,Integer channelId) {
         return restTemplate.getForObject(
-                "http://" + SERVICE_NAME + "/skArticleCategoryCn/articleCategory?locale=" + locale,
+                "http://" + SERVICE_NAME + "/skArticleCategoryCn/articleCategory?locale=" + locale+"&channelId=" + channelId,
                 List.class,locale);
     }
 

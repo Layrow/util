@@ -67,14 +67,6 @@ public class SkProjectServiceImpl implements SkProjectService {
     @Override
     public void updateByPrimaryKey(SkProject record) {
         restTemplate.put("http://" + SERVICE_NAME + "/project",record);
-        SkMemberIntegral integral = new SkMemberIntegral();
-        integral.setActions(IntegralActionsEnum.POST_UNPROJECT.getAction());
-        integral.setNumbers(IntegralActionsEnum.POST_UNPROJECT.getNums());
-        integral.setOperation(IntegralActionsEnum.POST_UNPROJECT.getOperation());
-        integral.setUserId(record.getUserId());
-        integral.setUserName(record.getUserName());
-        // 积分变更
-        restTemplate.postForObject("http://" + SERVICE_MEMVER + "/integral/integral",integral,String.class);
     }
 
     @Override

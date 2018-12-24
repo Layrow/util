@@ -56,20 +56,6 @@ public class SkProjectServiceImpl implements SkProjectService {
         // 删除作品
         restTemplate.delete("http://" + SERVICE_NAME + "/project?id=" + id,id);
         SkMemberIntegral integral = new SkMemberIntegral();
-        // 积分变更
-        integral.setActions(IntegralActionsEnum.POST_UNPROJECT.getAction());
-        integral.setNumbers(IntegralActionsEnum.POST_UNPROJECT.getNums());
-        integral.setOperation(IntegralActionsEnum.POST_UNPROJECT.getOperation());
-        integral.setUserId(userId);
-        integral.setUserName(userName);
-        restTemplate.postForObject("http://" + SERVICE_MEMVER + "/integral/integral",integral,String.class);
-        // 积分变更通知
-        SkMemberNotificationOps ops = new SkMemberNotificationOps();
-        ops.setOperation(IntegralActionsEnum.POST_PROJECT.getOperation());
-        ops.setProjectId(id);
-        ops.setUserId(userId);
-        ops.setUserName(userName);
-        restTemplate.postForObject("http://" + SERVICE_MEMVER + "/notification/add",ops,String.class);
     }
 
     // TODO 重复点赞，积分变更，通知

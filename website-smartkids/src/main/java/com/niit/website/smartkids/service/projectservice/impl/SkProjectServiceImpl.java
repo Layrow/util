@@ -80,8 +80,7 @@ public class SkProjectServiceImpl implements SkProjectService {
         SkProject skProject = selectByPrimaryKey(record.getId());
         // 点赞
         if(record.getLikesCount() > skProject.getLikesCount()) {
-            // 积分通知不成功，积分不变更，作品内容不更新
-            restTemplate.put("http://" + SERVICE_NAME + "/project",record);
+
             // 积分变更通知
             SkMemberNotificationOps ops = new SkMemberNotificationOps();
             ops.setOperation(NotificationEnum.LIKE.getOperation());
@@ -101,10 +100,11 @@ public class SkProjectServiceImpl implements SkProjectService {
                 integral.setUserName(record.getUserName());
                 // 积分变更
                 restTemplate.postForObject("http://" + SERVICE_MEMVER + "/integral/integral",integral,String.class);
+                // 积分通知不成功，积分不变更，作品内容不更新
+                restTemplate.put("http://" + SERVICE_NAME + "/project",record);
             }
         } else if (record.getFavCount() > skProject.getFavCount()) {
-            // 作品信息变更
-            restTemplate.put("http://" + SERVICE_NAME + "/project",record);
+
             // 收藏
             // 积分变更通知
             SkMemberNotificationOps ops = new SkMemberNotificationOps();
@@ -124,6 +124,8 @@ public class SkProjectServiceImpl implements SkProjectService {
                 integral.setUserName(record.getUserName());
                 // 积分变更
                 restTemplate.postForObject("http://" + SERVICE_MEMVER + "/integral/integral",integral,String.class);
+                // 作品信息变更
+                restTemplate.put("http://" + SERVICE_NAME + "/project",record);
 
             }
         } else {

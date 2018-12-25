@@ -15,7 +15,7 @@ import java.util.List;
 public interface SkProjectService {
 
     // insert
-    Integer insert(SkProject record);
+    String insert(SkProject record);
 
     // delete
     int deleteByPrimaryKey(Integer id);
@@ -32,8 +32,8 @@ public interface SkProjectService {
     // 查询所有作品
     PageInfo<SkProject> selectAllProject(Integer status,Integer currentPage,Integer pageSize);
 
-    // 批量审核作品
-    Integer updateMoreProject(String id);
+    // 批量操作作品（置顶，推荐，审核）
+    Integer updateMoreProject(String sign,String id);
 
     // 根据title模糊查询作品
     PageInfo<SkProject> likeSelectProjectByTitle(String status,String title,Integer currentPage,Integer pageSize);

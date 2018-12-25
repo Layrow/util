@@ -72,8 +72,17 @@
     </if>
   </select>
   <!-- 批量审核作品 -->
-  <update id="updateMoreProject" parameterType="java.util.List">
-    update sk_project set status = 1
+  <update id="updateMoreProject">
+    update sk_project
+    <if test="sign == 'status'">
+      set status = 1
+    </if>
+    <if test="sign == 'top'">
+      set is_top = 1
+    </if>
+    <if test="sign == 'recommnd'">
+      set is_recommnd = 1
+    </if>
     where id in
     <foreach collection="list" item="id" open="("
              separator="," close=")">

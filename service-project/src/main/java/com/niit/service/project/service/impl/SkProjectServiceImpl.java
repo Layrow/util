@@ -24,9 +24,10 @@ public class SkProjectServiceImpl implements SkProjectService {
 
     // insert
     @Override
-    public Integer insert(SkProject record) {
+    public String insert(SkProject record) {
         skProjectMapper.insert(record);
-        return record.getId();
+        Integer id = record.getId();
+        return String.valueOf(id);
     }
 
     // delete
@@ -65,11 +66,11 @@ public class SkProjectServiceImpl implements SkProjectService {
     }
 
 
-    // 批量审核作品
+    // 批量操作作品（置顶，推荐，审核）
     @Override
-    public Integer updateMoreProject(String id) {
+    public Integer updateMoreProject(String sign,String id) {
         List<String> list = Tools.getList(id);
-        return skProjectMapper.updateMoreProject(list);
+        return skProjectMapper.updateMoreProject(sign,list);
     }
 
     // 根据title模糊查询作品

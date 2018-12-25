@@ -24,7 +24,13 @@ public class SkProjectController {
 
     // insert
     @PostMapping
-    public Integer insertProject(@RequestBody SkProject skProject) {
+    public String insertProject(@RequestBody SkProject skProject) {
+        skProject.setFavCount(0);
+        skProject.setIsRecommnd(0);
+        skProject.setViewCount(0);
+        skProject.setIsTop(0);
+        skProject.setLikesCount(0);
+        skProject.setStatus(1);
         // 自增主键
         return skProjectService.insert(skProject);
     }
@@ -90,13 +96,14 @@ public class SkProjectController {
         return pageInfo;
     }
 
-    // 批量审核作品
+    // 批量操作作品（置顶，推荐，审核）
     @PutMapping("/more")
     public Integer updateMoreProject(HttpServletRequest request) {
         Integer updateStatus = 0;
         String id = request.getParameter("id");
+        String sign = request.getParameter("sign");
         try {
-            updateStatus = skProjectService.updateMoreProject(id);
+            updateStatus = skProjectService.updateMoreProject(sign,id);
         } catch (Exception e) {
             e.printStackTrace();
         }

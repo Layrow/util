@@ -32,8 +32,8 @@ public interface SkProjectMapper {
     // 查询所有作品
     List<SkProject> selectAllProject(@Param("status") Integer status);
 
-    // 批量审核作品
-    Integer updateMoreProject(List<String> list);
+    // 批量操作作品（置顶，推荐，审核）
+    Integer updateMoreProject(@Param("sign") String sign, @Param("list") List<String> list);
 
     // 根据title模糊查询作品
     List<SkProject> likeSelectProjectByTitle(String status,String title);

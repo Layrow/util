@@ -31,27 +31,27 @@ public class SkProjectServiceImpl implements SkProjectService {
     // 上传作品
     @Override
     @Transactional(rollbackFor=Exception.class)
-    public Integer insert(SkProject record) {
-        Integer id = restTemplate.postForObject("http://" + SERVICE_NAME + "/project", record,Integer.class);
-        System.out.println(id);
-        // 积分管理
-        SkMemberIntegral integral = new SkMemberIntegral();
-        integral.setActions(IntegralActionsEnum.POST_PROJECT.getAction());
-        integral.setNumbers(IntegralActionsEnum.POST_PROJECT.getNums());
-        integral.setOperation(IntegralActionsEnum.POST_PROJECT.getOperation());
-        integral.setUserId(record.getUserId());
-        integral.setUserName(record.getUserName());
-        // 积分变更
-        restTemplate.postForObject("http://" + SERVICE_MEMVER + "/integral/integral",integral,String.class);
+    public void insert(SkProject record) {
+        String id = restTemplate.postForObject("http://" + SERVICE_NAME + "/project", record,String.class);
         // 积分变更通知
         SkMemberNotificationOps ops = new SkMemberNotificationOps();
         ops.setOperation(NotificationEnum.PURCHASE.getOperation());
         ops.setNoticeTime(new Date());
-        ops.setProjectId(id);
+        ops.setProjectId(Integer.valueOf(id));
         ops.setUserId(record.getUserId());
         ops.setUserName(record.getUserName());
-        restTemplate.postForObject("http://" + SERVICE_MEMVER + "/notification/add",ops,String.class);
-        return id;
+        String s = restTemplate.postForObject("http://" + SERVICE_MEMVER + "/notification/add", ops, String.class);
+        if ("true".equals(s)) {
+            // 积分管理
+            SkMemberIntegral integral = new SkMemberIntegral();
+            integral.setActions(IntegralActionsEnum.POST_PROJECT.getAction());
+            integral.setNumbers(IntegralActionsEnum.POST_PROJECT.getNums());
+            integral.setOperation(IntegralActionsEnum.POST_PROJECT.getOperation());
+            integral.setUserId(record.getUserId());
+            integral.setUserName(record.getUserName());
+            // 积分变更
+            restTemplate.postForObject("http://" + SERVICE_MEMVER + "/integral/integral",integral,String.class);
+        }
     }
 
     // 删除作品
@@ -68,22 +68,30 @@ public class SkProjectServiceImpl implements SkProjectService {
     }
 
     // update
+    /**
+     * @Description record-作品实体，userlikeId-谁（用户ID）点赞了该作品，userlikeName点赞了该作品
+     * @Date 2018/12/25 11:02
+     * @Param [record, userlikeId, userlikeName]
+     * @Return void
+     **/
     @Override
     @Transactional(rollbackFor=Exception.class)
-    public void updateByPrimaryKey(SkProject record) {
+    public void updateByPrimaryKey(SkProject record,Integer userlikeId,String userlikeName) {
         SkProject skProject = selectByPrimaryKey(record.getId());
         // 点赞
         if(record.getLikesCount() > skProject.getLikesCount()) {
+            // 积分通知不成功，积分不变更，作品内容不更新
             restTemplate.put("http://" + SERVICE_NAME + "/project",record);
             // 积分变更通知
             SkMemberNotificationOps ops = new SkMemberNotificationOps();
             ops.setOperation(NotificationEnum.LIKE.getOperation());
             ops.setProjectId(record.getId());
-            ops.setUserId(record.getUserId());
-            ops.setUserName(record.getUserName());
-            Boolean s = restTemplate.postForObject("http://" + SERVICE_MEMVER + "/notification/add",ops,Boolean.class);
+            ops.setUserId(userlikeId);
+            ops.setUserName(userlikeName);
+            String s = restTemplate.postForObject("http://" + SERVICE_MEMVER + "/notification/add",ops,String.class);
+            System.out.println(Boolean.getBoolean(s));
             // 如果通知成功，进行积分变更
-            if (s) {
+            if ("true".equals(s)) {
                 // 积分管理
                 SkMemberIntegral integral = new SkMemberIntegral();
                 integral.setActions(IntegralActionsEnum.POST_LIKE.getAction());
@@ -94,18 +102,19 @@ public class SkProjectServiceImpl implements SkProjectService {
                 // 积分变更
                 restTemplate.postForObject("http://" + SERVICE_MEMVER + "/integral/integral",integral,String.class);
             }
-            // 收藏
         } else if (record.getFavCount() > skProject.getFavCount()) {
+            // 作品信息变更
             restTemplate.put("http://" + SERVICE_NAME + "/project",record);
+            // 收藏
             // 积分变更通知
             SkMemberNotificationOps ops = new SkMemberNotificationOps();
             ops.setOperation(NotificationEnum.COLLECT.getOperation());
             ops.setProjectId(record.getId());
-            ops.setUserId(record.getUserId());
-            ops.setUserName(record.getUserName());
-            Boolean s = restTemplate.postForObject("http://" + SERVICE_MEMVER + "/notification/add",ops,Boolean.class);
+            ops.setUserId(userlikeId);
+            ops.setUserName(userlikeName);
+            String s = restTemplate.postForObject("http://" + SERVICE_MEMVER + "/notification/add",ops,String.class);
             // 如果通知成功，进行积分变更
-            if (s) {
+            if ("true".equals(s)) {
                 // 积分管理
                 SkMemberIntegral integral = new SkMemberIntegral();
                 integral.setActions(IntegralActionsEnum.POST_COLLECT.getAction());
@@ -115,6 +124,7 @@ public class SkProjectServiceImpl implements SkProjectService {
                 integral.setUserName(record.getUserName());
                 // 积分变更
                 restTemplate.postForObject("http://" + SERVICE_MEMVER + "/integral/integral",integral,String.class);
+
             }
         } else {
             restTemplate.put("http://" + SERVICE_NAME + "/project",record);

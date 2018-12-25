@@ -28,8 +28,8 @@ public class SkMemberNotificationController {
      * @return
      */
     @PostMapping("/add")
-    public boolean add(@RequestBody SkMemberNotificationOps record){
-        return notificationService.insertNotification(record);
+    public String add(@RequestBody SkMemberNotificationOps record){
+       return  String.valueOf(notificationService.insertNotification(record));
     }
 
     /**

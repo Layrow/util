@@ -12,7 +12,7 @@ import com.sun.xml.internal.bind.v2.TODO;
 public interface SkProjectService {
 
     // insert
-    Integer insert(SkProject record);
+    void insert(SkProject record);
 
     // delete
     void deleteByPrimaryKey(Integer id);
@@ -21,7 +21,7 @@ public interface SkProjectService {
     SkProject selectByPrimaryKey(Integer id);
 
     // update
-    void updateByPrimaryKey(SkProject record);
+    void updateByPrimaryKey(SkProject record,Integer userlikeId,String userlikeName);
 
     // 批量删除作品
     void deleteMoreProject(String id);

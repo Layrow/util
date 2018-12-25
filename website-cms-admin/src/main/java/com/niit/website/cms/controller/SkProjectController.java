@@ -87,12 +87,13 @@ public class SkProjectController {
         return pageInfo;
     }
 
-    // 批量审核作品
+    // 批量操作作品（审核，置顶，推荐）
     @PutMapping("/more")
     public void updateMoreProject(HttpServletRequest request) {
         String id = request.getParameter("id");
+        String sign = request.getParameter("sign");
         try {
-            skProjectService.updateMoreProject(id);
+            skProjectService.updateMoreProject(sign,id);
         } catch (Exception e) {
             e.printStackTrace();
         }

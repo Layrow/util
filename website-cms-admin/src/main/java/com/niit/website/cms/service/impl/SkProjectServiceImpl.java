@@ -62,8 +62,8 @@ public class SkProjectServiceImpl implements SkProjectService {
 
     // 批量更改状态码
     @Override
-    public void updateMoreProject(String id) {
-        restTemplate.put("http://" + SERVICE_NAME + "/project/more?id="+id,id);
+    public void updateMoreProject(String sign,String id) {
+        restTemplate.put("http://" + SERVICE_NAME + "/project/more?id="+id+"&sign="+sign,id);
     }
 
     // 根据title，status分页查询作品

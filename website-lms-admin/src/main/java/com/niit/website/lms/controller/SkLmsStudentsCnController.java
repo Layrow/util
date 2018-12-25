@@ -34,6 +34,11 @@ public class SkLmsStudentsCnController {
     @Resource
     SkLmsStudentsCnService studentsService;
 
+    /**
+     * 把指定班级的学生信息导出到Excel
+     * @param batchId
+     * @return
+     */
     @PostMapping("/export")
     public boolean export(@RequestParam Integer batchId){
         return  studentsService.export(batchId);

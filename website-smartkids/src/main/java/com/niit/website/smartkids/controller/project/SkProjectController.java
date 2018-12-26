@@ -26,7 +26,7 @@ public class SkProjectController {
     @PostMapping
     public void insertProject(@RequestBody SkProject skProject) {
         try {
-            skProjectService.insert(skProject);
+            skProjectService.insertProject(skProject);
         } catch (Exception e) {
             e.printStackTrace();
         }

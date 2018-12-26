@@ -142,7 +142,7 @@ public class SkProjectController {
 
     // 查询用户作品
     @GetMapping("/user")
-    public PageInfo<SkProject> selectProject(Integer userId,Integer currentPage,Integer pageSize) {
-        return skProjectService.selectProjectByUserId(userId, currentPage, pageSize);
+    public String selectProjectByUserId(Integer userId) {
+        return skProjectService.selectProjectByUserId(userId);
     }
 }

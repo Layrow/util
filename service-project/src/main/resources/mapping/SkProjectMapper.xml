@@ -23,9 +23,19 @@
     id, title, url, view_count, updatetime, comments, operation_desc, cover_img, category_id, 
     fav_count, likes_count, status, is_top, is_recommnd, user_id, user_name
   </sql>
-  <!-- 查询某个用户下的作品 -->
-  <select id="selectProjectByUserId" resultMap="BaseResultMap">
-    select * from sk_project where user_id = #{userId}
+  <!-- 查询某个用户的作品(创作、收藏、点赞) -->
+  <select id="selectProjectByUserId" resultType="java.util.LinkedHashMap">
+    SELECT
+      a.*,
+      b.user_id as operation_user_id, b.user_name operation_user_name, b.operation as operation
+    FROM
+     sk_project a
+    LEFT JOIN sk_member_notification_ops b ON a.id = b.project_id
+    AND b.user_id = #{userId}
+    AND operation IN (2, 3)
+    WHERE
+     b.user_id = #{userId}
+    OR a.user_id = #{userId}
   </select>
 
   <!--  作品分类 -->

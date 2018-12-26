@@ -39,6 +39,6 @@ public interface SkProjectService {
     PageInfo<SkProject> likeSelectProjectAll(String title, Integer status, Integer categoryId, String orderBy, Integer currentPage, Integer pageSize);
 
     // 查询个人作品
-    PageInfo<SkProject> selectProjectByUserId(Integer userId,Integer currentPage,Integer pageSize);
+    String selectProjectByUserId(Integer userId);
 
 }

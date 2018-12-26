@@ -185,8 +185,7 @@ public class SkProjectServiceImpl implements SkProjectService {
     }
 
     @Override
-    public PageInfo<SkProject> selectProjectByUserId(Integer userId, Integer currentPage, Integer pageSize) {
-        return restTemplate.getForObject("http://" + SERVICE_NAME + "/project/user?currentPage="
-                +currentPage + "&pageSize="+pageSize + "&userId=" + userId,PageInfo.class);
+    public String selectProjectByUserId(Integer userId) {
+        return restTemplate.getForObject("http://" + SERVICE_NAME + "/project/user?userId=" + userId,String.class);
     }
 }

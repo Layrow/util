@@ -2,13 +2,17 @@ package com.niit.service.project.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.niit.common.utils.Tools;
 import com.niit.service.project.dao.SkProjectMapper;
 import com.niit.service.project.pojo.SkProject;
 import com.niit.service.project.service.SkProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.List;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @ClassName SkProjectServiceImpl
@@ -95,11 +99,16 @@ public class SkProjectServiceImpl implements SkProjectService {
 
     // 查询用户作品
     @Override
-    public PageInfo<SkProject> selectProjectByUserId(Integer userId, Integer currentPage, Integer pageSize) {
-        PageInfo<SkProject> pageInfo = null;
-        PageHelper.startPage(currentPage, pageSize);
-        List<SkProject> skProjectList = skProjectMapper.selectProjectByUserId(userId);
-        pageInfo = new PageInfo<>(skProjectList);
-        return pageInfo;
+    public String selectProjectByUserId(Integer userId) {
+        HashMap<String, Object> allPresonProjectInfo = new HashMap<>();
+        List<LinkedHashMap<String, Object>> map = skProjectMapper.selectProjectByUserId(userId);
+        List<LinkedHashMap<String, Object>> likeProjectList = map.stream().filter(x -> x.containsKey("operation") && (Integer) x.get("operation") == 2).collect(Collectors.toList());
+        List<LinkedHashMap<String, Object>> collectProjectList = map.stream().filter(x -> x.containsKey("operation") && (Integer) x.get("operation") == 3).collect(Collectors.toList());
+        List<LinkedHashMap<String, Object>> createProjectList = map.stream().filter(x -> x.containsKey("operation") == false).collect(Collectors.toList());
+        allPresonProjectInfo.put("likeProjectList",likeProjectList);
+        allPresonProjectInfo.put("collectProjectList",collectProjectList);
+        allPresonProjectInfo.put("createProjectList",createProjectList);
+        Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
+        return gson.toJson(allPresonProjectInfo);
     }
 }

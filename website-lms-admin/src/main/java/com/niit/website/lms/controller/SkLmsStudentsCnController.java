@@ -9,10 +9,12 @@ import com.google.gson.reflect.TypeToken;
 import com.niit.website.lms.pojo.SkLmsStudentsCn;
 import com.niit.website.lms.service.SkLmsStudentsCnService;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -43,7 +45,25 @@ public class SkLmsStudentsCnController {
     public boolean export(@RequestParam Integer batchId){
         return  studentsService.export(batchId);
     }
-    @PostMapping("/addOne")
+    @PostMapping("importExcel")
+    public boolean importExcel(@RequestParam MultipartFile excel, @RequestParam Integer batchId, @RequestParam String className) {
+        try {
+            InputStream inputStream=excel.getInputStream();
+            List<Object> list=EasyExcelFactory.read(inputStream,new Sheet(1,1,SkLmsStudentsCn.class));
+            Iterator<Object> iterator=list.iterator();
+            List<SkLmsStudentsCn> students=new ArrayList<>();
+            while (iterator.hasNext()){
+                students.add((SkLmsStudentsCn) iterator.next());
+            }
+            studentsService.imExcel(students,batchId,className);
+            inputStream.close();
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+        @PostMapping("/addOne")
     public boolean insert(@RequestBody SkLmsStudentsCn studentsCn, @RequestParam Integer batchId, @RequestParam String className){
         return  studentsService.addOne(studentsCn,batchId,className);
     }
@@ -98,4 +118,5 @@ public class SkLmsStudentsCnController {
     public PageInfo<SkLmsStudentsCn> splitShowAll(@RequestParam Integer batchId,@RequestParam  Integer currentPage,@RequestParam Integer pageSize){
         return studentsService.splitAllStudents(batchId,currentPage,pageSize);
     }
+
 }

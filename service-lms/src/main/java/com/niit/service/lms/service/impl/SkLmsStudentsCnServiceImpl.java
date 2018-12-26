@@ -13,10 +13,7 @@ import com.niit.service.lms.service.SkLmsStudentsCnService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.niit.common.utils.RandomUtil.randomChar;
 
@@ -47,28 +44,25 @@ public class SkLmsStudentsCnServiceImpl implements SkLmsStudentsCnService {
      * @return
      */
     @Override
-    public boolean addOne(SkLmsStudentsCn student, Integer batchID, String ClassName)  {
-        //添加之前,确保该学生未注册.如果学号重复,则添加失败.
-        if (studentMapper.selectByStudentID(student.getStudentSchoolId())==null){
-            student.setStudentCreateTime(new Date());
-            if (student.getStudentSchoolId()==null){
-                int num =studentMapper.selectAllStudentsByBatchCount(batchID);
-                student.setStudentUserId(ClassName+NumberUtil.numFormat(num));
-            }else {
-                student.setStudentUserId(student.getStudentSchoolId());
-            }
-            student.setStudentPwd(randomChar(6));
-            //将学生信息插入到数据库,只有插入进去才能获取生成的主键
-            studentMapper.insertSelective(student);
-            SkLmsBatchStudentCn batchStudentCn=new SkLmsBatchStudentCn();
-            int stu_ID=student.getId();
-            batchStudentCn.setStudentId(stu_ID);
-            batchStudentCn.setBatchId(batchID);
-            //添加到学生班级表
-            return batchStudentCnMapper.insertSelective(batchStudentCn)>0?true:false;
-        }else {
-            return false;
+    public boolean addOne(SkLmsStudentsCn student, Integer batchID, String ClassName) {
+
+        student.setStudentCreateTime(new Date());
+        if (student.getStudentSchoolId() == null) {
+            int num = studentMapper.selectAllStudentsByBatchCount(batchID);
+            student.setStudentUserId(ClassName + NumberUtil.numFormat(num));
+        } else {
+            student.setStudentUserId(student.getStudentSchoolId());
         }
+        student.setStudentPwd(randomChar(6));
+        //将学生信息插入到数据库,只有插入进去才能获取生成的主键
+        studentMapper.insertSelective(student);
+        SkLmsBatchStudentCn batchStudentCn = new SkLmsBatchStudentCn();
+        int stu_ID = student.getId();
+        batchStudentCn.setStudentId(stu_ID);
+        batchStudentCn.setBatchId(batchID);
+        //添加到学生班级表
+        return batchStudentCnMapper.insertSelective(batchStudentCn) > 0 ? true : false;
+
     }
 
 
@@ -166,6 +160,18 @@ public class SkLmsStudentsCnServiceImpl implements SkLmsStudentsCnService {
                 //把取到的list封装进PageInfo(PageInfo->分页信息+分页后的数据）
                 listInfo = new PageInfo<>(list);
                 return  listInfo;
+    }
+
+    @Override
+    public boolean exportExcel(List<SkLmsStudentsCn> list, String className, Integer batchId) {
+        int count =0;
+        int lenth=list.size();
+        Iterator<SkLmsStudentsCn> iterator=list.iterator();
+        while (iterator.hasNext()){
+            this.addOne(iterator.next(),batchId,className);
+            count++;
+        }
+        return (count==lenth);
     }
 
 

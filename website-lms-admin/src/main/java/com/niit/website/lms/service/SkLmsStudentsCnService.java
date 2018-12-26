@@ -2,6 +2,9 @@ package com.niit.website.lms.service;
 
 import com.github.pagehelper.PageInfo;
 import com.niit.website.lms.pojo.SkLmsStudentsCn;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
  * 〈一句话功能简述〉<br>
@@ -22,6 +25,7 @@ public interface SkLmsStudentsCnService {
      * @return
      */
     boolean export(Integer batchId);
+    boolean imExcel(List<SkLmsStudentsCn> list, Integer batchId, String className);
     /**
      * 实现单个添加学生的功能
      * @param student

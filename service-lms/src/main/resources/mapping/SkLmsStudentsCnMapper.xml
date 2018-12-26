@@ -83,6 +83,7 @@
       )
   </insert>
 
+
   <!--增加学生,此处比之前自动生成的代码 多了 一些 东西 在第一行,为了返回插入后的主键ID-->
   <insert id="insertSelective" parameterType="com.niit.service.lms.pojo.SkLmsStudentsCn" useGeneratedKeys="true" keyProperty="id" keyColumn="id" >
 

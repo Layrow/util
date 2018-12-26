@@ -78,4 +78,13 @@ public interface SkLmsStudentsCnService {
      */
     PageInfo<SkLmsStudentsCn> splitShowStudnets(Integer batchId, Integer currentPage, Integer pageSize);
 
+    /**
+     * 解析Excel,插入数据向数据库中
+     * @param list
+     * @param className
+     * @param batchID
+     * @return
+     */
+    boolean exportExcel(List<SkLmsStudentsCn> list,String className,Integer batchID);
+
 }

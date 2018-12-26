@@ -4,14 +4,17 @@ import com.alibaba.excel.EasyExcelFactory;
 import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.metadata.Sheet;
 import com.github.pagehelper.PageInfo;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.niit.service.lms.pojo.SkLmsStudentsCn;
 import com.niit.service.lms.service.SkLmsStudentsCnService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.OutputStream;
+import java.lang.reflect.Type;
+import java.util.List;
 
 /**
  * 〈一句话功能简述〉<br>
@@ -37,6 +40,17 @@ public class SkLmsStudentsCnController {
     @PostMapping("/addOne")
     public boolean insert(@RequestBody SkLmsStudentsCn studentsCn, @RequestParam Integer batchId, @RequestParam String className )  {
         return  studentsService.addOne(studentsCn,batchId,className);
+    }
+
+    @PostMapping("importExcel")
+    public boolean importExcel(@RequestParam  List<SkLmsStudentsCn> list,@RequestParam Integer batchId,@RequestParam String className){
+        try {
+           studentsService.exportExcel(list,className,batchId);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
     }
 
     /**

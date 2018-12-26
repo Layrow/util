@@ -46,5 +46,11 @@ public interface SkLmsStudentsCnMapper {
      */
      List<SkLmsStudentsCn> splitSelectAllStudents(Integer batchID);
 
+    /**
+     * 批量添加学生信息
+     * @param studentsCnList
+     * @return
+     */
+    int insertExcel(List<SkLmsStudentsCn>studentsCnList );
 
 }

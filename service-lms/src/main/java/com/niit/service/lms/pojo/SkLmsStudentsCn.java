@@ -10,14 +10,14 @@ public class SkLmsStudentsCn extends BaseRowModel {
     private Integer id;
     @ExcelProperty(value = "姓名" ,index = 0)
     private String studentName;
-
+    @ExcelProperty(value = "英文名" ,index = 1)
     private String studentEngName;
 
-    @ExcelProperty(value = "账号" ,index = 2)
+    @ExcelProperty(value = "账号" ,index = 3)
     private String studentUserId;
-    @ExcelProperty(value = "密码" ,index = 3)
+    @ExcelProperty(value = "密码" ,index = 4)
     private String studentPwd;
-    @ExcelProperty(value = "学号" ,index = 1)
+    @ExcelProperty(value = "学号" ,index = 2)
     private String studentSchoolId;
     @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:SS")
     private Date studentCreateTime;

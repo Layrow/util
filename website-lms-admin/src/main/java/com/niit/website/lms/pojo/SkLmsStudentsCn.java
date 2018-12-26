@@ -10,19 +10,19 @@ public class SkLmsStudentsCn extends BaseRowModel {
     private Integer id;
     @ExcelProperty(value = "姓名" ,index = 0)
     private String studentName;
-
+    @ExcelProperty(value = "英文名" ,index = 1)
     private String studentEngName;
 
+    @ExcelProperty(value = "账号" ,index = 3)
     private String studentUserId;
-    @ExcelProperty(value = "密码" ,index = 3)
+    @ExcelProperty(value = "密码" ,index = 4)
     private String studentPwd;
-    @ExcelProperty(value = "学号" ,index = 1)
+    @ExcelProperty(value = "学号" ,index = 2)
     private String studentSchoolId;
     @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:SS")
     private Date studentCreateTime;
 
     private Integer studentStatus;
-    @ExcelProperty(value = "账号" ,index = 2)
     private String studentLoginId;
 
     public Integer getId() {
@@ -95,5 +95,20 @@ public class SkLmsStudentsCn extends BaseRowModel {
 
     public void setStudentLoginId(String studentLoginId) {
         this.studentLoginId = studentLoginId == null ? null : studentLoginId.trim();
+    }
+
+    @Override
+    public String toString() {
+        return "SkLmsStudentsCn{" +
+                "id=" + id +
+                ", studentName='" + studentName + '\'' +
+                ", studentEngName='" + studentEngName + '\'' +
+                ", studentUserId='" + studentUserId + '\'' +
+                ", studentPwd='" + studentPwd + '\'' +
+                ", studentSchoolId='" + studentSchoolId + '\'' +
+                ", studentCreateTime=" + studentCreateTime +
+                ", studentStatus=" + studentStatus +
+                ", studentLoginId='" + studentLoginId + '\'' +
+                '}';
     }
 }

@@ -28,10 +28,13 @@ public class SkProjectServiceImpl implements SkProjectService {
     @Autowired
     private RestTemplate restTemplate;
 
-    // 上传作品
+    /**
+     * 上传作品，变更积分
+     *
+     **/
     @Override
     @Transactional(rollbackFor=Exception.class)
-    public void insert(SkProject record) {
+    public void insertProject(SkProject record) {
         String id = restTemplate.postForObject("http://" + SERVICE_NAME + "/project", record,String.class);
         // 积分变更通知
         SkMemberNotificationOps ops = new SkMemberNotificationOps();
@@ -54,82 +57,102 @@ public class SkProjectServiceImpl implements SkProjectService {
         }
     }
 
-    // 删除作品
+
+    /**
+     * 删除作品
+     *
+     **/
     @Override
     @Transactional(rollbackFor=Exception.class)
     public void deleteByPrimaryKey(Integer id) {
-        // 删除作品
         restTemplate.delete("http://" + SERVICE_NAME + "/project?id=" + id,id);
     }
 
     @Override
     public SkProject selectByPrimaryKey(Integer id) {
-        return restTemplate.getForObject("http://" + SERVICE_NAME + "/project/{id}",SkProject.class,id);
+        return restTemplate.getForObject("http://" + SERVICE_NAME + "/project?id=" + id,SkProject.class,id);
     }
 
-    // update
     /**
-     * @Description record-作品实体，userlikeId-谁（用户ID）点赞了该作品，userlikeName点赞了该作品
+     * @Description record-作品实体，userlikeId-哪位用户（用户ID）点赞了该作品，
+     *              userlikeName点赞了该作品，operate是执行的那个更新操作
      * @Date 2018/12/25 11:02
      * @Param [record, userlikeId, userlikeName]
      * @Return void
      **/
     @Override
     @Transactional(rollbackFor=Exception.class)
-    public void updateByPrimaryKey(SkProject record,Integer userlikeId,String userlikeName) {
+    public void updateByPrimaryKey(SkProject record,Integer userlikeId,String userlikeName,String operate) {
+
+        // 获得该作品在数据库中的信息
         SkProject skProject = selectByPrimaryKey(record.getId());
-        // 点赞
-        if(record.getLikesCount() > skProject.getLikesCount()) {
+        switch (operate) {
+            // 点赞请求 - 积分变更通知 - 积分变更
+            case "addLikeCount":
+                // 发送积分变更 通知
+                SkMemberNotificationOps ops = new SkMemberNotificationOps();
+                ops.setOperation(NotificationEnum.LIKE.getOperation());
+                ops.setProjectId(record.getId());
+                ops.setUserId(userlikeId);
+                ops.setUserName(userlikeName);
+                String s = restTemplate.postForObject("http://" + SERVICE_MEMVER + "/notification/add",ops,String.class);
 
-            // 积分变更通知
-            SkMemberNotificationOps ops = new SkMemberNotificationOps();
-            ops.setOperation(NotificationEnum.LIKE.getOperation());
-            ops.setProjectId(record.getId());
-            ops.setUserId(userlikeId);
-            ops.setUserName(userlikeName);
-            String s = restTemplate.postForObject("http://" + SERVICE_MEMVER + "/notification/add",ops,String.class);
-            System.out.println(Boolean.getBoolean(s));
-            // 如果通知成功，进行积分变更
-            if ("true".equals(s)) {
-                // 积分管理
-                SkMemberIntegral integral = new SkMemberIntegral();
-                integral.setActions(IntegralActionsEnum.POST_LIKE.getAction());
-                integral.setNumbers(IntegralActionsEnum.POST_LIKE.getNums());
-                integral.setOperation(IntegralActionsEnum.POST_LIKE.getOperation());
-                integral.setUserId(record.getUserId());
-                integral.setUserName(record.getUserName());
-                // 积分变更
-                restTemplate.postForObject("http://" + SERVICE_MEMVER + "/integral/integral",integral,String.class);
-                // 积分通知不成功，积分不变更，作品内容不更新
+                // 如果通知成功，进行积分变更
+                if ("true".equals(s)) {
+                    // 封装积分对象
+                    SkMemberIntegral integral = new SkMemberIntegral();
+                    integral.setActions(IntegralActionsEnum.POST_LIKE.getAction());
+                    integral.setNumbers(IntegralActionsEnum.POST_LIKE.getNums());
+                    integral.setOperation(IntegralActionsEnum.POST_LIKE.getOperation());
+                    integral.setUserId(record.getUserId());
+                    integral.setUserName(record.getUserName());
+                    // 积分变更
+                    restTemplate.postForObject("http://" + SERVICE_MEMVER + "/integral/integral",integral,String.class);
+                    // 点赞数加一
+                    record.setLikesCount(skProject.getLikesCount() + 1);
+                    // 更新作品信息
+                    restTemplate.put("http://" + SERVICE_NAME + "/project",record);
+                }
+                break;
+            // 收藏请求
+            case "addFavCount":
+                // 发送 积分变更通知
+                SkMemberNotificationOps ops1 = new SkMemberNotificationOps();
+                ops1.setOperation(NotificationEnum.COLLECT.getOperation());
+                ops1.setProjectId(record.getId());
+                ops1.setUserId(userlikeId);
+                ops1.setUserName(userlikeName);
+                String s1 = restTemplate.postForObject("http://" + SERVICE_MEMVER + "/notification/add",ops1,String.class);
+                // 如果通知成功 - 进行积分变更
+                if ("true".equals(s1)) {
+                    // 积分管理
+                    SkMemberIntegral integral = new SkMemberIntegral();
+                    integral.setActions(IntegralActionsEnum.POST_COLLECT.getAction());
+                    integral.setNumbers(IntegralActionsEnum.POST_COLLECT.getNums());
+                    integral.setOperation(IntegralActionsEnum.POST_COLLECT.getOperation());
+                    integral.setUserId(record.getUserId());
+                    integral.setUserName(record.getUserName());
+                    // 积分变更
+                    restTemplate.postForObject("http://" + SERVICE_MEMVER + "/integral/integral",integral,String.class);
+                    // 收藏数加一
+                    record.setFavCount(skProject.getFavCount() + 1);
+                    // 作品信息变更
+                    restTemplate.put("http://" + SERVICE_NAME + "/project",record);
+                }
+                break;
+            // 取消点赞
+            case "subLikeCount":
+                record.setLikesCount(skProject.getLikesCount() - 1);
                 restTemplate.put("http://" + SERVICE_NAME + "/project",record);
-            }
-        } else if (record.getFavCount() > skProject.getFavCount()) {
-
-            // 收藏
-            // 积分变更通知
-            SkMemberNotificationOps ops = new SkMemberNotificationOps();
-            ops.setOperation(NotificationEnum.COLLECT.getOperation());
-            ops.setProjectId(record.getId());
-            ops.setUserId(userlikeId);
-            ops.setUserName(userlikeName);
-            String s = restTemplate.postForObject("http://" + SERVICE_MEMVER + "/notification/add",ops,String.class);
-            // 如果通知成功，进行积分变更
-            if ("true".equals(s)) {
-                // 积分管理
-                SkMemberIntegral integral = new SkMemberIntegral();
-                integral.setActions(IntegralActionsEnum.POST_COLLECT.getAction());
-                integral.setNumbers(IntegralActionsEnum.POST_COLLECT.getNums());
-                integral.setOperation(IntegralActionsEnum.POST_COLLECT.getOperation());
-                integral.setUserId(record.getUserId());
-                integral.setUserName(record.getUserName());
-                // 积分变更
-                restTemplate.postForObject("http://" + SERVICE_MEMVER + "/integral/integral",integral,String.class);
-                // 作品信息变更
+                break;
+            // 取消收藏
+            case "subFavCount":
+                record.setFavCount(skProject.getFavCount() - 1);
+                restTemplate.put("http://" + SERVICE_NAME + "/project",record);
+                break;
+            default:
                 restTemplate.put("http://" + SERVICE_NAME + "/project",record);
 
-            }
-        } else {
-            restTemplate.put("http://" + SERVICE_NAME + "/project",record);
         }
 
     }

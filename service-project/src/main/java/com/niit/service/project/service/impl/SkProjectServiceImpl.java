@@ -45,7 +45,7 @@ public class SkProjectServiceImpl implements SkProjectService {
     // update
     @Override
     public int updateByPrimaryKey(SkProject record) {
-        return skProjectMapper.updateByPrimaryKey(record);
+        return skProjectMapper.updateByPrimaryKeySelective(record);
     }
 
     // delete more

@@ -56,9 +56,11 @@ public class SkProjectController {
 
     // update
     @PutMapping
-    public void updateProject(@RequestBody SkProject skProject,@RequestParam(value = "userlikeId",required = false) Integer userlikeId,@RequestParam(value = "userlikeName",required = false) String userlikeName) {
+    public void updateProject(@RequestBody SkProject skProject,@RequestParam(value = "userlikeId",required = false) Integer userlikeId,
+                              @RequestParam(value = "userlikeName",required = false) String userlikeName,
+                              @RequestParam(value = "operate",required = false,defaultValue = "other") String operate) {
         try {
-            skProjectService.updateByPrimaryKey(skProject,userlikeId,userlikeName);
+            skProjectService.updateByPrimaryKey(skProject,userlikeId,userlikeName,operate);
         } catch (Exception e) {
             e.printStackTrace();
         }

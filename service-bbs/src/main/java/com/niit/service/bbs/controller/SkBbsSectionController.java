@@ -34,7 +34,7 @@ public class SkBbsSectionController {
      * @param section
      * @return 成功返回true
      */
-    @GetMapping("/add")
+    @PostMapping("/add")
     public boolean insertSection(@RequestBody SkBbsSection section){
         return  skBbsSectionService.addSection(section);
     }

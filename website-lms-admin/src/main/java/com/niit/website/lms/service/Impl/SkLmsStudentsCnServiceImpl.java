@@ -2,18 +2,15 @@ package com.niit.website.lms.service.Impl;
 
 
 import com.github.pagehelper.PageInfo;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.niit.common.utils.Tools;
 import com.niit.website.lms.pojo.SkLmsStudentsCn;
 import com.niit.website.lms.service.SkLmsStudentsCnService;
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -51,10 +48,6 @@ public class SkLmsStudentsCnServiceImpl implements SkLmsStudentsCnService {
     @Override
     public boolean imExcel(List<SkLmsStudentsCn> list, Integer batchId, String className) {
         try {
-            Iterator<SkLmsStudentsCn> iterator=list.iterator();
-            while (iterator.hasNext()){
-                System.out.println(iterator.next());
-            }
             restTemplate.postForObject("http://" + SERVICE_NAME +
                     "/batch/students/importExcel?list="+list+"&batchId="+batchId+"&className="+className,null,String.class);
             return  true;

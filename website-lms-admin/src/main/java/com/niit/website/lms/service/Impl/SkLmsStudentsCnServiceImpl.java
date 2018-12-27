@@ -49,7 +49,7 @@ public class SkLmsStudentsCnServiceImpl implements SkLmsStudentsCnService {
     public boolean imExcel(List<SkLmsStudentsCn> list, Integer batchId, String className) {
         try {
             restTemplate.postForObject("http://" + SERVICE_NAME +
-                    "/batch/students/importExcel?list="+list+"&batchId="+batchId+"&className="+className,null,String.class);
+                    "/batch/students/importExcel?batchId="+batchId+"&className="+className,list,String.class);
             return  true;
         }catch (Exception e){
             e.printStackTrace();

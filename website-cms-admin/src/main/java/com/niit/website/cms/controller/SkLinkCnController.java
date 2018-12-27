@@ -56,6 +56,21 @@ public class SkLinkCnController {
         }
         return updateStatus;
     }
+    /**
+     * @Description 更新多条链接
+     * @author      yuwentao
+     * @param       skLinkCn
+     */
+    @PutMapping(value = "/updateList")
+    public Integer updateList(@RequestBody List<SkLinkCn> list,  @RequestParam String locale) {
+        Integer updateStatus = 0;
+        try {
+            updateStatus = skLinkCnService.updateList(list,locale);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return updateStatus;
+    }
 
     /**
      * @param currentPage 当前页码

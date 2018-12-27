@@ -85,6 +85,8 @@
     from sk_channel_article_goods_cn
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+
   <update id="batchUp" parameterType="java.util.List">
     update sk_channel_article_goods_cn  set sort_id =
     <foreach collection="list" item="item" index="index"

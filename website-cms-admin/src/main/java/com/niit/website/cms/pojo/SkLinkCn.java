@@ -1,5 +1,7 @@
 package com.niit.website.cms.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class SkLinkCn {
@@ -22,7 +24,7 @@ public class SkLinkCn {
     private Integer sortId;
 
     private Integer isLock;
-
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:SS")
     private Date addTime;
 
     public Integer getId() {

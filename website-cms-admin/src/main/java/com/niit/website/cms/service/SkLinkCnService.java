@@ -9,10 +9,12 @@ import java.util.List;
 public interface SkLinkCnService {
     //插入单条链接
     int insert(SkLinkCn record,String locale);
+    PageInfo<SkLinkCn> selectByPage(int currentPage, int pageSize,String locale);
+
     //更新单条链接
     int updateByPrimaryKey(SkLinkCn record,String locale);
-
-    PageInfo<SkLinkCn> selectByPage(int currentPage, int pageSize,String locale);
+    //更新多个链接
+    int updateList (List<SkLinkCn> list,String locale);
 
     //批量更新多条链接
     Integer updateByList(List<SkLinkCn> record, String locale);

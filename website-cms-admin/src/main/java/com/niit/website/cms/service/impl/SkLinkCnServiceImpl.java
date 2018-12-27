@@ -33,6 +33,12 @@ public class SkLinkCnServiceImpl implements SkLinkCnService {
     }
 
     @Override
+    public int updateList(List<SkLinkCn> list, String locale) {
+        restTemplate.put("http://" + SERVICE_NAME + "/updateList?locale="+locale, list);
+        return 999;
+    }
+
+    @Override
     public PageInfo<SkLinkCn> selectByPage(int currentPage, int pageSize,String locale) {
         return restTemplate.getForObject("http://" + SERVICE_NAME + "/link?currentPage=" + currentPage + "&pageSize=" + pageSize+"&locale="+locale, PageInfo.class);
     }

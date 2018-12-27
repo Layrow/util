@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -93,6 +94,24 @@ public class SkLinkCnController {
             e.printStackTrace();
         }
         return updateStatus;
+    }
+    /**
+     * @Description 更新多条链接
+     * @author      冯永辉
+     * @param       list
+     */
+    @PutMapping(value = "/updateList")
+    public Integer updateList(@RequestBody List<SkLinkCn> list,@RequestParam String locale) {
+        try {
+            Iterator<SkLinkCn> iterator=list.iterator();
+            while (iterator.hasNext()){
+                skLinkCnService.updateByPrimaryKey(iterator.next(),locale);
+            }
+            return 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 
     /**

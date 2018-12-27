@@ -50,10 +50,25 @@ public class SkLinkCnServiceImpl implements SkLinkCnService {
     public int insert(SkLinkCn record, String locale) {
         switch (locale) {
             case "zh":
+                if (record.getIsImage()==null||"".equals(record.getIsImage())){
+                    record.setIsImage(0);
+                }else {
+                    record.setIsImage(1);
+                }
                 return skLinkCnMapper.insert(record);
             case "en":
+                if (record.getIsImage()==null||"".equals(record.getIsImage())){
+                    record.setIsImage(0);
+                }else {
+                    record.setIsImage(1);
+                }
                 return skLinkEnMapper.insert(record);
             default:
+                if (record.getIsImage()==null||"".equals(record.getIsImage())){
+                    record.setIsImage(0);
+                }else {
+                    record.setIsImage(1);
+                }
                 return skLinkCnMapper.insert(record);
         }
     }
@@ -212,7 +227,7 @@ public class SkLinkCnServiceImpl implements SkLinkCnService {
             case "en":
                 PageHelper.startPage(currentPage, pageSize);
                 //执行SQL语句（list->分页后的数据）
-                list = skLinkCnMapper.listAllLink();
+                list = skLinkEnMapper.listAllLink();
                 //把取到的list封装进PageInfo(PageInfo->分页信息+分页后的数据）
                 listInfo = new PageInfo<>(list);
                 return listInfo;

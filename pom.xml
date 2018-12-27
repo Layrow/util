@@ -18,6 +18,8 @@
         <module>website-smartkids</module>
         <module>service-member</module>
         <module>service-uploader</module>
+        <module>bootshiro</module>
+
     </modules>
     <packaging>pom</packaging>
     <name>smartkids-parent</name>

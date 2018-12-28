@@ -50,25 +50,12 @@ public class SkLinkCnServiceImpl implements SkLinkCnService {
     public int insert(SkLinkCn record, String locale) {
         switch (locale) {
             case "zh":
-                if (record.getIsImage()==null||"".equals(record.getIsImage())){
-                    record.setIsImage(0);
-                }else {
-                    record.setIsImage(1);
-                }
+
                 return skLinkCnMapper.insert(record);
             case "en":
-                if (record.getIsImage()==null||"".equals(record.getIsImage())){
-                    record.setIsImage(0);
-                }else {
-                    record.setIsImage(1);
-                }
+
                 return skLinkEnMapper.insert(record);
             default:
-                if (record.getIsImage()==null||"".equals(record.getIsImage())){
-                    record.setIsImage(0);
-                }else {
-                    record.setIsImage(1);
-                }
                 return skLinkCnMapper.insert(record);
         }
     }

@@ -29,14 +29,14 @@
     <select id="likeSelectAll" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from sk_link_cn where  title  like CONCAT('%',#{title},'%') ORDER BY id ASC
+        from sk_link_cn where  title  like CONCAT('%',#{title},'%')  order  by sort_id desc
     </select>
 
     <!--分页查询-->
     <select id="listAllLink" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from sk_link_cn  ORDER BY id ASC
+        from sk_link_cn   order  by sort_id desc
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from sk_link_cn
@@ -202,6 +202,7 @@
         select
         <include refid="Base_Column_List"/>
         from sk_link_cn
+        order  by sort_id desc
     </select>
 
 </mapper>

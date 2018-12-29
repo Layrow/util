@@ -48,7 +48,6 @@ public class SkChannelArticleGoodsCostumesController {
             costumeMap.put("rotationCenterX",31);
             costumeMap.put("rotationCenterY",100);
             costumesList.add(costumeMap);
-
         });
 
         List<String> tagList=new LinkedList<>();

@@ -59,7 +59,7 @@ public class SkchannelArticleGoodsController {
                 skMemberIntegral.setUserId(record.getPurchaserId());
                 skMemberIntegral.setActions(IntegralActionsEnum.POST_BUY.getAction());
                 skMemberIntegral.setOperation(IntegralActionsEnum.POST_BUY.getOperation());
-                skMemberIntegral.setNumbers(IntegralActionsEnum.POST_BUY.getNums());
+                skMemberIntegral.setNumbers(record.getPrice().intValue());
                 memberServiceIntegralmpl.interAction(skMemberIntegral);
                 return Integer.parseInt(skchannelArticleGoodsService.generateOrders(record));
             } else {

@@ -30,7 +30,6 @@ public class SkChannelArticleGoodsOrderController {
 
     @PostMapping
     public String generateOrders(@RequestBody SkChannelArticleGoodsOrder record){
-        System.out.println("1233456__________________________------------------");
         return  skChannelArticleGoodsOrderService.generateOrders(record).toString();
     }
 

@@ -3,10 +3,14 @@ package com.niit.website.smartkids.controller;
 import com.github.pagehelper.PageInfo;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
+import com.niit.website.smartkids.enums.IntegralActionsEnum;
 import com.niit.website.smartkids.pojo.SkChannelArticleGoodsCn;
 import com.niit.website.smartkids.pojo.SkChannelArticleGoodsOrder;
+import com.niit.website.smartkids.pojo.member.SkMemberIntegral;
+import com.niit.website.smartkids.pojo.member.SkMemberNotificationOps;
 import com.niit.website.smartkids.service.SkchannelArticleGoodsService;
 import com.niit.website.smartkids.service.memberservice.IMemberItegralService;
+import com.niit.website.smartkids.service.memberservice.impl.MemberServiceIntegralmpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,7 +36,8 @@ public class SkchannelArticleGoodsController {
     SkchannelArticleGoodsService skchannelArticleGoodsService;
     @Autowired
     IMemberItegralService iMemberItegralService;
-
+    @Autowired
+    MemberServiceIntegralmpl memberServiceIntegralmpl;
 
     @PostMapping
     public Integer purchaseGoods(@RequestBody SkChannelArticleGoodsOrder record) {
@@ -50,6 +55,12 @@ public class SkchannelArticleGoodsController {
             //用户积分价格 且 用户库存中无此商品则生成订单
             if (point >= record.getPrice() && i < 1) {
                 record.setBuyingTime(new Date());
+                SkMemberIntegral skMemberIntegral=new SkMemberIntegral();
+                skMemberIntegral.setUserId(record.getPurchaserId());
+                skMemberIntegral.setActions(IntegralActionsEnum.POST_BUY.getAction());
+                skMemberIntegral.setOperation(IntegralActionsEnum.POST_BUY.getOperation());
+                skMemberIntegral.setNumbers(IntegralActionsEnum.POST_BUY.getNums());
+                memberServiceIntegralmpl.interAction(skMemberIntegral);
                 return Integer.parseInt(skchannelArticleGoodsService.generateOrders(record));
             } else {
                 return -1;

@@ -16,7 +16,7 @@ public enum IntegralActionsEnum {
     POST_REPLY(1, 20, "发表评论"),
     POST_TOP(1, 50, "置顶贴"),
     POST_ESSENCE(1, 50, "精华帖"),
-    POST_BUY(1, 50, "购买"),
+    POST_BUY(0, 50, "购买"),
     POST_COLLECT(1, 50, "收藏作品"),
     POST_LIKE(1, 50, "项目点赞"),
     POST_PROJECT(1, 50, "上传作品"),

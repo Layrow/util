@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.niit.service.cms.dao.SkChannelArticleGoodsOrderMapper">
+  <resultMap id="BaseResultMap" type="com.niit.service.cms.pojo.SkChannelArticleGoodsOrder">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="purchaser_id" jdbcType="INTEGER" property="purchaserId" />
+    <result column="goods_id" jdbcType="INTEGER" property="goodsId" />
+    <result column="buying_time" jdbcType="TIMESTAMP" property="buyingTime" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="price_unit" jdbcType="VARCHAR" property="priceUnit" />
+    <result column="status" jdbcType="BIT" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, purchaser_id, goods_id, buying_time, price, price_unit, status
+  </sql>
+
+  <select id="selectByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sk_channel_article_goods_order
+    where purchaser_id = #{purchaserId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sk_channel_article_goods_order
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sk_channel_article_goods_order
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.niit.service.cms.pojo.SkChannelArticleGoodsOrder">
+    insert into sk_channel_article_goods_order (id, purchaser_id, goods_id, 
+      buying_time, price, price_unit, 
+      status)
+    values (#{id,jdbcType=INTEGER}, #{purchaserId,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER}, 
+      #{buyingTime,jdbcType=TIMESTAMP}, #{price,jdbcType=DECIMAL}, #{priceUnit,jdbcType=VARCHAR}, 
+      #{status,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.niit.service.cms.pojo.SkChannelArticleGoodsOrder">
+    insert into sk_channel_article_goods_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="purchaserId != null">
+        purchaser_id,
+      </if>
+      <if test="goodsId != null">
+        goods_id,
+      </if>
+      <if test="buyingTime != null">
+        buying_time,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="priceUnit != null">
+        price_unit,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="purchaserId != null">
+        #{purchaserId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsId != null">
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="buyingTime != null">
+        #{buyingTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="priceUnit != null">
+        #{priceUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.niit.service.cms.pojo.SkChannelArticleGoodsOrder">
+    update sk_channel_article_goods_order
+    <set>
+      <if test="purchaserId != null">
+        purchaser_id = #{purchaserId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsId != null">
+        goods_id = #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="buyingTime != null">
+        buying_time = #{buyingTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="priceUnit != null">
+        price_unit = #{priceUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.niit.service.cms.pojo.SkChannelArticleGoodsOrder">
+    update sk_channel_article_goods_order
+    set purchaser_id = #{purchaserId,jdbcType=INTEGER},
+      goods_id = #{goodsId,jdbcType=INTEGER},
+      buying_time = #{buyingTime,jdbcType=TIMESTAMP},
+      price = #{price,jdbcType=DECIMAL},
+      price_unit = #{priceUnit,jdbcType=VARCHAR},
+      status = #{status,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

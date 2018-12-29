@@ -1,6 +1,8 @@
 package com.niit.website.cms.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.niit.website.cms.pojo.SkChannelArticleGoodsCn;
 import com.niit.website.cms.service.SkChannelArticleGoodsCnService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -118,6 +120,72 @@ public class SkChannelArticleGoodsCnController {
             e.printStackTrace();
         }
         return listInfo;
+    }
+
+
+    @PostMapping("/test")
+    public String test(Integer categoryId,String key,int currentPage, int pageSize, String title, @RequestParam String locale,Integer channelId) {
+        PageInfo<SkChannelArticleGoodsCn> listInfo=null;
+        try {
+            String t="[\n" +
+                    "    {\n" +
+                    "        \"name\": \"彩虹\",\n" +
+                    "        \"test\": \"fortest\",\n" +
+                    "        \"md5\": \"34638249f5a94cadae1e6634f180e96b.svg\",\n" +
+                    "        \"type\": \"sprite\",\n" +
+                    "        \"tags\": [\n" +
+                    "            \"people\",\n" +
+                    "            \"person\",\n" +
+                    "            \"drawing\"\n" +
+                    "        ],\n" +
+                    "        \"info\": [\n" +
+                    "            0,\n" +
+                    "            1,\n" +
+                    "            1\n" +
+                    "        ],\n" +
+                    "        \"json\": {\n" +
+                    "            \"objName\": \"彩虹\",\n" +
+                    "            \"sounds\": [\n" +
+                    "                {\n" +
+                    "                    \"soundName\": \"pop\",\n" +
+                    "                    \"soundID\": -1,\n" +
+                    "                    \"md5\": \"83a9787d4cb6f3b7632b4ddfebf74367.wav\",\n" +
+                    "                    \"sampleCount\": 258,\n" +
+                    "                    \"rate\": 11025,\n" +
+                    "                    \"format\": \"\"\n" +
+                    "                }\n" +
+                    "            ],\n" +
+                    "            \"costumes\": [\n" +
+                    "                {\n" +
+                    "                    \"costumeName\": \"彩虹-a\",\n" +
+                    "                    \"baseLayerID\": -1,\n" +
+                    "                    \"baseLayerMD5\": \"34638249f5a94cadae1e6634f180e96b.svg\",\n" +
+                    "                    \"bitmapResolution\": 1,\n" +
+                    "                    \"rotationCenterX\": 31,\n" +
+                    "                    \"rotationCenterY\": 100\n" +
+                    "                }\n" +
+                    "            ],\n" +
+                    "            \"currentCostumeIndex\": 0,\n" +
+                    "            \"scratchX\": -20,\n" +
+                    "            \"scratchY\": -38,\n" +
+                    "            \"scale\": 1,\n" +
+                    "            \"direction\": 90,\n" +
+                    "            \"rotationStyle\": \"normal\",\n" +
+                    "            \"isDraggable\": false,\n" +
+                    "            \"visible\": true,\n" +
+                    "            \"spriteInfo\": {}\n" +
+                    "        }\n" +
+                    "    }\n" +
+                    "]";
+            Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
+            return gson.toJson(t);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            return "bad";
+
+        }
     }
 
 

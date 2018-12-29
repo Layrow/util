@@ -2,6 +2,7 @@ package com.niit.website.smartkids.service.impl;
 
 import com.github.pagehelper.PageInfo;
 import com.niit.website.smartkids.pojo.SkChannelArticleGoodsCn;
+import com.niit.website.smartkids.pojo.SkChannelArticleGoodsOrder;
 import com.niit.website.smartkids.service.SkchannelArticleGoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,16 @@ public class SkchannelArticleGoodsServiceImpl implements SkchannelArticleGoodsSe
     @Autowired
     RestTemplate restTemplate;
 
+
+    @Override
+    public String generateOrders(SkChannelArticleGoodsOrder record) {
+        return restTemplate.postForObject("http://" + SERVICE_NAME + "/order_goods_costumes",record,String.class);
+    }
+
+    @Override
+    public String checkIsOwned(Integer goodId, Integer userId) {
+        return restTemplate.getForObject("http://" + SERVICE_NAME + "/order_goods_costumes/check_owned?userId="+userId+"&goodId="+goodId,String.class);
+    }
 
     @Override
     public String easyLikeSelectAll(String keyword,Integer channelId, String locale) {

@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.niit.service.cms.dao.SkChannelArticleGoodsCostumesMapper">
+  <resultMap id="BaseResultMap" type="com.niit.service.cms.pojo.SkChannelArticleGoodsCostumes">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="good_id" jdbcType="INTEGER" property="goodId" />
+    <result column="md5" jdbcType="VARCHAR" property="md5" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="info" jdbcType="VARCHAR" property="info" />
+    <result column="costumeName" jdbcType="VARCHAR" property="costumename" />
+    <result column="baseLayerID" jdbcType="INTEGER" property="baselayerid" />
+    <result column="baseLayerMD5" jdbcType="VARCHAR" property="baselayermd5" />
+    <result column="bitmapResolution" jdbcType="INTEGER" property="bitmapresolution" />
+    <result column="rotationCenterX" jdbcType="INTEGER" property="rotationcenterx" />
+    <result column="rotationCenterY" jdbcType="INTEGER" property="rotationcentery" />
+    <result column="currentCostumeIndex" jdbcType="INTEGER" property="currentcostumeindex" />
+    <result column="scratchX" jdbcType="INTEGER" property="scratchx" />
+    <result column="scratchY" jdbcType="INTEGER" property="scratchy" />
+    <result column="scale" jdbcType="INTEGER" property="scale" />
+    <result column="direction" jdbcType="INTEGER" property="direction" />
+    <result column="rotationStyle" jdbcType="VARCHAR" property="rotationstyle" />
+    <result column="isDraggable" jdbcType="BIT" property="isdraggable" />
+    <result column="visible" jdbcType="BIT" property="visible" />
+    <result column="spriteInfo" jdbcType="VARCHAR" property="spriteinfo" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, good_id, md5, type, info, costumeName, baseLayerID, baseLayerMD5, bitmapResolution,
+    rotationCenterX, rotationCenterY, currentCostumeIndex, scratchX, scratchY, scale, 
+    direction, rotationStyle, isDraggable, visible, spriteInfo
+  </sql>
+
+  <select id="selectByGoodId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sk_channel_article_goods_costumes
+    where good_id = #{goodId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByGoodsId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sk_channel_article_goods_costumes
+    where good_id In
+    <foreach collection="list" item="goodId" open="("
+             separator="," close=")">
+      #{goodId,jdbcType=INTEGER}
+    </foreach>
+  </select>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sk_channel_article_goods_costumes
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sk_channel_article_goods_costumes
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.niit.service.cms.pojo.SkChannelArticleGoodsCostumes">
+    insert into sk_channel_article_goods_costumes (id, good_id, md5, 
+      type, info, costumeName, 
+      baseLayerID, baseLayerMD5, bitmapResolution, 
+      rotationCenterX, rotationCenterY, currentCostumeIndex, 
+      scratchX, scratchY, scale, 
+      direction, rotationStyle, isDraggable, 
+      visible, spriteInfo)
+    values (#{id,jdbcType=INTEGER}, #{goodId,jdbcType=INTEGER}, #{md5,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{info,jdbcType=VARCHAR}, #{costumename,jdbcType=VARCHAR}, 
+      #{baselayerid,jdbcType=INTEGER}, #{baselayermd5,jdbcType=VARCHAR}, #{bitmapresolution,jdbcType=INTEGER}, 
+      #{rotationcenterx,jdbcType=INTEGER}, #{rotationcentery,jdbcType=INTEGER}, #{currentcostumeindex,jdbcType=INTEGER}, 
+      #{scratchx,jdbcType=INTEGER}, #{scratchy,jdbcType=INTEGER}, #{scale,jdbcType=INTEGER}, 
+      #{direction,jdbcType=INTEGER}, #{rotationstyle,jdbcType=VARCHAR}, #{isdraggable,jdbcType=BIT}, 
+      #{visible,jdbcType=BIT}, #{spriteinfo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.niit.service.cms.pojo.SkChannelArticleGoodsCostumes">
+    insert into sk_channel_article_goods_costumes
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="goodId != null">
+        good_id,
+      </if>
+      <if test="md5 != null">
+        md5,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="info != null">
+        info,
+      </if>
+      <if test="costumename != null">
+        costumeName,
+      </if>
+      <if test="baselayerid != null">
+        baseLayerID,
+      </if>
+      <if test="baselayermd5 != null">
+        baseLayerMD5,
+      </if>
+      <if test="bitmapresolution != null">
+        bitmapResolution,
+      </if>
+      <if test="rotationcenterx != null">
+        rotationCenterX,
+      </if>
+      <if test="rotationcentery != null">
+        rotationCenterY,
+      </if>
+      <if test="currentcostumeindex != null">
+        currentCostumeIndex,
+      </if>
+      <if test="scratchx != null">
+        scratchX,
+      </if>
+      <if test="scratchy != null">
+        scratchY,
+      </if>
+      <if test="scale != null">
+        scale,
+      </if>
+      <if test="direction != null">
+        direction,
+      </if>
+      <if test="rotationstyle != null">
+        rotationStyle,
+      </if>
+      <if test="isdraggable != null">
+        isDraggable,
+      </if>
+      <if test="visible != null">
+        visible,
+      </if>
+      <if test="spriteinfo != null">
+        spriteInfo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="goodId != null">
+        #{goodId,jdbcType=INTEGER},
+      </if>
+      <if test="md5 != null">
+        #{md5,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="info != null">
+        #{info,jdbcType=VARCHAR},
+      </if>
+      <if test="costumename != null">
+        #{costumename,jdbcType=VARCHAR},
+      </if>
+      <if test="baselayerid != null">
+        #{baselayerid,jdbcType=INTEGER},
+      </if>
+      <if test="baselayermd5 != null">
+        #{baselayermd5,jdbcType=VARCHAR},
+      </if>
+      <if test="bitmapresolution != null">
+        #{bitmapresolution,jdbcType=INTEGER},
+      </if>
+      <if test="rotationcenterx != null">
+        #{rotationcenterx,jdbcType=INTEGER},
+      </if>
+      <if test="rotationcentery != null">
+        #{rotationcentery,jdbcType=INTEGER},
+      </if>
+      <if test="currentcostumeindex != null">
+        #{currentcostumeindex,jdbcType=INTEGER},
+      </if>
+      <if test="scratchx != null">
+        #{scratchx,jdbcType=INTEGER},
+      </if>
+      <if test="scratchy != null">
+        #{scratchy,jdbcType=INTEGER},
+      </if>
+      <if test="scale != null">
+        #{scale,jdbcType=INTEGER},
+      </if>
+      <if test="direction != null">
+        #{direction,jdbcType=INTEGER},
+      </if>
+      <if test="rotationstyle != null">
+        #{rotationstyle,jdbcType=VARCHAR},
+      </if>
+      <if test="isdraggable != null">
+        #{isdraggable,jdbcType=BIT},
+      </if>
+      <if test="visible != null">
+        #{visible,jdbcType=BIT},
+      </if>
+      <if test="spriteinfo != null">
+        #{spriteinfo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.niit.service.cms.pojo.SkChannelArticleGoodsCostumes">
+    update sk_channel_article_goods_costumes
+    <set>
+      <if test="goodId != null">
+        good_id = #{goodId,jdbcType=INTEGER},
+      </if>
+      <if test="md5 != null">
+        md5 = #{md5,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="info != null">
+        info = #{info,jdbcType=VARCHAR},
+      </if>
+      <if test="costumename != null">
+        costumeName = #{costumename,jdbcType=VARCHAR},
+      </if>
+      <if test="baselayerid != null">
+        baseLayerID = #{baselayerid,jdbcType=INTEGER},
+      </if>
+      <if test="baselayermd5 != null">
+        baseLayerMD5 = #{baselayermd5,jdbcType=VARCHAR},
+      </if>
+      <if test="bitmapresolution != null">
+        bitmapResolution = #{bitmapresolution,jdbcType=INTEGER},
+      </if>
+      <if test="rotationcenterx != null">
+        rotationCenterX = #{rotationcenterx,jdbcType=INTEGER},
+      </if>
+      <if test="rotationcentery != null">
+        rotationCenterY = #{rotationcentery,jdbcType=INTEGER},
+      </if>
+      <if test="currentcostumeindex != null">
+        currentCostumeIndex = #{currentcostumeindex,jdbcType=INTEGER},
+      </if>
+      <if test="scratchx != null">
+        scratchX = #{scratchx,jdbcType=INTEGER},
+      </if>
+      <if test="scratchy != null">
+        scratchY = #{scratchy,jdbcType=INTEGER},
+      </if>
+      <if test="scale != null">
+        scale = #{scale,jdbcType=INTEGER},
+      </if>
+      <if test="direction != null">
+        direction = #{direction,jdbcType=INTEGER},
+      </if>
+      <if test="rotationstyle != null">
+        rotationStyle = #{rotationstyle,jdbcType=VARCHAR},
+      </if>
+      <if test="isdraggable != null">
+        isDraggable = #{isdraggable,jdbcType=BIT},
+      </if>
+      <if test="visible != null">
+        visible = #{visible,jdbcType=BIT},
+      </if>
+      <if test="spriteinfo != null">
+        spriteInfo = #{spriteinfo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.niit.service.cms.pojo.SkChannelArticleGoodsCostumes">
+    update sk_channel_article_goods_costumes
+    set good_id = #{goodId,jdbcType=INTEGER},
+      md5 = #{md5,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      info = #{info,jdbcType=VARCHAR},
+      costumeName = #{costumename,jdbcType=VARCHAR},
+      baseLayerID = #{baselayerid,jdbcType=INTEGER},
+      baseLayerMD5 = #{baselayermd5,jdbcType=VARCHAR},
+      bitmapResolution = #{bitmapresolution,jdbcType=INTEGER},
+      rotationCenterX = #{rotationcenterx,jdbcType=INTEGER},
+      rotationCenterY = #{rotationcentery,jdbcType=INTEGER},
+      currentCostumeIndex = #{currentcostumeindex,jdbcType=INTEGER},
+      scratchX = #{scratchx,jdbcType=INTEGER},
+      scratchY = #{scratchy,jdbcType=INTEGER},
+      scale = #{scale,jdbcType=INTEGER},
+      direction = #{direction,jdbcType=INTEGER},
+      rotationStyle = #{rotationstyle,jdbcType=VARCHAR},
+      isDraggable = #{isdraggable,jdbcType=BIT},
+      visible = #{visible,jdbcType=BIT},
+      spriteInfo = #{spriteinfo,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

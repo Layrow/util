@@ -24,6 +24,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @SpringBootApplication
 @EnableEurekaClient
 @EnableCircuitBreaker
+
+
 public class WebsiteSmartkids {
     @Bean
     @LoadBalanced

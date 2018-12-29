@@ -32,7 +32,6 @@ public class MemberServiceIntegralmpl implements IMemberItegralService {
     @Override
     public String getTatal(Integer uid) {
         try {
-
             String tatal= restTemplate.getForObject(URL+"total?uid="+uid,String.class);
             return tatal;
         }catch (Exception e){

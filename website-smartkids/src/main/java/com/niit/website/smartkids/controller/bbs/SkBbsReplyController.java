@@ -61,7 +61,9 @@ public class SkBbsReplyController {
     * @return int
     */
     @PostMapping
-    public int insertSelective(@RequestBody SkBbsReply record, @RequestBody SkMemberIntegral integral) {
+    public int insertSelective(@RequestBody SkBbsReply record, @RequestParam Integer rid) {
+        SkMemberIntegral integral =new SkMemberIntegral();
+        integral.setUserId(rid);
         integral.setActions(IntegralActionsEnum.POST_REPLY.getAction());
         integral.setOperation(IntegralActionsEnum.POST_REPLY.getOperation());
         integral.setNumbers(IntegralActionsEnum.POST_REPLY.getNums());

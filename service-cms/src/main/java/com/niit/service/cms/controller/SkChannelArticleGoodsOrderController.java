@@ -43,12 +43,9 @@ public class SkChannelArticleGoodsOrderController {
         List<SkChannelArticleGoodsCostumes> list;
         list =skChannelArticleGoodsOrderService.selectByUserId(userId);
 
-
         List<Map<String,Object>> resultList=new LinkedList<>();
 
-
         Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
-
 
         Set<Integer> goodIdSet=new HashSet<>();
 

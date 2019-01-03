@@ -7,7 +7,6 @@ import com.niit.website.smartkids.enums.IntegralActionsEnum;
 import com.niit.website.smartkids.pojo.SkChannelArticleGoodsCn;
 import com.niit.website.smartkids.pojo.SkChannelArticleGoodsOrder;
 import com.niit.website.smartkids.pojo.member.SkMemberIntegral;
-import com.niit.website.smartkids.pojo.member.SkMemberNotificationOps;
 import com.niit.website.smartkids.service.SkchannelArticleGoodsService;
 import com.niit.website.smartkids.service.memberservice.IMemberItegralService;
 import com.niit.website.smartkids.service.memberservice.impl.MemberServiceIntegralmpl;
@@ -40,7 +39,7 @@ public class SkchannelArticleGoodsController {
     MemberServiceIntegralmpl memberServiceIntegralmpl;
 
     @PostMapping
-    public Integer purchaseGoods(@RequestBody SkChannelArticleGoodsOrder record) {
+    public String purchaseGoods(@RequestBody SkChannelArticleGoodsOrder record) {
         Integer userID = record.getPurchaserId();
         Integer goodId = record.getGoodsId();
 
@@ -50,24 +49,26 @@ public class SkchannelArticleGoodsController {
         String isOwned;
         try {
             isOwned = skchannelArticleGoodsService.checkIsOwned(goodId, userID);
-
             int i = Integer.parseInt(isOwned);
-            //用户积分价格 且 用户库存中无此商品则生成订单
-            if (point >= record.getPrice() && i < 1) {
+
+            if (i >= 1) {
+                return "已采集过此素材，请前往素材库查看！";
+            } else if (point < record.getPrice()) {
+                return "积分不足！";
+            } else {
                 record.setBuyingTime(new Date());
-                SkMemberIntegral skMemberIntegral=new SkMemberIntegral();
+                SkMemberIntegral skMemberIntegral = new SkMemberIntegral();
                 skMemberIntegral.setUserId(record.getPurchaserId());
                 skMemberIntegral.setActions(IntegralActionsEnum.POST_BUY.getAction());
                 skMemberIntegral.setOperation(IntegralActionsEnum.POST_BUY.getOperation());
                 skMemberIntegral.setNumbers(record.getPrice().intValue());
                 memberServiceIntegralmpl.interAction(skMemberIntegral);
-                return Integer.parseInt(skchannelArticleGoodsService.generateOrders(record));
-            } else {
-                return -1;
-            }
+                skchannelArticleGoodsService.generateOrders(record);
+                return "采集成功！";
+            } //用户积分价格 且 用户库存中无此商品则生成订单
         } catch (Exception e) {
             e.printStackTrace();
-            return -999;
+            return "服务器异常！";
         }
 
     }
@@ -116,9 +117,9 @@ public class SkchannelArticleGoodsController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return map;
     }
-
 
     @PostMapping(value = "/category")
     public PageInfo<SkChannelArticleGoodsCn> getByCategory(Integer categoryId, String key, int currentPage, int pageSize, String title, String locale, Integer channelId, @RequestParam(value = "orderBy", required = false, defaultValue = "click") String orderBy) {

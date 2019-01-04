@@ -39,17 +39,19 @@ public class UploadController {
             checkPath(fullPath);
             for (MultipartFile mf : file) {
                 Attachement attachement = new Attachement();
+                String originalFilename = mf.getOriginalFilename();
+                System.out.println(originalFilename);
                 String newName = saveFile(fullPath, mf);
+               // String newName = new String(newNames.)
                 System.out.println(newName);
                 String[] split = newName.split("\\.");
                 String name = split[0];
                 String suffix  = split[split.length-1];
                 String[] split1 = name.split("/");
-                String name1  = split1[split1.length-1];
-                attachement.setAttachementName(name1);
+                attachement.setAttachementName(originalFilename);
                 attachement.setAttachementSuffix(suffix);
                 long size1 = mf.getSize();
-                Double size =(double)(size1/1024);
+                Double size =(double)(size1);
                 attachement.setAttachementSize(size);
                 attachement.setAttachmentUrl(relativePath+"/"+newName);
                 attachements.add(attachement);
@@ -85,7 +87,7 @@ public class UploadController {
     private String saveFile(String fullPath, MultipartFile mf) throws IOException {
         String filename = mf.getOriginalFilename();
         String suffix = filename.substring(filename.lastIndexOf("."));
-        String newName = UUID.randomUUID() + suffix;
+        String newName = filename;
         File dest = new File(fullPath + "/" + newName);
         mf.transferTo(dest);
         return newName;

@@ -25,8 +25,8 @@ spring:
     name: service-uploader
 xin:
    uploader:
-     image-path: C:/Users/Administrator/Desktop/upload/image
-     common-file-path: C:/Users/Administrator/Desktop/upload/file
-     attachment-path: C:/Users/Administrator/Desktop/upload/attachment
+     image-path: G:/upload/image
+     common-file-path: G:/upload/file
+     attachment-path: G:/upload/attachment
      child-path-strategy: hour
 

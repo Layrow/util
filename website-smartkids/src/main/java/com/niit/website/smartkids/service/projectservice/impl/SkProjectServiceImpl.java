@@ -70,7 +70,7 @@ public class SkProjectServiceImpl implements SkProjectService {
 
     @Override
     public SkProject selectByPrimaryKey(Integer id) {
-        return restTemplate.getForObject("http://" + SERVICE_NAME + "/project?id=" + id,SkProject.class,id);
+        return restTemplate.getForObject("http://" + SERVICE_NAME + "/project/{id}",SkProject.class,id);
     }
 
     /**

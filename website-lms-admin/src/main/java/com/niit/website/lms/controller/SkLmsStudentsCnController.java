@@ -46,7 +46,8 @@ public class SkLmsStudentsCnController {
         return  studentsService.export(batchId);
     }
 
-    @PostMapping("importExcel")
+    
+    @PostMapping("/importExcel")
     public boolean importExcel(@RequestParam MultipartFile excel, @RequestParam Integer batchId, @RequestParam String className) {
         try {
             InputStream inputStream=excel.getInputStream();

@@ -96,7 +96,7 @@ public class SkLmsStudentsCnController {
     @PostMapping("export")
     public String export( @RequestParam Integer batchId){
        try {
-           OutputStream out = new FileOutputStream("C:\\");
+           OutputStream out = new FileOutputStream("C:\\students.xlsx");
            ExcelWriter writer = EasyExcelFactory.getWriter(out);
            Sheet sheet2 = new Sheet(1, 0, SkLmsStudentsCn.class);
            sheet2.setSheetName("学生");

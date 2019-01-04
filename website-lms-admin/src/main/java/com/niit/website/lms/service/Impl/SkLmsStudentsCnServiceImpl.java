@@ -34,15 +34,15 @@ public class SkLmsStudentsCnServiceImpl implements SkLmsStudentsCnService {
      * @return
      */
     @Override
-    public boolean export(Integer batchId) {
-       try {
-           restTemplate.postForObject("http://" + SERVICE_NAME +
-                   "/batch/students/export?batchId="+batchId,null,String.class);
-           return  true;
-       }catch (Exception e){
-           e.printStackTrace();
-           return false;
-       }
+    public boolean export(Integer batchId){
+        try {
+            restTemplate.postForObject("http://"
+                    +SERVICE_NAME+"/batch/students/export?batchId="+batchId,null,String.class);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override

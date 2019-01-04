@@ -95,7 +95,6 @@ public class SkLmsHomeworkCnServiceImpl implements SkLmsHomeworkCnService {
     }
 
     // 布置作业 上传附件 共享班级
-    // TODO 多条语句一同执行-开启事务？？？
     @Override
     @Transactional
     public void insertHomework(String json) throws Exception {
@@ -288,7 +287,7 @@ public class SkLmsHomeworkCnServiceImpl implements SkLmsHomeworkCnService {
         return list;
     }
 
-    // 获得文件信息
+/*    // 获得文件信息
     public Map<String, Object> getFileInfo(String strUrl) {
             Map<String, Object> fileInfo = new HashMap<>();
             BufferedInputStream bis = null;
@@ -311,6 +310,24 @@ public class SkLmsHomeworkCnServiceImpl implements SkLmsHomeworkCnService {
             e.printStackTrace();
         } finally {
             urlconnection.disconnect();
+        }
+        return fileInfo;
+    }*/
+
+    // 获得文件信息
+    public Map<String, Object> getFileInfo(String strUrl) {
+        Map<String, Object> fileInfo = new HashMap<>();
+        BufferedInputStream bis = null;
+        HttpURLConnection urlconnection = null;
+        try {
+            URL url = new URL(strUrl);
+            urlconnection = (HttpURLConnection) url.openConnection();
+            urlconnection.connect();
+            // 获取文件大小
+            Integer size = urlconnection.getContentLength();
+            fileInfo.put("size", size);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return fileInfo;
     }

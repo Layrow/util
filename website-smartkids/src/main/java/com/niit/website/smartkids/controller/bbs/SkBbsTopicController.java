@@ -54,7 +54,9 @@ public class SkBbsTopicController {;
      * @return
      */
     @PostMapping("/add")
-    public boolean insert(@RequestBody SkBbsTopic topic, @RequestBody SkMemberIntegral integral){
+    public boolean insert(@RequestBody SkBbsTopic topic,@RequestParam Integer uid){
+        SkMemberIntegral integral=new SkMemberIntegral();
+        integral.setUserId(uid);
         integral.setActions(IntegralActionsEnum.POST_TOPIC.getAction());
         integral.setOperation(IntegralActionsEnum.POST_TOPIC.getOperation());
         integral.setNumbers(IntegralActionsEnum.POST_TOPIC.getNums());

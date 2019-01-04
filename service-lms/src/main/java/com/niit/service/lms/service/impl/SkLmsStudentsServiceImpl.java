@@ -122,6 +122,7 @@ public class SkLmsStudentsServiceImpl implements SkLmsStudentsService {
 
             //获取学生作业多个附件（JSONArray）
             JSONArray fileUrls = jo.getJSONArray("fileUrls");
+            JSONArray fileSizes = jo.getJSONArray("fileSizes");
             if (fileUrls != null) {
                 for (int i = 0; i < fileUrls.length(); i++) {
                     //获取学生作业附件信息
@@ -138,12 +139,12 @@ public class SkLmsStudentsServiceImpl implements SkLmsStudentsService {
                     SkLmsHomeworkAnswerAttachmentCn attachment = new SkLmsHomeworkAnswerAttachmentCn();
                     attachment.setAnswerAttachmentUrl(fileUrl);
                     attachment.setAnswerAttachmentCreateTime(new Date());
-                    attachment.setAnswerAttachmentSize(10086);
+
+                    attachment.setAnswerAttachmentSize((Integer)fileSizes.get(i));
                     attachment.setAnswerAttachmentSuffix(suffix);
                     attachment.setAnswerAttachmentTitle(title);
                     attachment.setHomeworkAnswerId(homeworkAnswerId);
                     skLmsHomeworkAnswerAttachmentCnMapper.insert(attachment);
-                    System.out.println("--------------------------------");
                 }
             }
             return 1;
@@ -156,8 +157,8 @@ public class SkLmsStudentsServiceImpl implements SkLmsStudentsService {
     //查看学生作业
     @Override
     public String selectHomeworkAnswerById(int homework_id, int student_id) {
-        SkLmsHomeworkAnswerCn skLmsHomeworkAnswerCn = null;
-        List<SkLmsHomeworkAnswerAttachmentCn> attachmentList = null;
+        SkLmsHomeworkAnswerCn skLmsHomeworkAnswerCn;
+        List<SkLmsHomeworkAnswerAttachmentCn> attachmentList;
         Map<String, Object> totalMap = new LinkedHashMap<>();
 
         try {
@@ -175,11 +176,13 @@ public class SkLmsStudentsServiceImpl implements SkLmsStudentsService {
 
         //依据附件列表大小定义数组
         String[] urlArray = new String[attachmentList.size()];
+        Integer[] urlSizeArray = new Integer[attachmentList.size()];
         String[] titleAndSuffixArray = new String[attachmentList.size()];
         if (attachmentList.size() > 0) {
             for (int i = 0; i < attachmentList.size(); i++) {
                 try {
                     urlArray[i] = attachmentList.get(i).getAnswerAttachmentUrl();
+                    urlSizeArray[i]=attachmentList.get(i).getAnswerAttachmentSize();
                     titleAndSuffixArray[i] = attachmentList.get(i).getAnswerAttachmentTitle() + "." + attachmentList.get(i).getAnswerAttachmentSuffix();
                 } catch (Exception e) {
                     return "";
@@ -187,6 +190,7 @@ public class SkLmsStudentsServiceImpl implements SkLmsStudentsService {
             }
         }
         totalMap.put("urlArray", urlArray);
+        totalMap.put("urlSizeArray", urlSizeArray);
         totalMap.put("titleAndSuffixArray", titleAndSuffixArray);
 
         Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();

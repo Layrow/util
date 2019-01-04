@@ -51,7 +51,7 @@ public class UploadController {
                 attachement.setAttachementName(originalFilename);
                 attachement.setAttachementSuffix(suffix);
                 long size1 = mf.getSize();
-                Double size =(double)(size1/1024);
+                Double size =(double)(size1);
                 attachement.setAttachementSize(size);
                 attachement.setAttachmentUrl(relativePath+"/"+newName);
                 attachements.add(attachement);

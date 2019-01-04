@@ -42,7 +42,7 @@ public class SkLmsStudentsCnController {
         return  studentsService.addOne(studentsCn,batchId,className);
     }
 
-    @PostMapping("importExcel")
+    @PostMapping("/importExcel")
     public boolean importExcel(@RequestBody List<SkLmsStudentsCn> list,@RequestParam Integer batchId,@RequestParam String className){
         try {
            studentsService.exportExcel(list,className,batchId);

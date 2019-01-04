@@ -44,9 +44,9 @@ public class SkChannelArticleGoodsCn {
 
     private Integer likeCount;
 
-    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:SS")
     private Date addTime;
-    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:SS")
     private Date updateTime;
 
     private String subTitle;

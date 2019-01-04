@@ -122,6 +122,7 @@ public class SkLmsStudentsServiceImpl implements SkLmsStudentsService {
 
             //获取学生作业多个附件（JSONArray）
             JSONArray fileUrls = jo.getJSONArray("fileUrls");
+            JSONArray fileSizes = jo.getJSONArray("fileSizes");
             if (fileUrls != null) {
                 for (int i = 0; i < fileUrls.length(); i++) {
                     //获取学生作业附件信息
@@ -138,12 +139,12 @@ public class SkLmsStudentsServiceImpl implements SkLmsStudentsService {
                     SkLmsHomeworkAnswerAttachmentCn attachment = new SkLmsHomeworkAnswerAttachmentCn();
                     attachment.setAnswerAttachmentUrl(fileUrl);
                     attachment.setAnswerAttachmentCreateTime(new Date());
-                    attachment.setAnswerAttachmentSize(10086);
+
+                    attachment.setAnswerAttachmentSize((Integer)fileSizes.get(i));
                     attachment.setAnswerAttachmentSuffix(suffix);
                     attachment.setAnswerAttachmentTitle(title);
                     attachment.setHomeworkAnswerId(homeworkAnswerId);
                     skLmsHomeworkAnswerAttachmentCnMapper.insert(attachment);
-                    System.out.println("--------------------------------");
                 }
             }
             return 1;

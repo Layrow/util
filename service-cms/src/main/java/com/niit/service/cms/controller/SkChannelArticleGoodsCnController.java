@@ -76,7 +76,6 @@ public class SkChannelArticleGoodsCnController {
     }
     @PutMapping("/batch")
     public String batchUp(@RequestBody List<SkChannelArticleGoodsCn> lis, String locale){
-        System.out.println("------"+locale+lis+"-----");
         int i = skChannelArticleGoodsCnService.batchUp(lis, locale);
         Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
         return gson.toJson(i);

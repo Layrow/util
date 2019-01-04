@@ -36,8 +36,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <cloud-common-version>1.0.0</cloud-common-version>
     </properties>
-
-
     <dependencies>
         <!-- The client -->
         <dependency>

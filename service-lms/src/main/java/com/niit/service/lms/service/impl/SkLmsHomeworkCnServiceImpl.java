@@ -62,12 +62,16 @@ public class SkLmsHomeworkCnServiceImpl implements SkLmsHomeworkCnService {
         SkLmsHomeworkCn skLmsHomeworkCn = skLmsHomeworkCnMapper.selectPrimaryKey(id);
         List<SkLmsHomeworkAttachmentCn> skLmsHomeworkAttachmentCn = skLmsHomeworkCn.getSkLmsHomeworkAttachmentCn();
         List<String> suffixAndTitleList = new ArrayList<>();
+        List<Integer> fileSizeList = new ArrayList<>();
         skLmsHomeworkAttachmentCn.forEach(x -> {
             String suffixAndTitle = x.getHomeworkAttachmentTitle() +"."+ x.getHomeworkAttachmentSuffix();
             suffixAndTitleList.add(suffixAndTitle);
+            Integer homeworkAttachmentSize = x.getHomeworkAttachmentSize();
+            fileSizeList.add(homeworkAttachmentSize);
         });
         map.put("skLmsHomeworkCn", skLmsHomeworkCn);
         map.put("suffixAndTitleList", suffixAndTitleList);
+        map.put("fileSizeList",fileSizeList);
 
         Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
         return gson.toJson(map);
@@ -104,6 +108,7 @@ public class SkLmsHomeworkCnServiceImpl implements SkLmsHomeworkCnService {
         String homeworkTitle = jsonObject.getString("homeworkTitle");
         String homeworkContent = jsonObject.getString("homeworkContent");
         JSONArray urlStr = jsonObject.getJSONArray("url");
+        JSONArray fileSizeArray = jsonObject.getJSONArray("size");
         JSONArray ids = jsonObject.getJSONArray("ids");
 
         // 封装作业信息对象
@@ -128,12 +133,12 @@ public class SkLmsHomeworkCnServiceImpl implements SkLmsHomeworkCnService {
             String suffix = fileSplitSplit[fileSplitSplit.length-1];
             String title = fileSplitSplit[fileSplitSplit.length - 2];
 
-            Map<String, Object> fileInfo = getFileInfo(url);
+//            Map<String, Object> fileInfo = getFileInfo(url);
             // 插入课件信息
             SkLmsHomeworkAttachmentCn skLmsHomeworkAttachmentCn = new SkLmsHomeworkAttachmentCn();
             skLmsHomeworkAttachmentCn.setHomeworkId(homeworkId);
             skLmsHomeworkAttachmentCn.setHomeworkAttachmentUrl(url);
-            skLmsHomeworkAttachmentCn.setHomeworkAttachmentSize((Integer) fileInfo.get("size"));
+            skLmsHomeworkAttachmentCn.setHomeworkAttachmentSize((Integer) fileSizeArray.get(i));
             skLmsHomeworkAttachmentCn.setHomeworkAttachmentSuffix(suffix);
             skLmsHomeworkAttachmentCn.setHomeworkAttachmentCreateTime(new Date());
             skLmsHomeworkAttachmentCn.setHomeworkAttachmentTitle(title);
@@ -160,6 +165,7 @@ public class SkLmsHomeworkCnServiceImpl implements SkLmsHomeworkCnService {
         String homeworkTitle = jsonObject.getString("homeworkTitle");
         String homeworkContent = jsonObject.getString("homeworkContent");
         Integer homeworkId = (Integer) jsonObject.get("homeworkId");
+        JSONArray fileSizeArray = jsonObject.getJSONArray("size");
         JSONArray urlStr = jsonObject.getJSONArray("url");
 
         // 作业信息
@@ -191,12 +197,11 @@ public class SkLmsHomeworkCnServiceImpl implements SkLmsHomeworkCnService {
                 String suffix = fileSplitSplit[fileSplitSplit.length-1];
                 String title = fileSplitSplit[fileSplitSplit.length - 2];
 
-                Map<String, Object> fileInfo = getFileInfo(url);
                 // 插入附件信息
                 SkLmsHomeworkAttachmentCn skLmsHomeworkAttachmentCn = new SkLmsHomeworkAttachmentCn();
                 skLmsHomeworkAttachmentCn.setHomeworkId(homeworkId);
                 skLmsHomeworkAttachmentCn.setHomeworkAttachmentUrl(url);
-                skLmsHomeworkAttachmentCn.setHomeworkAttachmentSize((Integer) fileInfo.get("size"));
+                skLmsHomeworkAttachmentCn.setHomeworkAttachmentSize((Integer) fileSizeArray.get(i));
                 skLmsHomeworkAttachmentCn.setHomeworkAttachmentSuffix(suffix);
                 skLmsHomeworkAttachmentCn.setHomeworkAttachmentCreateTime(new Date());
                 skLmsHomeworkAttachmentCn.setHomeworkAttachmentTitle(title);
@@ -287,7 +292,7 @@ public class SkLmsHomeworkCnServiceImpl implements SkLmsHomeworkCnService {
         return list;
     }
 
-/*    // 获得文件信息
+    /*// 获得文件信息
     public Map<String, Object> getFileInfo(String strUrl) {
             Map<String, Object> fileInfo = new HashMap<>();
             BufferedInputStream bis = null;
@@ -314,21 +319,5 @@ public class SkLmsHomeworkCnServiceImpl implements SkLmsHomeworkCnService {
         return fileInfo;
     }*/
 
-    // 获得文件信息
-    public Map<String, Object> getFileInfo(String strUrl) {
-        Map<String, Object> fileInfo = new HashMap<>();
-        BufferedInputStream bis = null;
-        HttpURLConnection urlconnection = null;
-        try {
-            URL url = new URL(strUrl);
-            urlconnection = (HttpURLConnection) url.openConnection();
-            urlconnection.connect();
-            // 获取文件大小
-            Integer size = urlconnection.getContentLength();
-            fileInfo.put("size", size);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return fileInfo;
-    }
+
 }

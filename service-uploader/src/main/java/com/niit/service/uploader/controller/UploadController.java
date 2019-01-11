@@ -11,7 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.UUID;
 import java.util.List;
 
 @CrossOrigin
@@ -86,8 +85,12 @@ public class UploadController {
     }
     private String saveFile(String fullPath, MultipartFile mf) throws IOException {
         String filename = mf.getOriginalFilename();
-        String suffix = filename.substring(filename.lastIndexOf("."));
         String newName = filename;
+        //blob名字加上随机数字。。
+        if (filename.split("\\.").length == 1 && filename.equals("blob"))
+        {newName = filename +(int) (Math.random() * 100000) + ".sb3" ;}
+      //  String suffix = filename.substring(filename.lastIndexOf("."));
+        System.out.println(filename);
         File dest = new File(fullPath + "/" + newName);
         mf.transferTo(dest);
         return newName;

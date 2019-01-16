@@ -62,6 +62,11 @@ public class SkMemberNotificationImpl implements ISkMemberNotificationService {
         return  false;
     }
 
+    @Override
+    public int deleteNotification(Integer user_id, Integer project_id,Integer operation) {
+        return notificationOpsMapper.deleteNotification(user_id,project_id,operation);
+    }
+
     /**
      * 查询用户下的所有通知
      *

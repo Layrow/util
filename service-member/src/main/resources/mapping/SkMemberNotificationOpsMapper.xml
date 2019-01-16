@@ -39,6 +39,12 @@
     order by sk_member_notification_ops.notice_time desc
   </select>
   <!--删除通知-->
+  <delete id="deleteNotification">
+    delete from sk_member_notification_ops
+    where user_id = #{user_id} and project_id = #{project_id} and operation = #{operation}
+  </delete>
+
+  <!--删除通知-->
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from sk_member_notification_ops
     where id = #{id,jdbcType=INTEGER}

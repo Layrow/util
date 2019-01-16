@@ -4,6 +4,8 @@ import com.github.pagehelper.PageInfo;
 import com.niit.website.smartkids.pojo.project.SkProject;
 import com.sun.xml.internal.bind.v2.TODO;
 
+import java.util.List;
+
 /**
  * @Description
  * @Author liyuhao
@@ -18,7 +20,12 @@ public interface SkProjectService {
     void deleteByPrimaryKey(Integer id);
 
     // select
-    SkProject selectByPrimaryKey(Integer id);
+    String selectByPrimaryKey(Integer id);
+
+    // select
+    SkProject selectProjectByPrimaryKey(Integer id);
+
+    List selectProjectOperation(Integer user_id, Integer project_id);
 
     // update
     void updateByPrimaryKey(SkProject record,Integer userlikeId,String userlikeName,String operate);

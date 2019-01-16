@@ -22,7 +22,11 @@ public interface SkProjectService {
     int deleteByPrimaryKey(Integer id);
 
     // select
-    SkProject selectByPrimaryKey(Integer id);
+    String selectByPrimaryKey(Integer id);
+
+    SkProject selectProjectInfo(Integer id);
+
+    List selectProjectOperation(Integer user_id,Integer project_id);
 
     // update
     int updateByPrimaryKey(SkProject record);
@@ -45,3 +49,4 @@ public interface SkProjectService {
     // 查询个人作品
     String selectProjectByUserId(Integer userId);
 }
+

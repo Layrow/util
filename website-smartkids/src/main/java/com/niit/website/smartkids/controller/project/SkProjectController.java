@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @ClassName SkProjectController
@@ -44,8 +45,8 @@ public class SkProjectController {
 
     // select
     @GetMapping("/{id}")
-    public SkProject selectProject(@PathVariable Integer id) {
-        SkProject skProject = null;
+    public String selectProject(@PathVariable Integer id) {
+        String skProject = null;
         try {
             skProject = skProjectService.selectByPrimaryKey(id);
         } catch (Exception e) {
@@ -134,5 +135,10 @@ public class SkProjectController {
     @GetMapping("/user")
     public String selectProjectByUserId(Integer userId) {
         return skProjectService.selectProjectByUserId(userId);
+    }
+
+    @GetMapping("/user_operation")
+    public List selectProjectOperation(Integer userId, Integer projectId) {
+        return skProjectService.selectProjectOperation(userId,projectId);
     }
 }

@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @ClassName SkProjectServiceImpl
@@ -69,8 +70,19 @@ public class SkProjectServiceImpl implements SkProjectService {
     }
 
     @Override
-    public SkProject selectByPrimaryKey(Integer id) {
-        return restTemplate.getForObject("http://" + SERVICE_NAME + "/project/{id}",SkProject.class,id);
+    public String selectByPrimaryKey(Integer id) {
+        return restTemplate.getForObject("http://" + SERVICE_NAME + "/project/{id}",String.class,id);
+    }
+
+    @Override
+    public SkProject selectProjectByPrimaryKey(Integer id) {
+        return restTemplate.getForObject("http://" + SERVICE_NAME + "/project/info/{id}",SkProject.class,id);
+    }
+
+    @Override
+    public List selectProjectOperation(Integer userId, Integer projectId) {
+        return restTemplate.getForObject("http://" + SERVICE_NAME + "/project/user_operation?user_id=" + userId + "&project_id=" + projectId
+                                            ,List.class);
     }
 
     /**
@@ -85,7 +97,7 @@ public class SkProjectServiceImpl implements SkProjectService {
     public void updateByPrimaryKey(SkProject record,Integer userlikeId,String userlikeName,String operate) {
 
         // 获得该作品在数据库中的信息
-        SkProject skProject = selectByPrimaryKey(record.getId());
+        SkProject skProject = selectProjectByPrimaryKey(record.getId());
         switch (operate) {
             // 点赞请求 - 积分变更通知 - 积分变更
             case "addLikeCount":
@@ -143,12 +155,18 @@ public class SkProjectServiceImpl implements SkProjectService {
             // 取消点赞
             case "subLikeCount":
                 record.setLikesCount(skProject.getLikesCount() - 1);
+                int operation = NotificationEnum.LIKE.getOperation();
                 restTemplate.put("http://" + SERVICE_NAME + "/project",record);
+                restTemplate.delete("http://" + SERVICE_MEMVER + "/notification/delnotification?userId=" +userlikeId+"&projectId=" + record.getId() + "&operation=" + operation
+                        ,userlikeId,record.getId());
                 break;
             // 取消收藏
             case "subFavCount":
                 record.setFavCount(skProject.getFavCount() - 1);
+                int collectOperation = NotificationEnum.COLLECT.getOperation();
                 restTemplate.put("http://" + SERVICE_NAME + "/project",record);
+                restTemplate.delete("http://" + SERVICE_MEMVER + "/notification/delnotification?userId=" +userlikeId+"&projectId=" + record.getId() + "&operation=" + collectOperation
+                        ,userlikeId,record.getId());
                 break;
             default:
                 restTemplate.put("http://" + SERVICE_NAME + "/project",record);

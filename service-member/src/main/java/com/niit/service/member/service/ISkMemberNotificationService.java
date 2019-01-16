@@ -2,6 +2,7 @@ package com.niit.service.member.service;
 
 import com.github.pagehelper.PageInfo;
 import com.niit.service.member.pojo.SkMemberNotificationOps;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 〈一句话功能简述〉<br>
@@ -24,6 +25,8 @@ public interface ISkMemberNotificationService {
      * @return
      */
     boolean deleteNotification(Integer notificationId);
+
+    int deleteNotification(Integer user_id, Integer project_id,Integer operation);
 
     /**
      * 查询用户下的所有通知

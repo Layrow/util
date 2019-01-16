@@ -37,7 +37,11 @@
      b.user_id = #{userId}
     OR a.user_id = #{userId}
   </select>
-
+  <!-- 查询某个用户是否对某作品进行操作过 -->
+  <select id="selectProjectOperation" resultType="java.lang.Integer">
+    select operation from sk_member_notification_ops
+    where user_id = #{user_id} and project_id = #{project_id}
+  </select>
   <!--  作品分类 -->
   <select id="likeSelectProjectAll" resultMap="BaseResultMap">
     select
@@ -137,11 +141,42 @@
       order by updatetime desc
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from sk_project
-    where id = #{id,jdbcType=INTEGER}
+  <select id="selectByPrimaryKey" resultType="java.util.LinkedHashMap" parameterType="java.lang.Integer" >
+SELECT
+	a.id project_id,
+	a.category_id,
+	a.comments,
+	a.cover_img,
+	a.fav_count,
+	a.is_recommnd,
+	a.is_top,
+	a.likes_count,
+	a.operation_desc,
+	a.title,
+	a.updatetime,
+	a.url,
+	a.user_id,
+	a.user_name,
+	a.view_count,
+	b.`name` category_name,
+	c.avatar,
+	d.operation
+FROM
+	sk_project a
+JOIN sk_project_category b ON a.category_id = b.id
+JOIN auth_user c ON a.user_id = c.uid
+left join sk_member_notification_ops d on c.uid = d.user_id and a.id = d.project_id
+WHERE
+    a.id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectProjectInfo" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    SELECT
+    *
+    FROM
+    sk_project
+    WHERE
+    id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from sk_project

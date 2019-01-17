@@ -19,7 +19,9 @@ public interface SkChannelArticleGoodsOrderService {
 
     Integer checkIsOwned(Integer userId,Integer goodId);
 
-    List<SkChannelArticleGoodsCostumes> selectByUserId(Integer userId);
+    List<SkChannelArticleGoodsCostumes> selectSpritesByUserId(Integer userId);
+
+    List<SkChannelArticleGoodsCostumes> selectBackdropsByUserId(Integer userId);
 
     Integer generateOrders(SkChannelArticleGoodsOrder record);
 

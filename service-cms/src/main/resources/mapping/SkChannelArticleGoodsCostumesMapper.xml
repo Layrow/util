@@ -36,11 +36,23 @@
     where good_id = #{goodId,jdbcType=INTEGER}
   </select>
 
-  <select id="selectByGoodsId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectSpritesByGoodsId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from sk_channel_article_goods_costumes
-    where good_id In
+    where type = "sprite" AND good_id IN
+    <foreach collection="list" item="goodId" open="("
+             separator="," close=")">
+
+      #{goodId,jdbcType=INTEGER}
+    </foreach>
+  </select>
+
+  <select id="selectBackdropsByGoodsId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sk_channel_article_goods_costumes
+    where type = "backdrop" AND good_id IN
     <foreach collection="list" item="goodId" open="("
              separator="," close=")">
       #{goodId,jdbcType=INTEGER}

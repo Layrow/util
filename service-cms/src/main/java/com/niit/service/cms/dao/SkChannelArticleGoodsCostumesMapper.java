@@ -15,7 +15,9 @@ public interface SkChannelArticleGoodsCostumesMapper {
 
     List<SkChannelArticleGoodsCostumes> selectByGoodId(Integer goodId);
 
-    List<SkChannelArticleGoodsCostumes> selectByGoodsId(List<Integer> goodsId);
+    List<SkChannelArticleGoodsCostumes> selectSpritesByGoodsId(List<Integer> goodsId);
+
+    List<SkChannelArticleGoodsCostumes> selectBackdropsByGoodsId(List<Integer> goodsId);
 
     int updateByPrimaryKeySelective(SkChannelArticleGoodsCostumes record);
 

@@ -37,11 +37,11 @@ public class SkChannelArticleGoodsOrderController {
         return skChannelArticleGoodsOrderService.checkIsOwned(userId, goodId).toString();
     }
 
-    @GetMapping
-    public String selectMyLibrary(Integer userId) {
+    @GetMapping("/sprites")
+    public String selectMySpritesLibrary(Integer userId) {
         List<SkChannelArticleGoodsCostumes> list;
         //拿到所有的造型(是costumes,非goods)
-        list = skChannelArticleGoodsOrderService.selectByUserId(userId);
+        list = skChannelArticleGoodsOrderService.selectSpritesByUserId(userId);
 
         //以下代码把从数据库查到的costumes列表格式化成Scratch所需要的结果格式，否则scratch会报错
         //resultList为Scratch所需要的结果格式
@@ -84,7 +84,7 @@ public class SkChannelArticleGoodsOrderController {
             //标签，必须为List
             //TODO 区分背景library与角色library
             List<String> tagList = new LinkedList<>();
-            tagList.add("mylibrary");
+            tagList.add("mySpritesLibrary");
 
             List<Integer> infoList = new LinkedList<>();
             //几个音频文件
@@ -117,6 +117,39 @@ public class SkChannelArticleGoodsOrderController {
             resultList.add(resultMap);
 
         }
+
+        Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
+        return gson.toJson(resultList);
+    }
+
+
+    @GetMapping("/backdrops")
+    public String selectMyBackdropsLibrary(Integer userId) {
+        List<SkChannelArticleGoodsCostumes> list;
+        //拿到所有的背景(是costumes,非goods)
+        list = skChannelArticleGoodsOrderService.selectBackdropsByUserId(userId);
+
+        //以下代码把从数据库查到的背景列表格式化成Scratch所需要的结果格式，否则scratch会报错
+        //resultList为Scratch所需要的结果格式
+        List<Map<String, Object>> resultList = new LinkedList<>();
+
+        //拿到所有的goodsId（此步可优化：上一步在批量查询造型的时候，用的就是goodsId）
+        Set<Integer> goodIdSet = new HashSet<>();
+        list.stream().forEach(e -> goodIdSet.add(e.getGoodId()));
+
+        list.stream().forEach(e -> {
+            Map<String, Object> resultMap = new LinkedHashMap<>();
+            List<String> tagList = new LinkedList<>();
+            tagList.add("myBackdropsLibrary");
+
+            resultMap.put("name",e.getCostumename());
+            resultMap.put("md5",e.getMd5());
+            resultMap.put("type",e.getType());
+            resultMap.put("tag",tagList);
+            resultMap.put("info",e.getInfo());
+
+            resultList.add(resultMap);
+        });
 
         Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
         return gson.toJson(resultList);

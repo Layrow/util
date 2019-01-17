@@ -27,85 +27,98 @@ public class SkChannelArticleGoodsOrderController {
     SkChannelArticleGoodsOrderService skChannelArticleGoodsOrderService;
 
 
-
     @PostMapping
-    public String generateOrders(@RequestBody SkChannelArticleGoodsOrder record){
-        return  skChannelArticleGoodsOrderService.generateOrders(record).toString();
+    public String generateOrders(@RequestBody SkChannelArticleGoodsOrder record) {
+        return skChannelArticleGoodsOrderService.generateOrders(record).toString();
     }
 
     @GetMapping("/check_owned")
-    public String checkIsOwned(Integer userId,Integer goodId){
+    public String checkIsOwned(Integer userId, Integer goodId) {
         return skChannelArticleGoodsOrderService.checkIsOwned(userId, goodId).toString();
     }
 
     @GetMapping
-    public String selectMyLibrary(Integer userId){
+    public String selectMyLibrary(Integer userId) {
         List<SkChannelArticleGoodsCostumes> list;
-        list =skChannelArticleGoodsOrderService.selectByUserId(userId);
+        //拿到所有的造型(是costumes,非goods)
+        list = skChannelArticleGoodsOrderService.selectByUserId(userId);
 
-        List<Map<String,Object>> resultList=new LinkedList<>();
+        //以下代码把从数据库查到的costumes列表格式化成Scratch所需要的结果格式，否则scratch会报错
+        //resultList为Scratch所需要的结果格式
+        List<Map<String, Object>> resultList = new LinkedList<>();
 
-        Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
+        //拿到所有的goodsId（此步可优化：上一步在批量查询造型的时候，用的就是goodsId）
+        Set<Integer> goodIdSet = new HashSet<>();
+        list.stream().forEach(e -> goodIdSet.add(e.getGoodId()));
 
-        Set<Integer> goodIdSet=new HashSet<>();
+        //一个商品（good）对应一个sprite(scratch角色)对应多个造型（costumes）与音频
+        for (Integer i : goodIdSet) {
+            //所有sprites(scratch角色)Map
+            Map<String, Object> resultMap = new LinkedHashMap<>();
+            //单个sprite(scratch角色)的子类Map（包含了造型与音频）的信息与其他杂七杂八的属性
+            Map<String, Object> jsonMap = new LinkedHashMap<>();
+            //costumes(造型)List
+            List<Map<String, Object>> costumesList = new LinkedList<>();
+            // TODO sounds
 
-        list.stream().forEach(e->{
-            goodIdSet.add(e.getGoodId());
-        });
-
-
-        for(Integer i:goodIdSet){
-            Map<String,Object> jsonMap=new LinkedHashMap<>();
-            Map<String,Object> resultMap=new LinkedHashMap<>();
-            List<Map<String,Object>> costumesList=new LinkedList<>();
-
-            System.out.println(i);
-            list.stream().forEach(e->{
-                if(i==e.getGoodId()){
-                    Map<String,Object> costumeMap=new LinkedHashMap<>();
-                    costumeMap.put("costumeName",e.getCostumename());
-                    costumeMap.put("baseLayerMD5",e.getBaselayermd5());
-                    costumeMap.put("bitmapResolution",1);
-                    costumeMap.put("rotationCenterX",31);
-                    costumeMap.put("rotationCenterY",100);
+            //把属于同一个sprites(scratch角色)的造型加入到costumes(造型)Map
+            list.stream().forEach(e -> {
+                if (i == e.getGoodId()) {
+                    // TODO sounds
+                    //把单个costume(造型)的信息放入costumes(造型)List
+                    Map<String, Object> costumeMap = new LinkedHashMap<>();
+                    costumeMap.put("costumeName", e.getCostumename());
+                    costumeMap.put("baseLayerMD5", e.getBaselayermd5());
+                    costumeMap.put("bitmapResolution", e.getBitmapresolution());
+                    costumeMap.put("rotationCenterX", e.getRotationcenterx());
+                    costumeMap.put("rotationCenterY", e.getRotationcentery());
                     costumesList.add(costumeMap);
                 }
             });
 
-            List<String> tagList=new LinkedList<>();
-            tagList.add("animals");
+            Map<Integer, Object> spriteInfoMap = new LinkedHashMap<>();
+
+            //拿到第一个costume(造型)作为"门面"
+            SkChannelArticleGoodsCostumes costume = list.stream().filter(e -> e.getGoodId() == i).findFirst().get();
+
+            //标签，必须为List
+            //TODO 区分背景library与角色library
+            List<String> tagList = new LinkedList<>();
             tagList.add("mylibrary");
-            List<Integer> infoList=new LinkedList<>();
+
+            List<Integer> infoList = new LinkedList<>();
+            //几个音频文件
             infoList.add(0);
-            infoList.add(2);
+            //几个造型
+            infoList.add(costumesList.size());
+            //？？？不知道第三个属性是什么意思
             infoList.add(1);
 
-            Map<Integer,Object> spriteInfoMap=new LinkedHashMap<>();
-            // TODO sounds
-            jsonMap.put("objName",list.stream().filter(e->e.getGoodId()==i).findFirst().get().getCostumename());
-            jsonMap.put("costumes",costumesList);
-            jsonMap.put("currentCostumeIndex",0);
-            jsonMap.put("scratchX",-20);
-            jsonMap.put("scratchY",-38);
-            jsonMap.put("scale",1);
-            jsonMap.put("direction",90);
-            jsonMap.put("rotationStyle","normal");
-            jsonMap.put("isDraggable",false);
-            jsonMap.put("visible",true);
-            jsonMap.put("spriteInfo",spriteInfoMap);
+            jsonMap.put("objName", costume.getCostumename());
+            jsonMap.put("costumes", costumesList);
+            jsonMap.put("currentCostumeIndex", costume.getCurrentcostumeindex());
+            jsonMap.put("scratchX", costume.getScratchx());
+            jsonMap.put("scratchY", costume.getScratchy());
+            jsonMap.put("scale", costume.getScale());
+            jsonMap.put("direction", costume.getDirection());
+            jsonMap.put("rotationStyle", costume.getRotationstyle());
+            jsonMap.put("isDraggable", costume.getIsdraggable());
+            jsonMap.put("visible", costume.getVisible());
+            jsonMap.put("spriteInfo", spriteInfoMap);
 
-            //TODO 这个name应该是goods表里的name
-            resultMap.put("name",list.stream().filter(e->e.getGoodId()==i).findFirst().get().getCostumename());
-            resultMap.put("md5",list.stream().filter(e->e.getGoodId()==i).findFirst().get().getMd5());
-            resultMap.put("type",list.stream().filter(e->e.getGoodId()==i).findFirst().get().getType());
-            resultMap.put("tags",tagList);
-            resultMap.put("info",infoList);
-            resultMap.put("json",jsonMap);
+            resultMap.put("name", costume.getCostumename());
+            resultMap.put("md5", costume.getMd5());
+            resultMap.put("type", costume.getType());
+            resultMap.put("tags", tagList);
+            resultMap.put("info", infoList);
+            resultMap.put("json", jsonMap);
+
+            //把各个素材信息加入到resultList
             resultList.add(resultMap);
 
         }
 
-
+        Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
         return gson.toJson(resultList);
     }
 

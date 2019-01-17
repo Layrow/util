@@ -38,7 +38,7 @@ public class SkChannelArticleGoodsOrderServiceImpl implements SkChannelArticleGo
     public List<SkChannelArticleGoodsCostumes> selectByUserId(Integer userId) {
         List<SkChannelArticleGoodsOrder> goodsList=
         skChannelArticleGoodsOrderMapper.selectByUserId(userId);
-
+        //拿到订单表里的所有goodId列表,然后goodId列表去造型表批量查询对应的造型
         List<Integer> goodsIdList= goodsList.stream().map(e->e.getGoodsId()).collect(Collectors.toList());
         return skChannelArticleGoodsCostumesMapper.selectByGoodsId(goodsIdList);
 

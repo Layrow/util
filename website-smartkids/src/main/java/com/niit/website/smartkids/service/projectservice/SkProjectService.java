@@ -28,7 +28,7 @@ public interface SkProjectService {
     List selectProjectOperation(Integer user_id, Integer project_id);
 
     // update
-    void updateByPrimaryKey(SkProject record,Integer userlikeId,String userlikeName,String operate);
+    void updateByPrimaryKey(SkProject record,Integer operationUserId,String operationUserName,String operate);
 
     // 批量删除作品
     void deleteMoreProject(String id);

@@ -94,7 +94,7 @@ public class SkProjectServiceImpl implements SkProjectService {
      **/
     @Override
     @Transactional(rollbackFor=Exception.class)
-    public void updateByPrimaryKey(SkProject record,Integer userlikeId,String userlikeName,String operate) {
+    public void updateByPrimaryKey(SkProject record,Integer operationUserId,String operationUserName,String operate) {
 
         // 获得该作品在数据库中的信息
         SkProject skProject = selectProjectByPrimaryKey(record.getId());
@@ -105,8 +105,8 @@ public class SkProjectServiceImpl implements SkProjectService {
                 SkMemberNotificationOps ops = new SkMemberNotificationOps();
                 ops.setOperation(NotificationEnum.LIKE.getOperation());
                 ops.setProjectId(record.getId());
-                ops.setUserId(userlikeId);
-                ops.setUserName(userlikeName);
+                ops.setUserId(operationUserId);
+                ops.setUserName(operationUserName);
                 String s = restTemplate.postForObject("http://" + SERVICE_MEMVER + "/notification/add",ops,String.class);
 
                 // 如果通知成功，进行积分变更
@@ -132,8 +132,8 @@ public class SkProjectServiceImpl implements SkProjectService {
                 SkMemberNotificationOps ops1 = new SkMemberNotificationOps();
                 ops1.setOperation(NotificationEnum.COLLECT.getOperation());
                 ops1.setProjectId(record.getId());
-                ops1.setUserId(userlikeId);
-                ops1.setUserName(userlikeName);
+                ops1.setUserId(operationUserId);
+                ops1.setUserName(operationUserName);
                 String s1 = restTemplate.postForObject("http://" + SERVICE_MEMVER + "/notification/add",ops1,String.class);
                 // 如果通知成功 - 进行积分变更
                 if ("true".equals(s1)) {
@@ -157,16 +157,16 @@ public class SkProjectServiceImpl implements SkProjectService {
                 record.setLikesCount(skProject.getLikesCount() - 1);
                 int operation = NotificationEnum.LIKE.getOperation();
                 restTemplate.put("http://" + SERVICE_NAME + "/project",record);
-                restTemplate.delete("http://" + SERVICE_MEMVER + "/notification/delnotification?userId=" +userlikeId+"&projectId=" + record.getId() + "&operation=" + operation
-                        ,userlikeId,record.getId());
+                restTemplate.delete("http://" + SERVICE_MEMVER + "/notification/delnotification?userId=" +operationUserId+"&projectId=" + record.getId() + "&operation=" + operation
+                        ,operationUserId,record.getId());
                 break;
             // 取消收藏
             case "subFavCount":
                 record.setFavCount(skProject.getFavCount() - 1);
                 int collectOperation = NotificationEnum.COLLECT.getOperation();
                 restTemplate.put("http://" + SERVICE_NAME + "/project",record);
-                restTemplate.delete("http://" + SERVICE_MEMVER + "/notification/delnotification?userId=" +userlikeId+"&projectId=" + record.getId() + "&operation=" + collectOperation
-                        ,userlikeId,record.getId());
+                restTemplate.delete("http://" + SERVICE_MEMVER + "/notification/delnotification?userId=" +operationUserId+"&projectId=" + record.getId() + "&operation=" + collectOperation
+                        ,operationUserId,record.getId());
                 break;
             default:
                 restTemplate.put("http://" + SERVICE_NAME + "/project",record);

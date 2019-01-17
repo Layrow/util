@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @ClassName SkProjectController
@@ -31,6 +33,7 @@ public class SkProjectController {
         skProject.setIsTop(0);
         skProject.setLikesCount(0);
         skProject.setStatus(1);
+        skProject.setUpdatetime(new Date());
         // 自增主键
         return skProjectService.insert(skProject);
     }
@@ -49,10 +52,22 @@ public class SkProjectController {
 
     // select
     @GetMapping("/{id}")
-    public SkProject selectProject(@PathVariable Integer id) {
-        SkProject skProject = null;
+    public String selectProject(@PathVariable Integer id) {
+        String skProject = null;
         try {
             skProject = skProjectService.selectByPrimaryKey(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return skProject;
+    }
+
+    // 只包含单纯的作品对象
+    @GetMapping("/info/{id}")
+    public SkProject selectProjectInfo(@PathVariable Integer id) {
+        SkProject skProject = null;
+        try {
+            skProject = skProjectService.selectProjectInfo(id);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -144,5 +159,10 @@ public class SkProjectController {
     @GetMapping("/user")
     public String selectProjectByUserId(Integer userId) {
         return skProjectService.selectProjectByUserId(userId);
+    }
+
+    @GetMapping("/user_operation")
+    public List selectProjectOperation(@RequestParam Integer user_id,@RequestParam Integer project_id) {
+        return skProjectService.selectProjectOperation(user_id, project_id);
     }
 }

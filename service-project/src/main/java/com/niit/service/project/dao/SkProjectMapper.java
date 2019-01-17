@@ -20,7 +20,11 @@ public interface SkProjectMapper {
     int insertSelective(SkProject record);
 
     // select
-    SkProject selectByPrimaryKey(Integer id);
+    LinkedHashMap<String,Object> selectByPrimaryKey(Integer id);
+
+    SkProject selectProjectInfo(Integer id);
+
+    List selectProjectOperation(@Param("user_id") Integer user_id,@Param("project_id") Integer project_id);
 
     int updateByPrimaryKeySelective(SkProject record);
 

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @ClassName SkProjectController
@@ -44,8 +45,8 @@ public class SkProjectController {
 
     // select
     @GetMapping("/{id}")
-    public SkProject selectProject(@PathVariable Integer id) {
-        SkProject skProject = null;
+    public String selectProject(@PathVariable Integer id) {
+        String skProject = null;
         try {
             skProject = skProjectService.selectByPrimaryKey(id);
         } catch (Exception e) {
@@ -56,11 +57,11 @@ public class SkProjectController {
 
     // update
     @PutMapping
-    public void updateProject(@RequestBody SkProject skProject,@RequestParam(value = "userlikeId",required = false) Integer userlikeId,
-                              @RequestParam(value = "userlikeName",required = false) String userlikeName,
+    public void updateProject(@RequestBody SkProject skProject,@RequestParam(value = "operationUserId",required = false) Integer operationUserId,
+                              @RequestParam(value = "operationUserName",required = false) String operationUserName,
                               @RequestParam(value = "operate",required = false,defaultValue = "other") String operate) {
         try {
-            skProjectService.updateByPrimaryKey(skProject,userlikeId,userlikeName,operate);
+            skProjectService.updateByPrimaryKey(skProject,operationUserId,operationUserName,operate);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -134,5 +135,10 @@ public class SkProjectController {
     @GetMapping("/user")
     public String selectProjectByUserId(Integer userId) {
         return skProjectService.selectProjectByUserId(userId);
+    }
+
+    @GetMapping("/user_operation")
+    public List selectProjectOperation(Integer userId, Integer projectId) {
+        return skProjectService.selectProjectOperation(userId,projectId);
     }
 }

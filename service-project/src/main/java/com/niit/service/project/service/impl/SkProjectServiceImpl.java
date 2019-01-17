@@ -11,6 +11,7 @@ import com.niit.service.project.service.SkProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -42,8 +43,24 @@ public class SkProjectServiceImpl implements SkProjectService {
 
     // select
     @Override
-    public SkProject selectByPrimaryKey(Integer id) {
-        return skProjectMapper.selectByPrimaryKey(id);
+    public String selectByPrimaryKey(Integer id) {
+        LinkedHashMap<String, Object> projectMap = skProjectMapper.selectByPrimaryKey(id);
+        Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
+        Date updatetime = (Date) projectMap.get("updatetime");
+        SimpleDateFormat formatTime = new SimpleDateFormat("yyyy-MM-dd");
+        String s = formatTime.format(updatetime);
+        projectMap.put("updatetime", s);
+        return gson.toJson(projectMap);
+    }
+
+    @Override
+    public SkProject selectProjectInfo(Integer id) {
+        return skProjectMapper.selectProjectInfo(id);
+    }
+
+    @Override
+    public List selectProjectOperation(Integer user_id, Integer project_id) {
+        return skProjectMapper.selectProjectOperation(user_id,project_id);
     }
 
     // update

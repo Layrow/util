@@ -6,6 +6,7 @@ import com.niit.website.cms.service.SkChannelCnService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
 import java.util.List;
 
 /**
@@ -22,8 +23,8 @@ public class SkChannelCnServiceImpl implements SkChannelCnService {
     RestTemplate restTemplate;
 
     @Override
-    public int insertSelective(SkChannelCn record,String locale) {
-        BaseResult<String> result = restTemplate.postForObject("http://" + SERVICE_NAME + "/skChannelCn/channel/"+locale, record, BaseResult.class);
+    public int insertSelective(SkChannelCn record, String locale) {
+        BaseResult<String> result = restTemplate.postForObject("http://" + SERVICE_NAME + "/skChannelCn/channel/" + locale, record, BaseResult.class);
 /*        if (result.getSuccess()) {
             return Tools.isEmpty(result.getContent()) ? 0 : Integer.parseInt(result.getContent());
         } else {
@@ -33,19 +34,19 @@ public class SkChannelCnServiceImpl implements SkChannelCnService {
     }
 
     @Override
-    public int updateByPrimaryKeySelective(SkChannelCn record,String locale) {
-        restTemplate.put("http://" + SERVICE_NAME + "/skChannelCn/channel",record);
+    public int updateByPrimaryKeySelective(SkChannelCn record, String locale) {
+        restTemplate.put("http://" + SERVICE_NAME + "/skChannelCn/channel", record);
         return 1;
     }
 
     @Override
     public List<SkChannelCn> selectAllChannel(String locale) {
-        return restTemplate.getForObject("http://" + SERVICE_NAME + "/skChannelCn/channel/"+locale,List.class);
+        return restTemplate.getForObject("http://" + SERVICE_NAME + "/skChannelCn/channel/" + locale, List.class);
     }
 
     @Override
-    public int deleteMoreChannel(String id,String locale) {
-        restTemplate.delete("http://" + SERVICE_NAME + "/skChannelCn/channel/{locale}/{id}",locale,id);
+    public int deleteMoreChannel(String id, String locale) {
+        restTemplate.delete("http://" + SERVICE_NAME + "/skChannelCn/channel/{locale}/{id}", locale, id);
         return 1;
     }
 }

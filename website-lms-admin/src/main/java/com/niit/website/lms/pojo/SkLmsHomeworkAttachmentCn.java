@@ -8,7 +8,7 @@ public class SkLmsHomeworkAttachmentCn {
     private Integer id;
 
     private String homeworkAttachmentUrl;
-    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date homeworkAttachmentCreateTime;
 
     private Integer homeworkAttachmentSize;

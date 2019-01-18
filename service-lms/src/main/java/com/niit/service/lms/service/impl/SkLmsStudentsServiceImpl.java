@@ -68,7 +68,7 @@ public class SkLmsStudentsServiceImpl implements SkLmsStudentsService {
         coursewareIdList = skLmsBatchCoursewareCnMapper.selectByBatchId(batch_id);
 //        coursewareIdList.forEach(System.out::println);
         try {
-            if(coursewareIdList.size()>0) {
+            if (coursewareIdList.size() > 0) {
                 //开启分页
                 PageHelper.startPage(currentPage, pageSize);
                 //执行SQL语句（list->分页后的数据）
@@ -140,7 +140,7 @@ public class SkLmsStudentsServiceImpl implements SkLmsStudentsService {
                     attachment.setAnswerAttachmentUrl(fileUrl);
                     attachment.setAnswerAttachmentCreateTime(new Date());
 
-                    attachment.setAnswerAttachmentSize((Integer)fileSizes.get(i));
+                    attachment.setAnswerAttachmentSize((Integer) fileSizes.get(i));
                     attachment.setAnswerAttachmentSuffix(suffix);
                     attachment.setAnswerAttachmentTitle(title);
                     attachment.setHomeworkAnswerId(homeworkAnswerId);
@@ -182,7 +182,7 @@ public class SkLmsStudentsServiceImpl implements SkLmsStudentsService {
             for (int i = 0; i < attachmentList.size(); i++) {
                 try {
                     urlArray[i] = attachmentList.get(i).getAnswerAttachmentUrl();
-                    urlSizeArray[i]=attachmentList.get(i).getAnswerAttachmentSize();
+                    urlSizeArray[i] = attachmentList.get(i).getAnswerAttachmentSize();
                     titleAndSuffixArray[i] = attachmentList.get(i).getAnswerAttachmentTitle() + "." + attachmentList.get(i).getAnswerAttachmentSuffix();
                 } catch (Exception e) {
                     return "";
@@ -249,7 +249,7 @@ public class SkLmsStudentsServiceImpl implements SkLmsStudentsService {
                     SkLmsHomeworkAnswerAttachmentCn attachment = new SkLmsHomeworkAnswerAttachmentCn();
                     attachment.setAnswerAttachmentUrl(fileUrl);
                     attachment.setAnswerAttachmentCreateTime(new Date());
-                    attachment.setAnswerAttachmentSize((Integer)fileSizes.get(i));
+                    attachment.setAnswerAttachmentSize((Integer) fileSizes.get(i));
                     attachment.setAnswerAttachmentSuffix(suffix);
                     attachment.setAnswerAttachmentTitle(title);
                     attachment.setHomeworkAnswerId(homeworkAnswerId);
@@ -263,7 +263,6 @@ public class SkLmsStudentsServiceImpl implements SkLmsStudentsService {
         }
 
     }
-
 
 
 }

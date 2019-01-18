@@ -28,20 +28,20 @@ public class SkLmsHomeworkAnswerCnServiceImpl implements SkLmsHomeworkAnswerCnSe
     public String selectAnswerInfoByHomeIdAndStuId(Integer studentId, Integer homeworkId) {
         ParameterizedTypeReference<String> typeRef = new ParameterizedTypeReference<String>() {
         };
-        ResponseEntity<String> responseEntity = restTemplate.exchange("http://" + SERVICE_NAME + "/skLmsHomeworkAnswerCn/homeworkanswer/" +studentId+"/"+homeworkId, HttpMethod.GET, null, typeRef);
+        ResponseEntity<String> responseEntity = restTemplate.exchange("http://" + SERVICE_NAME + "/skLmsHomeworkAnswerCn/homeworkanswer/" + studentId + "/" + homeworkId, HttpMethod.GET, null, typeRef);
         return responseEntity.getBody();
     }
 
     @Override
     public void updateByPrimaryKeySelective(SkLmsHomeworkAnswerCn record) {
-        restTemplate.put("http://" + SERVICE_NAME + "/skLmsHomeworkAnswerCn/homeworkanswer/",record);
+        restTemplate.put("http://" + SERVICE_NAME + "/skLmsHomeworkAnswerCn/homeworkanswer/", record);
     }
 
     @Override
     public String selectStudentHomeworkInfo(Integer batchId, Integer studentId) {
         ParameterizedTypeReference<String> typeRef = new ParameterizedTypeReference<String>() {
         };
-        ResponseEntity<String> responseEntity = restTemplate.exchange("http://" + SERVICE_NAME + "/skLmsHomeworkAnswerCn/analyse?batchId=" +batchId+"&studentId="+studentId, HttpMethod.GET, null, typeRef);
+        ResponseEntity<String> responseEntity = restTemplate.exchange("http://" + SERVICE_NAME + "/skLmsHomeworkAnswerCn/analyse?batchId=" + batchId + "&studentId=" + studentId, HttpMethod.GET, null, typeRef);
         return responseEntity.getBody();
     }
 
@@ -49,7 +49,7 @@ public class SkLmsHomeworkAnswerCnServiceImpl implements SkLmsHomeworkAnswerCnSe
     public String selectBacthInfo(Integer batchId) {
         ParameterizedTypeReference<String> typeRef = new ParameterizedTypeReference<String>() {
         };
-        ResponseEntity<String> responseEntity = restTemplate.exchange("http://" + SERVICE_NAME + "/skLmsHomeworkAnswerCn/analyse/batch?batchId=" +batchId, HttpMethod.GET, null, typeRef);
+        ResponseEntity<String> responseEntity = restTemplate.exchange("http://" + SERVICE_NAME + "/skLmsHomeworkAnswerCn/analyse/batch?batchId=" + batchId, HttpMethod.GET, null, typeRef);
         return responseEntity.getBody();
     }
 }

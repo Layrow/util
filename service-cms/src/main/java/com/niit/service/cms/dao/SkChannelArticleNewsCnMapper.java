@@ -28,27 +28,39 @@ public interface SkChannelArticleNewsCnMapper {
     int updateByPrimaryKeyWithBLOBs(SkChannelArticleNewsCn record);
 
     int updateByPrimaryKey(SkChannelArticleNewsCn record);
+
     //批量审核
     void updateSt(List<String> list);
+
     //批量删除
-    void  deleteAd(List<String> list);
+    void deleteAd(List<String> list);
+
     //分页查找所有
     List<SkChannelArticleNewsCn> selectAll();
+
     //分页查找所有Hot
     List<SkChannelArticleNewsCn> selectAllByHot();
+
     //分页查找所有Red
     List<SkChannelArticleNewsCn> selectAllByRed();
+
     //分页查找所有Top
     List<SkChannelArticleNewsCn> selectAllByTop();
+
     List<SkChannelArticleNewsCn> selectAllByAudited();
+
     List<SkChannelArticleNewsCn> selectAllByUnaudited();
+
     int batchUp(List<SkChannelArticleNewsCn> lis);
+
     //批量更新
-    void  updateTo(List<String> list);
+    void updateTo(List<String> list);
+
     //批量推荐
-    void  updateRe(List<String> list);
+    void updateRe(List<String> list);
+
     //批量热门
-    void  updateHo(List<String> list);
+    void updateHo(List<String> list);
 
     // 按照栏目类别ID并且status = 1查找新闻
     List<SkChannelArticleNewsCn> selectNewsByCategoryId(List<String> list);

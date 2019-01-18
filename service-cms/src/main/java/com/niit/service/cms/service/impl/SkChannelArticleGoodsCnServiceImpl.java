@@ -57,7 +57,6 @@ public class SkChannelArticleGoodsCnServiceImpl implements SkChannelArticleGoods
             List<SkChannelArticleGoodsCn> goodsList = (List<SkChannelArticleGoodsCn>) articleMethod.invoke(goodsMapper, title, "audited", null, "");
 
 
-
             //把goods中的栏目id放入originalCategoryIds列表
             goodsList.stream().forEach(e -> originalCategoryIds.add(e.getCategoryId()));
             //查询所有的栏目信息列表

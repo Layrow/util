@@ -22,6 +22,7 @@ public interface SkBbsTopicService {
 
     /**
      * 单个修改帖子
+     *
      * @param record
      * @return
      */
@@ -29,25 +30,31 @@ public interface SkBbsTopicService {
 
     /**
      * 客户端发表帖子
-     * @param record  帖子对象
+     *
+     * @param record 帖子对象
      * @return
      */
     boolean insertSelective(SkBbsTopic record);
 
     /**
      * 删除帖子根据帖子的主键Id
+     *
      * @param id
      * @return
      */
     int deleteByPrimaryKey(Integer id);
+
     /**
      * 删除帖子根据帖子的主键Ids
+     *
      * @param ids
      * @return
      */
     boolean batchDel(String ids);
+
     /**
      * 更新帖子浏览量
+     *
      * @param id 帖子主键
      * @return
      */
@@ -56,39 +63,43 @@ public interface SkBbsTopicService {
 
     /**
      * 分页显示所有的 帖子
+     *
      * @param currentPage 当前页
-     * @param pageSize  页面大小
+     * @param pageSize    页面大小
      * @return
      */
     PageInfo<SkBbsTopic> listAllTopic(Integer currentPage, Integer pageSize);
 
     /**
      * 分页显示指定栏目下的帖子
-     * @param sectionId  指定栏目Id
+     *
+     * @param sectionId   指定栏目Id
      * @param currentPage 当前页
-     * @param pageSize  页面大小
+     * @param pageSize    页面大小
      * @return
      */
-    PageInfo<SkBbsTopic>  listAllTopicInSection(Integer currentPage, Integer pageSize, Integer sectionId);
+    PageInfo<SkBbsTopic> listAllTopicInSection(Integer currentPage, Integer pageSize, Integer sectionId);
 
     /**
      * 分页 模糊查询
-     * @param title  查询关键字
+     *
+     * @param title       查询关键字
      * @param currentPage 当前页
-     * @param pageSize  页面大小
+     * @param pageSize    页面大小
      * @return
      */
     PageInfo<SkBbsTopic> likeSelectAll(Integer currentPage, Integer pageSize, String title, String key);
+
     /**
      * 分页 显示 带脏词的帖子
+     *
      * @param currentPage 当前页
-     * @param pageSize  页面大小
+     * @param pageSize    页面大小
      * @return
      */
     PageInfo<SkBbsTopic> selectAllDirty(Integer currentPage, Integer pageSize);
 
     /**
-     *
      * @param currentPage
      * @param pageSize
      * @param title
@@ -100,15 +111,17 @@ public interface SkBbsTopicService {
 
     /**
      * 分页查询,指定用户的所有发帖
-     * @param userId 指定的用户Id
+     *
+     * @param userId      指定的用户Id
      * @param currentPage 当前页
-     * @param pageSize  页面大小
+     * @param pageSize    页面大小
      * @return
      */
     PageInfo<SkBbsTopic> listAllTopicByOwner(Integer currentPage, Integer pageSize, String userId);
 
     /**
      * 批量审核 帖子
+     *
      * @param id 审核的帖子的集合
      * @return
      */
@@ -116,6 +129,7 @@ public interface SkBbsTopicService {
 
     /**
      * 批量置顶
+     *
      * @param id
      * @return
      */
@@ -123,12 +137,15 @@ public interface SkBbsTopicService {
 
     /**
      * 批量加精
+     *
      * @param id
      * @return
      */
     boolean essence(String id);
+
     /**
      * 批量官宣
+     *
      * @param id
      * @return
      */
@@ -136,6 +153,7 @@ public interface SkBbsTopicService {
 
     /**
      * 批量审核 帖子
+     *
      * @param id 审核的帖子的集合
      * @return
      */
@@ -143,6 +161,7 @@ public interface SkBbsTopicService {
 
     /**
      * 批量置顶
+     *
      * @param id
      * @return
      */
@@ -150,13 +169,15 @@ public interface SkBbsTopicService {
 
     /**
      * 批量加精
+     *
      * @param id
      * @return
      */
     boolean unEssence(String id);
 
-   // PageInfo<SkBbsTopic>  selectReplyUserIds( Integer currentPage, Integer pageSize,String replyUserId);
-    PageInfo<SkBbsTopic>  selectReplyUserIds(Integer currentPage, Integer pageSize, String replyUserId);
+    // PageInfo<SkBbsTopic>  selectReplyUserIds( Integer currentPage, Integer pageSize,String replyUserId);
+    PageInfo<SkBbsTopic> selectReplyUserIds(Integer currentPage, Integer pageSize, String replyUserId);
+
     String selectReplyUserId(String replyUserId);
 
 }

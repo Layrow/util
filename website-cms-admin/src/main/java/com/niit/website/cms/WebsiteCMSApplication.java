@@ -15,13 +15,13 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableEurekaClient
 @EnableCircuitBreaker
 public class WebsiteCMSApplication {
-	@Bean
-	@LoadBalanced
-	RestTemplate restTemplate() {
-		return new RestTemplate();
-	}
+    @Bean
+    @LoadBalanced
+    RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
 
-	public static void main(String[] args) {
-		SpringApplication.run(WebsiteCMSApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(WebsiteCMSApplication.class, args);
+    }
 }

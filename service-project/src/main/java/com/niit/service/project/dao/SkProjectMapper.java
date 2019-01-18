@@ -20,11 +20,11 @@ public interface SkProjectMapper {
     int insertSelective(SkProject record);
 
     // select
-    LinkedHashMap<String,Object> selectByPrimaryKey(Integer id);
+    LinkedHashMap<String, Object> selectByPrimaryKey(Integer id);
 
     SkProject selectProjectInfo(Integer id);
 
-    List selectProjectOperation(@Param("user_id") Integer user_id,@Param("project_id") Integer project_id);
+    List selectProjectOperation(@Param("user_id") Integer user_id, @Param("project_id") Integer project_id);
 
     int updateByPrimaryKeySelective(SkProject record);
 
@@ -41,14 +41,14 @@ public interface SkProjectMapper {
     Integer updateMoreProject(@Param("sign") String sign, @Param("list") List<String> list);
 
     // 根据title模糊查询作品
-    List<SkProject> likeSelectProjectByTitle(String status,String title);
+    List<SkProject> likeSelectProjectByTitle(String status, String title);
 
     // 按置顶，推荐进行查询
-    List<SkProject> likeSelectProjectAll(@Param("title")String title,@Param("status") Integer status,@Param("categoryId") Integer categoryId,@Param("orderBy") String orderBy);
+    List<SkProject> likeSelectProjectAll(@Param("title") String title, @Param("status") Integer status, @Param("categoryId") Integer categoryId, @Param("orderBy") String orderBy);
 
 //    // 查询某个用户的作品(创作、收藏、点赞)
 //    List<SkProject> selectProjectByUserId(Integer userId);
 
     // 查询某个用户的作品(创作、收藏、点赞)
-    List<LinkedHashMap<String,Object>> selectProjectByUserId(Integer userId);
+    List<LinkedHashMap<String, Object>> selectProjectByUserId(Integer userId);
 }

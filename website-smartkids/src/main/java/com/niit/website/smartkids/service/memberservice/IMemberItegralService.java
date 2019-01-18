@@ -12,6 +12,7 @@ import com.niit.website.smartkids.pojo.member.SkMemberIntegral;
 public interface IMemberItegralService {
     /**
      * 取得指定用户的所有积分
+     *
      * @param uid
      * @return
      */
@@ -19,9 +20,10 @@ public interface IMemberItegralService {
 
     /**
      * 增加操作记录
+     *
      * @param record
      * @return
      */
-    String  interAction(SkMemberIntegral record);
+    String interAction(SkMemberIntegral record);
 
 }

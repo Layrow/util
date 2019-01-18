@@ -30,16 +30,17 @@ public class SkChannelArticleNewsCnController {
 
     /**
      * 功能描述: 分页模糊查询
+     *
+     * @return com.github.pagehelper.PageInfo<com.niit.service.cms.pojo.SkChannelArticleNewsCn>
      * @author huangwei
      * @date 2018/11/8
      * @params [currentPage, pageSize, title]
-     * @return com.github.pagehelper.PageInfo<com.niit.service.cms.pojo.SkChannelArticleNewsCn>
      */
     @PostMapping("/titles")
     public PageInfo<SkChannelArticleNewsCn> likeSelectAllInfo(@Param("categoryId") Integer categoryId, String key, int currentPage, int pageSize, String title, @RequestParam String locale) {
-        PageInfo<SkChannelArticleNewsCn> listInfo=null;
+        PageInfo<SkChannelArticleNewsCn> listInfo = null;
         try {
-            listInfo = skChannelArticleNewsCnService.likeSelectAll(currentPage,pageSize,title,locale,categoryId,key);
+            listInfo = skChannelArticleNewsCnService.likeSelectAll(currentPage, pageSize, title, locale, categoryId, key);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -55,16 +56,17 @@ public class SkChannelArticleNewsCnController {
      * @params [record]
      */
     @PostMapping
-    public SkChannelArticleNewsCn insertSelectiveInfo(@RequestBody SkChannelArticleNewsCn record,@RequestParam String locale) {
-        Date d=new Date();
+    public SkChannelArticleNewsCn insertSelectiveInfo(@RequestBody SkChannelArticleNewsCn record, @RequestParam String locale) {
+        Date d = new Date();
         record.setAddTime(d);
         record.setUpdateTime(d);
-        skChannelArticleNewsCnService.insertSelective(record,locale);
+        skChannelArticleNewsCnService.insertSelective(record, locale);
         return record;
     }
+
     @PutMapping("/batch")
-    public String batchUp(@RequestBody List<SkChannelArticleNewsCn> lis, String locale){
-        System.out.println("------"+locale+lis+"-----");
+    public String batchUp(@RequestBody List<SkChannelArticleNewsCn> lis, String locale) {
+        System.out.println("------" + locale + lis + "-----");
         int i = skChannelArticleNewsCnService.batchUp(lis, locale);
         Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
         return gson.toJson(i);
@@ -99,8 +101,8 @@ public class SkChannelArticleNewsCnController {
      * @params [id]
      */
     @GetMapping("/id")
-    public SkChannelArticleNewsCn selectByPrimaryKeyInfo(Integer id,@RequestParam String locale) {
-        SkChannelArticleNewsCn Cn = skChannelArticleNewsCnService.selectByPrimaryKey(id,locale);
+    public SkChannelArticleNewsCn selectByPrimaryKeyInfo(Integer id, @RequestParam String locale) {
+        SkChannelArticleNewsCn Cn = skChannelArticleNewsCnService.selectByPrimaryKey(id, locale);
         return Cn;
     }
 
@@ -113,10 +115,10 @@ public class SkChannelArticleNewsCnController {
      * @params []
      */
     @GetMapping
-    public PageInfo<SkChannelArticleNewsCn> selectAllInfo(String key,int currentPage, int pageSize,@RequestParam String locale) {
+    public PageInfo<SkChannelArticleNewsCn> selectAllInfo(String key, int currentPage, int pageSize, @RequestParam String locale) {
         PageInfo<SkChannelArticleNewsCn> listInfo = null;
         try {
-            listInfo=skChannelArticleNewsCnService.FuzzySearchBy(key,currentPage,pageSize,locale);
+            listInfo = skChannelArticleNewsCnService.FuzzySearchBy(key, currentPage, pageSize, locale);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -132,9 +134,9 @@ public class SkChannelArticleNewsCnController {
      * @params [record]
      */
     @PutMapping
-    public SkChannelArticleNewsCn updateByPrimaryKeySelectiveInfo(@RequestBody SkChannelArticleNewsCn record,@RequestParam String locale) {
+    public SkChannelArticleNewsCn updateByPrimaryKeySelectiveInfo(@RequestBody SkChannelArticleNewsCn record, @RequestParam String locale) {
         record.setUpdateTime(new Date());
-        skChannelArticleNewsCnService.updateByPrimaryKeySelective(record,locale);
+        skChannelArticleNewsCnService.updateByPrimaryKeySelective(record, locale);
         return record;
     }
 
@@ -147,41 +149,45 @@ public class SkChannelArticleNewsCnController {
      * @params [request]
      */
     @DeleteMapping
-    public String deleteAd(HttpServletRequest request,@RequestParam String locale) {
+    public String deleteAd(HttpServletRequest request, @RequestParam String locale) {
         String id = request.getParameter("id");
-        skChannelArticleNewsCnService.deleteAd(id,locale);
+        skChannelArticleNewsCnService.deleteAd(id, locale);
         return id;
     }
 
     /**
      * 功能描述:批量审核
+     *
+     * @return java.lang.String
      * @author huangwei
      * @date 2018/11/1
      * @params [request]
-     * @return java.lang.String
      */
-   @PutMapping("/review")
-    public  String updateSt(HttpServletRequest request,@RequestParam String locale) {
-       String id = request.getParameter("id");
-       skChannelArticleNewsCnService.updateSt(id,locale);
-       return "批量审核";
-   }
-    @PutMapping("/top")
-    public  String updateTo(HttpServletRequest request,@RequestParam String locale){
+    @PutMapping("/review")
+    public String updateSt(HttpServletRequest request, @RequestParam String locale) {
         String id = request.getParameter("id");
-        skChannelArticleNewsCnService.updateTo(id,locale);
+        skChannelArticleNewsCnService.updateSt(id, locale);
+        return "批量审核";
+    }
+
+    @PutMapping("/top")
+    public String updateTo(HttpServletRequest request, @RequestParam String locale) {
+        String id = request.getParameter("id");
+        skChannelArticleNewsCnService.updateTo(id, locale);
         return "批量置顶";
     }
+
     @PutMapping("/red")
-    public  String updateRe(HttpServletRequest request,@RequestParam String locale){
+    public String updateRe(HttpServletRequest request, @RequestParam String locale) {
         String id = request.getParameter("id");
-        skChannelArticleNewsCnService.updateRe(id,locale);
+        skChannelArticleNewsCnService.updateRe(id, locale);
         return "批量推荐";
     }
+
     @PutMapping("/hot")
-    public  String updateHo(HttpServletRequest request,@RequestParam String locale){
+    public String updateHo(HttpServletRequest request, @RequestParam String locale) {
         String id = request.getParameter("id");
-        skChannelArticleNewsCnService.updateHo(id,locale);
+        skChannelArticleNewsCnService.updateHo(id, locale);
         return "批量热门";
     }
 
@@ -209,13 +215,12 @@ public class SkChannelArticleNewsCnController {
                                          Integer currentPage, Integer pageSize) {
         String info = null;
         try {
-            info = skChannelArticleNewsCnService.selectNewsByCategoryId(locale, categoryId,currentPage,pageSize);
+            info = skChannelArticleNewsCnService.selectNewsByCategoryId(locale, categoryId, currentPage, pageSize);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return info;
     }
-
 
 
 }

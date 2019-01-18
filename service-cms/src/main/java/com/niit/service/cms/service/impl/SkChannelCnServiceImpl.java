@@ -6,6 +6,7 @@ import com.niit.service.cms.pojo.SkChannelCn;
 import com.niit.service.cms.service.SkChannelCnService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class SkChannelCnServiceImpl implements SkChannelCnService {
     }
 
     @Override
-    public int insertSelective(SkChannelCn record,String locale) {
+    public int insertSelective(SkChannelCn record, String locale) {
         switch (locale) {
             case "zh":
                 return skChannelCnMapper.insertSelective(record);
@@ -52,7 +53,7 @@ public class SkChannelCnServiceImpl implements SkChannelCnService {
     }
 
     @Override
-    public int updateByPrimaryKeySelective(SkChannelCn record,String locale) {
+    public int updateByPrimaryKeySelective(SkChannelCn record, String locale) {
         switch (locale) {
             case "zh":
                 return skChannelCnMapper.updateByPrimaryKeySelective(record);
@@ -82,7 +83,7 @@ public class SkChannelCnServiceImpl implements SkChannelCnService {
 
     // 批量删除channel,传入的id是String类型
     @Override
-    public int deleteMoreChannel(String id,String locale) {
+    public int deleteMoreChannel(String id, String locale) {
         if ("".equals(id) || id == null) {
             return 0;
         }

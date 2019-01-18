@@ -22,98 +22,103 @@ public class SkLmsCoursewareCnController {
     private SkLmsCoursewareCnService ccs;
 
     /**
-    * 功能描述:根据ID进行删除
-    * @author huangwei
-    * @date :2018/11/12
-    * @params [id]
-    * @return int
-    */
+     * 功能描述:根据ID进行删除
+     *
+     * @return int
+     * @author huangwei
+     * @date :2018/11/12
+     * @params [id]
+     */
     @DeleteMapping
-    public  int  deleteByPrimaryInfo(Integer id){
+    public int deleteByPrimaryInfo(Integer id) {
         int i = ccs.deleteByPrimaryKey(id);
-        return  i;
+        return i;
 
     }
+
     /**
-    * 功能描述: 共享
-    * @author huangwei
-    * @date :2018/11/20
-    * @params [facultyId, courseware_title]
-    * @return java.util.List<com.niit.website.lms.pojo.SkLmsCoursewareCn>
-    */
+     * 功能描述: 共享
+     *
+     * @return java.util.List<com.niit.website.lms.pojo.SkLmsCoursewareCn>
+     * @author huangwei
+     * @date :2018/11/20
+     * @params [facultyId, courseware_title]
+     */
     @GetMapping
-   public Map<String,Object> selectAll(Integer facultyId, int currentPage, int pageSize, String courseware_title){
-        Map<String,Object> map = null;
-        String ware = ccs.selectAll(facultyId,currentPage,pageSize,courseware_title);
-        Type type = new TypeToken<Map<String,Object>>() {
+    public Map<String, Object> selectAll(Integer facultyId, int currentPage, int pageSize, String courseware_title) {
+        Map<String, Object> map = null;
+        String ware = ccs.selectAll(facultyId, currentPage, pageSize, courseware_title);
+        Type type = new TypeToken<Map<String, Object>>() {
         }.getType();
         Gson gson = new Gson();
-        if(ware==null||ware.isEmpty()){
-            return  map;
+        if (ware == null || ware.isEmpty()) {
+            return map;
         }
         map = gson.fromJson(ware, type);
-        return  map;
+        return map;
     }
-    /**
-    * 功能描述:上传文件
-    * @author huangwei
-    * @date :2018/11/19
-    * @params [url]
-    * @return java.lang.Integer
-    */
-    @PostMapping
-    public Integer insertSelectiveInfo(@RequestBody String url){
 
-        System.out.println("**********"+url);
+    /**
+     * 功能描述:上传文件
+     *
+     * @return java.lang.Integer
+     * @author huangwei
+     * @date :2018/11/19
+     * @params [url]
+     */
+    @PostMapping
+    public Integer insertSelectiveInfo(@RequestBody String url) {
+
+        System.out.println("**********" + url);
         int i = ccs.insertSelective(url);
         return i;
     }
+
     /**
-    * 功能描述:查询所有课件
-    * @author huangwei
-    * @date :2018/11/19
-    * @params []
-    * @return java.util.List<com.niit.website.lms.pojo.SkLmsCoursewareCn>
-    */
+     * 功能描述:查询所有课件
+     *
+     * @return java.util.List<com.niit.website.lms.pojo.SkLmsCoursewareCn>
+     * @author huangwei
+     * @date :2018/11/19
+     * @params []
+     */
     @GetMapping("/all")
-    public  Map<String,Object> selectAllWare(Integer facultyId,int currentPage, int pageSize){
-        Map<String,Object> map = null;
-        String ware = ccs.selectAllWare(facultyId,currentPage,pageSize);
-        Type type = new TypeToken<Map<String,Object>>() {
+    public Map<String, Object> selectAllWare(Integer facultyId, int currentPage, int pageSize) {
+        Map<String, Object> map = null;
+        String ware = ccs.selectAllWare(facultyId, currentPage, pageSize);
+        Type type = new TypeToken<Map<String, Object>>() {
         }.getType();
         Gson gson = new Gson();
-        if(ware==null||ware.isEmpty()){
-            return  map;
+        if (ware == null || ware.isEmpty()) {
+            return map;
         }
         map = gson.fromJson(ware, type);
-        return  map;
+        return map;
 
     }
+
     /**
      * 功能描述: 查询制定id班级下所有课件
+     *
+     * @return java.util.List<com.niit.service.lms.pojo.SkLmsCoursewareCn>
      * @author huangwei
      * @date : 2018/11/20
      * @params [batchId]
-     * @return java.util.List<com.niit.service.lms.pojo.SkLmsCoursewareCn>
      */
     @GetMapping("/allBatch")
-    public  Map<String,Object> selectAllBatchWare(Integer batchId,int currentPage, int pageSize){
-        Map<String,Object> map = null;
-        String ware = ccs.selectAllBatchWare(batchId,currentPage,pageSize);
-        Type type = new TypeToken<Map<String,Object>>() {
+    public Map<String, Object> selectAllBatchWare(Integer batchId, int currentPage, int pageSize) {
+        Map<String, Object> map = null;
+        String ware = ccs.selectAllBatchWare(batchId, currentPage, pageSize);
+        Type type = new TypeToken<Map<String, Object>>() {
         }.getType();
         Gson gson = new Gson();
-        if(ware==null||ware.isEmpty()){
-            return  map;
+        if (ware == null || ware.isEmpty()) {
+            return map;
         }
         map = gson.fromJson(ware, type);
-        return  map;
+        return map;
 
     }
-
-
-
-
 
 
 }

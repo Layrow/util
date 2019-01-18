@@ -25,7 +25,7 @@ public class SkAdServiceImpl implements SkAdService {
 
     // 查询特定广告位下的所有广告 order排序 status为1 或 status为0
     @Override
-    public PageInfo<SkAdContent> selectByAdId(Integer adId, Integer status,Integer currentPage,Integer pageSize) {
+    public PageInfo<SkAdContent> selectByAdId(Integer adId, Integer status, Integer currentPage, Integer pageSize) {
         if ("".equals(status) || status == null) {
             return restTemplate.getForObject("http://" + SERVICE_NAME + "/ad/content?adId=" + adId + "&currentPage=" + currentPage + "&pageSize=" + pageSize, PageInfo.class);
         }
@@ -34,10 +34,10 @@ public class SkAdServiceImpl implements SkAdService {
 
     // 查询所有广告位(可用/非可用)
     @Override
-    public PageInfo<SkAd> selectAllAdsense(Integer status,Integer currentPage,Integer pageSize) {
+    public PageInfo<SkAd> selectAllAdsense(Integer status, Integer currentPage, Integer pageSize) {
         if ("".equals(status) || status == null) {
-            return restTemplate.getForObject("http://" + SERVICE_NAME + "/ad?currentPage=" + currentPage + "&pageSize=" + pageSize,PageInfo.class);
+            return restTemplate.getForObject("http://" + SERVICE_NAME + "/ad?currentPage=" + currentPage + "&pageSize=" + pageSize, PageInfo.class);
         }
-        return restTemplate.getForObject("http://" + SERVICE_NAME + "/ad?status=" + status + "&currentPage=" + currentPage + "&pageSize=" + pageSize,PageInfo.class);
+        return restTemplate.getForObject("http://" + SERVICE_NAME + "/ad?status=" + status + "&currentPage=" + currentPage + "&pageSize=" + pageSize, PageInfo.class);
     }
 }

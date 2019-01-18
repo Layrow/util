@@ -11,7 +11,7 @@ public class SkChannelArticleGoodsOrder {
 
     private Integer goodsId;
 
-    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date buyingTime;
 
     private Long price;

@@ -18,8 +18,8 @@ import javax.annotation.Resource;
 @Service
 public class MemberSysServiceImpl implements IMemberNotificationSys {
 
-    private static final  String SERVICE_NAME = "service-member";
-    private static final  String URL="http://"+SERVICE_NAME+"/system/";
+    private static final String SERVICE_NAME = "service-member";
+    private static final String URL = "http://" + SERVICE_NAME + "/system/";
 
     @Resource
     RestTemplate restTemplate;
@@ -32,13 +32,13 @@ public class MemberSysServiceImpl implements IMemberNotificationSys {
      */
     @Override
     public boolean add(SkMemberNotificationSystem record) {
-       try {
-           restTemplate.postForObject(URL+"add",record,String.class);
-           return true;
-       }catch (Exception e){
-           e.printStackTrace();
-           return false;
-       }
+        try {
+            restTemplate.postForObject(URL + "add", record, String.class);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     /**
@@ -50,11 +50,11 @@ public class MemberSysServiceImpl implements IMemberNotificationSys {
     @Override
     public boolean delete(String sId) {
         try {
-            restTemplate.delete(URL+"delete?sId="+sId);
+            restTemplate.delete(URL + "delete?sId=" + sId);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            return  false;
+            return false;
         }
     }
 
@@ -67,11 +67,11 @@ public class MemberSysServiceImpl implements IMemberNotificationSys {
     @Override
     public boolean update(SkMemberNotificationSystem record) {
         try {
-            restTemplate.put(URL+"edit",record);
+            restTemplate.put(URL + "edit", record);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            return  false;
+            return false;
         }
 
     }
@@ -85,7 +85,7 @@ public class MemberSysServiceImpl implements IMemberNotificationSys {
      */
     @Override
     public PageInfo<SkMemberNotificationSystem> listAll(Integer currentPage, Integer pageSize) {
-        return  restTemplate.postForObject(URL+"listAll?currentPage="
-                +currentPage+"&pageSize="+pageSize,null,PageInfo.class);
+        return restTemplate.postForObject(URL + "listAll?currentPage="
+                + currentPage + "&pageSize=" + pageSize, null, PageInfo.class);
     }
 }

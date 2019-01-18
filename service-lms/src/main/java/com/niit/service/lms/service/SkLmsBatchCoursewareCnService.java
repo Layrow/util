@@ -13,14 +13,17 @@ import java.util.Map;
  */
 public interface SkLmsBatchCoursewareCnService {
     int deleteByPrimaryKey(Integer id);
+
     int insertSelective(SkLmsBatchCoursewareCn record);
 
     //批量删除
     void deleteAd(String batch_id, Integer coursewareId);
+
     //查询全部班级（包括共享的班级）
-    List<Map<String,Object>>  select(Integer coursewareId, Integer facultyId);
-  //  List<Map<String, Object>> shareBatch(Integer coursewareId,Integer facultyId);
-     int insertBatch(List<SkLmsBatchCoursewareCn> sk);
+    List<Map<String, Object>> select(Integer coursewareId, Integer facultyId);
+
+    //  List<Map<String, Object>> shareBatch(Integer coursewareId,Integer facultyId);
+    int insertBatch(List<SkLmsBatchCoursewareCn> sk);
 }
 
 

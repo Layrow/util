@@ -17,7 +17,7 @@ import java.util.List;
  */
 public interface SkChannelArticleGoodsOrderService {
 
-    Integer checkIsOwned(Integer userId,Integer goodId);
+    Integer checkIsOwned(Integer userId, Integer goodId);
 
     List<SkChannelArticleGoodsCostumes> selectSpritesByUserId(Integer userId);
 

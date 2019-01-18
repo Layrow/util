@@ -22,19 +22,22 @@ public class SkMemberSysNotificationController {
     IMemberNotificationSys sysNotificationService;
 
     @PostMapping("add")
-    public boolean add(@RequestBody SkMemberNotificationSystem record){
-        return  sysNotificationService.add(record);
+    public boolean add(@RequestBody SkMemberNotificationSystem record) {
+        return sysNotificationService.add(record);
     }
+
     @DeleteMapping("delete")
-    public boolean delete(@RequestParam String sId){
-        return  sysNotificationService.delete(sId);
+    public boolean delete(@RequestParam String sId) {
+        return sysNotificationService.delete(sId);
     }
+
     @PutMapping("edit")
-    public boolean edit(@RequestBody SkMemberNotificationSystem record){
+    public boolean edit(@RequestBody SkMemberNotificationSystem record) {
         return sysNotificationService.update(record);
     }
+
     @PostMapping("listAll")
-    public PageInfo<SkMemberNotificationSystem> list(Integer currentPage,Integer pageSize){
+    public PageInfo<SkMemberNotificationSystem> list(Integer currentPage, Integer pageSize) {
         return sysNotificationService.listAll(currentPage, pageSize);
     }
 }

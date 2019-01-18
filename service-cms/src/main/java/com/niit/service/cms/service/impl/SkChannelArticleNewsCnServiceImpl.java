@@ -15,20 +15,21 @@ import com.niit.service.cms.service.SkChannelArticleNewsCnService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-public class SkChannelArticleNewsCnServiceImpl implements SkChannelArticleNewsCnService{
+public class SkChannelArticleNewsCnServiceImpl implements SkChannelArticleNewsCnService {
 
     @Autowired
     private SkArticleCategoryCnMapper skArticleCategoryCnMapper;
     @Autowired
     private SkArticleCategoryCnMapper skArticleCategoryEnMapper;
     @Autowired
-    private SkChannelArticleNewsCnMapper skChannelArticleNewsCnMapper ;
+    private SkChannelArticleNewsCnMapper skChannelArticleNewsCnMapper;
     @Autowired
     private SkChannelArticleNewsEnMapper skChannelArticleNewsEnMapper;
     @Autowired
@@ -56,16 +57,16 @@ public class SkChannelArticleNewsCnServiceImpl implements SkChannelArticleNewsCn
 
     // 按照栏目类别ID并且status = 1查找新闻
     @Override
-    public String selectNewsByCategoryId(String locale,Integer categoryId,Integer currentPage,Integer pageSize) {
-        Map<String,Object> map = new HashMap<>();
-        PageInfo<SkChannelArticleNewsCn> listInfo=null;
+    public String selectNewsByCategoryId(String locale, Integer categoryId, Integer currentPage, Integer pageSize) {
+        Map<String, Object> map = new HashMap<>();
+        PageInfo<SkChannelArticleNewsCn> listInfo = null;
         // 根据传来的ID，获取所有栏目ID(传来的ID和及其子孙ID)存储在set中 --en
         // 递归实现
         List<String> addTimeList = new ArrayList<>();
         List<String> cnList = new ArrayList<>();
         List<String> enListID = new ArrayList<>();
-        getAllChildrenCategoryCn(Integer.toString(categoryId),cnList);
-        getAllChildrenCategoryEn(Integer.toString(categoryId),enListID);
+        getAllChildrenCategoryCn(Integer.toString(categoryId), cnList);
+        getAllChildrenCategoryEn(Integer.toString(categoryId), enListID);
         switch (locale) {
             case "zh":
                 PageHelper.startPage(currentPage, pageSize);
@@ -126,23 +127,23 @@ public class SkChannelArticleNewsCnServiceImpl implements SkChannelArticleNewsCn
 
     // 根据传来的ID，获取所有栏目ID(传来的ID和及其子孙ID)存储在list中 --zh
     // 递归实现
-    public void getAllChildrenCategoryCn(String id,List<String> categoryList) {
+    public void getAllChildrenCategoryCn(String id, List<String> categoryList) {
         categoryList.add(id);
         List<String> baseCategory = skArticleCategoryCnMapper.getBaseCategory(id);
         baseCategory.forEach(x -> {
             categoryList.add(x);
-            getAllChildrenCategoryCn(x,categoryList);
+            getAllChildrenCategoryCn(x, categoryList);
         });
     }
 
     // 根据传来的ID，获取所有栏目ID(传来的ID和及其子孙ID)存储在list中 --en
     // 递归实现
-    public void getAllChildrenCategoryEn(String id,List<String> categoryList) {
+    public void getAllChildrenCategoryEn(String id, List<String> categoryList) {
         categoryList.add(id);
         List<String> baseCategory = skArticleCategoryEnMapper.getBaseCategory(id);
         baseCategory.forEach(x -> {
             categoryList.add(x);
-            getAllChildrenCategoryEn(x,categoryList);
+            getAllChildrenCategoryEn(x, categoryList);
         });
     }
 
@@ -154,26 +155,26 @@ public class SkChannelArticleNewsCnServiceImpl implements SkChannelArticleNewsCn
     //分页模糊查询
     @Override
     public PageInfo<SkChannelArticleNewsCn> likeSelectAll(int currentPage, int pageSize, String title, String locale, @Param(value = "categoryId") Integer categoryId, String key) {
-        PageInfo<SkChannelArticleNewsCn> listInfo=null;
-        List<Integer> categoryIdList=new LinkedList<>();
+        PageInfo<SkChannelArticleNewsCn> listInfo = null;
+        List<Integer> categoryIdList = new LinkedList<>();
         Object mapper = getMapper(locale);
-        List<SkArticleCategoryCn> totalList=null;
+        List<SkArticleCategoryCn> totalList = null;
         try {
-            totalList= (List<SkArticleCategoryCn>) getMapper2(locale).getClass().getMethod("selectAll",Integer.class).invoke(getMapper2(locale),1);
-        }catch (Exception e){
+            totalList = (List<SkArticleCategoryCn>) getMapper2(locale).getClass().getMethod("selectAll", Integer.class).invoke(getMapper2(locale), 1);
+        } catch (Exception e) {
             e.printStackTrace();
         }
         List<SkArticleCategoryCn> pList;
-        if (categoryId==0){
+        if (categoryId == 0) {
             //categoryId=0,则去找parentID()=0的数据
-            pList=totalList.stream().filter(e->e.getParentId().equals(0)).collect(Collectors.toList());
+            pList = totalList.stream().filter(e -> e.getParentId().equals(0)).collect(Collectors.toList());
         } else {
-            pList= totalList.stream().filter(e -> e.getId().equals(categoryId)).collect(Collectors.toList());
+            pList = totalList.stream().filter(e -> e.getId().equals(categoryId)).collect(Collectors.toList());
         }
         //递归拿到指定categoryId的儿子栏目的id集合
-        categoryIdList=test(totalList,pList,categoryIdList);
+        categoryIdList = test(totalList, pList, categoryIdList);
         //数据库查询
-        if (categoryIdList!=null&&categoryIdList.size()>0 ) {
+        if (categoryIdList != null && categoryIdList.size() > 0) {
             try {
                 PageHelper.startPage(currentPage, pageSize);
                 Method method = mapper.getClass().getMethod("likeSelectAllByCategoryId", String.class, String.class, List.class);
@@ -188,16 +189,16 @@ public class SkChannelArticleNewsCnServiceImpl implements SkChannelArticleNewsCn
     }
 
     //递归拿到指定categoryId的儿子栏目的id集合
-    public List<Integer> test(List<SkArticleCategoryCn> totalList, List<SkArticleCategoryCn> pList, List<Integer> categoryIdList){
-        pList.stream().forEach(e->{
+    public List<Integer> test(List<SkArticleCategoryCn> totalList, List<SkArticleCategoryCn> pList, List<Integer> categoryIdList) {
+        pList.stream().forEach(e -> {
             categoryIdList.add(e.getId());
-            test(totalList,totalList.stream().filter(p->p.getParentId().equals(e.getId())).collect(Collectors.toList()),categoryIdList);
+            test(totalList, totalList.stream().filter(p -> p.getParentId().equals(e.getId())).collect(Collectors.toList()), categoryIdList);
         });
         return categoryIdList;
     }
 
     @Override
-    public int deleteByPrimaryKey(Integer id,String locale) {
+    public int deleteByPrimaryKey(Integer id, String locale) {
         switch (locale) {
             case "zh":
                 return skChannelArticleNewsCnMapper.deleteByPrimaryKey(id);
@@ -207,15 +208,16 @@ public class SkChannelArticleNewsCnServiceImpl implements SkChannelArticleNewsCn
                 return skChannelArticleNewsCnMapper.deleteByPrimaryKey(id);
         }
     }
+
     @Override
-    public int batchUp(List<SkChannelArticleNewsCn> lis,String locale) {
+    public int batchUp(List<SkChannelArticleNewsCn> lis, String locale) {
         switch (locale) {
             case "zh":
-                return  skChannelArticleNewsCnMapper.batchUp(lis);
+                return skChannelArticleNewsCnMapper.batchUp(lis);
             case "en":
-                return  skChannelArticleNewsEnMapper.batchUp(lis);
+                return skChannelArticleNewsEnMapper.batchUp(lis);
             default:
-                return  skChannelArticleNewsCnMapper.batchUp(lis);
+                return skChannelArticleNewsCnMapper.batchUp(lis);
         }
     }
 
@@ -262,7 +264,7 @@ public class SkChannelArticleNewsCnServiceImpl implements SkChannelArticleNewsCn
     }
 
     @Override
-    public int insert(SkChannelArticleNewsCn record,String locale) {
+    public int insert(SkChannelArticleNewsCn record, String locale) {
         switch (locale) {
             case "zh":
                 return skChannelArticleNewsCnMapper.insert(record);
@@ -274,7 +276,7 @@ public class SkChannelArticleNewsCnServiceImpl implements SkChannelArticleNewsCn
     }
 
     @Override
-    public int insertSelective(SkChannelArticleNewsCn record,String locale) {
+    public int insertSelective(SkChannelArticleNewsCn record, String locale) {
         switch (locale) {
             case "zh":
                 return skChannelArticleNewsCnMapper.insertSelective(record);
@@ -286,7 +288,7 @@ public class SkChannelArticleNewsCnServiceImpl implements SkChannelArticleNewsCn
     }
 
     @Override
-    public SkChannelArticleNewsCn selectByPrimaryKey(Integer id,String locale) {
+    public SkChannelArticleNewsCn selectByPrimaryKey(Integer id, String locale) {
         switch (locale) {
             case "zh":
                 return skChannelArticleNewsCnMapper.selectByPrimaryKey(id);
@@ -298,7 +300,7 @@ public class SkChannelArticleNewsCnServiceImpl implements SkChannelArticleNewsCn
     }
 
     @Override
-    public int updateByPrimaryKeySelective(SkChannelArticleNewsCn record,String locale) {
+    public int updateByPrimaryKeySelective(SkChannelArticleNewsCn record, String locale) {
         switch (locale) {
             case "zh":
                 return skChannelArticleNewsCnMapper.updateByPrimaryKeySelective(record);
@@ -310,12 +312,12 @@ public class SkChannelArticleNewsCnServiceImpl implements SkChannelArticleNewsCn
     }
 
     @Override
-    public int updateByPrimaryKeyWithBLOBs(SkChannelArticleNewsCn record,String locale) {
-         return  1;
+    public int updateByPrimaryKeyWithBLOBs(SkChannelArticleNewsCn record, String locale) {
+        return 1;
     }
 
     @Override
-    public int updateByPrimaryKey(SkChannelArticleNewsCn record,String locale) {
+    public int updateByPrimaryKey(SkChannelArticleNewsCn record, String locale) {
         record.setUpdateTime(new Date());
         switch (locale) {
             case "zh":
@@ -326,41 +328,41 @@ public class SkChannelArticleNewsCnServiceImpl implements SkChannelArticleNewsCn
                 return skChannelArticleNewsCnMapper.updateByPrimaryKey(record);
         }
     }
+
     //分页查找
     @Override
-    public PageInfo<SkChannelArticleNewsCn> selectAll(int currentPage, int pageSize,String locale) {
+    public PageInfo<SkChannelArticleNewsCn> selectAll(int currentPage, int pageSize, String locale) {
         List<SkChannelArticleNewsCn> list;
         PageInfo<SkChannelArticleNewsCn> listInfo;
         switch (locale) {
             case "zh":
-                PageHelper.startPage(currentPage,pageSize);
+                PageHelper.startPage(currentPage, pageSize);
                 //执行SQL语句（list->分页后的数据）
-                list=skChannelArticleNewsCnMapper.selectAll();
+                list = skChannelArticleNewsCnMapper.selectAll();
                 //把取到的list封装进PageInfo(PageInfo->分页信息+分页后的数据）
                 listInfo = new PageInfo<>(list);
-                return  listInfo;
+                return listInfo;
             case "en":
-                PageHelper.startPage(currentPage,pageSize);
+                PageHelper.startPage(currentPage, pageSize);
                 //执行SQL语句（list->分页后的数据）
-                list=skChannelArticleNewsEnMapper.selectAll();
+                list = skChannelArticleNewsEnMapper.selectAll();
                 //把取到的list封装进PageInfo(PageInfo->分页信息+分页后的数据）
                 listInfo = new PageInfo<>(list);
-                return  listInfo;
+                return listInfo;
             default:
-                PageHelper.startPage(currentPage,pageSize);
+                PageHelper.startPage(currentPage, pageSize);
                 //执行SQL语句（list->分页后的数据）
-                list=skChannelArticleNewsCnMapper.selectAll();
+                list = skChannelArticleNewsCnMapper.selectAll();
                 //把取到的list封装进PageInfo(PageInfo->分页信息+分页后的数据）
                 listInfo = new PageInfo<>(list);
-                return  listInfo;
+                return listInfo;
         }
     }
 
 
-
     //批量删除
     @Override
-    public void deleteAd(String id,String locale) {
+    public void deleteAd(String id, String locale) {
         List<String> list = getList(id);
         switch (locale) {
             case "zh":
@@ -374,7 +376,7 @@ public class SkChannelArticleNewsCnServiceImpl implements SkChannelArticleNewsCn
 
     //批量审核
     @Override
-    public void updateSt(String id,String locale) {
+    public void updateSt(String id, String locale) {
         List<String> list = getList(id);
         switch (locale) {
             case "zh":
@@ -385,8 +387,10 @@ public class SkChannelArticleNewsCnServiceImpl implements SkChannelArticleNewsCn
                 skChannelArticleNewsCnMapper.updateSt(list);
         }
     }
+
     /**
      * id放入list
+     *
      * @param id
      * @return
      */
@@ -402,76 +406,76 @@ public class SkChannelArticleNewsCnServiceImpl implements SkChannelArticleNewsCn
 
     //分页模糊查询
     @Override
-    public PageInfo<SkChannelArticleNewsCn> likeSelectAll(int currentPage, int pageSize, String title,String locale) {
+    public PageInfo<SkChannelArticleNewsCn> likeSelectAll(int currentPage, int pageSize, String title, String locale) {
         List<SkChannelArticleNewsCn> list;
         PageInfo<SkChannelArticleNewsCn> listInfo;
         switch (locale) {
             case "zh":
-                PageHelper.startPage(currentPage,pageSize);
+                PageHelper.startPage(currentPage, pageSize);
                 //执行SQL语句（list->分页后的数据）
-                list=skChannelArticleNewsCnMapper.likeSelectAll(title);
+                list = skChannelArticleNewsCnMapper.likeSelectAll(title);
                 //把取到的list封装进PageInfo(PageInfo->分页信息+分页后的数据）
                 listInfo = new PageInfo<>(list);
-                return  listInfo;
+                return listInfo;
             case "en":
-                PageHelper.startPage(currentPage,pageSize);
+                PageHelper.startPage(currentPage, pageSize);
                 //执行SQL语句（list->分页后的数据）
-                list=skChannelArticleNewsEnMapper.likeSelectAll(title);
+                list = skChannelArticleNewsEnMapper.likeSelectAll(title);
                 //把取到的list封装进PageInfo(PageInfo->分页信息+分页后的数据）
                 listInfo = new PageInfo<>(list);
-                return  listInfo;
+                return listInfo;
             default:
-                PageHelper.startPage(currentPage,pageSize);
+                PageHelper.startPage(currentPage, pageSize);
                 //执行SQL语句（list->分页后的数据）
-                list=skChannelArticleNewsCnMapper.likeSelectAll(title);
+                list = skChannelArticleNewsCnMapper.likeSelectAll(title);
                 //把取到的list封装进PageInfo(PageInfo->分页信息+分页后的数据）
                 listInfo = new PageInfo<>(list);
-                return  listInfo;
+                return listInfo;
         }
     }
 
     //分页查询所有
     @Override
-    public PageInfo<SkChannelArticleNewsCn> FuzzySearchBy(String key,int currentPage, int pageSize,String locale) {
-        List<SkChannelArticleNewsCn> list=null;
+    public PageInfo<SkChannelArticleNewsCn> FuzzySearchBy(String key, int currentPage, int pageSize, String locale) {
+        List<SkChannelArticleNewsCn> list = null;
         PageInfo<SkChannelArticleNewsCn> listInfo;
         switch (locale) {
             case "zh":
-                PageHelper.startPage(currentPage,pageSize);
+                PageHelper.startPage(currentPage, pageSize);
                 //执行SQL语句（list->分页后的数据）
-                if(key.equals("all")) list = skChannelArticleNewsCnMapper.selectAll();
-                else if (key.equals("red")) list=skChannelArticleNewsCnMapper.selectAllByRed();
-                else if (key.equals("hot")) list=skChannelArticleNewsCnMapper.selectAllByHot();
-                else if (key.equals("top")) list=skChannelArticleNewsCnMapper.selectAllByTop();
-                else if (key.equals("audited")) list=skChannelArticleNewsCnMapper.selectAllByAudited();
-                else if (key.equals("unaudited")) list=skChannelArticleNewsCnMapper.selectAllByUnaudited();
+                if (key.equals("all")) list = skChannelArticleNewsCnMapper.selectAll();
+                else if (key.equals("red")) list = skChannelArticleNewsCnMapper.selectAllByRed();
+                else if (key.equals("hot")) list = skChannelArticleNewsCnMapper.selectAllByHot();
+                else if (key.equals("top")) list = skChannelArticleNewsCnMapper.selectAllByTop();
+                else if (key.equals("audited")) list = skChannelArticleNewsCnMapper.selectAllByAudited();
+                else if (key.equals("unaudited")) list = skChannelArticleNewsCnMapper.selectAllByUnaudited();
                 //把取到的list封装进PageInfo(PageInfo->分页信息+分页后的数据）
                 listInfo = new PageInfo<>(list);
-                return  listInfo;
+                return listInfo;
             case "en":
-                PageHelper.startPage(currentPage,pageSize);
+                PageHelper.startPage(currentPage, pageSize);
                 //执行SQL语句（list->分页后的数据）
-                if(key.equals("all")) list = skChannelArticleNewsEnMapper.selectAll();
-                else if (key.equals("red")) list=skChannelArticleNewsEnMapper.selectAllByRed();
-                else if (key.equals("hot")) list=skChannelArticleNewsEnMapper.selectAllByHot();
-                else if (key.equals("top")) list=skChannelArticleNewsEnMapper.selectAllByTop();
-                else if (key.equals("audited")) list=skChannelArticleNewsEnMapper.selectAllByAudited();
-                else if (key.equals("unaudited")) list=skChannelArticleNewsEnMapper.selectAllByUnaudited();
+                if (key.equals("all")) list = skChannelArticleNewsEnMapper.selectAll();
+                else if (key.equals("red")) list = skChannelArticleNewsEnMapper.selectAllByRed();
+                else if (key.equals("hot")) list = skChannelArticleNewsEnMapper.selectAllByHot();
+                else if (key.equals("top")) list = skChannelArticleNewsEnMapper.selectAllByTop();
+                else if (key.equals("audited")) list = skChannelArticleNewsEnMapper.selectAllByAudited();
+                else if (key.equals("unaudited")) list = skChannelArticleNewsEnMapper.selectAllByUnaudited();
                 //把取到的list封装进PageInfo(PageInfo->分页信息+分页后的数据）
                 listInfo = new PageInfo<>(list);
-                return  listInfo;
+                return listInfo;
             default:
-                PageHelper.startPage(currentPage,pageSize);
+                PageHelper.startPage(currentPage, pageSize);
                 //执行SQL语句（list->分页后的数据）
-                if(key.equals("all")) list = skChannelArticleNewsCnMapper.selectAll();
-                else if (key.equals("red")) list=skChannelArticleNewsCnMapper.selectAllByRed();
-                else if (key.equals("hot")) list=skChannelArticleNewsCnMapper.selectAllByHot();
-                else if (key.equals("top")) list=skChannelArticleNewsCnMapper.selectAllByTop();
-                else if (key.equals("audited")) list=skChannelArticleNewsCnMapper.selectAllByAudited();
-                else if (key.equals("unaudited")) list=skChannelArticleNewsCnMapper.selectAllByUnaudited();
+                if (key.equals("all")) list = skChannelArticleNewsCnMapper.selectAll();
+                else if (key.equals("red")) list = skChannelArticleNewsCnMapper.selectAllByRed();
+                else if (key.equals("hot")) list = skChannelArticleNewsCnMapper.selectAllByHot();
+                else if (key.equals("top")) list = skChannelArticleNewsCnMapper.selectAllByTop();
+                else if (key.equals("audited")) list = skChannelArticleNewsCnMapper.selectAllByAudited();
+                else if (key.equals("unaudited")) list = skChannelArticleNewsCnMapper.selectAllByUnaudited();
                 //把取到的list封装进PageInfo(PageInfo->分页信息+分页后的数据）
                 listInfo = new PageInfo<>(list);
-                return  listInfo;
+                return listInfo;
         }
     }
 }

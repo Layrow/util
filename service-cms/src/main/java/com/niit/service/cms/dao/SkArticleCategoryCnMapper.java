@@ -52,13 +52,12 @@ public interface SkArticleCategoryCnMapper {
 
     // 查询所有
     List<SkArticleCategoryCn> selectAllCategory();
-	
-	// 查询channel为1的，parent_id为0的栏目类别
+
+    // 查询channel为1的，parent_id为0的栏目类别
     List<SkArticleCategoryCn> selectCategory(Integer channelId);
 
     // 级联删除与栏目相关的内容
     Integer deleteAboutArticleCategoryCn(List<String> list);
-
 
 
 }

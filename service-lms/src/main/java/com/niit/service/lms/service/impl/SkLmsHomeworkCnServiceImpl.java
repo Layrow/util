@@ -64,14 +64,14 @@ public class SkLmsHomeworkCnServiceImpl implements SkLmsHomeworkCnService {
         List<String> suffixAndTitleList = new ArrayList<>();
         List<Integer> fileSizeList = new ArrayList<>();
         skLmsHomeworkAttachmentCn.forEach(x -> {
-            String suffixAndTitle = x.getHomeworkAttachmentTitle() +"."+ x.getHomeworkAttachmentSuffix();
+            String suffixAndTitle = x.getHomeworkAttachmentTitle() + "." + x.getHomeworkAttachmentSuffix();
             suffixAndTitleList.add(suffixAndTitle);
             Integer homeworkAttachmentSize = x.getHomeworkAttachmentSize();
             fileSizeList.add(homeworkAttachmentSize);
         });
         map.put("skLmsHomeworkCn", skLmsHomeworkCn);
         map.put("suffixAndTitleList", suffixAndTitleList);
-        map.put("fileSizeList",fileSizeList);
+        map.put("fileSizeList", fileSizeList);
 
         Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
         return gson.toJson(map);
@@ -128,9 +128,9 @@ public class SkLmsHomeworkCnServiceImpl implements SkLmsHomeworkCnService {
             String url = (String) urlStr.get(i);
             // 获得 suffix and title
             String[] fileSplit = url.split("/");
-            String fileSplitLast=fileSplit[fileSplit.length-1];
-            String[] fileSplitSplit=fileSplitLast.split("\\.");
-            String suffix = fileSplitSplit[fileSplitSplit.length-1];
+            String fileSplitLast = fileSplit[fileSplit.length - 1];
+            String[] fileSplitSplit = fileSplitLast.split("\\.");
+            String suffix = fileSplitSplit[fileSplitSplit.length - 1];
             String title = fileSplitSplit[fileSplitSplit.length - 2];
 
 //            Map<String, Object> fileInfo = getFileInfo(url);
@@ -161,7 +161,7 @@ public class SkLmsHomeworkCnServiceImpl implements SkLmsHomeworkCnService {
     public void updateHomework(String json) throws Exception {
         // 获取json信息
         JSONObject jsonObject = new JSONObject(json);
-        String facultyId =  jsonObject.getString("facultyId");
+        String facultyId = jsonObject.getString("facultyId");
         String homeworkTitle = jsonObject.getString("homeworkTitle");
         String homeworkContent = jsonObject.getString("homeworkContent");
         Integer homeworkId = (Integer) jsonObject.get("homeworkId");
@@ -187,14 +187,14 @@ public class SkLmsHomeworkCnServiceImpl implements SkLmsHomeworkCnService {
         // 保存的时候进行附件删除重新插入
         skLmsHomeworkAttachmentCnSerive.deleteByHomeworkId(homeworkId);
         // 附件信息
-        if (urlStr!=null) {
+        if (urlStr != null) {
             for (int i = 0; i < urlStr.length(); i++) {
                 String url = (String) urlStr.get(i);
                 // 获得 suffix and title
                 String[] fileSplit = url.split("/");
-                String fileSplitLast=fileSplit[fileSplit.length-1];
-                String[] fileSplitSplit=fileSplitLast.split("\\.");
-                String suffix = fileSplitSplit[fileSplitSplit.length-1];
+                String fileSplitLast = fileSplit[fileSplit.length - 1];
+                String[] fileSplitSplit = fileSplitLast.split("\\.");
+                String suffix = fileSplitSplit[fileSplitSplit.length - 1];
                 String title = fileSplitSplit[fileSplitSplit.length - 2];
 
                 // 插入附件信息
@@ -230,13 +230,13 @@ public class SkLmsHomeworkCnServiceImpl implements SkLmsHomeworkCnService {
     }
 
     @Override
-    public String selectStudentByHomeworkId(Integer batchId,Integer homeworkId,Integer currentPage, Integer pageSize) {
+    public String selectStudentByHomeworkId(Integer batchId, Integer homeworkId, Integer currentPage, Integer pageSize) {
         // currentPage 第几页 pageSize 每页大小
         Map<String, Object> map = new LinkedHashMap<>();
-        int count = skLmsHomeworkCnMapper.selectFinishCountByHomeworkId(batchId,homeworkId);
+        int count = skLmsHomeworkCnMapper.selectFinishCountByHomeworkId(batchId, homeworkId);
         PageInfo<LinkedHashMap<String, Object>> listInfo;
-        PageHelper.startPage(currentPage,pageSize);
-        List<LinkedHashMap<String, Object>> commitInfoList = skLmsHomeworkCnMapper.selectStudentByHomeworkId(batchId,homeworkId);
+        PageHelper.startPage(currentPage, pageSize);
+        List<LinkedHashMap<String, Object>> commitInfoList = skLmsHomeworkCnMapper.selectStudentByHomeworkId(batchId, homeworkId);
         listInfo = new PageInfo<>(commitInfoList);
         map.put("info", listInfo);
         map.put("commitcount", count);
@@ -246,7 +246,7 @@ public class SkLmsHomeworkCnServiceImpl implements SkLmsHomeworkCnService {
 
     @Override
     public List<LinkedHashMap<String, Object>> selectNotdoStudentByHomeworkId(Integer batchId, Integer homeworkId) {
-        return skLmsHomeworkCnMapper.selectNotdoStudentByHomeworkId(batchId,homeworkId);
+        return skLmsHomeworkCnMapper.selectNotdoStudentByHomeworkId(batchId, homeworkId);
     }
 
     @Override
@@ -256,7 +256,7 @@ public class SkLmsHomeworkCnServiceImpl implements SkLmsHomeworkCnService {
         List<String> formatTimeList = new ArrayList<>();
         List<SkLmsHomeworkCn> skLmsHomeworkCnList = skLmsHomeworkCnMapper.selectHomeworkByBatchId(batchId);
         if (!skLmsHomeworkCnList.isEmpty()) {
-            skLmsHomeworkCnList.forEach(homework ->{
+            skLmsHomeworkCnList.forEach(homework -> {
                 Date time = homework.getHomeworkCreateTime();
                 SimpleDateFormat sdf = new SimpleDateFormat("MM-dd");
                 SimpleDateFormat formatTime = new SimpleDateFormat("yyyy-MM-dd");
@@ -277,7 +277,7 @@ public class SkLmsHomeworkCnServiceImpl implements SkLmsHomeworkCnService {
     // 获得特定班级特定作业下的得分情况
     @Override
     public String selectScore(Integer batchId, Integer homeworkId) {
-        List<HashMap<String,Object>> maps = skLmsHomeworkCnMapper.selectScore(batchId, homeworkId);
+        List<HashMap<String, Object>> maps = skLmsHomeworkCnMapper.selectScore(batchId, homeworkId);
         Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
         return gson.toJson(maps);
     }

@@ -16,13 +16,15 @@ import com.niit.website.smartkids.pojo.SkChannelArticleGoodsOrder;
 public interface SkchannelArticleGoodsService {
 
     String generateOrders(SkChannelArticleGoodsOrder record);
-    String checkIsOwned(Integer goodId,Integer userId);
+
+    String checkIsOwned(Integer goodId, Integer userId);
+
     String easyLikeSelectAll(String keyword, Integer channelId, String locale);
 
     String selectGoodIdsByUserId(Integer userId);
 
     //通过父类 拿到父类栏目的内容（商品、新闻）总数
-    String getArticleCountByCategory(Integer channelId, String locale,String keyword);
+    String getArticleCountByCategory(Integer channelId, String locale, String keyword);
 
-    PageInfo<SkChannelArticleGoodsCn> getByCategory(Integer categoryId, String key, int currentPage, int pageSize, String title, String locale, Integer channelId,String orderBy);
+    PageInfo<SkChannelArticleGoodsCn> getByCategory(Integer categoryId, String key, int currentPage, int pageSize, String title, String locale, Integer channelId, String orderBy);
 }

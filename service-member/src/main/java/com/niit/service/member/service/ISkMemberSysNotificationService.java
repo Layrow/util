@@ -16,6 +16,7 @@ public interface ISkMemberSysNotificationService {
 
     /**
      * 增加一条系统通知
+     *
      * @param record
      * @return
      */
@@ -23,6 +24,7 @@ public interface ISkMemberSysNotificationService {
 
     /**
      * 删除条系统通知
+     *
      * @param id
      * @return
      */
@@ -30,6 +32,7 @@ public interface ISkMemberSysNotificationService {
 
     /**
      * 修改一条系统通知
+     *
      * @param record
      * @return
      */
@@ -37,6 +40,7 @@ public interface ISkMemberSysNotificationService {
 
     /**
      * 显示所有的 系统通知
+     *
      * @return
      */
     PageInfo<SkMemberNotificationSystem> listAll(Integer currentPage, Integer pageSize);

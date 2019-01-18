@@ -21,6 +21,7 @@ public interface SkLmsHomeworkAnswerAttachmentCnMapper {
     int updateByPrimaryKeySelective(SkLmsHomeworkAnswerAttachmentCn record);
 
     int updateByPrimaryKey(SkLmsHomeworkAnswerAttachmentCn record);
+
     //删除
     int deleteByHomeworkAnswerIdList(List<Integer> attachmentList);
 }

@@ -24,23 +24,23 @@ import java.util.stream.Collectors;
 public class CommonMethod {
 
     /**
+     * @param originalCategoryIds 需要查找最父类的子类栏目id列表
+     * @param categoryIdMap       子类栏目与父类栏目列表对应表
+     * @param categoryList        所有栏目列表
      * @Description 递归拿到指定categoryId列表的的各个父类id列表
      * @author yuwentao
-     * @param originalCategoryIds 需要查找最父类的子类栏目id列表
-     * @param categoryIdMap 子类栏目与父类栏目列表对应表
-     * @param categoryList 所有栏目列表
      */
     public Map<Integer, List<SkArticleCategoryCn>> getParentList(List<Integer> originalCategoryIds, Map<Integer, List<SkArticleCategoryCn>> categoryIdMap, List<SkArticleCategoryCn> categoryList) {
-        originalCategoryIds.stream().forEach(p->
+        originalCategoryIds.stream().forEach(p ->
                 categoryList.stream().filter(e -> e.getId().equals(categoryIdMap.get(p).get(0).getParentId())).forEach(e -> {
-                    if (e.getParentId()==0){
-                        List<SkArticleCategoryCn> temp=categoryIdMap.get(p);
-                        temp.add(0,e);
-                        categoryIdMap.put(p,temp);
-                    }else{
-                        List<SkArticleCategoryCn> temp=categoryIdMap.get(p);
-                        temp.add(0,e);
-                        categoryIdMap.put(p,temp);
+                    if (e.getParentId() == 0) {
+                        List<SkArticleCategoryCn> temp = categoryIdMap.get(p);
+                        temp.add(0, e);
+                        categoryIdMap.put(p, temp);
+                    } else {
+                        List<SkArticleCategoryCn> temp = categoryIdMap.get(p);
+                        temp.add(0, e);
+                        categoryIdMap.put(p, temp);
                         getParentList(originalCategoryIds, categoryIdMap, categoryList);
                     }
                 })
@@ -49,23 +49,23 @@ public class CommonMethod {
     }
 
     /**
+     * @param originalCategoryIds 需要查找最父类的子类栏目id列表
+     * @param categoryIdMap       子类栏目与最父类栏目对应表
+     * @param categoryList        所有栏目列表
      * @Description 递归拿到指定categoryId列表的的各个最父类id
      * @author yuwentao
-     * @param originalCategoryIds 需要查找最父类的子类栏目id列表
-     * @param categoryIdMap 子类栏目与最父类栏目对应表
-     * @param categoryList 所有栏目列表
      */
     public Map<Integer, SkArticleCategoryCn> getParent(List<Integer> originalCategoryIds, Map<Integer, SkArticleCategoryCn> categoryIdMap, List<SkArticleCategoryCn> categoryList) {
-        originalCategoryIds.stream().forEach(p->
-                        categoryList.stream().filter(e -> e.getId().equals(categoryIdMap.get(p).getParentId())).forEach(e -> {
-                            if (e.getParentId()==0){
-                                categoryIdMap.put(p, e);
-                            }else{
-                                categoryIdMap.put(p, e);
-                                getParent(originalCategoryIds, categoryIdMap, categoryList);
-                            }
-                            })
-                );
+        originalCategoryIds.stream().forEach(p ->
+                categoryList.stream().filter(e -> e.getId().equals(categoryIdMap.get(p).getParentId())).forEach(e -> {
+                    if (e.getParentId() == 0) {
+                        categoryIdMap.put(p, e);
+                    } else {
+                        categoryIdMap.put(p, e);
+                        getParent(originalCategoryIds, categoryIdMap, categoryList);
+                    }
+                })
+        );
         return categoryIdMap;
     }
 
@@ -78,7 +78,7 @@ public class CommonMethod {
         return categoryIdList;
     }
 
-    public PageInfo<Object> likeSelectAll(int currentPage, int pageSize, String title, Integer categoryId, String key, Integer channelId, Object articleMapper, Object categoryMapper,String orderBy) {
+    public PageInfo<Object> likeSelectAll(int currentPage, int pageSize, String title, Integer categoryId, String key, Integer channelId, Object articleMapper, Object categoryMapper, String orderBy) {
         PageInfo<Object> listInfo = null;
         List<Integer> categoryIdList = new LinkedList<>();
         try {
@@ -96,8 +96,8 @@ public class CommonMethod {
             //数据库查询
             if (categoryIdList != null && categoryIdList.size() > 0) {
                 PageHelper.startPage(currentPage, pageSize);
-                Method articleMethod = articleMapper.getClass().getMethod("likeSelectAllByCategoryId", String.class, String.class, List.class,String.class);
-                List<Object> list = (List<Object>) articleMethod.invoke(articleMapper, title, key, categoryIdList,orderBy);
+                Method articleMethod = articleMapper.getClass().getMethod("likeSelectAllByCategoryId", String.class, String.class, List.class, String.class);
+                List<Object> list = (List<Object>) articleMethod.invoke(articleMapper, title, key, categoryIdList, orderBy);
                 listInfo = new PageInfo<>(list);
             }
         } catch (Exception e) {

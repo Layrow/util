@@ -46,12 +46,12 @@ public class SkLmsHomeworkCnServiceImpl implements SkLmsHomeworkCnService {
         headers.add("Accept", MediaType.APPLICATION_JSON.toString());
         JSONObject jsonObj = new JSONObject(json);
         HttpEntity<String> formEntity = new HttpEntity<String>(jsonObj.toString(), headers);
-        restTemplate.put("http://" + SERVICE_NAME + "/skLmsHomeworkCn/homework",formEntity);
+        restTemplate.put("http://" + SERVICE_NAME + "/skLmsHomeworkCn/homework", formEntity);
     }
 
     @Override
     public void deleteHomework(Integer id) {
-        restTemplate.delete("http://" + SERVICE_NAME + "/skLmsHomeworkCn/homework/{id}",id);
+        restTemplate.delete("http://" + SERVICE_NAME + "/skLmsHomeworkCn/homework/{id}", id);
     }
 
 
@@ -60,7 +60,7 @@ public class SkLmsHomeworkCnServiceImpl implements SkLmsHomeworkCnService {
         // getForObject是不会知道List<>中传递的数据类型的，会被默认为LinkedHashMap，最后变成List<LinkedHashMap>
         ParameterizedTypeReference<List<SkLmsHomeworkCn>> typeRef = new ParameterizedTypeReference<List<SkLmsHomeworkCn>>() {
         };
-        ResponseEntity<List<SkLmsHomeworkCn>> responseEntity = restTemplate.exchange("http://" + SERVICE_NAME + "/skLmsHomeworkCn/homework/faculty/" +facultyId, HttpMethod.GET, null, typeRef);
+        ResponseEntity<List<SkLmsHomeworkCn>> responseEntity = restTemplate.exchange("http://" + SERVICE_NAME + "/skLmsHomeworkCn/homework/faculty/" + facultyId, HttpMethod.GET, null, typeRef);
         List<SkLmsHomeworkCn> skLmsHomeworkCnList = responseEntity.getBody();
         return skLmsHomeworkCnList;
     }
@@ -69,18 +69,18 @@ public class SkLmsHomeworkCnServiceImpl implements SkLmsHomeworkCnService {
     public String selectByPrimaryKey(Integer id) {
         ParameterizedTypeReference<String> typeRef = new ParameterizedTypeReference<String>() {
         };
-        ResponseEntity<String> responseEntity = restTemplate.exchange("http://" + SERVICE_NAME + "/skLmsHomeworkCn/homework/" +id, HttpMethod.GET, null, typeRef);
+        ResponseEntity<String> responseEntity = restTemplate.exchange("http://" + SERVICE_NAME + "/skLmsHomeworkCn/homework/" + id, HttpMethod.GET, null, typeRef);
         return responseEntity.getBody();
 
     }
 
     @Override
-    public String selectStudentByHomeworkId(Integer batchId,Integer homeworkId,Integer currentPage,Integer pageSize) {
+    public String selectStudentByHomeworkId(Integer batchId, Integer homeworkId, Integer currentPage, Integer pageSize) {
         ParameterizedTypeReference<String> typeRef = new ParameterizedTypeReference<String>() {
         };
         ResponseEntity<String> responseEntity = restTemplate.exchange(
                 "http://" + SERVICE_NAME + "/skLmsHomeworkCn/homework/stu?batchId="
-                        + batchId+"&homeworkId="+homeworkId+"&currentPage="+currentPage+"&pageSize="+pageSize
+                        + batchId + "&homeworkId=" + homeworkId + "&currentPage=" + currentPage + "&pageSize=" + pageSize
                 , HttpMethod.GET, null, typeRef);
         return responseEntity.getBody();
 

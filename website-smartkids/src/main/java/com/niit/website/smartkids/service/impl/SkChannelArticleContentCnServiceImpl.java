@@ -23,21 +23,21 @@ public class SkChannelArticleContentCnServiceImpl implements SkChannelArticleCon
     @Override
     public String selectContentByCategoryId(String locale, Integer categoryId, Integer currentPage, Integer pageSize) {
         return restTemplate.getForObject(
-                "http://" + SERVICE_NAME + "/content/{locale}/{categoryId}/?currentPage=" + currentPage+"&pageSize=" +pageSize,
-                String.class,locale,categoryId);
+                "http://" + SERVICE_NAME + "/content/{locale}/{categoryId}/?currentPage=" + currentPage + "&pageSize=" + pageSize,
+                String.class, locale, categoryId);
     }
 
     @Override
     public List<SkArticleCategoryCn> selectCategory(String locale, Integer channelId) {
         return restTemplate.getForObject(
-                "http://" + SERVICE_NAME + "/skArticleCategoryCn/articleCategory?locale=" + locale+"&channelId=" + channelId,
-                List.class,locale);
+                "http://" + SERVICE_NAME + "/skArticleCategoryCn/articleCategory?locale=" + locale + "&channelId=" + channelId,
+                List.class, locale);
     }
 
     @Override
     public SkChannelArticleContentCn selectByPrimaryKeyInfo(Integer id, String locale) {
         return restTemplate.getForObject(
-                "http://" + SERVICE_NAME + "/content/id?id=" + id+"&locale=" + locale,
+                "http://" + SERVICE_NAME + "/content/id?id=" + id + "&locale=" + locale,
                 SkChannelArticleContentCn.class);
     }
 }

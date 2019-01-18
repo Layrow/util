@@ -9,7 +9,7 @@ import java.util.Map;
 
 @Mapper
 public interface SkChannelArticleGoodsEnMapper {
-    List<Integer> selectEachCountByMainCategoryId(@Param("title") String title,@Param("keyy") String key,@Param("mainCategoryChildrenListMap") Map<Integer,List<Integer>> mainCategoryChildrenListMap);
+    List<Integer> selectEachCountByMainCategoryId(@Param("title") String title, @Param("keyy") String key, @Param("mainCategoryChildrenListMap") Map<Integer, List<Integer>> mainCategoryChildrenListMap);
 
     int deleteByPrimaryKey(Integer id);
 
@@ -29,11 +29,10 @@ public interface SkChannelArticleGoodsEnMapper {
     List<SkChannelArticleGoodsCn> selectAll();
 
     //分页模糊查询 ByCategoryId
-    List<SkChannelArticleGoodsCn> likeSelectAllByCategoryId(@Param("title") String title,@Param("key") String key,@Param("list") List categoryIdList,@Param("orderBy") String orderBy);
+    List<SkChannelArticleGoodsCn> likeSelectAllByCategoryId(@Param("title") String title, @Param("key") String key, @Param("list") List categoryIdList, @Param("orderBy") String orderBy);
+
     //分页查找所有 ByCategoryId
-    List<SkChannelArticleGoodsCn> selectAllByCategoryId(@Param("categoryId") Integer categoryId,@Param("key") String key);
-
-
+    List<SkChannelArticleGoodsCn> selectAllByCategoryId(@Param("categoryId") Integer categoryId, @Param("key") String key);
 
 
     //分页模糊查询
@@ -41,22 +40,31 @@ public interface SkChannelArticleGoodsEnMapper {
 
     //批量审核
     void updateSt(List<String> list);
+
     //批量删除
-    void  deleteAd(List<String> list);
+    void deleteAd(List<String> list);
 
     //分页查找所有Hot
     List<SkChannelArticleGoodsCn> selectAllByHot();
+
     //分页查找所有Red
     List<SkChannelArticleGoodsCn> selectAllByRed();
+
     //分页查找所有Top
     List<SkChannelArticleGoodsCn> selectAllByTop();
+
     List<SkChannelArticleGoodsCn> selectAllByAudited();
+
     List<SkChannelArticleGoodsCn> selectAllByUnaudited();
+
     int batchUp(List<SkChannelArticleGoodsCn> lis);
+
     //批量更新
-    void  updateTo(List<String> list);
+    void updateTo(List<String> list);
+
     //批量推荐
-    void  updateRe(List<String> list);
+    void updateRe(List<String> list);
+
     //批量热门
-    void  updateHo(List<String> list);
+    void updateHo(List<String> list);
 }

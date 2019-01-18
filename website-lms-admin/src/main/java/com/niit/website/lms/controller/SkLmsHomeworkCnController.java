@@ -21,6 +21,7 @@ public class SkLmsHomeworkCnController {
 
     @Autowired
     private SkLmsHomeworkCnService skLmsHomeworkCnService;
+
     /**
      * @Description 查询特定的老师布置的作业
      * @Date 2018/11/8 15:49
@@ -76,7 +77,7 @@ public class SkLmsHomeworkCnController {
      * @Return java.lang.Integer
      **/
     @PostMapping("/homework")
-    public void insertHomeword(@RequestBody String json) throws Exception{
+    public void insertHomeword(@RequestBody String json) throws Exception {
         try {
             skLmsHomeworkCnService.insertHomework(json);
         } catch (Exception e) {
@@ -103,7 +104,7 @@ public class SkLmsHomeworkCnController {
      **/
     @GetMapping("/homework/stu")
     public String selectStudentByHomeworkId(Integer batchId, Integer homeworkId, Integer currentPage, Integer pageSize) {
-        return skLmsHomeworkCnService.selectStudentByHomeworkId(batchId,homeworkId,currentPage,pageSize);
+        return skLmsHomeworkCnService.selectStudentByHomeworkId(batchId, homeworkId, currentPage, pageSize);
     }
 
     /**
@@ -124,7 +125,6 @@ public class SkLmsHomeworkCnController {
     public String selectScore(Integer batchId, Integer homeworkId) {
         return skLmsHomeworkCnService.selectScore(batchId, homeworkId);
     }
-
 
 
 }

@@ -21,21 +21,21 @@ public class SkChannelArticleNewsCnServiceImpl implements SkChannelArticleNewsCn
     @Override
     public String selectNewsByCategoryId(String locale, Integer categoryId, Integer currentPage, Integer pageSize) {
         return restTemplate.getForObject(
-                "http://" + SERVICE_NAME + "/news/{locale}/{categoryId}/?currentPage=" + currentPage+"&pageSize=" +pageSize,
-                String.class,locale,categoryId);
+                "http://" + SERVICE_NAME + "/news/{locale}/{categoryId}/?currentPage=" + currentPage + "&pageSize=" + pageSize,
+                String.class, locale, categoryId);
     }
 
     @Override
-    public List<SkArticleCategoryCn> selectCategory(String locale,Integer channelId) {
+    public List<SkArticleCategoryCn> selectCategory(String locale, Integer channelId) {
         return restTemplate.getForObject(
-                "http://" + SERVICE_NAME + "/skArticleCategoryCn/articleCategory?locale=" + locale+"&channelId=" + channelId,
-                List.class,locale);
+                "http://" + SERVICE_NAME + "/skArticleCategoryCn/articleCategory?locale=" + locale + "&channelId=" + channelId,
+                List.class, locale);
     }
 
     @Override
     public SkChannelArticleNewsCn selectByPrimaryKeyInfo(Integer id, String locale) {
         return restTemplate.getForObject(
-                "http://" + SERVICE_NAME + "/news/id?id=" + id+"&locale=" + locale,
+                "http://" + SERVICE_NAME + "/news/id?id=" + id + "&locale=" + locale,
                 SkChannelArticleNewsCn.class);
     }
 }

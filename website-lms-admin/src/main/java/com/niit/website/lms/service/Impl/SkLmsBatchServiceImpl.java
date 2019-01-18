@@ -24,27 +24,27 @@ public class SkLmsBatchServiceImpl implements SkLmsBatchCnService {
 
     @Override
     public int deleteByPrimaryKey(Integer id) {
-        restTemplate.delete("http://" + SERVICE_NAME + "/skLmsBatchCn/batch/{id}",id);
+        restTemplate.delete("http://" + SERVICE_NAME + "/skLmsBatchCn/batch/{id}", id);
         return 1;
     }
 
 
     @Override
     public int insertSelective(SkLmsBatchCn record) {
-        restTemplate.postForObject("http://" + SERVICE_NAME + "/skLmsBatchCn/batch",record, BaseResult.class);
+        restTemplate.postForObject("http://" + SERVICE_NAME + "/skLmsBatchCn/batch", record, BaseResult.class);
         return 1;
     }
 
 
     @Override
     public int updateByPrimaryKeySelective(SkLmsBatchCn record) {
-        restTemplate.put("http://" + SERVICE_NAME + "/skLmsBatchCn/batch",record);
+        restTemplate.put("http://" + SERVICE_NAME + "/skLmsBatchCn/batch", record);
         return 1;
     }
 
 
     @Override
     public List<SkLmsBatchCn> selectByFacultyId(Integer facultyId) {
-        return restTemplate.getForObject("http://" + SERVICE_NAME + "/skLmsBatchCn/batch/{facultyId}",List.class,facultyId);
+        return restTemplate.getForObject("http://" + SERVICE_NAME + "/skLmsBatchCn/batch/{facultyId}", List.class, facultyId);
     }
 }

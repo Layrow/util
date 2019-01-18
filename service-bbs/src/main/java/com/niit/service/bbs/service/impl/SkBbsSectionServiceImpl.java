@@ -45,27 +45,26 @@ public class SkBbsSectionServiceImpl implements SkBbsSectionService {
     @Override
     public boolean addSection(SkBbsSection section) {
         section.setCreateDate(new Date());
-        return skBbsSectionMapper.insertSelective(section)>0;
+        return skBbsSectionMapper.insertSelective(section) > 0;
     }
 
     @Override
-    public boolean deleteSection(String id)
-    {
-       try {
-           skBbsReplyMapper.deleteReplyBySection(Tools.getList(id));
-           skBbsTopicMapper.deleteBySection(Tools.getList(id));
-           skBbsSectionMapper.deleteByPrimaryKey(Tools.getList(id));
-           return true;
-       }catch (Exception e){
-           e.printStackTrace();
-           return  false;
-       }
+    public boolean deleteSection(String id) {
+        try {
+            skBbsReplyMapper.deleteReplyBySection(Tools.getList(id));
+            skBbsTopicMapper.deleteBySection(Tools.getList(id));
+            skBbsSectionMapper.deleteByPrimaryKey(Tools.getList(id));
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
     public boolean updateOderBatch(List<SkBbsSection> list) {
         //如果更新的数量和传入的对象数量一致则返回true,失败返回false
-        return skBbsSectionMapper.doBatchUpdateSectionOrder(list)==list.size();
+        return skBbsSectionMapper.doBatchUpdateSectionOrder(list) == list.size();
     }
 
     @Override
@@ -75,8 +74,9 @@ public class SkBbsSectionServiceImpl implements SkBbsSectionService {
 
     @Override
     public boolean editSection(SkBbsSection section) {
-        return skBbsSectionMapper.updateByPrimaryKeySelective(section)>0;
+        return skBbsSectionMapper.updateByPrimaryKeySelective(section) > 0;
     }
+
     /**
      * 分页模糊查询
      *
@@ -89,11 +89,11 @@ public class SkBbsSectionServiceImpl implements SkBbsSectionService {
     public PageInfo<SkBbsSection> likeSelectAll(Integer currentPage, Integer pageSize, String name) {
         List<SkBbsSection> list;
         PageInfo<SkBbsSection> listInfo;
-        PageHelper.startPage(currentPage,pageSize);
+        PageHelper.startPage(currentPage, pageSize);
         //执行SQL语句（list->分页后的数据）
-        list=skBbsSectionMapper.likeSelectAll(name);
+        list = skBbsSectionMapper.likeSelectAll(name);
         //把取到的list封装进PageInfo(PageInfo->分页信息+分页后的数据）
         listInfo = new PageInfo<>(list);
-        return  listInfo;
+        return listInfo;
     }
 }

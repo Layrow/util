@@ -39,8 +39,8 @@ public class SkLmsStudentServiceImpl implements SkLmsStudentService {
 
     //查找某班课件列表
     @Override
-    public PageInfo<SkLmsCoursewareCn> selectCoursewareByBatch(int batch_id,Integer currentPage,Integer pageSize) {
-        return restTemplate.getForObject("http://" + SERVICE_NAME + "/student/courseware/{batch_id}?currentPage="+currentPage+"&pageSize="+pageSize,PageInfo.class,batch_id);
+    public PageInfo<SkLmsCoursewareCn> selectCoursewareByBatch(int batch_id, Integer currentPage, Integer pageSize) {
+        return restTemplate.getForObject("http://" + SERVICE_NAME + "/student/courseware/{batch_id}?currentPage=" + currentPage + "&pageSize=" + pageSize, PageInfo.class, batch_id);
     }
 
     //查找单项作业要求
@@ -69,7 +69,7 @@ public class SkLmsStudentServiceImpl implements SkLmsStudentService {
 //        ResponseEntity<Map<String,Object>> responseEntity =
 //        restTemplate.exchange("http://" + SERVICE_NAME + "/student/homework/*/{homework_id}/{student_id}", HttpMethod.GET, null,typeRef,homework_id,student_id);
 //        Map<String,Object> totalMap = responseEntity.getBody();
-        return restTemplate.getForObject("http://" + SERVICE_NAME + "/student/homework/*/{homework_id}/{student_id}",String.class,homework_id,student_id);
+        return restTemplate.getForObject("http://" + SERVICE_NAME + "/student/homework/*/{homework_id}/{student_id}", String.class, homework_id, student_id);
 
     }
 

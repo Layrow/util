@@ -46,7 +46,7 @@ public class SkLmsStudentsController {
 
         PageInfo<SkLmsCoursewareCn> pageInfo = null;
         try {
-            pageInfo = skLmsStudentsService.selectCoursewareByBatch(batch_id,currentPage,pageSize);
+            pageInfo = skLmsStudentsService.selectCoursewareByBatch(batch_id, currentPage, pageSize);
         } catch (Exception e) {
             e.printStackTrace();
         }

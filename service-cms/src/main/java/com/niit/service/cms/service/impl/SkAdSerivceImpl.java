@@ -12,6 +12,7 @@ import com.niit.service.cms.pojo.SkAdContent;
 import com.niit.service.cms.service.SkAdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -33,7 +34,7 @@ public class SkAdSerivceImpl implements SkAdService {
 
     // 查询所有广告位,默认查询所有的广告位，可以添加参数用来查询可用的广告位(status = 1)
     @Override
-    public PageInfo<SkAd> selectAllAdsense(Integer status,Integer currentPage,Integer pageSize) {
+    public PageInfo<SkAd> selectAllAdsense(Integer status, Integer currentPage, Integer pageSize) {
         PageInfo<SkAd> pageInfo = null;
         PageHelper.startPage(currentPage, pageSize);
         List<SkAd> skAdList = skAdMapper.selectAllAdsense(status);
@@ -86,7 +87,7 @@ public class SkAdSerivceImpl implements SkAdService {
 
     // 查询特定广告位下的所有广告 order排序 status为1 或 status为0
     @Override
-    public PageInfo<SkAdContent> selectByAdId(Integer adId, Integer status,Integer currentPage,Integer pageSize) {
+    public PageInfo<SkAdContent> selectByAdId(Integer adId, Integer status, Integer currentPage, Integer pageSize) {
         PageInfo<SkAdContent> pageInfo = null;
         PageHelper.startPage(currentPage, pageSize);
         List<SkAdContent> skAdContentsList = skAdContentMapper.selectByAdId(adId, status);
@@ -142,10 +143,10 @@ public class SkAdSerivceImpl implements SkAdService {
 
     // 查询所有广告
     @Override
-    public String selectAllAd(Integer status,String title,Integer currentPage,Integer pageSize) {
+    public String selectAllAd(Integer status, String title, Integer currentPage, Integer pageSize) {
         PageInfo<LinkedHashMap<String, Object>> pageInfo = null;
         PageHelper.startPage(currentPage, pageSize);
-        List<LinkedHashMap<String, Object>> linkedHashMaps = skAdContentMapper.selectAllAd(status,title);
+        List<LinkedHashMap<String, Object>> linkedHashMaps = skAdContentMapper.selectAllAd(status, title);
         pageInfo = new PageInfo<>(linkedHashMaps);
         ArrayList<SkAdContent> listAdContent = new ArrayList<>();
         ArrayList<String> listTitleList = new ArrayList<>();
@@ -175,7 +176,7 @@ public class SkAdSerivceImpl implements SkAdService {
             listTitleList.add(adtitle);
         });
         map.put("pageInfo", pageInfo);
-        map.put("listAdContentTitle",listTitleList);
+        map.put("listAdContentTitle", listTitleList);
         Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
         return gson.toJson(map);
     }

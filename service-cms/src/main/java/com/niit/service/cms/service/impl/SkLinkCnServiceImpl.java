@@ -35,10 +35,10 @@ public class SkLinkCnServiceImpl implements SkLinkCnService {
 
     @Override
     public Integer updateByList(List<SkLinkCn> record, String locale) {
-        Object mapper=getMapper(locale);
+        Object mapper = getMapper(locale);
         try {
             Method method = mapper.getClass().getMethod("updateByList", List.class);
-            return (Integer) method.invoke(mapper,record);
+            return (Integer) method.invoke(mapper, record);
         } catch (Exception e) {
             e.printStackTrace();
             return -1;
@@ -61,7 +61,7 @@ public class SkLinkCnServiceImpl implements SkLinkCnService {
     }
 
     @Override
-    public int updateByPrimaryKey(SkLinkCn record,String locale) {
+    public int updateByPrimaryKey(SkLinkCn record, String locale) {
         switch (locale) {
             case "zh":
                 return skLinkCnMapper.updateByPrimaryKey(record);
@@ -79,7 +79,7 @@ public class SkLinkCnServiceImpl implements SkLinkCnService {
      * @author yuwentao
      */
     @Override
-    public PageInfo<SkLinkCn> selectByPage(int currentPage, int pageSize,String locale) {
+    public PageInfo<SkLinkCn> selectByPage(int currentPage, int pageSize, String locale) {
         List<SkLinkCn> list;
         PageInfo<SkLinkCn> listInfo;
         switch (locale) {
@@ -118,8 +118,8 @@ public class SkLinkCnServiceImpl implements SkLinkCnService {
      * @return
      */
     @Override
-    public boolean deleteBatchLinkByPromaryKey(String ids,String locale) {
-        if (ids == null||"".equals(ids)) {
+    public boolean deleteBatchLinkByPromaryKey(String ids, String locale) {
+        if (ids == null || "".equals(ids)) {
             return false;
         }
         switch (locale) {
@@ -139,7 +139,7 @@ public class SkLinkCnServiceImpl implements SkLinkCnService {
      * @return
      */
     @Override
-    public boolean check(String ids,String locale) {
+    public boolean check(String ids, String locale) {
         if (ids == null || "".equals(ids)) {
             return false;
         }

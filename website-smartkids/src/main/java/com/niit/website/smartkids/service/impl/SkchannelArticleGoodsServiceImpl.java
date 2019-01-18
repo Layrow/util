@@ -28,31 +28,31 @@ public class SkchannelArticleGoodsServiceImpl implements SkchannelArticleGoodsSe
 
     @Override
     public String generateOrders(SkChannelArticleGoodsOrder record) {
-        return restTemplate.postForObject("http://" + SERVICE_NAME + "/order_goods_costumes",record,String.class);
+        return restTemplate.postForObject("http://" + SERVICE_NAME + "/order_goods_costumes", record, String.class);
     }
 
     @Override
     public String checkIsOwned(Integer goodId, Integer userId) {
-        return restTemplate.getForObject("http://" + SERVICE_NAME + "/order_goods_costumes/check_owned?userId="+userId+"&goodId="+goodId,String.class);
+        return restTemplate.getForObject("http://" + SERVICE_NAME + "/order_goods_costumes/check_owned?userId=" + userId + "&goodId=" + goodId, String.class);
     }
 
     @Override
-    public String easyLikeSelectAll(String keyword,Integer channelId, String locale) {
-        return restTemplate.getForObject("http://" + SERVICE_NAME + "/goods/main_category_fuzz_search?keyword="+keyword+"&channelId="+channelId+"&locale="+locale,String.class);
+    public String easyLikeSelectAll(String keyword, Integer channelId, String locale) {
+        return restTemplate.getForObject("http://" + SERVICE_NAME + "/goods/main_category_fuzz_search?keyword=" + keyword + "&channelId=" + channelId + "&locale=" + locale, String.class);
     }
 
     @Override
     public String selectGoodIdsByUserId(Integer userId) {
-        return restTemplate.getForObject("http://" + SERVICE_NAME + "/order_goods_costumes/goodids?userId="+userId,String.class);
+        return restTemplate.getForObject("http://" + SERVICE_NAME + "/order_goods_costumes/goodids?userId=" + userId, String.class);
     }
 
     @Override
-    public String getArticleCountByCategory(Integer channelId, String locale,String keyword) {
-        return restTemplate.getForObject("http://" + SERVICE_NAME + "/goods/main_category_article_count?channelId="+channelId+"&locale="+locale+"&keyword="+keyword,String.class);
+    public String getArticleCountByCategory(Integer channelId, String locale, String keyword) {
+        return restTemplate.getForObject("http://" + SERVICE_NAME + "/goods/main_category_article_count?channelId=" + channelId + "&locale=" + locale + "&keyword=" + keyword, String.class);
     }
 
     @Override
-    public PageInfo<SkChannelArticleGoodsCn> getByCategory(Integer categoryId, String key, int currentPage, int pageSize, String title, String locale, Integer channelId,String orderBy) {
-         return restTemplate.postForObject("http://" + SERVICE_NAME + "/goods/titles?categoryId="+categoryId+"&key="+key+"&currentPage="+currentPage+"&pageSize="+pageSize+"&title="+title+"&locale="+locale+"&channelId="+channelId+"&orderBy="+orderBy,null,PageInfo.class);
+    public PageInfo<SkChannelArticleGoodsCn> getByCategory(Integer categoryId, String key, int currentPage, int pageSize, String title, String locale, Integer channelId, String orderBy) {
+        return restTemplate.postForObject("http://" + SERVICE_NAME + "/goods/titles?categoryId=" + categoryId + "&key=" + key + "&currentPage=" + currentPage + "&pageSize=" + pageSize + "&title=" + title + "&locale=" + locale + "&channelId=" + channelId + "&orderBy=" + orderBy, null, PageInfo.class);
     }
 }

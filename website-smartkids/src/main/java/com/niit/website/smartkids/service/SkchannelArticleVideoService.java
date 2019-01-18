@@ -18,7 +18,7 @@ import java.util.List;
 public interface SkchannelArticleVideoService {
 
     // 按照栏目类别ID并且status = 1
-    String selectVideoByCategoryId(String locale,Integer categoryId,Integer currentPage,Integer pageSize);
+    String selectVideoByCategoryId(String locale, Integer categoryId, Integer currentPage, Integer pageSize);
 
     // 查询channel为1的，parent_id为0的栏目类别
     List<SkChannelArticleVideoCn> selectCategory(String locale, Integer channelId);

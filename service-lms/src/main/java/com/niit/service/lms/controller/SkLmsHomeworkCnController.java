@@ -99,12 +99,12 @@ public class SkLmsHomeworkCnController {
      **/
     @GetMapping("/homework/stu")
     public String selectStudentByHomeworkId(Integer batchId, Integer homeworkId, Integer currentPage, Integer pageSize) {
-        return skLmsHomeworkCnService.selectStudentByHomeworkId(batchId,homeworkId,currentPage,pageSize);
+        return skLmsHomeworkCnService.selectStudentByHomeworkId(batchId, homeworkId, currentPage, pageSize);
     }
 
     // 获得作业成绩情况
     @GetMapping("/homework/score")
-    public String selectScore(Integer batchId,Integer homeworkId) {
+    public String selectScore(Integer batchId, Integer homeworkId) {
         return skLmsHomeworkCnService.selectScore(batchId, homeworkId);
     }
 

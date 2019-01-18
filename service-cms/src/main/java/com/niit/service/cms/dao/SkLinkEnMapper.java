@@ -13,9 +13,9 @@ public interface SkLinkEnMapper {
     int deleteByPrimaryKey(Integer id);
 
     /**
+     * @param
      * @Description 批量更新
      * @author yuwentao
-     * @param
      */
     Integer updateByList(List<SkLinkCn> record);
 
@@ -43,12 +43,15 @@ public interface SkLinkEnMapper {
 
     /**
      * 实现链接数据的批量删除操作,执行到此时,list集合内一定有数据
+     *
      * @param ids
      * @return
      */
     boolean deleteBatchByPrimaryKey(List<String> ids);
+
     /**
      * 实现链接数据的批量审核,执行到此时,List集合内一定有数据
+     *
      * @param ids
      * @return
      */
@@ -56,13 +59,15 @@ public interface SkLinkEnMapper {
 
     /**
      * 分页模糊查询
-     * @param title  查询关键字
-     * @return  查询结果集合
+     *
+     * @param title 查询关键字
+     * @return 查询结果集合
      */
     List<SkLinkCn> likeSelectAll(String title);
 
     /**
      * 分页查询所有
+     *
      * @return 查询的内容
      */
     List<SkLinkCn> listAllLink();

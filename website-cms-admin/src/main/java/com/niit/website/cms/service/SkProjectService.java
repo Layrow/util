@@ -30,7 +30,7 @@ public interface SkProjectService {
     PageInfo<SkProject> selectAllProject(Integer status, Integer currentPage, Integer pageSize);
 
     // 批量操作作品（审核，推荐，置顶）
-    void updateMoreProject(String sign,String id);
+    void updateMoreProject(String sign, String id);
 
     // 根据title模糊查询作品
     PageInfo<SkProject> likeSelectProjectByTitle(String status, String title, Integer currentPage, Integer pageSize);

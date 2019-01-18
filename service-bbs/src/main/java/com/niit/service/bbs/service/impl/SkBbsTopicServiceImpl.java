@@ -1,4 +1,5 @@
 package com.niit.service.bbs.service.impl;
+
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.niit.common.utils.BadWordUtil;
@@ -47,13 +48,13 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
         List<SkBbsReply> skBbsReplies = skBbsReplyMapper.selectAll();
         //查出所有回帖的ID
         LinkedList<Integer> list = new LinkedList<>();
-        skBbsReplies.stream().forEach(e->list.add(e.getId()));
+        skBbsReplies.stream().forEach(e -> list.add(e.getId()));
         //根据回帖Id查询出相对应的帖子
         //List<SkBbsTopic> topics = skBbsTopicMapper.selectAllTopicById(list);
-        Map<Integer, String> map=new LinkedHashMap<>();
-        skBbsReplies.stream().forEach(e->{
+        Map<Integer, String> map = new LinkedHashMap<>();
+        skBbsReplies.stream().forEach(e -> {
             //key放入 回帖Id  value放入回帖对映的帖子
-            map.put(e.getId(),skBbsReplyMapper.selectAllTopicById(e.getId()));
+            map.put(e.getId(), skBbsReplyMapper.selectAllTopicById(e.getId()));
         });
         return map;
 
@@ -68,11 +69,11 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
     @Override
     public int insertSelective(SkBbsTopic record) {
         record.setCreateTime(new Date());
-        if (BadWordUtil.isContaintBadWord(record.getTitle(), 2)||BadWordUtil.isContaintBadWord(record.getContent(), 2)){
-            record.setTitle(BadWordUtil.replaceBadWord(record.getTitle(),2,"*"));
-            record.setContent(BadWordUtil.replaceBadWord(record.getContent(),2,"*"));
+        if (BadWordUtil.isContaintBadWord(record.getTitle(), 2) || BadWordUtil.isContaintBadWord(record.getContent(), 2)) {
+            record.setTitle(BadWordUtil.replaceBadWord(record.getTitle(), 2, "*"));
+            record.setContent(BadWordUtil.replaceBadWord(record.getContent(), 2, "*"));
             record.setHasbad(1);
-        }else {
+        } else {
             record.setHasbad(0);
         }
         record.setViewcount(0);
@@ -83,12 +84,12 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
     @Override
     public int deleteByPrimaryKey(Integer id) {
         try {
-            List<String> list= new ArrayList<>();
+            List<String> list = new ArrayList<>();
             list.add(id.toString());
             skBbsReplyMapper.deleteReplyByTopic(list);
             skBbsTopicMapper.deleteByPrimaryKey(id);
-           return id;
-        }catch (Exception e){
+            return id;
+        } catch (Exception e) {
             e.printStackTrace();
             return 0;
         }
@@ -108,18 +109,18 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
             //删除所有的帖子
             skBbsTopicMapper.deleteByPrimaryKeyList(id);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            return  false;
+            return false;
         }
 
     }
 
     @Override
     public int updateViewCountByPrimaryKey(Integer id) {
-        SkBbsTopic record=skBbsTopicMapper.selectByPrimaryKey(id);
-        Integer newCount=record.getViewcount()+1;
-        return skBbsTopicMapper.updateViewCountByPrimaryKey(id,newCount);
+        SkBbsTopic record = skBbsTopicMapper.selectByPrimaryKey(id);
+        Integer newCount = record.getViewcount() + 1;
+        return skBbsTopicMapper.updateViewCountByPrimaryKey(id, newCount);
     }
 
     @Override
@@ -127,33 +128,32 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
 
         List<SkBbsTopic> list;
         PageInfo<SkBbsTopic> listInfo;
-        PageHelper.startPage(currentPage,pageSize);
+        PageHelper.startPage(currentPage, pageSize);
         //执行SQL语句（list->分页后的数据）
-        list=skBbsTopicMapper.listAllTopic();
+        list = skBbsTopicMapper.listAllTopic();
         //把取到的list封装进PageInfo(PageInfo->分页信息+分页后的数据）
         listInfo = new PageInfo<>(list);
-        return  listInfo;
+        return listInfo;
     }
-
 
 
     @Override
     public PageInfo<SkBbsTopic> listAllTopicInSection(Integer currentPage, Integer pageSize, Integer sectionId) {
         List<SkBbsTopic> list;
         PageInfo<SkBbsTopic> pageInfo;
-        PageHelper.startPage(currentPage,pageSize);
-        list=skBbsTopicMapper.listAllTopicInSection(sectionId);
-        pageInfo=new PageInfo<>(list);
+        PageHelper.startPage(currentPage, pageSize);
+        list = skBbsTopicMapper.listAllTopicInSection(sectionId);
+        pageInfo = new PageInfo<>(list);
         return pageInfo;
     }
 
     @Override
-    public PageInfo<SkBbsTopic> likeSelectAll(Integer currentPage, Integer pageSize, String title,String key) {
+    public PageInfo<SkBbsTopic> likeSelectAll(Integer currentPage, Integer pageSize, String title, String key) {
         List<SkBbsTopic> list;
         PageInfo<SkBbsTopic> pageInfo;
-        PageHelper.startPage(currentPage,pageSize);
-        list=skBbsTopicMapper.likeSelectAll(title,key);
-        pageInfo=new PageInfo<>(list);
+        PageHelper.startPage(currentPage, pageSize);
+        list = skBbsTopicMapper.likeSelectAll(title, key);
+        pageInfo = new PageInfo<>(list);
         return pageInfo;
     }
 
@@ -168,9 +168,9 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
     public PageInfo<SkBbsTopic> selectAllDirty(Integer currentPage, Integer pageSize) {
         List<SkBbsTopic> list;
         PageInfo<SkBbsTopic> pageInfo;
-        PageHelper.startPage(currentPage,pageSize);
-        list=skBbsTopicMapper.selectAllDirty();
-        pageInfo=new PageInfo<>(list);
+        PageHelper.startPage(currentPage, pageSize);
+        list = skBbsTopicMapper.selectAllDirty();
+        pageInfo = new PageInfo<>(list);
         return pageInfo;
     }
 
@@ -185,12 +185,12 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
      * @return
      */
     @Override
-    public PageInfo<SkBbsTopic> likeSectionAll(Integer currentPage, Integer pageSize, String title, Integer sectionId,String key) {
+    public PageInfo<SkBbsTopic> likeSectionAll(Integer currentPage, Integer pageSize, String title, Integer sectionId, String key) {
         List<SkBbsTopic> list;
         PageInfo<SkBbsTopic> pageInfo;
-        PageHelper.startPage(currentPage,pageSize);
-        list=skBbsTopicMapper.likeSelectInSection(title,sectionId,key);
-        pageInfo=new PageInfo<>(list);
+        PageHelper.startPage(currentPage, pageSize);
+        list = skBbsTopicMapper.likeSelectInSection(title, sectionId, key);
+        pageInfo = new PageInfo<>(list);
         return pageInfo;
     }
 
@@ -198,17 +198,17 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
     public PageInfo<SkBbsTopic> listAllTopicByOwner(Integer currentPage, Integer pageSize, String userId) {
         List<SkBbsTopic> list;
         PageInfo<SkBbsTopic> pageInfo;
-        PageHelper.startPage(currentPage,pageSize);
-        list=skBbsTopicMapper.listAllTopicByOwner(userId);
-        pageInfo=new PageInfo<>(list);
+        PageHelper.startPage(currentPage, pageSize);
+        list = skBbsTopicMapper.listAllTopicByOwner(userId);
+        pageInfo = new PageInfo<>(list);
         return pageInfo;
     }
 
     @Override
     public boolean check(String id) {
-        if (id==null||"".equals(id)){
-            return  false;
-        }else {
+        if (id == null || "".equals(id)) {
+            return false;
+        } else {
             return skBbsTopicMapper.doCheck(Tools.getList(id));
         }
     }
@@ -221,54 +221,54 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
      */
     @Override
     public boolean offcial(String id) {
-        if (id==null||"".equals(id)){
-            return  false;
-        }else {
+        if (id == null || "".equals(id)) {
+            return false;
+        } else {
             return skBbsTopicMapper.doOffcial(Tools.getList(id));
         }
     }
 
     @Override
     public boolean top(String id) {
-        if (id==null||"".equals(id)){
-            return  false;
-        }else {
+        if (id == null || "".equals(id)) {
+            return false;
+        } else {
             return skBbsTopicMapper.doTop(Tools.getList(id));
         }
     }
 
     @Override
     public boolean essence(String id) {
-        if (id==null||"".equals(id)){
-            return  false;
-        }else {
+        if (id == null || "".equals(id)) {
+            return false;
+        } else {
             return skBbsTopicMapper.doEssence(Tools.getList(id));
         }
     }
 
     @Override
     public boolean unCheck(String id) {
-        if (id==null||"".equals(id)){
-            return  false;
-        }else {
+        if (id == null || "".equals(id)) {
+            return false;
+        } else {
             return skBbsTopicMapper.doUnCheck(Tools.getList(id));
         }
     }
 
     @Override
     public boolean unTop(String id) {
-        if (id==null||"".equals(id)){
-            return  false;
-        }else {
+        if (id == null || "".equals(id)) {
+            return false;
+        } else {
             return skBbsTopicMapper.doUnTop(Tools.getList(id));
         }
     }
 
     @Override
     public boolean unEssence(String id) {
-        if (id==null||"".equals(id)){
-            return  false;
-        }else {
+        if (id == null || "".equals(id)) {
+            return false;
+        } else {
             return skBbsTopicMapper.doUnEssence(Tools.getList(id));
         }
     }
@@ -289,30 +289,30 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
         //查询出该用户的所有贴子
         List<SkBbsTopic> list = skBbsTopicMapper.selectReplyUserId(replyUserId);
         LinkedList<Integer> topicId = new LinkedList<>();
-        list.stream().forEach(e->topicId.add(e.getId()));
+        list.stream().forEach(e -> topicId.add(e.getId()));
         //根据帖子id查出所有所有回复
         List<SkBbsReply> replies = skBbsReplyMapper.selectReplyByIds(topicId);
-        Map<Integer, List<Object>> totalResult=new LinkedHashMap<>();
-        list.stream().forEach(e->{
+        Map<Integer, List<Object>> totalResult = new LinkedHashMap<>();
+        list.stream().forEach(e -> {
             //tempList用于存放回复总量、最新回复
-            List<Object> tempList=new LinkedList<>();
+            List<Object> tempList = new LinkedList<>();
             //找到与帖子ID对应的所有回复
-            List<SkBbsReply> matchedReplys=replies.stream().filter(p->p.getTopicId().equals(e.getId())).collect(Collectors.toList());
+            List<SkBbsReply> matchedReplys = replies.stream().filter(p -> p.getTopicId().equals(e.getId())).collect(Collectors.toList());
             //运算出回复总量
-            Integer replysCount=matchedReplys.size();
+            Integer replysCount = matchedReplys.size();
             //运算出最新回复实体
             SkBbsReply lastedReply;
-            if(replysCount>0) {
-                lastedReply= matchedReplys.stream().sorted(Comparator.comparing(SkBbsReply::getReplyTime).reversed()).findFirst().get();
-            }else{
-                lastedReply=null;
+            if (replysCount > 0) {
+                lastedReply = matchedReplys.stream().sorted(Comparator.comparing(SkBbsReply::getReplyTime).reversed()).findFirst().get();
+            } else {
+                lastedReply = null;
             }
             //把回复总量、最新回复加入tempList
             tempList.add(replysCount);
             tempList.add(lastedReply);
 
             //把tempList放入结果集，key是topicId
-            totalResult.put(e.getId(),tempList);
+            totalResult.put(e.getId(), tempList);
             //totalResult.put(e.getId(),skBbsTopicMapper.selectReplyUserId(replyUserId));
         });
         return totalResult;
@@ -321,8 +321,8 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
 
     @Override
     public PageInfo<SkBbsTopic> selectReplyUserIds(Integer currentPage, Integer pageSize, String replyUserId) {
-        PageInfo<SkBbsTopic>  pageInfo = null;
-        PageHelper.startPage(currentPage,pageSize);
+        PageInfo<SkBbsTopic> pageInfo = null;
+        PageHelper.startPage(currentPage, pageSize);
         List<SkBbsTopic> list = skBbsTopicMapper.selectReplyUserIds(replyUserId);
         pageInfo = new PageInfo<>(list);
         return pageInfo;

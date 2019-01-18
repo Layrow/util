@@ -25,11 +25,11 @@ public class SkAdController {
 
     // 查询特定广告位下的所有广告 order排序 可以查询状态不同的广告位
     @GetMapping("/content")
-    public PageInfo<SkAdContent> selectByAdId(@RequestParam("adId")Integer adId, @RequestParam(defaultValue = "1") Integer status,
+    public PageInfo<SkAdContent> selectByAdId(@RequestParam("adId") Integer adId, @RequestParam(defaultValue = "1") Integer status,
                                               @RequestParam("currentPage") Integer currentPage, @RequestParam("pageSize") Integer pageSize) {
         PageInfo<SkAdContent> pageInfo = null;
         try {
-            pageInfo = skAdService.selectByAdId(adId,status,currentPage,pageSize);
+            pageInfo = skAdService.selectByAdId(adId, status, currentPage, pageSize);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -42,7 +42,7 @@ public class SkAdController {
                                            @RequestParam("pageSize") Integer pageSize) {
         PageInfo<SkAd> pageInfo = null;
         try {
-            pageInfo = skAdService.selectAllAdsense(status,currentPage,pageSize);
+            pageInfo = skAdService.selectAllAdsense(status, currentPage, pageSize);
         } catch (Exception e) {
             e.printStackTrace();
         }

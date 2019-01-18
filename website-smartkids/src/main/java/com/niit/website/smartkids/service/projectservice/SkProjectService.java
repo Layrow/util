@@ -2,7 +2,6 @@ package com.niit.website.smartkids.service.projectservice;
 
 import com.github.pagehelper.PageInfo;
 import com.niit.website.smartkids.pojo.project.SkProject;
-import com.sun.xml.internal.bind.v2.TODO;
 
 import java.util.List;
 
@@ -28,7 +27,7 @@ public interface SkProjectService {
     List selectProjectOperation(Integer user_id, Integer project_id);
 
     // update
-    void updateByPrimaryKey(SkProject record,Integer operationUserId,String operationUserName,String operate);
+    void updateByPrimaryKey(SkProject record, Integer operationUserId, String operationUserName, String operate);
 
     // 批量删除作品
     void deleteMoreProject(String id);

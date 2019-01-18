@@ -88,10 +88,10 @@ public class SkProjectCommentsController {
 
     // 查询所有作品留言
     @GetMapping("/more")
-    public PageInfo<SkProjectComments> selectAllProjectComments(@RequestParam(required = false,defaultValue = "") Integer projectId, Integer currentPage, Integer pageSize) {
+    public PageInfo<SkProjectComments> selectAllProjectComments(@RequestParam(required = false, defaultValue = "") Integer projectId, Integer currentPage, Integer pageSize) {
         PageInfo<SkProjectComments> pageInfo = null;
         try {
-            pageInfo = skProjectCommentsService.selectAllProjectComment(projectId,currentPage, pageSize);
+            pageInfo = skProjectCommentsService.selectAllProjectComment(projectId, currentPage, pageSize);
         } catch (Exception e) {
             e.printStackTrace();
         }

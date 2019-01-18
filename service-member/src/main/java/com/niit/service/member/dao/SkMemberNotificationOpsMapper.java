@@ -9,6 +9,7 @@ public interface SkMemberNotificationOpsMapper {
 
     /**
      * 删除通知
+     *
      * @param id
      * @return
      */
@@ -20,6 +21,7 @@ public interface SkMemberNotificationOpsMapper {
 
     /**
      * 显示用户的所有通知
+     *
      * @param userId
      * @return
      */
@@ -27,6 +29,7 @@ public interface SkMemberNotificationOpsMapper {
 
     /**
      * 添加一条通知
+     *
      * @param record
      * @return
      */

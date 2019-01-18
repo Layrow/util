@@ -19,6 +19,7 @@ public interface SkBbsReplyMapper {
 
     /**
      * 删除栏目下帖子的所有的回帖
+     *
      * @param sectionId
      * @return
      */
@@ -44,32 +45,35 @@ public interface SkBbsReplyMapper {
 
     /**
      * 根据传递的Ids查询所有的回复贴
+     *
      * @param ids
      * @return
      */
-    List<SkBbsReply>selectReplyByIds(List<Integer> ids);
+    List<SkBbsReply> selectReplyByIds(List<Integer> ids);
 
     //最新回复时间
-    Map<String,Object> selectDate(Integer topicId);
+    Map<String, Object> selectDate(Integer topicId);
 
     //批量删除回帖
-    void  deleteAd(@Param("list") List<String> list);
+    void deleteAd(@Param("list") List<String> list);
 
     //查询所有回帖
     List<SkBbsReply> selectAll();
+
     // 批量审核
-    void  updateAd(@Param("list") List<String> list);
+    void updateAd(@Param("list") List<String> list);
 
     //查询审核
-    List<SkBbsReply>  selectAllStatus();
+    List<SkBbsReply> selectAllStatus();
 
     //查询未审核
-    List<SkBbsReply>  selectAllNoStatus();
+    List<SkBbsReply> selectAllNoStatus();
+
     //查询用户的所有回帖
-    List<SkBbsReply>  selectReply(@Param("replyUserid") String replyUserId);
+    List<SkBbsReply> selectReply(@Param("replyUserid") String replyUserId);
 
-    List<SkBbsReply>  selectReplyUserId(@Param("replyUserid") String replyUserId);
+    List<SkBbsReply> selectReplyUserId(@Param("replyUserid") String replyUserId);
 
-    String selectAllTopicById (Integer id);
+    String selectAllTopicById(Integer id);
 
 }

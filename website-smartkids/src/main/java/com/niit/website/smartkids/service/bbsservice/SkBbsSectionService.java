@@ -16,8 +16,10 @@ import java.util.List;
 public interface SkBbsSectionService {
 
     String getName(Integer sectionId);
+
     /**
      * 增加 模块功能
+     *
      * @param section
      * @return
      */
@@ -25,6 +27,7 @@ public interface SkBbsSectionService {
 
     /**
      * 删除栏目,根据主键
+     *
      * @param id
      * @return
      */
@@ -32,6 +35,7 @@ public interface SkBbsSectionService {
 
     /**
      * 批量跟新 栏目排序值
+     *
      * @param list
      * @return
      */
@@ -39,18 +43,22 @@ public interface SkBbsSectionService {
 
     /**
      * 查询所有的栏目,按照排序值升序排列
+     *
      * @return 栏目对象排序后的
      */
     List<SkBbsSection> selectAllSection();
 
     /**
      * 修改 栏目信息
+     *
      * @param section
      * @return
      */
     boolean editSection(SkBbsSection section);
+
     /**
      * 分页模糊查询
+     *
      * @param currentPage
      * @param pageSize
      * @param name

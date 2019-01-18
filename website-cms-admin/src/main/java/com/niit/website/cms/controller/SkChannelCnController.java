@@ -28,11 +28,11 @@ public class SkChannelCnController {
      * @Return int
      **/
     @PostMapping("/channel/{locale}")
-    public Integer insertSkChannelCn(@RequestBody SkChannelCn record,@PathVariable("locale") String locale) {
+    public Integer insertSkChannelCn(@RequestBody SkChannelCn record, @PathVariable("locale") String locale) {
         // 操作成功返回1，失败返回0
         Integer insertStatus = 0;
         try {
-            insertStatus = skChannelCnService.insertSelective(record,locale);
+            insertStatus = skChannelCnService.insertSelective(record, locale);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -63,10 +63,10 @@ public class SkChannelCnController {
      * @Return java.lang.String
      **/
     @PutMapping("/channel/{locale}")
-    public Integer updateChannelCn(@RequestBody SkChannelCn record,@PathVariable("locale") String locale) {
+    public Integer updateChannelCn(@RequestBody SkChannelCn record, @PathVariable("locale") String locale) {
         Integer updateStatus = 0;
         try {
-            updateStatus = skChannelCnService.updateByPrimaryKeySelective(record,locale);
+            updateStatus = skChannelCnService.updateByPrimaryKeySelective(record, locale);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -116,11 +116,11 @@ public class SkChannelCnController {
      * @Return java.lang.Integer
      **/
     @DeleteMapping("/channel/{locale}/{id}")
-    public Integer deleteMoreChannelCn(@PathVariable("id") String id,@PathVariable("locale") String locale) {
+    public Integer deleteMoreChannelCn(@PathVariable("id") String id, @PathVariable("locale") String locale) {
         Integer deleteBatchStatus = 0;
         // 获取多个id  1,2,3(String类型)
         try {
-            deleteBatchStatus = skChannelCnService.deleteMoreChannel(id,locale);
+            deleteBatchStatus = skChannelCnService.deleteMoreChannel(id, locale);
         } catch (Exception e) {
             e.printStackTrace();
         }

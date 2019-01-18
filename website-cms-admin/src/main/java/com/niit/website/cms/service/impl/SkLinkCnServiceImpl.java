@@ -20,27 +20,27 @@ public class SkLinkCnServiceImpl implements SkLinkCnService {
     RestTemplate restTemplate;
 
     @Override
-    public int insert(SkLinkCn record,String locale) {
-        restTemplate.postForObject("http://" + SERVICE_NAME + "/link?locale="+locale, record, String.class);
+    public int insert(SkLinkCn record, String locale) {
+        restTemplate.postForObject("http://" + SERVICE_NAME + "/link?locale=" + locale, record, String.class);
         return 999;
     }
 
 
     @Override
-    public int updateByPrimaryKey(SkLinkCn record,String locale) {
-        restTemplate.put("http://" + SERVICE_NAME + "/link?locale="+locale, record);
+    public int updateByPrimaryKey(SkLinkCn record, String locale) {
+        restTemplate.put("http://" + SERVICE_NAME + "/link?locale=" + locale, record);
         return 999;
     }
 
     @Override
     public int updateList(List<SkLinkCn> list, String locale) {
-        restTemplate.put("http://" + SERVICE_NAME + "/updateList?locale="+locale, list);
+        restTemplate.put("http://" + SERVICE_NAME + "/updateList?locale=" + locale, list);
         return 999;
     }
 
     @Override
-    public PageInfo<SkLinkCn> selectByPage(int currentPage, int pageSize,String locale) {
-        return restTemplate.getForObject("http://" + SERVICE_NAME + "/link?currentPage=" + currentPage + "&pageSize=" + pageSize+"&locale="+locale, PageInfo.class);
+    public PageInfo<SkLinkCn> selectByPage(int currentPage, int pageSize, String locale) {
+        return restTemplate.getForObject("http://" + SERVICE_NAME + "/link?currentPage=" + currentPage + "&pageSize=" + pageSize + "&locale=" + locale, PageInfo.class);
     }
 
     @Override
@@ -48,7 +48,7 @@ public class SkLinkCnServiceImpl implements SkLinkCnService {
         try {
             restTemplate.put("http://" + SERVICE_NAME + "/linklist?local=" + locale, record);
             return 999;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return -1;
         }
@@ -56,9 +56,9 @@ public class SkLinkCnServiceImpl implements SkLinkCnService {
     }
 
     @Override
-    public boolean deleteBatchLinkByPromaryKey(String ids,String locale) {
+    public boolean deleteBatchLinkByPromaryKey(String ids, String locale) {
         try {
-            restTemplate.delete("http://" + SERVICE_NAME + "/delLink?linkID=" + ids+"&locale="+locale, ids);
+            restTemplate.delete("http://" + SERVICE_NAME + "/delLink?linkID=" + ids + "&locale=" + locale, ids);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -67,9 +67,9 @@ public class SkLinkCnServiceImpl implements SkLinkCnService {
     }
 
     @Override
-    public boolean check(String ids,String locale) {
+    public boolean check(String ids, String locale) {
         try {
-            restTemplate.put("http://" + SERVICE_NAME + "/checkLink?linkID=" + ids+"&locale="+locale, ids,locale);
+            restTemplate.put("http://" + SERVICE_NAME + "/checkLink?linkID=" + ids + "&locale=" + locale, ids, locale);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -88,11 +88,11 @@ public class SkLinkCnServiceImpl implements SkLinkCnService {
      */
     @Override
     public PageInfo<SkLinkCn> likeSelectAll(int currentPage, int pageSize, String title, String locale) {
-        PageInfo<SkLinkCn> list=null;
+        PageInfo<SkLinkCn> list = null;
         try {
-            list=restTemplate.postForObject("http://" + SERVICE_NAME + "/link/likeSelectAll?currentPage="+currentPage+"&pageSize="+pageSize+"&title="+title+"&locale="+locale,null,PageInfo.class);
+            list = restTemplate.postForObject("http://" + SERVICE_NAME + "/link/likeSelectAll?currentPage=" + currentPage + "&pageSize=" + pageSize + "&title=" + title + "&locale=" + locale, null, PageInfo.class);
             return list;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return list;
@@ -108,11 +108,11 @@ public class SkLinkCnServiceImpl implements SkLinkCnService {
      */
     @Override
     public PageInfo<SkLinkCn> listAllLink(int currentPage, int pageSize, String locale) {
-        PageInfo<SkLinkCn> list=null;
+        PageInfo<SkLinkCn> list = null;
         try {
-            list=restTemplate.postForObject("http://" + SERVICE_NAME + "/link/listAllLink?currentPage="+currentPage+"&pageSize="+pageSize+"&locale="+locale,null,PageInfo.class);
+            list = restTemplate.postForObject("http://" + SERVICE_NAME + "/link/listAllLink?currentPage=" + currentPage + "&pageSize=" + pageSize + "&locale=" + locale, null, PageInfo.class);
             return list;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return list;

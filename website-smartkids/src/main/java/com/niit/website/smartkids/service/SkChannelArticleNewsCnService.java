@@ -14,7 +14,7 @@ public interface SkChannelArticleNewsCnService {
     String selectNewsByCategoryId(String locale, Integer categoryId, Integer currentPage, Integer pageSize);
 
     // 查询channel为1的，parent_id为0的栏目类别
-    List<SkArticleCategoryCn> selectCategory(String locale,Integer channelId);
+    List<SkArticleCategoryCn> selectCategory(String locale, Integer channelId);
 
     // 查询单条新闻
     SkChannelArticleNewsCn selectByPrimaryKeyInfo(Integer id, String locale);

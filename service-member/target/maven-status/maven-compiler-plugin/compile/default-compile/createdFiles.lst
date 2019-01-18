@@ -1,0 +1,16 @@
+com\niit\service\member\service\impl\SkMemberSYSNotificationImpl.class
+com\niit\service\member\service\ISkMemberSysNotificationService.class
+com\niit\service\member\service\impl\SkMemberIntegralServiceImpl.class
+com\niit\service\member\service\impl\SkMemberNotificationImpl.class
+com\niit\service\member\dao\SkMemberNotificationSystemMapper.class
+com\niit\service\member\ServiceMemberApplication.class
+com\niit\service\member\dao\SkMemberIntegralMapper.class
+com\niit\service\member\service\ISkMemberIntegralService.class
+com\niit\service\member\pojo\SkMemberIntegral.class
+com\niit\service\member\dao\SkMemberNotificationOpsMapper.class
+com\niit\service\member\service\ISkMemberNotificationService.class
+com\niit\service\member\controller\SkMemberNotificationController.class
+com\niit\service\member\pojo\SkMemberNotificationOps.class
+com\niit\service\member\controller\SkMemberIntegralController.class
+com\niit\service\member\controller\SkMemberSysNotificationController.class
+com\niit\service\member\pojo\SkMemberNotificationSystem.class

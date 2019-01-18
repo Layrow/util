@@ -8,12 +8,14 @@ import java.util.List;
 public interface SkMemberNotificationSystemMapper {
     /**
      * 显示所有的 系统通知
+     *
      * @return
      */
-     List<SkMemberNotificationSystem> selectAllSys();
+    List<SkMemberNotificationSystem> selectAllSys();
 
     /**
      * 删除一条系统通知
+     *
      * @param id
      * @return
      */
@@ -23,6 +25,7 @@ public interface SkMemberNotificationSystemMapper {
 
     /**
      * 添加一条系统通知
+     *
      * @param record
      * @return
      */
@@ -32,6 +35,7 @@ public interface SkMemberNotificationSystemMapper {
 
     /**
      * 修改体统通知
+     *
      * @param record
      * @return
      */

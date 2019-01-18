@@ -16,8 +16,10 @@ public interface SkLmsHomeworkAttachmentCnMapper {
     int updateByPrimaryKeySelective(SkLmsHomeworkAttachmentCn record);
 
     int updateByPrimaryKey(SkLmsHomeworkAttachmentCn record);
+
     // 根据homework_id查询课件
     SkLmsHomeworkAttachmentCn selectByHomeworkId(Integer homeworkId);
+
     // 根据homework_id删除附件
     int deleteByHomeworkId(Integer homeworkId);
 }

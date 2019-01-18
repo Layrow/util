@@ -21,6 +21,7 @@ public interface SkLmsStudentsCnMapper {
 
     /**
      * 自己添加的方法,根据学生学号来查询学生,用来排除学生重复冗余
+     *
      * @param id
      * @return
      */
@@ -28,29 +29,34 @@ public interface SkLmsStudentsCnMapper {
 
     /**
      * 查询当前班级下的所有学生
+     *
      * @param batchID 当前班级编号.
      * @return 当前的班级
      */
-     List<SkLmsStudentsCn> selectAllStudentsByBatch(Integer batchID);
+    List<SkLmsStudentsCn> selectAllStudentsByBatch(Integer batchID);
+
     /**
      * 查询当前班级下的所有学生数量
+     *
      * @param batchID 当前班级编号.
      * @return 当前的班级
      */
-     int selectAllStudentsByBatchCount(Integer batchID);
+    int selectAllStudentsByBatchCount(Integer batchID);
 
     /**
      * 分页查询当前班级下的所有学生
+     *
      * @param batchID
      * @return
      */
-     List<SkLmsStudentsCn> splitSelectAllStudents(Integer batchID);
+    List<SkLmsStudentsCn> splitSelectAllStudents(Integer batchID);
 
     /**
      * 批量添加学生信息
+     *
      * @param studentsCnList
      * @return
      */
-    int insertExcel(List<SkLmsStudentsCn>studentsCnList );
+    int insertExcel(List<SkLmsStudentsCn> studentsCnList);
 
 }

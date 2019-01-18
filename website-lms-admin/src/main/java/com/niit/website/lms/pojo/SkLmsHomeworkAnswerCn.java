@@ -7,7 +7,7 @@ import java.util.Date;
 public class SkLmsHomeworkAnswerCn {
     private Integer id;
 
-    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date homeworkAnswerCreateTime;
 
     private Integer studentId;

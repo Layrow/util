@@ -1,0 +1,16 @@
+com\niit\service\project\pojo\SkProject.class
+com\niit\service\project\dao\SkProjectCategoryMapper.class
+com\niit\service\project\dao\SkProjectMapper.class
+com\niit\service\project\controller\SkProjectCategoryController.class
+com\niit\service\project\ServiceProjectApplication.class
+com\niit\service\project\pojo\SkProjectComments.class
+com\niit\service\project\service\SkProjectCommentsService.class
+com\niit\service\project\service\SkProjectService.class
+com\niit\service\project\service\impl\SkProjectCommentsServiceImpl.class
+com\niit\service\project\controller\SkProjectCommentsController.class
+com\niit\service\project\service\impl\SkProjectServiceImpl.class
+com\niit\service\project\service\SkProjectCategoryService.class
+com\niit\service\project\pojo\SkProjectCategory.class
+com\niit\service\project\service\impl\SkProjectCategoryServiceImpl.class
+com\niit\service\project\controller\SkProjectController.class
+com\niit\service\project\dao\SkProjectCommentsMapper.class

@@ -22,6 +22,7 @@ public interface SkLmsBatchCnService {
     int updateByPrimaryKeySelective(SkLmsBatchCn record);
 
     int updateByPrimaryKey(SkLmsBatchCn record);
+
     // 查询特定教师下的班级
     List<SkLmsBatchCn> selectByFacultyId(Integer facultyId);
 }

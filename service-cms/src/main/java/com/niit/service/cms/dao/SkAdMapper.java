@@ -4,6 +4,7 @@ package com.niit.service.cms.dao;
 import com.niit.service.cms.pojo.SkAd;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 @Mapper

@@ -77,10 +77,10 @@ public class SkProjectController {
 
     // select more
     @GetMapping("/more")
-    public PageInfo<SkProject> selectMoreProject(@RequestParam(value = "status",defaultValue = "",required = false) Integer status, @RequestParam Integer currentPage, @RequestParam Integer pageSize) {
+    public PageInfo<SkProject> selectMoreProject(@RequestParam(value = "status", defaultValue = "", required = false) Integer status, @RequestParam Integer currentPage, @RequestParam Integer pageSize) {
         PageInfo<SkProject> pageInfo = null;
         try {
-            pageInfo = skProjectService.selectAllProject(status,currentPage,pageSize);
+            pageInfo = skProjectService.selectAllProject(status, currentPage, pageSize);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -93,7 +93,7 @@ public class SkProjectController {
         String id = request.getParameter("id");
         String sign = request.getParameter("sign");
         try {
-            skProjectService.updateMoreProject(sign,id);
+            skProjectService.updateMoreProject(sign, id);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -101,11 +101,11 @@ public class SkProjectController {
 
     // 根据title模糊查询作品
     @GetMapping("/title")
-    public PageInfo<SkProject> likeSelectProjectByTitle(@RequestParam(defaultValue = "") String status,@RequestParam String title,@RequestParam Integer currentPage,
+    public PageInfo<SkProject> likeSelectProjectByTitle(@RequestParam(defaultValue = "") String status, @RequestParam String title, @RequestParam Integer currentPage,
                                                         @RequestParam Integer pageSize) {
         PageInfo<SkProject> pageInfo = null;
         try {
-            pageInfo = skProjectService.likeSelectProjectByTitle(status,title,currentPage,pageSize);
+            pageInfo = skProjectService.likeSelectProjectByTitle(status, title, currentPage, pageSize);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -114,15 +114,15 @@ public class SkProjectController {
 
     // 按照置顶/推荐/点赞数 查询
     @GetMapping("/type")
-    public PageInfo<SkProject> likeSelectProjectAll(@RequestParam(defaultValue = "",required = false) String title,
-                                                    @RequestParam(defaultValue = "",required = false) Integer status,
+    public PageInfo<SkProject> likeSelectProjectAll(@RequestParam(defaultValue = "", required = false) String title,
+                                                    @RequestParam(defaultValue = "", required = false) Integer status,
                                                     @RequestParam Integer categoryId,
-                                                    @RequestParam(defaultValue ="")String orderBy,
+                                                    @RequestParam(defaultValue = "") String orderBy,
                                                     @RequestParam Integer currentPage,
                                                     @RequestParam Integer pageSize) {
         PageInfo<SkProject> pageInfo = null;
         try {
-            pageInfo = skProjectService.likeSelectProjectAll(title,status,categoryId,orderBy, currentPage, pageSize);
+            pageInfo = skProjectService.likeSelectProjectAll(title, status, categoryId, orderBy, currentPage, pageSize);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -131,7 +131,7 @@ public class SkProjectController {
 
     // 查询用户作品
     @GetMapping("/user")
-    public PageInfo<SkProject> selectProject(Integer userId,Integer currentPage,Integer pageSize) {
+    public PageInfo<SkProject> selectProject(Integer userId, Integer currentPage, Integer pageSize) {
         return skProjectService.selectProjectByUserId(userId, currentPage, pageSize);
     }
 }

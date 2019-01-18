@@ -19,7 +19,7 @@ public class BadWordUtil {
      */
     public static String filePath = "H:\\GeePlayerDownload\\dictionary.txt";
     public static Set<String> words;
-    public static Map<String,String> wordMap;
+    public static Map<String, String> wordMap;
     /**
      * 最小匹配规则
      */
@@ -28,73 +28,76 @@ public class BadWordUtil {
      * 最大匹配规则
      */
     public static int maxMatchType = 2;
-    static{
+
+    static {
         BadWordUtil.words = readTxtByLine(filePath);
         addBadWordToHashMap(BadWordUtil.words);
     }
-    public static Set<String> readTxtByLine(String path){
+
+    public static Set<String> readTxtByLine(String path) {
         Set<String> keyWordSet = new HashSet<>();
-        File file=new File(path);
+        File file = new File(path);
         //文件流是否存在
-        if(!file.exists()){
+        if (!file.exists()) {
             return keyWordSet;
         }
-        BufferedReader reader=null;
+        BufferedReader reader = null;
         String temp;
         //int line=1;
-        try{
+        try {
             //reader=new BufferedReader(new FileReader(file));这样在web运行的时候，读取会乱码
-            reader=new BufferedReader(new InputStreamReader(new FileInputStream(file),"UTF-8"));
-            while((temp=reader.readLine())!=null){
+            reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
+            while ((temp = reader.readLine()) != null) {
                 keyWordSet.add(temp);
             }
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        } finally{
-            if(reader!=null){
-                try{
+        } finally {
+            if (reader != null) {
+                try {
                     reader.close();
-                }catch(Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }
         return keyWordSet;
     }
+
     /**
      * 检查文字中是否包含敏感字符，检查规则如下：<br>
+     *
      * @param txt
      * @param beginIndex
      * @param matchType
      * @return，如果存在，则返回敏感词字符的长度，不存在返回0
      * @version 1.0
      */
-    @SuppressWarnings({ "rawtypes"})
-    public static int checkBadWord(String txt,int beginIndex,int matchType){
+    @SuppressWarnings({"rawtypes"})
+    public static int checkBadWord(String txt, int beginIndex, int matchType) {
         //敏感词结束标识位：用于敏感词只有1位的情况
-        boolean  flag = false;
+        boolean flag = false;
         //匹配标识数默认为0
         int matchFlag = 0;
         char word = 0;
         Map nowMap = wordMap;
-        for(int i = beginIndex; i < txt.length() ; i++){
+        for (int i = beginIndex; i < txt.length(); i++) {
             word = txt.charAt(i);
             //获取指定key
             nowMap = (Map) nowMap.get(word);
             //存在，则判断是否为最后一个
-            if(nowMap != null){
+            if (nowMap != null) {
                 matchFlag++;     //找到相应key，匹配标识+1
                 //如果为最后一个匹配规则,结束循环，返回匹配标识数
-                if("1".equals(nowMap.get("isEnd"))){
+                if ("1".equals(nowMap.get("isEnd"))) {
                     //结束标志位为true
                     flag = true;
                     //最小规则，直接返回,最大规则还需继续查找
-                    if(minMatchTYpe == matchType){
+                    if (minMatchTYpe == matchType) {
                         break;
                     }
                 }
-            }
-            else{     //不存在，直接返回
+            } else {     //不存在，直接返回
                 break;
             }
         }
@@ -103,7 +106,7 @@ public class BadWordUtil {
          * if(matchFlag < 2 && !flag){
             matchFlag = 0;
         }*/
-        if(!flag){
+        if (!flag) {
             matchFlag = 0;
         }
         return matchFlag;
@@ -111,18 +114,19 @@ public class BadWordUtil {
 
     /**
      * 判断文字是否包含敏感字符
-     * @param txt  文字
-     * @param matchType  匹配规则 1：最小匹配规则，2：最大匹配规则
+     *
+     * @param txt       文字
+     * @param matchType 匹配规则 1：最小匹配规则，2：最大匹配规则
      * @return 若包含返回true，否则返回false
      * @version 1.0
      */
-    public static boolean isContaintBadWord(String txt,int matchType){
+    public static boolean isContaintBadWord(String txt, int matchType) {
         boolean flag = false;
-        for(int i = 0 ; i < txt.length() ; i++){
+        for (int i = 0; i < txt.length(); i++) {
             //判断是否包含敏感字符
             int matchFlag = checkBadWord(txt, i, matchType);
             //大于0存在，返回true
-            if(matchFlag > 0){
+            if (matchFlag > 0) {
                 flag = true;
             }
         }
@@ -131,12 +135,13 @@ public class BadWordUtil {
 
     /**
      * 替换敏感字字符
+     *
      * @param txt
      * @param matchType
      * @param replaceChar 替换字符，默认*
      * @version 1.0
      */
-    public static String replaceBadWord(String txt,int matchType,String replaceChar){
+    public static String replaceBadWord(String txt, int matchType, String replaceChar) {
         String resultTxt = txt;
         //获取所有的敏感词
         Set<String> set = getBadWord(txt, matchType);
@@ -151,22 +156,24 @@ public class BadWordUtil {
 
         return resultTxt;
     }
+
     /**
      * 获取文字中的敏感词
-     * @param txt 文字
+     *
+     * @param txt       文字
      * @param matchType 匹配规则 1：最小匹配规则，2：最大匹配规则
      * @return
      * @version 1.0
      */
-    public static Set<String> getBadWord(String txt , int matchType){
+    public static Set<String> getBadWord(String txt, int matchType) {
         Set<String> sensitiveWordList = new HashSet<String>();
 
-        for(int i = 0 ; i < txt.length() ; i++){
+        for (int i = 0; i < txt.length(); i++) {
             //判断是否包含敏感字符
             int length = checkBadWord(txt, i, matchType);
             //存在,加入list中
-            if(length > 0){
-                sensitiveWordList.add(txt.substring(i, i+length));
+            if (length > 0) {
+                sensitiveWordList.add(txt.substring(i, i + length));
                 //减1的原因，是因为for会自增
                 i = i + length - 1;
             }
@@ -177,14 +184,15 @@ public class BadWordUtil {
 
     /**
      * 获取替换字符串
+     *
      * @param replaceChar
      * @param length
      * @return
      * @version 1.0
      */
-    private static String getReplaceChars(String replaceChar,int length){
+    private static String getReplaceChars(String replaceChar, int length) {
         String resultReplace = replaceChar;
-        for(int i = 1 ; i < length ; i++){
+        for (int i = 1; i < length; i++) {
             resultReplace += replaceChar;
         }
 
@@ -193,11 +201,12 @@ public class BadWordUtil {
 
     /**
      * TODO 将我们的敏感词库构建成了一个类似与一颗一颗的树，这样我们判断一个词是否为敏感词时就大大减少了检索的匹配范围。
+     *
      * @param keyWordSet 敏感词库
      * @author
      * @date
      */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({"unchecked", "rawtypes"})
     private static void addBadWordToHashMap(Set<String> keyWordSet) {
         //初始化敏感词容器，减少扩容操作
         wordMap = new HashMap(keyWordSet.size());
@@ -206,21 +215,20 @@ public class BadWordUtil {
         Map<String, String> newWorMap = null;
         //迭代keyWordSet
         Iterator<String> iterator = keyWordSet.iterator();
-        while(iterator.hasNext()){
+        while (iterator.hasNext()) {
             //关键字
             key = iterator.next();
             nowMap = wordMap;
-            for(int i = 0 ; i < key.length() ; i++){
+            for (int i = 0; i < key.length(); i++) {
                 //转换成char型
                 char keyChar = key.charAt(i);
                 //获取
                 Object wordMap = nowMap.get(keyChar);
 
                 //如果存在该key，直接赋值
-                if(wordMap != null){
+                if (wordMap != null) {
                     nowMap = (Map) wordMap;
-                }
-                else{     //不存在则，则构建一个map，同时将isEnd设置为0，因为他不是最后一个
+                } else {     //不存在则，则构建一个map，同时将isEnd设置为0，因为他不是最后一个
                     newWorMap = new HashMap<>(keyWordSet.size());
                     //不是最后一个
                     newWorMap.put("isEnd", "0");
@@ -228,7 +236,7 @@ public class BadWordUtil {
                     nowMap = newWorMap;
                 }
 
-                if(i == key.length() - 1){
+                if (i == key.length() - 1) {
                     //最后一个
                     nowMap.put("isEnd", "1");
                 }

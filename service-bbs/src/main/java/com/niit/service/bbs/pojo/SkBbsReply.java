@@ -9,7 +9,7 @@ public class SkBbsReply {
 
     private String replyUserid;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm",timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+8")
     private Date replyTime;
 
     private Integer replyOrder;
@@ -18,8 +18,8 @@ public class SkBbsReply {
 
     private String content;
 
-    private  Integer  replyStatus;
-    private  Integer hasbad;
+    private Integer replyStatus;
+    private Integer hasbad;
 
     public Integer getId() {
         return id;

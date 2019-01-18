@@ -12,6 +12,7 @@ import com.niit.service.member.pojo.SkMemberIntegral;
 public interface ISkMemberIntegralService {
     /**
      * 取得用户的所有积分
+     *
      * @param id
      * @return
      */
@@ -19,6 +20,7 @@ public interface ISkMemberIntegralService {
 
     /**
      * 添加用户的积分变动数据
+     *
      * @param record
      * @return
      */

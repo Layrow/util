@@ -34,12 +34,12 @@ public class SkLmsStudentsCnServiceImpl implements SkLmsStudentsCnService {
      * @return
      */
     @Override
-    public boolean export(Integer batchId){
+    public boolean export(Integer batchId) {
         try {
             restTemplate.postForObject("http://"
-                    +SERVICE_NAME+"/batch/students/export?batchId="+batchId,null,String.class);
+                    + SERVICE_NAME + "/batch/students/export?batchId=" + batchId, null, String.class);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
@@ -49,9 +49,9 @@ public class SkLmsStudentsCnServiceImpl implements SkLmsStudentsCnService {
     public boolean imExcel(List<SkLmsStudentsCn> list, Integer batchId, String className) {
         try {
             restTemplate.postForObject("http://" + SERVICE_NAME +
-                    "/batch/students/importExcel?batchId="+batchId+"&className="+className,list,String.class);
-            return  true;
-        }catch (Exception e){
+                    "/batch/students/importExcel?batchId=" + batchId + "&className=" + className, list, String.class);
+            return true;
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
@@ -60,58 +60,63 @@ public class SkLmsStudentsCnServiceImpl implements SkLmsStudentsCnService {
 
     /**
      * 实现单个添加学生的功能
+     *
      * @param student 添加的学生信息
      * @return 添加成功返回 true 失败返回 false
      */
     @Override
     public boolean addOne(SkLmsStudentsCn student, Integer batchId, String className) {
-              String result=  restTemplate.postForObject("http://" + SERVICE_NAME +
-                      "/batch/students/addOne?batchId="+batchId+"&className="+className,student,String.class);
+        String result = restTemplate.postForObject("http://" + SERVICE_NAME +
+                "/batch/students/addOne?batchId=" + batchId + "&className=" + className, student, String.class);
 
-              if (Tools.isEmpty(result)){
-                  return  false;
-              }else {
-                  return  true;
-              }
+        if (Tools.isEmpty(result)) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     /**
      * 实现学生密码的重置,使用自动生成的密码
+     *
      * @param id 需要修改的学生ID
      * @return
      */
     @Override
     public boolean reSetPassword(int id) {
         try {
-            restTemplate.put("http://" + SERVICE_NAME +"/batch/students/editPW?id="+id,id);
-            return  true;
-        }catch (Exception e){
-            return  false;
+            restTemplate.put("http://" + SERVICE_NAME + "/batch/students/editPW?id=" + id, id);
+            return true;
+        } catch (Exception e) {
+            return false;
         }
     }
+
     /**
      * 数据修改前的一个回填显示
+     *
      * @param id 需要修改的学生id
      * @return
      */
     @Override
     public SkLmsStudentsCn editStudentInfoPre(int id) {
-            return  restTemplate.getForObject("http://" + SERVICE_NAME +"/batch/students/editPre?id="+id,SkLmsStudentsCn.class);
+        return restTemplate.getForObject("http://" + SERVICE_NAME + "/batch/students/editPre?id=" + id, SkLmsStudentsCn.class);
 
     }
 
     /**
      * 实现学生信息的修改功能
+     *
      * @param student
      * @return 返回学生修改后的信息
      */
     @Override
     public boolean editStudentInfo(SkLmsStudentsCn student) {
         try {
-            restTemplate.put("http://" + SERVICE_NAME +"/batch/students/edit",student);
+            restTemplate.put("http://" + SERVICE_NAME + "/batch/students/edit", student);
             return true;
-        }catch (Exception e){
-            return  false;
+        } catch (Exception e) {
+            return false;
         }
     }
 
@@ -124,10 +129,10 @@ public class SkLmsStudentsCnServiceImpl implements SkLmsStudentsCnService {
     @Override
     public boolean deleteStudentByID(Integer id) {
         try {
-            restTemplate.delete("http://" + SERVICE_NAME +"/batch/students/delete?id="+id,id);
+            restTemplate.delete("http://" + SERVICE_NAME + "/batch/students/delete?id=" + id, id);
             return true;
-        }catch (Exception e){
-            return  false;
+        } catch (Exception e) {
+            return false;
         }
     }
 
@@ -139,8 +144,8 @@ public class SkLmsStudentsCnServiceImpl implements SkLmsStudentsCnService {
      */
     @Override
     public String showStudents(Integer batchID) {
-        return    restTemplate.getForObject("http://" + SERVICE_NAME
-                +"/batch/students/showAllStudents?batchID="+batchID,String.class);
+        return restTemplate.getForObject("http://" + SERVICE_NAME
+                + "/batch/students/showAllStudents?batchID=" + batchID, String.class);
     }
 
     /**
@@ -153,7 +158,7 @@ public class SkLmsStudentsCnServiceImpl implements SkLmsStudentsCnService {
      */
     @Override
     public PageInfo<SkLmsStudentsCn> splitAllStudents(Integer batchId, Integer currentPage, Integer pageSize) {
-        return restTemplate.getForObject("http://" + SERVICE_NAME + "/batch/students/splitShowAll?batchId="+batchId+"&currentPage="+currentPage+"&pageSize="+pageSize, PageInfo.class);
+        return restTemplate.getForObject("http://" + SERVICE_NAME + "/batch/students/splitShowAll?batchId=" + batchId + "&currentPage=" + currentPage + "&pageSize=" + pageSize, PageInfo.class);
     }
 
 

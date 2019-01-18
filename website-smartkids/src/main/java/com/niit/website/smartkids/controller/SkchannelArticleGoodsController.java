@@ -40,8 +40,8 @@ public class SkchannelArticleGoodsController {
 
     @GetMapping(value = "/purchased_goodids")
     public String purchasedGoodIds(Integer userId) {
-            String json = skchannelArticleGoodsService.selectGoodIdsByUserId(userId);
-            return json;
+        String json = skchannelArticleGoodsService.selectGoodIdsByUserId(userId);
+        return json;
     }
 
 

@@ -19,7 +19,7 @@ public class SkLmsHomeworkAnswerCnController {
     private SkLmsHomeworkAnswerCnService skLmsHomeworkAnswerCnService;
 
     @GetMapping("/homeworkanswer/{studentId}/{homeworkId}")
-    public String selectAnswerInfoByHomeIdAndStuId(@PathVariable Integer studentId,@PathVariable Integer homeworkId) {
+    public String selectAnswerInfoByHomeIdAndStuId(@PathVariable Integer studentId, @PathVariable Integer homeworkId) {
         String info = null;
         try {
             info = skLmsHomeworkAnswerCnService.selectAnswerInfoByHomeIdAndStuId(studentId, homeworkId);
@@ -35,7 +35,7 @@ public class SkLmsHomeworkAnswerCnController {
     }
 
     @GetMapping("/analyse")
-    public String selectStudentHomeworkInfo(@RequestParam("batchId")  Integer batchId,@RequestParam("studentId") Integer studentId) {
+    public String selectStudentHomeworkInfo(@RequestParam("batchId") Integer batchId, @RequestParam("studentId") Integer studentId) {
         return skLmsHomeworkAnswerCnService.selectStudentHomeworkInfo(batchId, studentId);
     }
 

@@ -31,10 +31,10 @@ public class SkChannelArticleGoodsCnController {
 
 
     @GetMapping(value = "/main_category_fuzz_search")
-    public String fuzzSearchAndMainCategory(String keyword,Integer channelId,String locale) {
-        Map<String,Object> result=new LinkedHashMap<>();
+    public String fuzzSearchAndMainCategory(String keyword, Integer channelId, String locale) {
+        Map<String, Object> result = new LinkedHashMap<>();
         try {
-            result=skChannelArticleGoodsCnService.easyLikeSelectAll(locale,keyword,channelId);
+            result = skChannelArticleGoodsCnService.easyLikeSelectAll(locale, keyword, channelId);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -48,10 +48,10 @@ public class SkChannelArticleGoodsCnController {
      * @author yuwentao
      */
     @GetMapping(value = "/main_category_article_count")
-    public String  getMainCategoryAndArticleCount(Integer channelId, String locale,@RequestParam(value = "keyword",required = false,defaultValue = "") String keyword) {
-        Map<String,Object> map = null;
+    public String getMainCategoryAndArticleCount(Integer channelId, String locale, @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword) {
+        Map<String, Object> map = null;
         try {
-            map = skChannelArticleGoodsCnService.getArticleCountByCategory(channelId, locale,keyword);
+            map = skChannelArticleGoodsCnService.getArticleCountByCategory(channelId, locale, keyword);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -68,14 +68,15 @@ public class SkChannelArticleGoodsCnController {
      * @params [record]
      */
     @PostMapping
-    public SkChannelArticleGoodsCn insertSelectiveInfo(@RequestBody SkChannelArticleGoodsCn record,@RequestParam String locale) {
+    public SkChannelArticleGoodsCn insertSelectiveInfo(@RequestBody SkChannelArticleGoodsCn record, @RequestParam String locale) {
         record.setAddTime(new Date());
-        skChannelArticleGoodsCnService.insertSelective(record,locale);
-       return  record;
+        skChannelArticleGoodsCnService.insertSelective(record, locale);
+        return record;
 
     }
+
     @PutMapping("/batch")
-    public String batchUp(@RequestBody List<SkChannelArticleGoodsCn> lis, String locale){
+    public String batchUp(@RequestBody List<SkChannelArticleGoodsCn> lis, String locale) {
         int i = skChannelArticleGoodsCnService.batchUp(lis, locale);
         Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
         return gson.toJson(i);
@@ -131,6 +132,7 @@ public class SkChannelArticleGoodsCnController {
         }
         return listInfo;
     }
+
     /**
      * 功能描述:更新
      *
@@ -140,11 +142,11 @@ public class SkChannelArticleGoodsCnController {
      * @params [record]
      */
     @PutMapping
-    public SkChannelArticleGoodsCn  updateByPrimaryKeySelectiveInfo(@RequestBody SkChannelArticleGoodsCn record,@RequestParam String locale) {
+    public SkChannelArticleGoodsCn updateByPrimaryKeySelectiveInfo(@RequestBody SkChannelArticleGoodsCn record, @RequestParam String locale) {
         record.setUpdateTime(new Date());
 
-        skChannelArticleGoodsCnService.updateByPrimaryKeySelective(record,locale);
-        return  record;
+        skChannelArticleGoodsCnService.updateByPrimaryKeySelective(record, locale);
+        return record;
 
     }
 
@@ -157,42 +159,47 @@ public class SkChannelArticleGoodsCnController {
      * @params [request]
      */
     @DeleteMapping
-    public String deleteAd(HttpServletRequest request,@RequestParam String locale) {
+    public String deleteAd(HttpServletRequest request, @RequestParam String locale) {
         String id = request.getParameter("id");
-        skChannelArticleGoodsCnService.deleteAd(id,locale);
-        return  id;
+        skChannelArticleGoodsCnService.deleteAd(id, locale);
+        return id;
     }
+
     /**
      * 功能描述:批量审核
+     *
+     * @return java.lang.String
      * @author huangwei
      * @date 2018/11/1
      * @params [request]
-     * @return java.lang.String
      */
-   @PutMapping("/review")
-    public  String updateSt(HttpServletRequest request,@RequestParam String locale){
+    @PutMapping("/review")
+    public String updateSt(HttpServletRequest request, @RequestParam String locale) {
 
-       String id = request.getParameter("id");
-        skChannelArticleGoodsCnService.updateSt(id,locale);
+        String id = request.getParameter("id");
+        skChannelArticleGoodsCnService.updateSt(id, locale);
         return "批量审核";
 
     }
+
     @PutMapping("/top")
-    public  String updateTo(HttpServletRequest request,@RequestParam String locale){
+    public String updateTo(HttpServletRequest request, @RequestParam String locale) {
         String id = request.getParameter("id");
-        skChannelArticleGoodsCnService.updateTo(id,locale);
+        skChannelArticleGoodsCnService.updateTo(id, locale);
         return "批量置顶";
     }
+
     @PutMapping("/red")
-    public  String updateRe(HttpServletRequest request,@RequestParam String locale){
+    public String updateRe(HttpServletRequest request, @RequestParam String locale) {
         String id = request.getParameter("id");
-        skChannelArticleGoodsCnService.updateRe(id,locale);
+        skChannelArticleGoodsCnService.updateRe(id, locale);
         return "批量推荐";
     }
+
     @PutMapping("/hot")
-    public  String updateHo(HttpServletRequest request,@RequestParam String locale){
+    public String updateHo(HttpServletRequest request, @RequestParam String locale) {
         String id = request.getParameter("id");
-        skChannelArticleGoodsCnService.updateHo(id,locale);
+        skChannelArticleGoodsCnService.updateHo(id, locale);
         return "批量热门";
     }
 
@@ -205,10 +212,10 @@ public class SkChannelArticleGoodsCnController {
      * @params [currentPage, pageSize, title]
      */
     @PostMapping("/titles")
-    public PageInfo<Object> likeSelectAllInfo(Integer categoryId, String key, int currentPage, int pageSize, String title,String locale,Integer channelId,@RequestParam(value = "orderBy",required = false,defaultValue = "") String orderBy) {
+    public PageInfo<Object> likeSelectAllInfo(Integer categoryId, String key, int currentPage, int pageSize, String title, String locale, Integer channelId, @RequestParam(value = "orderBy", required = false, defaultValue = "") String orderBy) {
         PageInfo<Object> listInfo = null;
         try {
-            listInfo = skChannelArticleGoodsCnService.likeSelectAll(currentPage, pageSize, title, locale, categoryId, key,channelId,orderBy);
+            listInfo = skChannelArticleGoodsCnService.likeSelectAll(currentPage, pageSize, title, locale, categoryId, key, channelId, orderBy);
         } catch (Exception e) {
             e.printStackTrace();
         }

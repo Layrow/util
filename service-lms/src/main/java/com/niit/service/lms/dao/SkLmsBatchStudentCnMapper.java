@@ -19,6 +19,7 @@ public interface SkLmsBatchStudentCnMapper {
 
     /**
      * 学生班级关联表的字段删除
+     *
      * @param studentId 需要删除的学生ID
      * @return
      */

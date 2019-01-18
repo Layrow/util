@@ -19,6 +19,7 @@ public class SkLmsBatchServiceImpl implements SkLmsBatchCnService {
 
     @Autowired
     private SkLmsBatchCnMapper skLmsBatchCnMapper;
+
     @Override
     public int deleteByPrimaryKey(Integer id) {
         return skLmsBatchCnMapper.deleteByPrimaryKey(id);

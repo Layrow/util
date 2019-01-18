@@ -30,39 +30,43 @@ public class SkChannelArticleVideoCnController {
 
     /**
      * 功能描述: 分页模糊查询
+     *
+     * @return com.github.pagehelper.PageInfo<com.niit.service.cms.pojo.SkChannelArticleVideoCn>
      * @author huangwei
      * @date 2018/11/8
      * @params [currentPage, pageSize, title]
-     * @return com.github.pagehelper.PageInfo<com.niit.service.cms.pojo.SkChannelArticleVideoCn>
      */
     @PostMapping("/titles")
     public PageInfo<SkChannelArticleVideoCn> likeSelectAllInfo(@Param("categoryId") Integer categoryId, String key, int currentPage, int pageSize, String title, @RequestParam String locale) {
-        PageInfo<SkChannelArticleVideoCn> listInfo=null;
+        PageInfo<SkChannelArticleVideoCn> listInfo = null;
         try {
-            listInfo = skChannelArticleVideoCnService.likeSelectAll(currentPage,pageSize,title,locale,categoryId,key);
+            listInfo = skChannelArticleVideoCnService.likeSelectAll(currentPage, pageSize, title, locale, categoryId, key);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return listInfo;
     }
+
     /**
      * 功能描述:插入
+     *
+     * @return java.lang.String
      * @author huangwei
      * @date 2018/11/1
      * @params [record]
-     * @return java.lang.String
      */
     @PostMapping
-    public SkChannelArticleVideoCn insertSelectiveInfo(@RequestBody SkChannelArticleVideoCn record,@RequestParam String locale) {
+    public SkChannelArticleVideoCn insertSelectiveInfo(@RequestBody SkChannelArticleVideoCn record, @RequestParam String locale) {
         record.setAddTime(new Date());
 
-        skChannelArticleVideoCnService.insertSelective(record,locale);
-         return  record;
+        skChannelArticleVideoCnService.insertSelective(record, locale);
+        return record;
 
     }
+
     @PutMapping("/batch")
-    public String batchUp(@RequestBody List<SkChannelArticleVideoCn> lis, String locale){
-        System.out.println("------"+locale+lis+"-----");
+    public String batchUp(@RequestBody List<SkChannelArticleVideoCn> lis, String locale) {
+        System.out.println("------" + locale + lis + "-----");
         int i = skChannelArticleVideoCnService.batchUp(lis, locale);
         Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
         return gson.toJson(i);
@@ -82,24 +86,28 @@ public class SkChannelArticleVideoCnController {
         } else
             return "删除失败";
     }*/
+
     /**
      * 功能描述:查找根据ID
+     *
+     * @return com.niit.service.cms.pojo.SkChannelArticleVideoCn
      * @author huangwei
      * @date 2018/11/1
      * @params [id]
-     * @return com.niit.service.cms.pojo.SkChannelArticleVideoCn
      */
     @GetMapping("/id")
-    public SkChannelArticleVideoCn selectByPrimaryKeyInfo(@RequestParam Integer id,@RequestParam String locale) {
-        SkChannelArticleVideoCn contentCn = skChannelArticleVideoCnService.selectByPrimaryKey(id,locale);
+    public SkChannelArticleVideoCn selectByPrimaryKeyInfo(@RequestParam Integer id, @RequestParam String locale) {
+        SkChannelArticleVideoCn contentCn = skChannelArticleVideoCnService.selectByPrimaryKey(id, locale);
         return contentCn;
     }
+
     /**
      * 功能描述:查找所有
+     *
+     * @return java.util.List<com.niit.service.cms.pojo.SkChannelArticleVideoCn>
      * @author huangwei
      * @date 2018/11/1
      * @params []
-     * @return java.util.List<com.niit.service.cms.pojo.SkChannelArticleVideoCn>
      */
 //    @GetMapping
 //    public PageInfo<SkChannelArticleVideoCn> selectAllInfo(int currentPage, int pageSize) {
@@ -111,76 +119,84 @@ public class SkChannelArticleVideoCnController {
 //        }
 //        return listInfo;
 //    }
-
     @GetMapping
-    public PageInfo<SkChannelArticleVideoCn> selectAllInfo(String key,int currentPage, int pageSize,@RequestParam String locale) {
+    public PageInfo<SkChannelArticleVideoCn> selectAllInfo(String key, int currentPage, int pageSize, @RequestParam String locale) {
         PageInfo<SkChannelArticleVideoCn> listInfo = null;
         try {
-            listInfo=skChannelArticleVideoCnService.FuzzySearchBy(key,currentPage,pageSize,locale);
+            listInfo = skChannelArticleVideoCnService.FuzzySearchBy(key, currentPage, pageSize, locale);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
         return listInfo;
     }
+
     /**
      * 功能描述:更新
+     *
+     * @return java.lang.String
      * @author huangwei
      * @date 2018/11/1
      * @params [record]
-     * @return java.lang.String
      */
     @PutMapping
-    public SkChannelArticleVideoCn updateByPrimaryKeySelectiveInfo(@RequestBody SkChannelArticleVideoCn record,@RequestParam String locale) {
+    public SkChannelArticleVideoCn updateByPrimaryKeySelectiveInfo(@RequestBody SkChannelArticleVideoCn record, @RequestParam String locale) {
         record.setUpdateTime(new Date());
 
-        skChannelArticleVideoCnService.updateByPrimaryKeySelective(record,locale);
+        skChannelArticleVideoCnService.updateByPrimaryKeySelective(record, locale);
         return record;
 
     }
+
     /**
      * 功能描述:批量删除
+     *
+     * @return java.lang.String
      * @author huangwei
      * @date 2018/11/1
      * @params [request]
-     * @return java.lang.String
      */
     @DeleteMapping
-    public String deleteAd(HttpServletRequest request,@RequestParam String locale) {
+    public String deleteAd(HttpServletRequest request, @RequestParam String locale) {
         String id = request.getParameter("id");
-        skChannelArticleVideoCnService.deleteAd(id,locale);
+        skChannelArticleVideoCnService.deleteAd(id, locale);
         return id;
     }
+
     /**
      * 功能描述:批量审核
+     *
+     * @return java.lang.String
      * @author huangwei
      * @date 2018/11/1
      * @params [request]
-     * @return java.lang.String
      */
     @PutMapping("/review")
-    public  String updateSt(HttpServletRequest request,@RequestParam String locale){
+    public String updateSt(HttpServletRequest request, @RequestParam String locale) {
         String id = request.getParameter("id");
-        skChannelArticleVideoCnService.updateSt(id,locale);
+        skChannelArticleVideoCnService.updateSt(id, locale);
         return "批量审核";
 
     }
+
     @PutMapping("/top")
-    public  String updateTo(HttpServletRequest request,@RequestParam String locale){
+    public String updateTo(HttpServletRequest request, @RequestParam String locale) {
         String id = request.getParameter("id");
-        skChannelArticleVideoCnService.updateTo(id,locale);
+        skChannelArticleVideoCnService.updateTo(id, locale);
         return "批量置顶";
     }
+
     @PutMapping("/red")
-    public  String updateRe(HttpServletRequest request,@RequestParam String locale){
+    public String updateRe(HttpServletRequest request, @RequestParam String locale) {
         String id = request.getParameter("id");
-        skChannelArticleVideoCnService.updateRe(id,locale);
+        skChannelArticleVideoCnService.updateRe(id, locale);
         return "批量推荐";
     }
+
     @PutMapping("/hot")
-    public  String updateHo(HttpServletRequest request,@RequestParam String locale){
+    public String updateHo(HttpServletRequest request, @RequestParam String locale) {
         String id = request.getParameter("id");
-        skChannelArticleVideoCnService.updateHo(id,locale);
+        skChannelArticleVideoCnService.updateHo(id, locale);
         return "批量热门";
     }
 
@@ -208,7 +224,7 @@ public class SkChannelArticleVideoCnController {
                                          Integer currentPage, Integer pageSize) {
         String info = null;
         try {
-            info = skChannelArticleVideoCnService.selectVideoByCategoryId(locale, categoryId,currentPage,pageSize);
+            info = skChannelArticleVideoCnService.selectVideoByCategoryId(locale, categoryId, currentPage, pageSize);
         } catch (Exception e) {
             e.printStackTrace();
         }

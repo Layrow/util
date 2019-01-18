@@ -12,11 +12,15 @@ import java.util.List;
  */
 public interface SkLmsBatchCoursewareCnService {
     int deleteByPrimaryKey(Integer id);
+
     int insertSelective(SkLmsBatchCoursewareCn record);
+
     //共享（已共享的班级查询）
-    String  select(Integer coursewareId, Integer facultyId);
+    String select(Integer coursewareId, Integer facultyId);
+
     //批量删除
     void deleteAd(String batch_id, Integer coursewareId);
+
     String insertBatch(List<SkLmsBatchCoursewareCn> sk);
 
 }

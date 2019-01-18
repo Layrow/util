@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 public class SkLmsBatchHomeworkCnServiceImpl implements SkLmsBatchHomeworkCnService {
     @Autowired
     private SkLmsBatchHomeworkCnMapper skLmsBatchHomeworkCnMapper;
+
     @Override
     public int deleteByPrimaryKey(Integer id) {
         return skLmsBatchHomeworkCnMapper.deleteByPrimaryKey(id);

@@ -7,6 +7,7 @@ import com.niit.service.lms.pojo.SkLmsHomeworkAnswerCn;
 import com.niit.service.lms.service.SkLmsHomeworkAnswerCnService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.*;
 
 /**
@@ -64,7 +65,7 @@ public class SkLmsHomeworkAnswerCnServiceImpl implements SkLmsHomeworkAnswerCnSe
         HashMap<String, Object> map = new HashMap<>();
         List<HashMap<String, Object>> scoreList = skLmsHomeworkAnswerCnMapper.selectScoreByStudentId(studentId);
         List<HashMap<String, Object>> homeworkList = skLmsHomeworkAnswerCnMapper.selectHomeworkSizeByStudentId(batchId, studentId);
-        map.put("scoreList",scoreList);
+        map.put("scoreList", scoreList);
         map.put("homeworkList", homeworkList);
         Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
         return gson.toJson(map);

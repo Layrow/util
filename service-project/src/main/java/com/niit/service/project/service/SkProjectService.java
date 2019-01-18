@@ -2,7 +2,7 @@ package com.niit.service.project.service;
 
 import com.github.pagehelper.PageInfo;
 import com.niit.service.project.pojo.SkProject;
-import com.sun.xml.internal.bind.v2.model.core.ID;
+
 import org.apache.ibatis.annotations.Param;
 
 import java.util.LinkedHashMap;
@@ -26,7 +26,7 @@ public interface SkProjectService {
 
     SkProject selectProjectInfo(Integer id);
 
-    List selectProjectOperation(Integer user_id,Integer project_id);
+    List selectProjectOperation(Integer user_id, Integer project_id);
 
     // update
     int updateByPrimaryKey(SkProject record);
@@ -35,16 +35,16 @@ public interface SkProjectService {
     int deleteMoreProject(String id);
 
     // 查询所有作品
-    PageInfo<SkProject> selectAllProject(Integer status,Integer currentPage,Integer pageSize);
+    PageInfo<SkProject> selectAllProject(Integer status, Integer currentPage, Integer pageSize);
 
     // 批量操作作品（置顶，推荐，审核）
-    Integer updateMoreProject(String sign,String id);
+    Integer updateMoreProject(String sign, String id);
 
     // 根据title模糊查询作品
-    PageInfo<SkProject> likeSelectProjectByTitle(String status,String title,Integer currentPage,Integer pageSize);
+    PageInfo<SkProject> likeSelectProjectByTitle(String status, String title, Integer currentPage, Integer pageSize);
 
     // 按置顶，推荐进行查询
-    PageInfo<SkProject> likeSelectProjectAll(String title,Integer status,Integer categoryId,String orderBy,Integer currentPage,Integer pageSize);
+    PageInfo<SkProject> likeSelectProjectAll(String title, Integer status, Integer categoryId, String orderBy, Integer currentPage, Integer pageSize);
 
     // 查询个人作品
     String selectProjectByUserId(Integer userId);

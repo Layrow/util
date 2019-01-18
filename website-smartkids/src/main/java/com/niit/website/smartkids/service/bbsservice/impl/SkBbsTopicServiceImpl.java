@@ -21,34 +21,34 @@ import java.util.List;
 @Service
 public class SkBbsTopicServiceImpl implements SkBbsTopicService {
 
-    private static final  String SERVICE_NAME = "service-bbs";
-    private static final  String URL="http://"+SERVICE_NAME+"/topic/";
+    private static final String SERVICE_NAME = "service-bbs";
+    private static final String URL = "http://" + SERVICE_NAME + "/topic/";
 
     @Resource
     RestTemplate restTemplate;
 
     @Override
     public SkBbsTopic getTopic(Integer id) {
-        return restTemplate.getForObject(URL+"get?id="+id,SkBbsTopic.class);
+        return restTemplate.getForObject(URL + "get?id=" + id, SkBbsTopic.class);
     }
 
     @Override
     public String selectAllTopicById() {
 
-        return restTemplate.getForObject("http://"+SERVICE_NAME+"/topic/allTopic",String.class);
+        return restTemplate.getForObject("http://" + SERVICE_NAME + "/topic/allTopic", String.class);
     }
 
     @Override
     public List<String> listUserId(String id) {
-        return restTemplate.postForObject(URL+"/listUserId?id="+id,null,List.class);
+        return restTemplate.postForObject(URL + "/listUserId?id=" + id, null, List.class);
     }
 
     @Override
     public boolean editOne(SkBbsTopic record) {
         try {
-            restTemplate.put(URL+"edit",record);
+            restTemplate.put(URL + "edit", record);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
@@ -65,10 +65,10 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
     public boolean insertSelective(SkBbsTopic record) {
 
         String result =
-                restTemplate.postForObject(URL+"add",record,String.class);
-        if (Tools.isEmpty(result)){
+                restTemplate.postForObject(URL + "add", record, String.class);
+        if (Tools.isEmpty(result)) {
             return false;
-        }else {
+        } else {
             return true;
         }
     }
@@ -81,13 +81,13 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
      */
     @Override
     public int deleteByPrimaryKey(Integer id) {
-       try {
-           restTemplate.delete(URL+"delete?id="+id);
-           return id;
-       }catch (Exception e){
-           e.printStackTrace();
-           return 0;
-       }
+        try {
+            restTemplate.delete(URL + "delete?id=" + id);
+            return id;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 
     /**
@@ -99,26 +99,26 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
     @Override
     public boolean batchDel(String ids) {
         try {
-            restTemplate.delete(URL+"batchDel?ids="+ids);
+            restTemplate.delete(URL + "batchDel?ids=" + ids);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            return  false;
+            return false;
         }
     }
 
     /**
      * 更新帖子浏览量
      *
-     * @param id       帖子主键
+     * @param id 帖子主键
      * @return
      */
     @Override
     public int updateViewCountByPrimaryKey(Integer id) {
         try {
-            restTemplate.put(URL+"editViewCount?id="+id,String.class);
+            restTemplate.put(URL + "editViewCount?id=" + id, String.class);
             return 1;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return 0;
         }
@@ -133,7 +133,7 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
      */
     @Override
     public PageInfo<SkBbsTopic> listAllTopic(Integer currentPage, Integer pageSize) {
-        return restTemplate.postForObject(URL+"listAll?currentPage="+currentPage+"&pageSize="+pageSize,null,PageInfo.class);
+        return restTemplate.postForObject(URL + "listAll?currentPage=" + currentPage + "&pageSize=" + pageSize, null, PageInfo.class);
     }
 
     /**
@@ -146,7 +146,7 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
      */
     @Override
     public PageInfo<SkBbsTopic> listAllTopicInSection(Integer currentPage, Integer pageSize, Integer sectionId) {
-        return  restTemplate.postForObject(URL+"listSection?currentPage="+currentPage+"&pageSize="+pageSize+"&sectionId="+sectionId,null,PageInfo.class);
+        return restTemplate.postForObject(URL + "listSection?currentPage=" + currentPage + "&pageSize=" + pageSize + "&sectionId=" + sectionId, null, PageInfo.class);
     }
 
     /**
@@ -158,8 +158,8 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
      * @return
      */
     @Override
-    public PageInfo<SkBbsTopic> likeSelectAll(Integer currentPage, Integer pageSize, String title,String key) {
-        return restTemplate.postForObject(URL+"likeList?currentPage="+currentPage+"&pageSize="+pageSize+"&title="+title+"&key="+key,null,PageInfo.class);
+    public PageInfo<SkBbsTopic> likeSelectAll(Integer currentPage, Integer pageSize, String title, String key) {
+        return restTemplate.postForObject(URL + "likeList?currentPage=" + currentPage + "&pageSize=" + pageSize + "&title=" + title + "&key=" + key, null, PageInfo.class);
     }
 
     /**
@@ -171,7 +171,7 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
      */
     @Override
     public PageInfo<SkBbsTopic> selectAllDirty(Integer currentPage, Integer pageSize) {
-        return restTemplate.postForObject(URL+"dirty?currentPage="+currentPage+"&pageSize="+pageSize,null,PageInfo.class);
+        return restTemplate.postForObject(URL + "dirty?currentPage=" + currentPage + "&pageSize=" + pageSize, null, PageInfo.class);
     }
 
     /**
@@ -184,8 +184,8 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
      */
     @Override
     public PageInfo<SkBbsTopic> likeSection(Integer currentPage, Integer pageSize, String title, Integer sectionId, String key) {
-        return restTemplate.postForObject(URL+"likeSection?currentPage="+currentPage+"&pageSize="
-                +pageSize+"&title="+title+"&sectionId="+sectionId+"&key="+key,null,PageInfo.class);
+        return restTemplate.postForObject(URL + "likeSection?currentPage=" + currentPage + "&pageSize="
+                + pageSize + "&title=" + title + "&sectionId=" + sectionId + "&key=" + key, null, PageInfo.class);
     }
 
 
@@ -199,7 +199,7 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
      */
     @Override
     public PageInfo<SkBbsTopic> listAllTopicByOwner(Integer currentPage, Integer pageSize, String userId) {
-        return restTemplate.postForObject(URL+"listUser?currentPage="+currentPage+"&pageSize="+pageSize+"&userId="+userId,null,PageInfo.class);
+        return restTemplate.postForObject(URL + "listUser?currentPage=" + currentPage + "&pageSize=" + pageSize + "&userId=" + userId, null, PageInfo.class);
     }
 
     /**
@@ -211,11 +211,11 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
     @Override
     public boolean check(String id) {
         try {
-            restTemplate.put(URL+"check?id="+id,String.class);
+            restTemplate.put(URL + "check?id=" + id, String.class);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            return  false;
+            return false;
         }
     }
 
@@ -228,11 +228,11 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
     @Override
     public boolean top(String id) {
         try {
-            restTemplate.put(URL+"top?id="+id,String.class);
+            restTemplate.put(URL + "top?id=" + id, String.class);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            return  false;
+            return false;
         }
     }
 
@@ -245,13 +245,14 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
     @Override
     public boolean essence(String id) {
         try {
-            restTemplate.put(URL+"essence?id="+id,String.class);
+            restTemplate.put(URL + "essence?id=" + id, String.class);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            return  false;
+            return false;
         }
     }
+
     /**
      * 批量官宣
      *
@@ -261,11 +262,11 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
     @Override
     public boolean offcial(String id) {
         try {
-            restTemplate.put(URL+"offcial?id="+id,String.class);
+            restTemplate.put(URL + "offcial?id=" + id, String.class);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            return  false;
+            return false;
         }
     }
 
@@ -278,11 +279,11 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
     @Override
     public boolean unCheck(String id) {
         try {
-            restTemplate.put(URL+"unCheck?id="+id,String.class);
+            restTemplate.put(URL + "unCheck?id=" + id, String.class);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            return  false;
+            return false;
         }
     }
 
@@ -295,11 +296,11 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
     @Override
     public boolean unTop(String id) {
         try {
-            restTemplate.put(URL+"unTop?id="+id,String.class);
+            restTemplate.put(URL + "unTop?id=" + id, String.class);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            return  false;
+            return false;
         }
     }
 
@@ -312,22 +313,22 @@ public class SkBbsTopicServiceImpl implements SkBbsTopicService {
     @Override
     public boolean unEssence(String id) {
         try {
-            restTemplate.put(URL+"unEssence?id="+id,String.class);
+            restTemplate.put(URL + "unEssence?id=" + id, String.class);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            return  false;
+            return false;
         }
     }
 
     @Override
     public PageInfo<SkBbsTopic> selectReplyUserIds(Integer currentPage, Integer pageSize, String replyUserId) {
-        return restTemplate.getForObject("http://"+SERVICE_NAME+"/topic?currentPage="+currentPage+"&pageSize="+pageSize+"&replyUserId="+replyUserId,PageInfo.class);
+        return restTemplate.getForObject("http://" + SERVICE_NAME + "/topic?currentPage=" + currentPage + "&pageSize=" + pageSize + "&replyUserId=" + replyUserId, PageInfo.class);
     }
 
     @Override
     public String selectReplyUserId(String replyUserId) {
-        return restTemplate.getForObject("http://"+SERVICE_NAME+"/topic/replyId?replyUserId="+replyUserId,String.class);
+        return restTemplate.getForObject("http://" + SERVICE_NAME + "/topic/replyId?replyUserId=" + replyUserId, String.class);
     }
 
 }

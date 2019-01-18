@@ -20,6 +20,7 @@ public class SkMemberIntegralServiceImpl implements ISkMemberIntegralService {
 
     @Resource
     SkMemberIntegralMapper skMemberIntegralMapper;
+
     /**
      * 取得用户的所有积分
      *
@@ -33,26 +34,26 @@ public class SkMemberIntegralServiceImpl implements ISkMemberIntegralService {
         //减少的分值
         Integer del = skMemberIntegralMapper.selectDelIntegral(id);
         //如果没有加分,则置为0
-        if (add==null){
-            add=0;
+        if (add == null) {
+            add = 0;
         }
         //如果没有减分,则置为0
-        if (del==null){
-            del=0;
+        if (del == null) {
+            del = 0;
         }
         //总得分 奖励分-惩罚分
-        return  add-del;
+        return add - del;
     }
 
     @Override
     public boolean updateIntegral(SkMemberIntegral record) {
-      try{
-           record.setOperationTime(new Date());
-           skMemberIntegralMapper.insertSelective(record);
-           return  true;
-       }catch (Exception e){
-           e.printStackTrace();
-           return false;
-       }
+        try {
+            record.setOperationTime(new Date());
+            skMemberIntegralMapper.insertSelective(record);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

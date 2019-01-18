@@ -126,7 +126,6 @@
         </dependency>
 
 
-
         <dependency>
             <groupId>com.niit</groupId>
             <artifactId>cloud-common</artifactId>

@@ -21,6 +21,7 @@ public interface SkLmsBatchHomeworkCnMapper {
     List<Integer> selectByBatchId(Integer batch_id);
 
     int updateByPrimaryKey(SkLmsBatchHomeworkCn record);
+
     // 根据homeworkID删除附件与作业的关系
     int deleteByHomeworkId(Integer homeworkId);
 }

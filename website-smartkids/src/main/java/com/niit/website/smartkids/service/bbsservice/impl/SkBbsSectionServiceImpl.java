@@ -21,19 +21,20 @@ import java.util.List;
  */
 @Service
 public class SkBbsSectionServiceImpl implements SkBbsSectionService {
-    private static final  String SERVICE_NAME = "service-bbs";
-    private static final  String URL="http://"+SERVICE_NAME+"/section/";
+    private static final String SERVICE_NAME = "service-bbs";
+    private static final String URL = "http://" + SERVICE_NAME + "/section/";
     @Resource
     RestTemplate restTemplate;
 
     /**
      * 取得栏目名
+     *
      * @param sectionId
      * @return
      */
     @Override
     public String getName(Integer sectionId) {
-        return restTemplate.getForObject(URL+"getName?sectionId="+sectionId,String.class);
+        return restTemplate.getForObject(URL + "getName?sectionId=" + sectionId, String.class);
     }
 
     /**
@@ -44,13 +45,13 @@ public class SkBbsSectionServiceImpl implements SkBbsSectionService {
      */
     @Override
     public boolean addSection(SkBbsSection section) {
-       String result =
-               restTemplate.postForObject(URL+"add",section,String.class);
-       if (Tools.isEmpty(result)){
-           return false;
-       }else {
-           return true;
-       }
+        String result =
+                restTemplate.postForObject(URL + "add", section, String.class);
+        if (Tools.isEmpty(result)) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     /**
@@ -62,9 +63,9 @@ public class SkBbsSectionServiceImpl implements SkBbsSectionService {
     @Override
     public boolean deleteSection(String id) {
         try {
-            restTemplate.delete(URL+"delete?id="+id);
+            restTemplate.delete(URL + "delete?id=" + id);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
@@ -79,9 +80,9 @@ public class SkBbsSectionServiceImpl implements SkBbsSectionService {
     @Override
     public boolean updateOderBatch(List<SkBbsSection> list) {
         try {
-            restTemplate.put(URL+"edit",list);
-            return  true;
-        }catch (Exception e){
+            restTemplate.put(URL + "edit", list);
+            return true;
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
@@ -94,18 +95,19 @@ public class SkBbsSectionServiceImpl implements SkBbsSectionService {
      */
     @Override
     public List<SkBbsSection> selectAllSection() {
-        return restTemplate.getForObject(URL+"list",List.class);
+        return restTemplate.getForObject(URL + "list", List.class);
     }
 
     @Override
     public boolean editSection(SkBbsSection section) {
         try {
-            restTemplate.put(URL+"editOne",section);
+            restTemplate.put(URL + "editOne", section);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
     }
+
     /**
      * 分页模糊查询
      *
@@ -116,6 +118,6 @@ public class SkBbsSectionServiceImpl implements SkBbsSectionService {
      */
     @Override
     public PageInfo<SkBbsSection> likeSelectAll(Integer currentPage, Integer pageSize, String name) {
-        return  restTemplate.getForObject(URL+"like?currentPage="+currentPage+"&pageSize="+pageSize+"&name="+name,PageInfo.class);
+        return restTemplate.getForObject(URL + "like?currentPage=" + currentPage + "&pageSize=" + pageSize + "&name=" + name, PageInfo.class);
     }
 }

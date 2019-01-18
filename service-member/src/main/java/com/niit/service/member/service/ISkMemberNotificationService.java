@@ -14,6 +14,7 @@ import org.apache.ibatis.annotations.Param;
 public interface ISkMemberNotificationService {
     /**
      * 添加一条通知
+     *
      * @param record
      * @return
      */
@@ -21,20 +22,22 @@ public interface ISkMemberNotificationService {
 
     /**
      * 根据通知主键删除通知
+     *
      * @param notificationId
      * @return
      */
     boolean deleteNotification(Integer notificationId);
 
-    int deleteNotification(Integer user_id, Integer project_id,Integer operation);
+    int deleteNotification(Integer user_id, Integer project_id, Integer operation);
 
     /**
      * 查询用户下的所有通知
-     * @param pageSize  页面大小
+     *
+     * @param pageSize    页面大小
      * @param currentPage 当前页
      * @param userId
      * @return
      */
-    PageInfo<SkMemberNotificationOps> listAll(Integer currentPage, Integer pageSize,Integer userId);
+    PageInfo<SkMemberNotificationOps> listAll(Integer currentPage, Integer pageSize, Integer userId);
 
 }

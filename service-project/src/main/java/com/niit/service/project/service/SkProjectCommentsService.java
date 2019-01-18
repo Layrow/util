@@ -31,6 +31,6 @@ public interface SkProjectCommentsService {
     Integer deleteMoreProjectComment(String id);
 
     // 查询所有作品留言
-    PageInfo<SkProjectComments> selectAllProjectComment(Integer projectId,Integer currentPage,Integer pageSize);
+    PageInfo<SkProjectComments> selectAllProjectComment(Integer projectId, Integer currentPage, Integer pageSize);
 
 }

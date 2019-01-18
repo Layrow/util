@@ -47,33 +47,37 @@ public class SkLmsCoursewareCnController {
     }
 
     /**
-    * 功能描述: 上传文件
-    * @author huangwei
-    * @date :2018/11/15
-    * @params [request]
-    * @return int
-    */
+     * 功能描述: 上传文件
+     *
+     * @return int
+     * @author huangwei
+     * @date :2018/11/15
+     * @params [request]
+     */
     @PostMapping
-     public int insertSelectiveInfo(@RequestBody String url){
+    public int insertSelectiveInfo(@RequestBody String url) {
         int i = sccs.insertSelective(url);
         return i;
-     }
-     //根据老师插查询所有
-     @GetMapping("/all")
-     public String  selectAllWare(Integer facultyId,int currentPage, int pageSize){
-         return  sccs.selectAllWare(facultyId,currentPage,pageSize);
-     }
-     /**
+    }
+
+    //根据老师插查询所有
+    @GetMapping("/all")
+    public String selectAllWare(Integer facultyId, int currentPage, int pageSize) {
+        return sccs.selectAllWare(facultyId, currentPage, pageSize);
+    }
+
+    /**
      * 功能描述: 查询制定id班级下所有课件
+     *
+     * @return java.util.List<com.niit.service.lms.pojo.SkLmsCoursewareCn>
      * @author huangwei
      * @date : 2018/11/20
      * @params [batchId]
-     * @return java.util.List<com.niit.service.lms.pojo.SkLmsCoursewareCn>
      */
-     @GetMapping("/allBatch")
-     public  String selectAllBatchWare(Integer batchId,int currentPage, int pageSize){
-         return  sccs.selectAllBatchWare(batchId,currentPage,pageSize);
-     }
+    @GetMapping("/allBatch")
+    public String selectAllBatchWare(Integer batchId, int currentPage, int pageSize) {
+        return sccs.selectAllBatchWare(batchId, currentPage, pageSize);
+    }
 }
 
 

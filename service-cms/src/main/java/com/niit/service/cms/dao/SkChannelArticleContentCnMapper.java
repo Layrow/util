@@ -32,26 +32,36 @@ public interface SkChannelArticleContentCnMapper {
     List<SkChannelArticleContentCn> likeSelectAll(String title);
 
     //批量审核
-     void updateSt(List<String> list);
-     //批量删除
-    void  deleteAd(List<String> list);
+    void updateSt(List<String> list);
+
+    //批量删除
+    void deleteAd(List<String> list);
 
     //批量更新
-    void  updateTo(List<String> list);
+    void updateTo(List<String> list);
+
     //批量推荐
-    void  updateRe(List<String> list);
+    void updateRe(List<String> list);
+
     //批量热门
-    void  updateHo(List<String> list);
+    void updateHo(List<String> list);
+
     //分页查找所有
     List<SkChannelArticleContentCn> selectAll();
+
     //分页查找所有Hot
     List<SkChannelArticleContentCn> selectAllByHot();
+
     //分页查找所有Red
     List<SkChannelArticleContentCn> selectAllByRed();
+
     //分页查找所有Top
     List<SkChannelArticleContentCn> selectAllByTop();
+
     List<SkChannelArticleContentCn> selectAllByAudited();
+
     List<SkChannelArticleContentCn> selectAllByUnaudited();
+
     int batchUp(List<SkChannelArticleContentCn> lis);
 
     // 按照栏目类别ID并且status = 1查找新闻

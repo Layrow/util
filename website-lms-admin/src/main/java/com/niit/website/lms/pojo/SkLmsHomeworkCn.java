@@ -9,7 +9,7 @@ public class SkLmsHomeworkCn {
 
     private String homeworkTitle;
 
-    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date homeworkCreateTime;
 
     private String facultyId;

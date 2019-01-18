@@ -22,12 +22,12 @@ public class SkProjectCommentsServiceImpl implements SkProjectCommentsService {
 
     @Override
     public void deleteByPrimaryKey(Integer id) {
-        restTemplate.delete("http://" + SERVICE_NAME + "/projectcomments/{id}",id);
+        restTemplate.delete("http://" + SERVICE_NAME + "/projectcomments/{id}", id);
     }
 
     @Override
     public void insert(SkProjectComments record) {
-        restTemplate.postForObject("http://" + SERVICE_NAME + "/projectcomments", record,String.class);
+        restTemplate.postForObject("http://" + SERVICE_NAME + "/projectcomments", record, String.class);
     }
 
     @Override
@@ -37,23 +37,23 @@ public class SkProjectCommentsServiceImpl implements SkProjectCommentsService {
 
     @Override
     public void updateByPrimaryKey(SkProjectComments record) {
-        restTemplate.put("http://" + SERVICE_NAME + "/projectcomments",record);
+        restTemplate.put("http://" + SERVICE_NAME + "/projectcomments", record);
     }
 
     @Override
     public void updateMoreProjectComment(String id) {
-        restTemplate.put("http://" + SERVICE_NAME + "/projectcomments/more?id=" + id,id);
+        restTemplate.put("http://" + SERVICE_NAME + "/projectcomments/more?id=" + id, id);
     }
 
     @Override
     public void deleteMoreProjectComment(String id) {
-        restTemplate.delete("http://" + SERVICE_NAME + "/projectcomments/more?id="+id,id);
+        restTemplate.delete("http://" + SERVICE_NAME + "/projectcomments/more?id=" + id, id);
 
     }
 
     // 查询所有留言
     @Override
     public PageInfo<SkProjectComments> selectAllProjectComment(Integer projectId, Integer currentPage, Integer pageSize) {
-        return restTemplate.getForObject("http://" + SERVICE_NAME + "/projectcomments/more?currentPage=" + currentPage +"&pageSize=" +pageSize+"&projectId=" + projectId,PageInfo.class);
+        return restTemplate.getForObject("http://" + SERVICE_NAME + "/projectcomments/more?currentPage=" + currentPage + "&pageSize=" + pageSize + "&projectId=" + projectId, PageInfo.class);
     }
 }

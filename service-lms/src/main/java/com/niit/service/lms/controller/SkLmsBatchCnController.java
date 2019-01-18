@@ -44,6 +44,7 @@ public class SkLmsBatchCnController {
         }
         return insertStatus;
     }
+
     /**
      * @Description 传入所属教师ID，查询该教师创建的所有班级
      * @Date 2018/11/8 13:48
@@ -60,6 +61,7 @@ public class SkLmsBatchCnController {
         }
         return skLmsBatchCnList;
     }
+
     /**
      * @Description 修改班级信息
      * @Date 2018/11/8 14:01
@@ -76,6 +78,7 @@ public class SkLmsBatchCnController {
         }
         return updateStauts;
     }
+
     /**
      * @Description 删除班级
      * @Date 2018/11/8 14:04

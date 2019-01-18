@@ -21,7 +21,7 @@ public class SkAd {
         this.keycode = keycode;
     }
 
-    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     private Integer status;

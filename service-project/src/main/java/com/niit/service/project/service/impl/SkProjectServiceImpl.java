@@ -60,7 +60,7 @@ public class SkProjectServiceImpl implements SkProjectService {
 
     @Override
     public List selectProjectOperation(Integer user_id, Integer project_id) {
-        return skProjectMapper.selectProjectOperation(user_id,project_id);
+        return skProjectMapper.selectProjectOperation(user_id, project_id);
     }
 
     // update
@@ -89,27 +89,27 @@ public class SkProjectServiceImpl implements SkProjectService {
 
     // 批量操作作品（置顶，推荐，审核）
     @Override
-    public Integer updateMoreProject(String sign,String id) {
+    public Integer updateMoreProject(String sign, String id) {
         List<String> list = Tools.getList(id);
-        return skProjectMapper.updateMoreProject(sign,list);
+        return skProjectMapper.updateMoreProject(sign, list);
     }
 
     // 根据title模糊查询作品
     @Override
-    public PageInfo<SkProject> likeSelectProjectByTitle(String status,String title,Integer currentPage,Integer pageSize) {
+    public PageInfo<SkProject> likeSelectProjectByTitle(String status, String title, Integer currentPage, Integer pageSize) {
         PageInfo<SkProject> pageInfo = null;
         PageHelper.startPage(currentPage, pageSize);
-        List<SkProject> skProjectList = skProjectMapper.likeSelectProjectByTitle(status,title);
+        List<SkProject> skProjectList = skProjectMapper.likeSelectProjectByTitle(status, title);
         pageInfo = new PageInfo<>(skProjectList);
         return pageInfo;
     }
 
     // 按照置顶/推荐查询
     @Override
-    public PageInfo<SkProject> likeSelectProjectAll(String title,Integer status,Integer categoryId,String orderBy,Integer currentPage,Integer pageSize) {
+    public PageInfo<SkProject> likeSelectProjectAll(String title, Integer status, Integer categoryId, String orderBy, Integer currentPage, Integer pageSize) {
         PageInfo<SkProject> pageInfo = null;
         PageHelper.startPage(currentPage, pageSize);
-        List<SkProject> skProjectList = skProjectMapper.likeSelectProjectAll(title,status,categoryId,orderBy);
+        List<SkProject> skProjectList = skProjectMapper.likeSelectProjectAll(title, status, categoryId, orderBy);
         pageInfo = new PageInfo<>(skProjectList);
         return pageInfo;
     }
@@ -122,9 +122,9 @@ public class SkProjectServiceImpl implements SkProjectService {
         List<LinkedHashMap<String, Object>> likeProjectList = map.stream().filter(x -> x.containsKey("operation") && (Integer) x.get("operation") == 2).collect(Collectors.toList());
         List<LinkedHashMap<String, Object>> collectProjectList = map.stream().filter(x -> x.containsKey("operation") && (Integer) x.get("operation") == 3).collect(Collectors.toList());
         List<LinkedHashMap<String, Object>> createProjectList = map.stream().filter(x -> x.containsKey("operation") == false).collect(Collectors.toList());
-        allPresonProjectInfo.put("likeProjectList",likeProjectList);
-        allPresonProjectInfo.put("collectProjectList",collectProjectList);
-        allPresonProjectInfo.put("createProjectList",createProjectList);
+        allPresonProjectInfo.put("likeProjectList", likeProjectList);
+        allPresonProjectInfo.put("collectProjectList", collectProjectList);
+        allPresonProjectInfo.put("createProjectList", createProjectList);
         Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
         return gson.toJson(allPresonProjectInfo);
     }

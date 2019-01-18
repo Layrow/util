@@ -11,6 +11,7 @@ public interface SkMemberIntegralMapper {
 
     /**
      * 积分变动,每一次的更新插入都会影响到这里
+     *
      * @param record
      * @return
      */
@@ -18,6 +19,7 @@ public interface SkMemberIntegralMapper {
 
     /**
      * 查询正积分
+     *
      * @param userId
      * @return
      */
@@ -25,6 +27,7 @@ public interface SkMemberIntegralMapper {
 
     /**
      * 查询负积分
+     *
      * @param userId
      * @return
      */

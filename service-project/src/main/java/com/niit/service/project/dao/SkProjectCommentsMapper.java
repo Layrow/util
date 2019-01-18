@@ -22,7 +22,7 @@ public interface SkProjectCommentsMapper {
     int updateByPrimaryKey(SkProjectComments record);
 
     // 批量审核
-    Integer updateMoreProjectComment(List<String > list);
+    Integer updateMoreProjectComment(List<String> list);
 
     // 批量删除
     Integer deleteMoreProjectComment(List<String> list);

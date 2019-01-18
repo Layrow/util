@@ -6,6 +6,7 @@ import com.niit.service.cms.pojo.SkAdContent;
 import com.niit.service.cms.service.SkAdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
@@ -40,11 +41,11 @@ public class SkAdController {
 
     // 查询所有广告位,默认查询所有的广告位，可以添加参数用来查询不同状态的广告位
     @GetMapping
-    public PageInfo<SkAd> selectAllAdsense(@RequestParam(value = "status",required=false) Integer status,@RequestParam("currentPage") Integer currentPage,
+    public PageInfo<SkAd> selectAllAdsense(@RequestParam(value = "status", required = false) Integer status, @RequestParam("currentPage") Integer currentPage,
                                            @RequestParam("pageSize") Integer pageSize) {
         PageInfo<SkAd> pageInfo = null;
         try {
-            pageInfo = skAdService.selectAllAdsense(status,currentPage,pageSize);
+            pageInfo = skAdService.selectAllAdsense(status, currentPage, pageSize);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -66,11 +67,11 @@ public class SkAdController {
 
     // 查询特定广告位下的所有广告 order排序 可以查询状态不同的广告位
     @GetMapping("/content")
-    public PageInfo<SkAdContent> selectByAdId(@RequestParam("adId")Integer adId,@RequestParam(value = "status",required=false) Integer status,
-                                              @RequestParam("currentPage") Integer currentPage,@RequestParam("pageSize") Integer pageSize) {
+    public PageInfo<SkAdContent> selectByAdId(@RequestParam("adId") Integer adId, @RequestParam(value = "status", required = false) Integer status,
+                                              @RequestParam("currentPage") Integer currentPage, @RequestParam("pageSize") Integer pageSize) {
         PageInfo<SkAdContent> pageInfo = null;
         try {
-            pageInfo = skAdService.selectByAdId(adId,status,currentPage,pageSize);
+            pageInfo = skAdService.selectByAdId(adId, status, currentPage, pageSize);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -79,11 +80,11 @@ public class SkAdController {
 
     // 根据keycode查询
     @GetMapping("/content/key")
-    public PageInfo<SkAdContent> selectByKeycode(@RequestParam("keycode") String keycode,@RequestParam(value = "status",required=false) Integer status,
-                                              @RequestParam("currentPage") Integer currentPage,@RequestParam("pageSize") Integer pageSize) {
+    public PageInfo<SkAdContent> selectByKeycode(@RequestParam("keycode") String keycode, @RequestParam(value = "status", required = false) Integer status,
+                                                 @RequestParam("currentPage") Integer currentPage, @RequestParam("pageSize") Integer pageSize) {
         PageInfo<SkAdContent> pageInfo = null;
         try {
-            pageInfo = skAdService.selectByKeycode(keycode,status,currentPage,pageSize);
+            pageInfo = skAdService.selectByKeycode(keycode, status, currentPage, pageSize);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -106,7 +107,7 @@ public class SkAdController {
     // 删除某个广告位下的所有广告
     @DeleteMapping("/contents")
     public Integer deleteAllByAdId(@RequestParam Integer adId) {
-        Integer deleteStatus  = 0;
+        Integer deleteStatus = 0;
         try {
             deleteStatus = skAdService.deleteByAdId(adId);
         } catch (Exception e) {
@@ -195,10 +196,10 @@ public class SkAdController {
 
     // 查询所有广告
     @GetMapping("/contents")
-    public String selectAllAd(@RequestParam(value = "status",required=false) Integer status,@RequestParam(value = "title",defaultValue = "") String title,
-            @RequestParam("currentPage") Integer currentPage,
-            @RequestParam("pageSize") Integer pageSize) {
-        return skAdService.selectAllAd(status,title,currentPage,pageSize);
+    public String selectAllAd(@RequestParam(value = "status", required = false) Integer status, @RequestParam(value = "title", defaultValue = "") String title,
+                              @RequestParam("currentPage") Integer currentPage,
+                              @RequestParam("pageSize") Integer pageSize) {
+        return skAdService.selectAllAd(status, title, currentPage, pageSize);
     }
 
     // 查询所有广告位

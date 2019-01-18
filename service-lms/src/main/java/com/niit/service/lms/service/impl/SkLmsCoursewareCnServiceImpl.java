@@ -36,35 +36,36 @@ public class SkLmsCoursewareCnServiceImpl implements SkLmsCoursewareCnService {
 
     //查询所有
     @Override
-    public String selectAll(Integer facultyId,int currentPage, int pageSize,String courseware_title) {
+    public String selectAll(Integer facultyId, int currentPage, int pageSize, String courseware_title) {
         HashMap<String, Object> map = new HashMap<>();
         PageInfo<SkLmsCoursewareCn> listInfo;
-        PageHelper.startPage(currentPage,pageSize);
-        List<SkLmsCoursewareCn> list = sccm.selectAll(facultyId,courseware_title);
+        PageHelper.startPage(currentPage, pageSize);
+        List<SkLmsCoursewareCn> list = sccm.selectAll(facultyId, courseware_title);
         listInfo = new PageInfo<>(list);
         String[] titleAndSuffixArray = new String[list.size()];
         String[] strings = new String[list.size()];
-        String[] times   =  new String[list.size()];
+        String[] times = new String[list.size()];
         if (list.size() > 0) {
             for (int i = 0; i < list.size(); i++) {
                 try {
                     strings[i] = list.get(i).getCoursewareUrl();
-                    titleAndSuffixArray[i] = list.get(i).getCoursewareTitle()+"."+list.get(i).getCoursewareSuffix();
+                    titleAndSuffixArray[i] = list.get(i).getCoursewareTitle() + "." + list.get(i).getCoursewareSuffix();
                     Date time = list.get(i).getCoursewareCreateTime();
-                    SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                     times[i] = sdf.format(time);
                 } catch (Exception e) {
                     return "";
                 }
             }
-            map.put("titleAndSuffixArray",titleAndSuffixArray);
-            map.put("times",times);
+            map.put("titleAndSuffixArray", titleAndSuffixArray);
+            map.put("times", times);
 
         }
-        map.put("SkLmsCoursewareCn",listInfo);
+        map.put("SkLmsCoursewareCn", listInfo);
         Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
         return gson.toJson(map);
     }
+
     //上传文件
     public String JSONTokener(String in) {
         if (in != null && in.startsWith("\ufeff")) {
@@ -72,6 +73,7 @@ public class SkLmsCoursewareCnServiceImpl implements SkLmsCoursewareCnService {
         }
         return in;
     }
+
     @Override
     public int insertSelective(String url) {
         try {
@@ -80,12 +82,12 @@ public class SkLmsCoursewareCnServiceImpl implements SkLmsCoursewareCnService {
 
             String fileUrls = obj.getString("fileUrls");
             //分割获取suffix与title
-                String[] fileSplit = fileUrls.split("/");
-                String fileSplitLast = fileSplit[fileSplit.length - 1];
-                String[] fileSplitSplit = fileSplitLast.split("\\.");
-                String suffix = fileSplitSplit[fileSplitSplit.length - 1];
-                String title = fileSplitSplit[fileSplitSplit.length - 2];
-                try {
+            String[] fileSplit = fileUrls.split("/");
+            String fileSplitLast = fileSplit[fileSplit.length - 1];
+            String[] fileSplitSplit = fileSplitLast.split("\\.");
+            String suffix = fileSplitSplit[fileSplitSplit.length - 1];
+            String title = fileSplitSplit[fileSplitSplit.length - 2];
+            try {
 /*
                     URL url1 = new URL(fileUrl);
                     HttpURLConnection conn = null;
@@ -94,20 +96,20 @@ public class SkLmsCoursewareCnServiceImpl implements SkLmsCoursewareCnService {
                     conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows 7; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.73 Safari/537.36 YNoteCef/5.8.0.1 (Windows)");
                     int size = conn.getContentLength();*/
 
-                    //创建对象往库里插入
-                    SkLmsCoursewareCn cn = new SkLmsCoursewareCn();
-                    cn.setCoursewareCreateTime(new Date());  //日期
-                    cn.setCoursewareTitle(title);   //标题
-                    cn.setCoursewareSuffix(suffix);
-                    cn.setCoursewareUrl(fileUrls);
-                   // cn.setCoursewareSize(size);
+                //创建对象往库里插入
+                SkLmsCoursewareCn cn = new SkLmsCoursewareCn();
+                cn.setCoursewareCreateTime(new Date());  //日期
+                cn.setCoursewareTitle(title);   //标题
+                cn.setCoursewareSuffix(suffix);
+                cn.setCoursewareUrl(fileUrls);
+                // cn.setCoursewareSize(size);
 
-                    //插入
-                    sccm.insertSelective(cn);
+                //插入
+                sccm.insertSelective(cn);
 
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
 
         } catch (JSONException e) {
@@ -180,62 +182,62 @@ public class SkLmsCoursewareCnServiceImpl implements SkLmsCoursewareCnService {
     }*/
 
     @Override
-    public String selectAllWare(Integer facultyId,int currentPage ,int pageSize) {
+    public String selectAllWare(Integer facultyId, int currentPage, int pageSize) {
         HashMap<String, Object> map = new HashMap<>();
         PageInfo<SkLmsCoursewareCn> listInfo;
-        PageHelper.startPage(currentPage,pageSize);
+        PageHelper.startPage(currentPage, pageSize);
         List<SkLmsCoursewareCn> list = sccm.selectAllWare(facultyId);
         listInfo = new PageInfo<>(list);
         String[] titleAndSuffixArray = new String[list.size()];
         String[] strings = new String[list.size()];
-        String[] times   =  new String[list.size()];
+        String[] times = new String[list.size()];
         if (list.size() > 0) {
             for (int i = 0; i < list.size(); i++) {
                 try {
                     strings[i] = list.get(i).getCoursewareUrl();
-                    titleAndSuffixArray[i] = list.get(i).getCoursewareTitle()+"."+list.get(i).getCoursewareSuffix();
+                    titleAndSuffixArray[i] = list.get(i).getCoursewareTitle() + "." + list.get(i).getCoursewareSuffix();
                     Date time = list.get(i).getCoursewareCreateTime();
-                    SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                     times[i] = sdf.format(time);
                 } catch (Exception e) {
                     return "";
                 }
             }
-            map.put("titleAndSuffixArray",titleAndSuffixArray);
-            map.put("times",times);
+            map.put("titleAndSuffixArray", titleAndSuffixArray);
+            map.put("times", times);
 
         }
-        map.put("SkLmsCoursewareCn",listInfo);
+        map.put("SkLmsCoursewareCn", listInfo);
         Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
         return gson.toJson(map);
     }
 
     @Override
-    public String selectAllBatchWare(Integer batchId,int currentPage ,int pageSize ) {
+    public String selectAllBatchWare(Integer batchId, int currentPage, int pageSize) {
         HashMap<String, Object> map = new HashMap<>();
         PageInfo<SkLmsCoursewareCn> listInfo;
-        PageHelper.startPage(currentPage,pageSize);
+        PageHelper.startPage(currentPage, pageSize);
         List<SkLmsCoursewareCn> list = sccm.selectAllBatchWare(batchId);
         listInfo = new PageInfo<>(list);
         String[] titleAndSuffixArray = new String[list.size()];
         String[] strings = new String[list.size()];
-        String[] times   =  new String[list.size()];
+        String[] times = new String[list.size()];
         if (list.size() > 0) {
             for (int i = 0; i < list.size(); i++) {
                 try {
                     strings[i] = list.get(i).getCoursewareUrl();
-                    titleAndSuffixArray[i] = list.get(i).getCoursewareTitle()+"."+list.get(i).getCoursewareSuffix();
+                    titleAndSuffixArray[i] = list.get(i).getCoursewareTitle() + "." + list.get(i).getCoursewareSuffix();
                     Date time = list.get(i).getCoursewareCreateTime();
-                    SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                     times[i] = sdf.format(time);
                 } catch (Exception e) {
                     return "";
                 }
             }
-            map.put("titleAndSuffixArray",titleAndSuffixArray);
-            map.put("times",times);
+            map.put("titleAndSuffixArray", titleAndSuffixArray);
+            map.put("times", times);
         }
-        map.put("SkLmsCoursewareCn",listInfo);
+        map.put("SkLmsCoursewareCn", listInfo);
         Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
         return gson.toJson(map);
 

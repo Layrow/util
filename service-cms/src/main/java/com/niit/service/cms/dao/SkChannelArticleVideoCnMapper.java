@@ -27,28 +27,39 @@ public interface SkChannelArticleVideoCnMapper {
     List<SkChannelArticleVideoCn> likeSelectAll(String title);
 
     int updateByPrimaryKey(SkChannelArticleVideoCn record);
+
     //批量审核
     void updateSt(List<String> list);
+
     //批量删除
-    void  deleteAd(List<String> list);
+    void deleteAd(List<String> list);
+
     //分页查找所有
     List<SkChannelArticleVideoCn> selectAll();
 
     //分页查找所有Hot
     List<SkChannelArticleVideoCn> selectAllByHot();
+
     //分页查找所有Red
     List<SkChannelArticleVideoCn> selectAllByRed();
+
     //分页查找所有Top
     List<SkChannelArticleVideoCn> selectAllByTop();
+
     List<SkChannelArticleVideoCn> selectAllByAudited();
+
     List<SkChannelArticleVideoCn> selectAllByUnaudited();
+
     int batchUp(List<SkChannelArticleVideoCn> lis);
+
     //批量更新
-    void  updateTo(List<String> list);
+    void updateTo(List<String> list);
+
     //批量推荐
-    void  updateRe(List<String> list);
+    void updateRe(List<String> list);
+
     //批量热门
-    void  updateHo(List<String> list);
+    void updateHo(List<String> list);
 
     List<SkChannelArticleVideoCn> selectVideoByCategoryId(List<String> list);
 }

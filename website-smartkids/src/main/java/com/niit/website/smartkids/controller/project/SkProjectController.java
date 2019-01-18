@@ -57,11 +57,11 @@ public class SkProjectController {
 
     // update
     @PutMapping
-    public void updateProject(@RequestBody SkProject skProject,@RequestParam(value = "operationUserId",required = false) Integer operationUserId,
-                              @RequestParam(value = "operationUserName",required = false) String operationUserName,
-                              @RequestParam(value = "operate",required = false,defaultValue = "other") String operate) {
+    public void updateProject(@RequestBody SkProject skProject, @RequestParam(value = "operationUserId", required = false) Integer operationUserId,
+                              @RequestParam(value = "operationUserName", required = false) String operationUserName,
+                              @RequestParam(value = "operate", required = false, defaultValue = "other") String operate) {
         try {
-            skProjectService.updateByPrimaryKey(skProject,operationUserId,operationUserName,operate);
+            skProjectService.updateByPrimaryKey(skProject, operationUserId, operationUserName, operate);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -83,7 +83,7 @@ public class SkProjectController {
     public PageInfo<SkProject> selectMoreProject(@RequestParam(defaultValue = "") Integer status, @RequestParam Integer currentPage, @RequestParam Integer pageSize) {
         PageInfo<SkProject> pageInfo = null;
         try {
-            pageInfo = skProjectService.selectAllProject(status,currentPage,pageSize);
+            pageInfo = skProjectService.selectAllProject(status, currentPage, pageSize);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -103,11 +103,11 @@ public class SkProjectController {
 
     // 根据title模糊查询作品
     @GetMapping("/title")
-    public PageInfo<SkProject> likeSelectProjectByTitle(@RequestParam(defaultValue = "") String status,@RequestParam String title,@RequestParam Integer currentPage,
+    public PageInfo<SkProject> likeSelectProjectByTitle(@RequestParam(defaultValue = "") String status, @RequestParam String title, @RequestParam Integer currentPage,
                                                         @RequestParam Integer pageSize) {
         PageInfo<SkProject> pageInfo = null;
         try {
-            pageInfo = skProjectService.likeSelectProjectByTitle(status,title,currentPage,pageSize);
+            pageInfo = skProjectService.likeSelectProjectByTitle(status, title, currentPage, pageSize);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -116,15 +116,15 @@ public class SkProjectController {
 
     // 按照置顶/推荐/点赞数 查询
     @GetMapping("/type")
-    public PageInfo<SkProject> likeSelectProjectAll(@RequestParam(defaultValue = "",required = false) String title,
-                                                    @RequestParam(defaultValue = "1",required = false) Integer status,
-                                                    @RequestParam(defaultValue = "",required = false) Integer categoryId,
-                                                    @RequestParam(defaultValue ="")String orderBy,
+    public PageInfo<SkProject> likeSelectProjectAll(@RequestParam(defaultValue = "", required = false) String title,
+                                                    @RequestParam(defaultValue = "1", required = false) Integer status,
+                                                    @RequestParam(defaultValue = "", required = false) Integer categoryId,
+                                                    @RequestParam(defaultValue = "") String orderBy,
                                                     @RequestParam Integer currentPage,
                                                     @RequestParam Integer pageSize) {
         PageInfo<SkProject> pageInfo = null;
         try {
-            pageInfo = skProjectService.likeSelectProjectAll(title,status,categoryId,orderBy, currentPage, pageSize);
+            pageInfo = skProjectService.likeSelectProjectAll(title, status, categoryId, orderBy, currentPage, pageSize);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -139,6 +139,6 @@ public class SkProjectController {
 
     @GetMapping("/user_operation")
     public List selectProjectOperation(Integer userId, Integer projectId) {
-        return skProjectService.selectProjectOperation(userId,projectId);
+        return skProjectService.selectProjectOperation(userId, projectId);
     }
 }

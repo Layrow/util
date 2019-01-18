@@ -22,6 +22,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @MapperScan("com.niit.service.project.dao")
 public class ServiceProjectApplication {
     public static void main(String[] args) {
-        SpringApplication.run(ServiceProjectApplication.class,args);
+        SpringApplication.run(ServiceProjectApplication.class, args);
     }
 }

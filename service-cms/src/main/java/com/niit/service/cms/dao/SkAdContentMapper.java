@@ -3,6 +3,7 @@ package com.niit.service.cms.dao;
 import com.niit.service.cms.pojo.SkAdContent;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public interface SkAdContentMapper {
     List<SkAdContent> selectByAdId(@Param("ad_id") Integer adId, @Param("ad_status") Integer status);
 
     // 根据keycode查询广告 order排序 status为1 或 status为0
-    List<SkAdContent> selectByKeycode(@Param("keycode")String keycode, @Param("ad_status") Integer status);
+    List<SkAdContent> selectByKeycode(@Param("keycode") String keycode, @Param("ad_status") Integer status);
 
     // 批量审核广告
     int updateMoreAdContent(List<String> list);
@@ -42,6 +43,6 @@ public interface SkAdContentMapper {
     int updateAdContentMoreSortId(List<SkAdContent> skAdContentList);
 
     // 根据广告位Title模糊查询所有广告
-    List<LinkedHashMap<String,Object>> selectAllAd(@Param("ad_status") Integer status,@Param("title") String title);
+    List<LinkedHashMap<String, Object>> selectAllAd(@Param("ad_status") Integer status, @Param("title") String title);
 
 }

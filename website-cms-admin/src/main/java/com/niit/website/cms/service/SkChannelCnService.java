@@ -11,13 +11,13 @@ import java.util.List;
  **/
 public interface SkChannelCnService {
 
-    int insertSelective(SkChannelCn record,String locale);
+    int insertSelective(SkChannelCn record, String locale);
 
-    int updateByPrimaryKeySelective(SkChannelCn record,String locale);
+    int updateByPrimaryKeySelective(SkChannelCn record, String locale);
 
     // 查询所有频道
     List<SkChannelCn> selectAllChannel(String locale);
 
     // 批量删除频道
-    int deleteMoreChannel(String id,String locale);
+    int deleteMoreChannel(String id, String locale);
 }

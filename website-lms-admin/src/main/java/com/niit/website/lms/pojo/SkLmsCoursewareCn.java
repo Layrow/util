@@ -14,7 +14,7 @@ public class SkLmsCoursewareCn {
     private String coursewareUrl;
 
     private String coursewareSuffix;
-    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date coursewareCreateTime;
 
     private Integer coursewareStatus;

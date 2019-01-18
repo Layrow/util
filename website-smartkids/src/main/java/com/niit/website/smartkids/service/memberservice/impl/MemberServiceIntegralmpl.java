@@ -17,8 +17,8 @@ import javax.annotation.Resource;
 @Service
 public class MemberServiceIntegralmpl implements IMemberItegralService {
 
-    private static final  String SERVICE_NAME = "service-member";
-    private static final  String URL="http://"+SERVICE_NAME+"/integral/";
+    private static final String SERVICE_NAME = "service-member";
+    private static final String URL = "http://" + SERVICE_NAME + "/integral/";
 
     @Resource
     RestTemplate restTemplate;
@@ -32,9 +32,9 @@ public class MemberServiceIntegralmpl implements IMemberItegralService {
     @Override
     public String getTatal(Integer uid) {
         try {
-            String tatal= restTemplate.getForObject(URL+"total?uid="+uid,String.class);
+            String tatal = restTemplate.getForObject(URL + "total?uid=" + uid, String.class);
             return tatal;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -48,6 +48,6 @@ public class MemberServiceIntegralmpl implements IMemberItegralService {
      */
     @Override
     public String interAction(SkMemberIntegral record) {
-            return restTemplate.postForObject(URL+"integral",record,String.class);
+        return restTemplate.postForObject(URL + "integral", record, String.class);
     }
 }

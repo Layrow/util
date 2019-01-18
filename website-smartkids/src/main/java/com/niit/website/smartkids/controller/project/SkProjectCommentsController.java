@@ -91,7 +91,7 @@ public class SkProjectCommentsController {
     public PageInfo<SkProjectComments> selectAllProjectComments(@RequestParam Integer projectId, Integer currentPage, Integer pageSize) {
         PageInfo<SkProjectComments> pageInfo = null;
         try {
-            pageInfo = skProjectCommentsService.selectAllProjectComment(projectId,currentPage, pageSize);
+            pageInfo = skProjectCommentsService.selectAllProjectComment(projectId, currentPage, pageSize);
         } catch (Exception e) {
             e.printStackTrace();
         }

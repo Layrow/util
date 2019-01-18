@@ -22,11 +22,13 @@ public interface SkLmsCoursewareCnMapper {
 
     int updateByPrimaryKey(SkLmsCoursewareCn record);
 
-   // List<SkLmsCoursewareCn>  selectAll(String courseware_title);
+    // List<SkLmsCoursewareCn>  selectAll(String courseware_title);
     //模糊查询
-    List<SkLmsCoursewareCn>  selectAll(@Param("facultyId")Integer facultyId, @Param("courseware_title") String courseware_title);
+    List<SkLmsCoursewareCn> selectAll(@Param("facultyId") Integer facultyId, @Param("courseware_title") String courseware_title);
+
     //查询老师我的课件下所有课件
-    List<SkLmsCoursewareCn>  selectAllWare(Integer facultyId);
+    List<SkLmsCoursewareCn> selectAllWare(Integer facultyId);
+
     //查询班级下的课件
-    List<SkLmsCoursewareCn>  selectAllBatchWare(Integer batchId);
+    List<SkLmsCoursewareCn> selectAllBatchWare(Integer batchId);
 }

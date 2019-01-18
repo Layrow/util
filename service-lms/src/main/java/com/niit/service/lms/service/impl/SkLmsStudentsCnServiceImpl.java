@@ -40,6 +40,7 @@ public class SkLmsStudentsCnServiceImpl implements SkLmsStudentsCnService {
      * SkLmsStudentsCnMapper.insertSelective(SkLmsStudentsCn record)
      * 实现班级和学生的关联
      * SkLmsBatchStudentCnMapper.insertSelective(SkLmsBatchStudentCn record);
+     *
      * @param student
      * @return
      */
@@ -68,22 +69,25 @@ public class SkLmsStudentsCnServiceImpl implements SkLmsStudentsCnService {
 
     /**
      * 实现学生密码的重置,使用自动生成的密码
+     *
      * @param id 需要修改的学生ID
      * @return
      */
     @Override
     public boolean reSetPassword(int id) {
-        SkLmsStudentsCn student  =studentMapper.selectByPrimaryKey(id);
-            //调用工具类的随机生成字符串功能实现密码的重置
-            student.setStudentPwd(randomChar(6));
-            if (studentMapper.updateByPrimaryKey(student) > 0) {
-                return true;
-            } else {
-                return false;
-            }
+        SkLmsStudentsCn student = studentMapper.selectByPrimaryKey(id);
+        //调用工具类的随机生成字符串功能实现密码的重置
+        student.setStudentPwd(randomChar(6));
+        if (studentMapper.updateByPrimaryKey(student) > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
+
     /**
      * 数据修改前的一个回填显示
+     *
      * @param id 需要修改的学生id
      * @return
      */
@@ -94,12 +98,13 @@ public class SkLmsStudentsCnServiceImpl implements SkLmsStudentsCnService {
 
     /**
      * 实现学生信息的修改功能
+     *
      * @param student
      * @return 返回学生修改后的信息
      */
     @Override
     public boolean editStudentInfo(SkLmsStudentsCn student) {
-        return studentMapper.updateByPrimaryKeySelective(student)>0?true:false;
+        return studentMapper.updateByPrimaryKeySelective(student) > 0 ? true : false;
     }
 
     /**
@@ -112,20 +117,21 @@ public class SkLmsStudentsCnServiceImpl implements SkLmsStudentsCnService {
     public boolean deleteStudentByID(Integer id) {
 
         return
-                ( batchStudentCnMapper.deleteByStudentID(id)>0&&studentMapper.deleteByPrimaryKey(id)>0)?true:false;
+                (batchStudentCnMapper.deleteByStudentID(id) > 0 && studentMapper.deleteByPrimaryKey(id) > 0) ? true : false;
     }
 
 
     /**
      * 取得当前班级的所有学生和数量
+     *
      * @param batchID 当前班级ID
      * @return
      */
     @Override
-    public  String showStudents(Integer batchID) {
-        Map<String,Object> map=new HashMap<>(50);
-        map.put("allBatchStudents",studentMapper.selectAllStudentsByBatch(batchID));
-        map.put("allBatchStudentsCount",studentMapper.selectAllStudentsByBatchCount(batchID));
+    public String showStudents(Integer batchID) {
+        Map<String, Object> map = new HashMap<>(50);
+        map.put("allBatchStudents", studentMapper.selectAllStudentsByBatch(batchID));
+        map.put("allBatchStudentsCount", studentMapper.selectAllStudentsByBatchCount(batchID));
         Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
         return gson.toJson(map);
 
@@ -154,24 +160,24 @@ public class SkLmsStudentsCnServiceImpl implements SkLmsStudentsCnService {
     public PageInfo<SkLmsStudentsCn> splitShowStudnets(Integer batchId, Integer currentPage, Integer pageSize) {
         List<SkLmsStudentsCn> list;
         PageInfo<SkLmsStudentsCn> listInfo;
-                PageHelper.startPage(currentPage,pageSize);
-                //执行SQL语句（list->分页后的数据）
-                list=studentMapper.splitSelectAllStudents(batchId);
-                //把取到的list封装进PageInfo(PageInfo->分页信息+分页后的数据）
-                listInfo = new PageInfo<>(list);
-                return  listInfo;
+        PageHelper.startPage(currentPage, pageSize);
+        //执行SQL语句（list->分页后的数据）
+        list = studentMapper.splitSelectAllStudents(batchId);
+        //把取到的list封装进PageInfo(PageInfo->分页信息+分页后的数据）
+        listInfo = new PageInfo<>(list);
+        return listInfo;
     }
 
     @Override
     public boolean exportExcel(List<SkLmsStudentsCn> list, String className, Integer batchId) {
-        int count =0;
-        int lenth=list.size();
-        Iterator<SkLmsStudentsCn> iterator=list.iterator();
-        while (iterator.hasNext()){
-            this.addOne(iterator.next(),batchId,className);
+        int count = 0;
+        int lenth = list.size();
+        Iterator<SkLmsStudentsCn> iterator = list.iterator();
+        while (iterator.hasNext()) {
+            this.addOne(iterator.next(), batchId, className);
             count++;
         }
-        return (count==lenth);
+        return (count == lenth);
     }
 
 

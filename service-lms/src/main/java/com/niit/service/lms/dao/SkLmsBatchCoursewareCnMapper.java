@@ -23,16 +23,20 @@ public interface SkLmsBatchCoursewareCnMapper {
     int updateByPrimaryKeySelective(SkLmsBatchCoursewareCn record);
 
     int updateByPrimaryKey(SkLmsBatchCoursewareCn record);
+
     List<Map<String, Object>> selectClass();
 
     //查询所有班级
     List<Map<String, Object>> selectAllBatch(Integer facultyId);
+
     //查询关联id
-    List<Map<String, Object>>  selectId(@Param("coursewareId") Integer coursewareId, @Param("facultyId")Integer facultyId);
+    List<Map<String, Object>> selectId(@Param("coursewareId") Integer coursewareId, @Param("facultyId") Integer facultyId);
+
     //批量删除
-    void  deleteAd(@Param("list") List<String> list,@Param("coursewareId") Integer coursewareId);
+    void deleteAd(@Param("list") List<String> list, @Param("coursewareId") Integer coursewareId);
+
     //分享班级
-    List<Map<String, Object>> select(@Param("coursewareId") Integer coursewareId, @Param("facultyId")Integer facultyId);
+    List<Map<String, Object>> select(@Param("coursewareId") Integer coursewareId, @Param("facultyId") Integer facultyId);
 
     int insertBatch(List<SkLmsBatchCoursewareCn> skList);
 }

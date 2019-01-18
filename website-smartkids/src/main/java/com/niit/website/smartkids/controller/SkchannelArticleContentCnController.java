@@ -5,6 +5,7 @@ import com.niit.website.smartkids.pojo.SkChannelArticleContentCn;
 import com.niit.website.smartkids.service.SkChannelArticleContentCnService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 /**
@@ -28,7 +29,7 @@ public class SkchannelArticleContentCnController {
                                          Integer currentPage, Integer pageSize) {
         String newsInfos = null;
         try {
-            newsInfos = skChannelArticleContentCnService.selectContentByCategoryId(locale, categoryId,currentPage,pageSize);
+            newsInfos = skChannelArticleContentCnService.selectContentByCategoryId(locale, categoryId, currentPage, pageSize);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -38,13 +39,13 @@ public class SkchannelArticleContentCnController {
     // 查询channel特定的，parent_id为0的栏目类别
     @GetMapping("/articleCategory")
     public List<SkArticleCategoryCn> selectCategory(@RequestParam String locale, @RequestParam Integer channelId) {
-        return  skChannelArticleContentCnService.selectCategory(locale,channelId);
+        return skChannelArticleContentCnService.selectCategory(locale, channelId);
     }
 
     // 根据ID查找
     @GetMapping("/id")
     public SkChannelArticleContentCn selectByPrimaryKeyInfo(Integer id, @RequestParam String locale) {
-        SkChannelArticleContentCn Cn = skChannelArticleContentCnService.selectByPrimaryKeyInfo(id,locale);
+        SkChannelArticleContentCn Cn = skChannelArticleContentCnService.selectByPrimaryKeyInfo(id, locale);
         return Cn;
     }
 

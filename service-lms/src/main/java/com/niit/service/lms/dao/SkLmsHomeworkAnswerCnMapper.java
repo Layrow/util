@@ -19,7 +19,7 @@ public interface SkLmsHomeworkAnswerCnMapper {
     SkLmsHomeworkAnswerCn selectByPrimaryKey(Integer id);
 
     //依据student_id和homeworkid查找
-    SkLmsHomeworkAnswerCn selectByStudentAndHomeworkId(Integer homework_id,Integer student_id);
+    SkLmsHomeworkAnswerCn selectByStudentAndHomeworkId(Integer homework_id, Integer student_id);
 
     int updateByPrimaryKeySelective(SkLmsHomeworkAnswerCn record);
 

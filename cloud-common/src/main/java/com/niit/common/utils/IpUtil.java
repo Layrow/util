@@ -13,8 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 public class IpUtil {
 
     /**
-     * @param request
-     *            IP
+     * @param request IP
      * @return IP Address
      */
     public static String getIpAddrByRequest(HttpServletRequest request) {

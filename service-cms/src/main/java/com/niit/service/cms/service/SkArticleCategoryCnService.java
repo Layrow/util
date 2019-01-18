@@ -16,13 +16,13 @@ public interface SkArticleCategoryCnService {
 
     int deleteByPrimaryKey(String id);
 
-    int insert(SkArticleCategoryCn record,String locale);
+    int insert(SkArticleCategoryCn record, String locale);
 
     int insertSelective(SkArticleCategoryCn record);
 
     SkArticleCategoryCn selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(SkArticleCategoryCn record,String locale);
+    int updateByPrimaryKeySelective(SkArticleCategoryCn record, String locale);
 
     int updateByPrimaryKey(SkArticleCategoryCn record);
 
@@ -33,7 +33,7 @@ public interface SkArticleCategoryCnService {
     // Integer deleteAboutArticleCategoryCn(String id);
 
     // 查询栏目类别节点树，查询所有栏目类别(包含层级关系)
-    List<SkArticleCategoryCn> getNodeTree(Integer channelId,String locale);
+    List<SkArticleCategoryCn> getNodeTree(Integer channelId, String locale);
 
     // 根据ChannelId获取特定栏目类别
     List<SkArticleCategoryCn> selectArticleCategoryByChannelId(Integer channelId);
@@ -42,10 +42,10 @@ public interface SkArticleCategoryCnService {
     List<String> getBaseCategory(String id);
 
     // 根据传来的ID，删除此ID和此ID下的子孙ID栏目类别
-    int deleteAllCategoryCn(String id,String locale);
+    int deleteAllCategoryCn(String id, String locale);
 
     // 批量修改sortId
-    int updateMoreSortId(List<SkArticleCategoryCn> skArticleCategoryCnList,String locale);
+    int updateMoreSortId(List<SkArticleCategoryCn> skArticleCategoryCnList, String locale);
 
     // 根据父类id查询对应的子类
     List<SkArticleCategoryCn> getNextInfos(Integer parentId);
@@ -54,7 +54,7 @@ public interface SkArticleCategoryCnService {
     List<SkArticleCategoryCn> selectAllCategory();
 
     // 查询channel为1的，parent_id为0的栏目类别
-    List<SkArticleCategoryCn> selectNewsCategory(String locale,Integer channelId);
+    List<SkArticleCategoryCn> selectNewsCategory(String locale, Integer channelId);
 
 
 }

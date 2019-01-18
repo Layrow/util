@@ -1,7 +1,6 @@
 package com.niit.website.smartkids.pojo.bbs;
 
 
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;

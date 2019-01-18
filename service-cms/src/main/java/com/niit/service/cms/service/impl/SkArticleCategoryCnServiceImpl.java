@@ -8,6 +8,7 @@ import com.niit.service.cms.pojo.SkArticleCategoryCn;
 import com.niit.service.cms.service.SkArticleCategoryCnService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.lang.reflect.Method;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -35,7 +36,7 @@ public class SkArticleCategoryCnServiceImpl implements SkArticleCategoryCnServic
         CommonMethod commonMethod = new CommonMethod();
 
         Map<Integer, List<SkArticleCategoryCn>> categoryListMap = new LinkedHashMap<>();
-        Map<Integer, List<SkArticleCategoryCn>> result=new LinkedHashMap<>();
+        Map<Integer, List<SkArticleCategoryCn>> result = new LinkedHashMap<>();
         try {
             Object categoryMapper = getCategoryMapper(locale);
             //查询所有的栏目信息列表
@@ -43,7 +44,7 @@ public class SkArticleCategoryCnServiceImpl implements SkArticleCategoryCnServic
             List<SkArticleCategoryCn> categoryList = (List<SkArticleCategoryCn>) categoryMethod.invoke(categoryMapper, channelId);
             //把所有的categoryIds当作
             categoryIds.stream().distinct().forEach(e -> {
-                List<SkArticleCategoryCn> parentCategoryList=new LinkedList();
+                List<SkArticleCategoryCn> parentCategoryList = new LinkedList();
                 parentCategoryList.add(categoryList.stream().filter(c -> c.getId().equals(e)).findFirst().get());
                 categoryListMap.put(e, parentCategoryList);
             });
@@ -63,7 +64,7 @@ public class SkArticleCategoryCnServiceImpl implements SkArticleCategoryCnServic
 
 
     @Override
-    public int insert(SkArticleCategoryCn record,String locale) {
+    public int insert(SkArticleCategoryCn record, String locale) {
         switch (locale) {
             case "zh":
                 return skArticleCategoryCnMapper.insert(record);
@@ -86,7 +87,7 @@ public class SkArticleCategoryCnServiceImpl implements SkArticleCategoryCnServic
     }
 
     @Override
-    public int updateByPrimaryKeySelective(SkArticleCategoryCn record,String locale) {
+    public int updateByPrimaryKeySelective(SkArticleCategoryCn record, String locale) {
         switch (locale) {
             case "zh":
                 return skArticleCategoryCnMapper.updateByPrimaryKeySelective(record);
@@ -107,7 +108,7 @@ public class SkArticleCategoryCnServiceImpl implements SkArticleCategoryCnServic
     @Override
     public int deleteMoreArticleCategoryCn(String id) {
         if ("".equals(id) || id == null) {
-          return 0;
+            return 0;
         }
         // String --> List
         List<String> list = getList(id);
@@ -133,7 +134,7 @@ public class SkArticleCategoryCnServiceImpl implements SkArticleCategoryCnServic
                 List<SkArticleCategoryCn> pList = cnList.stream().filter(e -> e.getParentId() == 0).collect(Collectors.toList());
                 return sortCategory(pList, cnList);
             case "en":
-                List<SkArticleCategoryCn> enList= skArticleCategoryEnMapper.selectAll(channelId);
+                List<SkArticleCategoryCn> enList = skArticleCategoryEnMapper.selectAll(channelId);
                 List<SkArticleCategoryCn> pEnList = enList.stream().filter(e -> e.getParentId() == 0).collect(Collectors.toList());
                 return sortCategory(pEnList, enList);
             default:
@@ -152,7 +153,7 @@ public class SkArticleCategoryCnServiceImpl implements SkArticleCategoryCnServic
         //把儿子插入父亲
         pList.stream().forEach(e -> e.setChildren(totalList.stream().filter(p -> p.getParentId().equals(e.getId())).collect(Collectors.toList())));
         //如果父亲的儿子不为空，那继续递归
-        pList.stream().forEach(p -> sortCategory(p.getChildren().stream().filter(e->e.getId()!=null).collect(Collectors.toList()), totalList));
+        pList.stream().forEach(p -> sortCategory(p.getChildren().stream().filter(e -> e.getId() != null).collect(Collectors.toList()), totalList));
         return pList;
     }
 
@@ -167,48 +168,48 @@ public class SkArticleCategoryCnServiceImpl implements SkArticleCategoryCnServic
     }
 
     // 根据传来的ID，获取所有栏目ID(传来的ID和及其子孙ID)存储在set中 --zh
-    public void getAllChildrenCategoryCn(String id,Set categorySet) {
+    public void getAllChildrenCategoryCn(String id, Set categorySet) {
         categorySet.add(id);
         List<String> baseCategory = skArticleCategoryCnMapper.getBaseCategory(id);
         baseCategory.forEach(x -> {
             categorySet.add(x);
-            getAllChildrenCategoryCn(x,categorySet);
+            getAllChildrenCategoryCn(x, categorySet);
         });
     }
 
     // 根据传来的ID，获取所有栏目ID(传来的ID和及其子孙ID)存储在set中 --en
-    public void getAllChildrenCategoryEn(String id,Set categorySet) {
+    public void getAllChildrenCategoryEn(String id, Set categorySet) {
         categorySet.add(id);
         List<String> baseCategory = skArticleCategoryEnMapper.getBaseCategory(id);
         baseCategory.forEach(x -> {
             categorySet.add(x);
-            getAllChildrenCategoryEn(x,categorySet);
+            getAllChildrenCategoryEn(x, categorySet);
         });
     }
 
     // 根据传来的ID，删除此ID和此ID下的子孙ID栏目类别 ,级联删除与栏目ID集相关的内容
     @Override
-    public int deleteAllCategoryCn(String id,String locale) {
+    public int deleteAllCategoryCn(String id, String locale) {
         Set<String> categorySet = new HashSet<>();
         List<String> idList = getList(id);
         switch (locale) {
             case "zh":
                 idList.forEach(x -> {
-                    getAllChildrenCategoryCn(x,categorySet);
+                    getAllChildrenCategoryCn(x, categorySet);
                 });
                 // Set --> List
                 List list1 = new ArrayList(categorySet);
                 return skArticleCategoryCnMapper.deleteAboutArticleCategoryCn(list1);
             case "en":
                 idList.forEach(x -> {
-                    getAllChildrenCategoryEn(x,categorySet);
+                    getAllChildrenCategoryEn(x, categorySet);
                 });
                 // Set --> List
                 List list2 = new ArrayList(categorySet);
                 return skArticleCategoryEnMapper.deleteAboutArticleCategoryCn(list2);
             default:
                 idList.forEach(x -> {
-                    getAllChildrenCategoryCn(x,categorySet);
+                    getAllChildrenCategoryCn(x, categorySet);
                 });
                 // Set --> List
                 List list3 = new ArrayList(categorySet);
@@ -217,7 +218,7 @@ public class SkArticleCategoryCnServiceImpl implements SkArticleCategoryCnServic
     }
 
     @Override
-    public int updateMoreSortId(List<SkArticleCategoryCn> skArticleCategoryCnList,String locale) {
+    public int updateMoreSortId(List<SkArticleCategoryCn> skArticleCategoryCnList, String locale) {
         switch (locale) {
             case "zh":
                 return skArticleCategoryCnMapper.updateMoreSortId(skArticleCategoryCnList);
@@ -234,7 +235,7 @@ public class SkArticleCategoryCnServiceImpl implements SkArticleCategoryCnServic
     }
 
     @Override
-    public List<SkArticleCategoryCn> selectNewsCategory(String locale,Integer channelId) {
+    public List<SkArticleCategoryCn> selectNewsCategory(String locale, Integer channelId) {
         switch (locale) {
             case "zh":
                 return skArticleCategoryCnMapper.selectCategory(channelId);

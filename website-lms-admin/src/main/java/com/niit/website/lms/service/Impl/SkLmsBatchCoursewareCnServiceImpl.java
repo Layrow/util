@@ -53,7 +53,7 @@ public class SkLmsBatchCoursewareCnServiceImpl implements SkLmsBatchCoursewareCn
 
     @Override
     public String insertBatch(List<SkLmsBatchCoursewareCn> sk) {
-      return restTemplate.postForObject("http://" + SERVICE_NAME + "/batchCourse/batch", sk, String.class);
+        return restTemplate.postForObject("http://" + SERVICE_NAME + "/batchCourse/batch", sk, String.class);
 
     }
 

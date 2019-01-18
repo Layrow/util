@@ -1,6 +1,6 @@
 package com.niit.service.lms.pojo;
 
-public class SkLmsBatchStudentCn  {
+public class SkLmsBatchStudentCn {
     private Integer id;
 
     private Integer studentId;

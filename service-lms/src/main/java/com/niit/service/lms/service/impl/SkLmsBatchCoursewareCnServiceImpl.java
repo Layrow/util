@@ -36,24 +36,24 @@ public class SkLmsBatchCoursewareCnServiceImpl implements SkLmsBatchCoursewareCn
     @Override
     public void deleteAd(String batch_id, Integer coursewareId) {
         List<String> list = getList(batch_id);
-        ccm.deleteAd(list,coursewareId);
+        ccm.deleteAd(list, coursewareId);
 
     }
 
     @Override
-    public List<Map<String,Object>>  select(Integer coursewareId,Integer facultyId) {
-      //  HashMap<String, Object> map = new HashMap<>();
+    public List<Map<String, Object>> select(Integer coursewareId, Integer facultyId) {
+        //  HashMap<String, Object> map = new HashMap<>();
         ArrayList<Map<String, Object>> list = new ArrayList<>();
         List<Map<String, Object>> select = ccm.select(coursewareId, facultyId);
       /*  map.put("ids",ccm.selectId(coursewareId,facultyId));
         map.put("batchInfo",ccm.selectAllBatch(facultyId));*/
-       // list.add(map);
+        // list.add(map);
         return select;
     }
 
     @Override
     public int insertBatch(List<SkLmsBatchCoursewareCn> sk) {
-       return ccm.insertBatch(sk);
+        return ccm.insertBatch(sk);
 
 
     }
@@ -67,6 +67,7 @@ public class SkLmsBatchCoursewareCnServiceImpl implements SkLmsBatchCoursewareCn
 
     /**
      * id放入list
+     *
      * @param id
      * @return
      */
@@ -80,7 +81,6 @@ public class SkLmsBatchCoursewareCnServiceImpl implements SkLmsBatchCoursewareCn
         return list;
 
     }
-
 
 
 }

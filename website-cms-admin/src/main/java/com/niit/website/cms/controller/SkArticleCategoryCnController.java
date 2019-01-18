@@ -29,11 +29,11 @@ public class SkArticleCategoryCnController {
     private SkArticleCategoryCnService skArticleCategoryCnService;
 
     @PostMapping("/parent_list")
-    public Map<Integer,List<SkArticleCategoryCn>> getParentList(@RequestBody List<Integer> list, Integer channelId, String locale) {
-        Map<Integer,List<SkArticleCategoryCn>> map=new LinkedHashMap<>();
+    public Map<Integer, List<SkArticleCategoryCn>> getParentList(@RequestBody List<Integer> list, Integer channelId, String locale) {
+        Map<Integer, List<SkArticleCategoryCn>> map = new LinkedHashMap<>();
         try {
-            String mapString =skArticleCategoryCnService.getParentList(list,channelId,locale);
-            Type type = new TypeToken<Map<Integer,List<SkArticleCategoryCn>>>() {
+            String mapString = skArticleCategoryCnService.getParentList(list, channelId, locale);
+            Type type = new TypeToken<Map<Integer, List<SkArticleCategoryCn>>>() {
             }.getType();
             Gson gson = new Gson();
             if (mapString == null || mapString.isEmpty()) {
@@ -53,10 +53,10 @@ public class SkArticleCategoryCnController {
      * @Return int
      */
     @PostMapping("/articleCategory/{locale}")
-    public Integer insertSkArticleCategoryCn(@RequestBody SkArticleCategoryCn record,@PathVariable("locale") String locale) {
+    public Integer insertSkArticleCategoryCn(@RequestBody SkArticleCategoryCn record, @PathVariable("locale") String locale) {
         Integer insertStatus = 0;
         try {
-            insertStatus = skArticleCategoryCnService.insertSelective(record,locale);
+            insertStatus = skArticleCategoryCnService.insertSelective(record, locale);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -66,16 +66,16 @@ public class SkArticleCategoryCnController {
 
 
     /**
-     * @Description  根据ChannelId获取特定栏目类别
+     * @Description 根据ChannelId获取特定栏目类别
      * @Date 2018/10/31 11:18
      * @Param []
      * @Return java.util.List<com.niit.service.cms.pojo.SkArticleCategoryCn>
      **/
     @GetMapping("/articleCategory/{locale}/{channelId}")
-    public List<SkArticleCategoryCn> getAllCategoryByChannelId(@PathVariable Integer channelId,@PathVariable("locale") String locale) {
+    public List<SkArticleCategoryCn> getAllCategoryByChannelId(@PathVariable Integer channelId, @PathVariable("locale") String locale) {
         List<SkArticleCategoryCn> skArticleCategoryCnList = null;
         try {
-            skArticleCategoryCnList = skArticleCategoryCnService.getNodeTree(channelId,locale);
+            skArticleCategoryCnList = skArticleCategoryCnService.getNodeTree(channelId, locale);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -84,17 +84,17 @@ public class SkArticleCategoryCnController {
 
     /**
      * @Description 批量删除ArticleCategoryCn / 也能删除单条记录
-                    skArticleCategoryCn/articleCategory/10,11,12
-                    -- 删除10,11,12及其三个ID下的子孙栏目类别
+     * skArticleCategoryCn/articleCategory/10,11,12
+     * -- 删除10,11,12及其三个ID下的子孙栏目类别
      * @Date 2018/10/31 11:20
      * @Param [request]
      * @Return java.lang.String
      **/
     @DeleteMapping("/articleCategory/{locale}/{id}")
-    public Integer deleteMoreArticleCategoryCn(@PathVariable("id") String id,@PathVariable("locale") String locale) {
+    public Integer deleteMoreArticleCategoryCn(@PathVariable("id") String id, @PathVariable("locale") String locale) {
         Integer deleteMoreStatus = 0;
         try {
-            deleteMoreStatus = skArticleCategoryCnService.deleteMoreArticleCategoryCn(id,locale);
+            deleteMoreStatus = skArticleCategoryCnService.deleteMoreArticleCategoryCn(id, locale);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -109,8 +109,8 @@ public class SkArticleCategoryCnController {
      * @Return java.lang.Integer
      **/
     @PutMapping("/articleCategory/{locale}")
-    public Integer updateSkArticleCategoryCn(@RequestBody SkArticleCategoryCn record,@PathVariable("locale") String locale) {
-        return skArticleCategoryCnService.updateByPrimaryKeySelective(record,locale);
+    public Integer updateSkArticleCategoryCn(@RequestBody SkArticleCategoryCn record, @PathVariable("locale") String locale) {
+        return skArticleCategoryCnService.updateByPrimaryKeySelective(record, locale);
     }
 
     /**
@@ -120,9 +120,10 @@ public class SkArticleCategoryCnController {
      * @Return void
      **/
     @PutMapping("/articleCategory/moreArticleCategory/{locale}")
-    public void updateMoreSortId(@RequestBody List<SkArticleCategoryCn> skArticleCategoryCnList,@PathVariable String locale) {
-        skArticleCategoryCnService.updateMoreSortId(skArticleCategoryCnList,locale);
+    public void updateMoreSortId(@RequestBody List<SkArticleCategoryCn> skArticleCategoryCnList, @PathVariable String locale) {
+        skArticleCategoryCnService.updateMoreSortId(skArticleCategoryCnList, locale);
     }
+
     /**
      * @Description 根据父类id查询对应的子类
      * @Date 2018/11/30 9:32

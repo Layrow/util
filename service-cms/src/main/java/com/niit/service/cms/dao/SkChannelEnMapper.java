@@ -13,7 +13,6 @@ public interface SkChannelEnMapper {
     int insert(Object o);
 
 
-
     int insertSelective(SkChannelCn record);
 
     SkChannelCn selectByPrimaryKey(Integer id);
@@ -21,8 +20,10 @@ public interface SkChannelEnMapper {
     int updateByPrimaryKeySelective(SkChannelCn record);
 
     int updateByPrimaryKey(SkChannelCn record);
+
     // 查询所有channel
     List<SkChannelCn> selectAllChannel();
+
     // 批量删除
     int deleteMoreChannel(List<String> list);
 }

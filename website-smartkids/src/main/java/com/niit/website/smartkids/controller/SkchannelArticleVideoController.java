@@ -24,7 +24,7 @@ public class SkchannelArticleVideoController {
     SkchannelArticleVideoService skchannelArticleVideoService;
 
     @GetMapping(value = "/category")
-    public Integer getByCategory(String key,Integer pageSize,Integer currentPage,Integer categoryId){
+    public Integer getByCategory(String key, Integer pageSize, Integer currentPage, Integer categoryId) {
 //        skchannelArticleVideoService.
         return 1;
     }
@@ -35,7 +35,7 @@ public class SkchannelArticleVideoController {
                                          Integer currentPage, Integer pageSize) {
         String newsInfos = null;
         try {
-            newsInfos = skchannelArticleVideoService.selectVideoByCategoryId(locale, categoryId,currentPage,pageSize);
+            newsInfos = skchannelArticleVideoService.selectVideoByCategoryId(locale, categoryId, currentPage, pageSize);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -45,13 +45,13 @@ public class SkchannelArticleVideoController {
     // 查询channel特定的，parent_id为0的栏目类别
     @GetMapping("/articleCategory")
     public List<SkChannelArticleVideoCn> selectCategory(@RequestParam String locale, @RequestParam Integer channelId) {
-        return  skchannelArticleVideoService.selectCategory(locale,channelId);
+        return skchannelArticleVideoService.selectCategory(locale, channelId);
     }
 
     // 根据ID查找
     @GetMapping("/id")
     public SkChannelArticleVideoCn selectByPrimaryKeyInfo(@RequestParam Integer id, @RequestParam String locale) {
-        SkChannelArticleVideoCn Cn = skchannelArticleVideoService.selectByPrimaryKeyInfo(id,locale);
+        SkChannelArticleVideoCn Cn = skchannelArticleVideoService.selectByPrimaryKeyInfo(id, locale);
         return Cn;
     }
 

@@ -25,7 +25,7 @@ public class SkBbsReplyServiceImpl implements SkBbsReplyService {
     @Override
     public String replyInfo(Integer sectionId) {
         return restTemplate.postForObject("http://" + SERVICE_NAME +
-                "/reply/replyInfo?sectionId="+sectionId,null,String.class);
+                "/reply/replyInfo?sectionId=" + sectionId, null, String.class);
     }
 
     @Override
@@ -36,22 +36,23 @@ public class SkBbsReplyServiceImpl implements SkBbsReplyService {
 
     @Override
     public int deleteByPrimaryKey(Integer id) {
-       // restTemplate.delete("http://"+SERVICE_NAME+"/reply");
+        // restTemplate.delete("http://"+SERVICE_NAME+"/reply");
         return 0;
     }
 
     @Override
     public PageInfo<SkBbsReply> selectReply(Integer currentPage, Integer pageSize, String replyUserId) {
-        return restTemplate.getForObject("http://"+SERVICE_NAME+"/reply/reply?currentPage="+currentPage+"&pageSize="+pageSize+"&replyUserId="+replyUserId,PageInfo.class);
+        return restTemplate.getForObject("http://" + SERVICE_NAME + "/reply/reply?currentPage=" + currentPage + "&pageSize=" + pageSize + "&replyUserId=" + replyUserId, PageInfo.class);
     }
+
     @Override
     public String selectCount(Integer topicId) {
-        return restTemplate.getForObject("http://"+SERVICE_NAME+"/reply/count?topicId="+topicId,String.class);
+        return restTemplate.getForObject("http://" + SERVICE_NAME + "/reply/count?topicId=" + topicId, String.class);
     }
 
     @Override
     public PageInfo<SkBbsReply> selectAllReply(Integer topicId, Integer currentPage, Integer pageSize) {
-       return restTemplate.getForObject("http://"+SERVICE_NAME+"/reply?topicId="+topicId+"&currentPage="+currentPage+"&pageSize="+pageSize,PageInfo.class);
+        return restTemplate.getForObject("http://" + SERVICE_NAME + "/reply?topicId=" + topicId + "&currentPage=" + currentPage + "&pageSize=" + pageSize, PageInfo.class);
 
     }
 
@@ -63,7 +64,7 @@ public class SkBbsReplyServiceImpl implements SkBbsReplyService {
     @Override
     public PageInfo<SkBbsReply> selectAllDirtyReply(Integer currentPage, Integer pageSize) {
         return restTemplate.postForObject("http://" + SERVICE_NAME +
-                "/reply/dirtyReply?currentPage="+currentPage+"&pageSize="+pageSize,null,PageInfo.class);
+                "/reply/dirtyReply?currentPage=" + currentPage + "&pageSize=" + pageSize, null, PageInfo.class);
     }
 
     @Override
@@ -74,39 +75,40 @@ public class SkBbsReplyServiceImpl implements SkBbsReplyService {
 
     @Override
     public void deleteAd(String id) {
-        restTemplate.delete("http://"+SERVICE_NAME+"/reply/batch?id="+id);
+        restTemplate.delete("http://" + SERVICE_NAME + "/reply/batch?id=" + id);
 
     }
 
     @Override
     public PageInfo<SkBbsReply> selectAll(Integer currentPage, Integer pageSize) {
-        return restTemplate.getForObject("http://"+SERVICE_NAME+"/reply/all?currentPage="+currentPage+"&pageSize="+pageSize,PageInfo.class);
+        return restTemplate.getForObject("http://" + SERVICE_NAME + "/reply/all?currentPage=" + currentPage + "&pageSize=" + pageSize, PageInfo.class);
     }
 
     @Override
     public int updateByPrimaryKeySelective(SkBbsReply record) {
-         restTemplate.put("http://"+SERVICE_NAME+"/reply",record);
-         return  1;
+        restTemplate.put("http://" + SERVICE_NAME + "/reply", record);
+        return 1;
     }
+
     @Override
     public void updateAd(String id) {
-        restTemplate.put("http://"+SERVICE_NAME+"/reply/batch?id="+id,id);
+        restTemplate.put("http://" + SERVICE_NAME + "/reply/batch?id=" + id, id);
 
     }
 
     @Override
     public PageInfo<SkBbsReply> selectAllStatus(Integer currentPage, Integer pageSize) {
-        return restTemplate.getForObject("http://"+SERVICE_NAME+"/reply/status?currentPage="+currentPage+"&pageSize="+pageSize,PageInfo.class);
+        return restTemplate.getForObject("http://" + SERVICE_NAME + "/reply/status?currentPage=" + currentPage + "&pageSize=" + pageSize, PageInfo.class);
     }
 
     @Override
     public PageInfo<SkBbsReply> selectAllNoStatus(Integer currentPage, Integer pageSize) {
-        return restTemplate.getForObject("http://"+SERVICE_NAME+"/reply/NoStatus?currentPage="+currentPage+"&pageSize="+pageSize,PageInfo.class);
+        return restTemplate.getForObject("http://" + SERVICE_NAME + "/reply/NoStatus?currentPage=" + currentPage + "&pageSize=" + pageSize, PageInfo.class);
     }
 
     @Override
     public String selectAll() {
-        return  restTemplate.getForObject("http://"+SERVICE_NAME+"/reply/replyAll",String.class);
+        return restTemplate.getForObject("http://" + SERVICE_NAME + "/reply/replyAll", String.class);
     }
 
 }

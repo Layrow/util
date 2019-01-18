@@ -20,8 +20,9 @@ public enum NotificationEnum {
     COLLECT(3);
 
     private int operation;
-    private NotificationEnum(int operation){
-        this.operation=operation;
+
+    private NotificationEnum(int operation) {
+        this.operation = operation;
     }
 
     public int getOperation() {

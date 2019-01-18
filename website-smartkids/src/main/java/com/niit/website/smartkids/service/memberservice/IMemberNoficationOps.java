@@ -13,6 +13,7 @@ import com.niit.website.smartkids.pojo.member.SkMemberNotificationOps;
 public interface IMemberNoficationOps {
     /**
      * 添加一条通知
+     *
      * @param record
      * @return
      */
@@ -20,6 +21,7 @@ public interface IMemberNoficationOps {
 
     /**
      * 根据通知主键删除通知
+     *
      * @param nId
      * @return
      */
@@ -27,8 +29,9 @@ public interface IMemberNoficationOps {
 
     /**
      * 查询用户下的所有通知
+     *
      * @param currentPage 当前页
-     * @param pageSize  页面大小
+     * @param pageSize    页面大小
      * @param uId
      * @return
      */

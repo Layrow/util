@@ -30,26 +30,26 @@ public class SkChannelArticleGoodsOrderServiceImpl implements SkChannelArticleGo
 
     @Override
     public Integer checkIsOwned(Integer userId, Integer goodId) {
-        List<SkChannelArticleGoodsOrder> list =skChannelArticleGoodsOrderMapper.selectByUserId(userId);
-        return list.stream().filter(e->e.getGoodsId()==goodId).collect(Collectors.toList()).size();
+        List<SkChannelArticleGoodsOrder> list = skChannelArticleGoodsOrderMapper.selectByUserId(userId);
+        return list.stream().filter(e -> e.getGoodsId() == goodId).collect(Collectors.toList()).size();
     }
 
     @Override
     public List<SkChannelArticleGoodsCostumes> selectSpritesByUserId(Integer userId) {
-        List<SkChannelArticleGoodsOrder> goodsList=
-        skChannelArticleGoodsOrderMapper.selectByUserId(userId);
+        List<SkChannelArticleGoodsOrder> goodsList =
+                skChannelArticleGoodsOrderMapper.selectByUserId(userId);
         //拿到订单表里的所有goodId列表,然后goodId列表去造型表批量查询对应的造型
-        List<Integer> goodsIdList= goodsList.stream().map(e->e.getGoodsId()).collect(Collectors.toList());
+        List<Integer> goodsIdList = goodsList.stream().map(e -> e.getGoodsId()).collect(Collectors.toList());
         return skChannelArticleGoodsCostumesMapper.selectSpritesByGoodsId(goodsIdList);
 
     }
 
     @Override
     public List<SkChannelArticleGoodsCostumes> selectBackdropsByUserId(Integer userId) {
-        List<SkChannelArticleGoodsOrder> goodsList=
+        List<SkChannelArticleGoodsOrder> goodsList =
                 skChannelArticleGoodsOrderMapper.selectByUserId(userId);
         //拿到订单表里的所有goodId列表,然后goodId列表去造型表批量查询对应的造型
-        List<Integer> goodsIdList= goodsList.stream().map(e->e.getGoodsId()).collect(Collectors.toList());
+        List<Integer> goodsIdList = goodsList.stream().map(e -> e.getGoodsId()).collect(Collectors.toList());
         return skChannelArticleGoodsCostumesMapper.selectBackdropsByGoodsId(goodsIdList);
     }
 

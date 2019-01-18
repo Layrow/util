@@ -24,37 +24,40 @@ public class SkMemberNotificationController {
 
     /**
      * 添加一个通知
+     *
      * @param record
      * @return
      */
     @PostMapping("/add")
-    public String add(@RequestBody SkMemberNotificationOps record){
-       return  String.valueOf(notificationService.insertNotification(record));
+    public String add(@RequestBody SkMemberNotificationOps record) {
+        return String.valueOf(notificationService.insertNotification(record));
     }
 
     /**
      * 删除用户列表下的 一条通知
+     *
      * @param nId
      * @return
      */
     @DeleteMapping("/delete")
-    public boolean delete(@RequestParam Integer nId){
+    public boolean delete(@RequestParam Integer nId) {
         return notificationService.deleteNotification(nId);
     }
 
     /**
      * 删除用户列表下的 一条通知
+     *
      * @param
      * @return
      */
     @DeleteMapping("/delnotification")
-    public int delete(@RequestParam Integer userId,@RequestParam Integer projectId,@RequestParam Integer operation){
-        return notificationService.deleteNotification(userId,projectId,operation);
+    public int delete(@RequestParam Integer userId, @RequestParam Integer projectId, @RequestParam Integer operation) {
+        return notificationService.deleteNotification(userId, projectId, operation);
     }
 
     @PostMapping("/listAll")
-    public PageInfo<SkMemberNotificationOps> listAll(@RequestParam Integer currentPage,@RequestParam Integer pageSize,@RequestParam Integer uId){
-        return notificationService.listAll(currentPage,pageSize,uId);
+    public PageInfo<SkMemberNotificationOps> listAll(@RequestParam Integer currentPage, @RequestParam Integer pageSize, @RequestParam Integer uId) {
+        return notificationService.listAll(currentPage, pageSize, uId);
     }
 
 

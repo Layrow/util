@@ -21,12 +21,13 @@ public class MemberIntegralController {
     IMemberItegralService memberItegralService;
 
     @GetMapping("/total")
-    public String total(@RequestParam Integer uId){
-           return memberItegralService.getTatal(uId) ;
+    public String total(@RequestParam Integer uId) {
+        return memberItegralService.getTatal(uId);
 
     }
+
     @PostMapping("integral")
-    public  String integral (@RequestBody SkMemberIntegral record){
-         return memberItegralService.interAction(record);
+    public String integral(@RequestBody SkMemberIntegral record) {
+        return memberItegralService.interAction(record);
     }
 }

@@ -26,6 +26,7 @@ public class SkMemberSYSNotificationImpl implements ISkMemberSysNotificationServ
 
     @Resource
     SkMemberNotificationSystemMapper systemMapper;
+
     /**
      * 增加一条系统通知
      *
@@ -36,14 +37,14 @@ public class SkMemberSYSNotificationImpl implements ISkMemberSysNotificationServ
     public boolean add(SkMemberNotificationSystem record) {
         record.setNoticeTime(new Date());
         try {
-            if (systemMapper.insertSelective(record)>0){
+            if (systemMapper.insertSelective(record) > 0) {
                 return true;
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
-        return  false;
+        return false;
     }
 
     /**
@@ -55,14 +56,14 @@ public class SkMemberSYSNotificationImpl implements ISkMemberSysNotificationServ
     @Override
     public boolean delete(String id) {
         try {
-            if (systemMapper.deleteByPrimaryKey(Tools.getList(id))>0){
+            if (systemMapper.deleteByPrimaryKey(Tools.getList(id)) > 0) {
                 return true;
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
-        return  false;
+        return false;
     }
 
     /**
@@ -74,14 +75,14 @@ public class SkMemberSYSNotificationImpl implements ISkMemberSysNotificationServ
     @Override
     public boolean update(SkMemberNotificationSystem record) {
         try {
-            if (systemMapper.updateByPrimaryKeySelective(record)>0){
+            if (systemMapper.updateByPrimaryKeySelective(record) > 0) {
                 return true;
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
-        return  false;
+        return false;
     }
 
     /**
@@ -93,11 +94,11 @@ public class SkMemberSYSNotificationImpl implements ISkMemberSysNotificationServ
     public PageInfo<SkMemberNotificationSystem> listAll(Integer currentPage, Integer pageSize) {
         List<SkMemberNotificationSystem> list;
         PageInfo<SkMemberNotificationSystem> listInfo;
-        PageHelper.startPage(currentPage,pageSize);
+        PageHelper.startPage(currentPage, pageSize);
         //执行SQL语句（list->分页后的数据）
-        list=systemMapper.selectAllSys();
+        list = systemMapper.selectAllSys();
         //把取到的list封装进PageInfo(PageInfo->分页信息+分页后的数据）
         listInfo = new PageInfo<>(list);
-        return  listInfo;
+        return listInfo;
     }
 }

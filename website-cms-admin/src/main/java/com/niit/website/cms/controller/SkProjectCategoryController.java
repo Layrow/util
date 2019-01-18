@@ -32,7 +32,7 @@ public class SkProjectCategoryController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteProjectCategory(@PathVariable  Integer id) {
+    public void deleteProjectCategory(@PathVariable Integer id) {
         try {
             skProjectCategoryService.deleteByPrimaryKey(id);
         } catch (Exception e) {

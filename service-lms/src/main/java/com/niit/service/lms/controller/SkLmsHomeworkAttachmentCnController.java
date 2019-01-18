@@ -17,6 +17,7 @@ public class SkLmsHomeworkAttachmentCnController {
 
     @Autowired
     private SkLmsHomeworkAttachmentCnSerive skLmsHomeworkAttachmentCnSerive;
+
     @DeleteMapping("/homeworkAttachment/{id}")
     public void deleteSkLmsHomeworkAttachment(@PathVariable Integer id) {
         skLmsHomeworkAttachmentCnSerive.deleteByPrimaryKey(id);

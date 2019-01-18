@@ -15,17 +15,20 @@ import java.util.Map;
  */
 public interface SkBbsReplyService {
 
-    PageInfo<SkBbsReply>  selectDirtyReply(Integer currentPage, Integer pageSize);
+    PageInfo<SkBbsReply> selectDirtyReply(Integer currentPage, Integer pageSize);
 
     int insertSelective(SkBbsReply record);
 
     int deleteByPrimaryKey(Integer id);
+
     //查询所有回复帖总数
     String selectCount(Integer topicId);
+
     //查询帖子的所有回复帖
     PageInfo<SkBbsReply> selectAllReply(Integer topicId, Integer currentPage, Integer pageSize);
+
     //最新回复日期
-    Map<String,Object> selectDate(Integer topicId);
+    Map<String, Object> selectDate(Integer topicId);
 
     void deleteAd(String id);
 
@@ -35,22 +38,24 @@ public interface SkBbsReplyService {
     int updateByPrimaryKeySelective(SkBbsReply record);
 
     // 批量审核
-    void  updateAd(String id);
+    void updateAd(String id);
 
 
     //查询审核
     PageInfo<SkBbsReply> selectAllStatus(Integer currentPage, Integer pageSize);
 
     //查询未审核
-    PageInfo<SkBbsReply>  selectAllNoStatus(Integer currentPage, Integer pageSize);
+    PageInfo<SkBbsReply> selectAllNoStatus(Integer currentPage, Integer pageSize);
+
     //查询用户的所有回帖
-    PageInfo<SkBbsReply>  selectReply(Integer currentPage, Integer pageSize,String replyUserId);
+    PageInfo<SkBbsReply> selectReply(Integer currentPage, Integer pageSize, String replyUserId);
 
-   // Map<Integer,List<Object>>  selectReplyUserId(Integer currentPage, Integer pageSize,String replyUserId);
+    // Map<Integer,List<Object>>  selectReplyUserId(Integer currentPage, Integer pageSize,String replyUserId);
 
 
-    Map<Integer,List<Object>> replyInfo(Integer sectionId);
-    Map<Integer,List<Object>> selectAll();
+    Map<Integer, List<Object>> replyInfo(Integer sectionId);
+
+    Map<Integer, List<Object>> selectAll();
 
 
 }

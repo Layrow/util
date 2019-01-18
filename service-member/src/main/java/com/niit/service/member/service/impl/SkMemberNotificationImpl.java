@@ -23,6 +23,7 @@ public class SkMemberNotificationImpl implements ISkMemberNotificationService {
 
     @Resource
     SkMemberNotificationOpsMapper notificationOpsMapper;
+
     /**
      * 添加一条通知
      *
@@ -33,14 +34,14 @@ public class SkMemberNotificationImpl implements ISkMemberNotificationService {
     public boolean insertNotification(SkMemberNotificationOps record) {
         try {
             record.setNoticeTime(new Date());
-            if ( notificationOpsMapper.insert(record)>0){
+            if (notificationOpsMapper.insert(record) > 0) {
                 return true;
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            return  false;
+            return false;
         }
-            return  false;
+        return false;
     }
 
     /**
@@ -52,19 +53,19 @@ public class SkMemberNotificationImpl implements ISkMemberNotificationService {
     @Override
     public boolean deleteNotification(Integer notificationId) {
         try {
-            if ( notificationOpsMapper.deleteByPrimaryKey(notificationId)>0){
+            if (notificationOpsMapper.deleteByPrimaryKey(notificationId) > 0) {
                 return true;
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            return  false;
+            return false;
         }
-        return  false;
+        return false;
     }
 
     @Override
-    public int deleteNotification(Integer user_id, Integer project_id,Integer operation) {
-        return notificationOpsMapper.deleteNotification(user_id,project_id,operation);
+    public int deleteNotification(Integer user_id, Integer project_id, Integer operation) {
+        return notificationOpsMapper.deleteNotification(user_id, project_id, operation);
     }
 
     /**
@@ -74,14 +75,14 @@ public class SkMemberNotificationImpl implements ISkMemberNotificationService {
      * @return
      */
     @Override
-    public PageInfo<SkMemberNotificationOps> listAll(Integer currentPage, Integer pageSize,Integer userId) {
+    public PageInfo<SkMemberNotificationOps> listAll(Integer currentPage, Integer pageSize, Integer userId) {
         List<SkMemberNotificationOps> list;
         PageInfo<SkMemberNotificationOps> listInfo;
-        PageHelper.startPage(currentPage,pageSize);
+        PageHelper.startPage(currentPage, pageSize);
         //执行SQL语句（list->分页后的数据）
-        list=notificationOpsMapper.selectAll(userId);
+        list = notificationOpsMapper.selectAll(userId);
         //把取到的list封装进PageInfo(PageInfo->分页信息+分页后的数据）
         listInfo = new PageInfo<>(list);
-        return  listInfo;
+        return listInfo;
     }
 }

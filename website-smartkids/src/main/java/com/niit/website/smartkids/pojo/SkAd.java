@@ -10,7 +10,7 @@ public class SkAd {
     private String title;
 
     private String content;
-    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     private Integer status;

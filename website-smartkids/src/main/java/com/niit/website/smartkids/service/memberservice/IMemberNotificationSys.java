@@ -15,6 +15,7 @@ public interface IMemberNotificationSys {
 
     /**
      * 增加一条系统通知
+     *
      * @param record
      * @return
      */
@@ -22,6 +23,7 @@ public interface IMemberNotificationSys {
 
     /**
      * 删除一条系统通知
+     *
      * @param id
      * @return
      */
@@ -29,6 +31,7 @@ public interface IMemberNotificationSys {
 
     /**
      * 修改一条系统通知
+     *
      * @param record
      * @return
      */
@@ -36,6 +39,7 @@ public interface IMemberNotificationSys {
 
     /**
      * 显示所有的 系统通知
+     *
      * @return
      */
     PageInfo<SkMemberNotificationSystem> listAll(Integer currentPage, Integer pageSize);

@@ -1,0 +1,16 @@
+com\niit\service\bbs\dao\SkBbsReplyMapper.class
+com\niit\service\bbs\dao\SkBbsTopicMapper.class
+com\niit\service\bbs\service\SkBbsSectionService.class
+com\niit\service\bbs\controller\SkBbsTopicController.class
+com\niit\service\bbs\dao\SkBbsSectionMapper.class
+com\niit\service\bbs\controller\SkBbsSectionController.class
+com\niit\service\bbs\service\impl\SkBbsSectionServiceImpl.class
+com\niit\service\bbs\pojo\SkBbsSection.class
+com\niit\service\bbs\service\impl\SkBbsTopicServiceImpl.class
+com\niit\service\bbs\service\SkBbsReplyService.class
+com\niit\service\bbs\service\SkBbsTopicService.class
+com\niit\service\bbs\controller\SkBbsReplyController.class
+com\niit\service\bbs\ServiceBBSApplication.class
+com\niit\service\bbs\pojo\SkBbsReply.class
+com\niit\service\bbs\pojo\SkBbsTopic.class
+com\niit\service\bbs\service\impl\SkBbsReplyServiceImpl.class

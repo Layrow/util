@@ -19,6 +19,7 @@ public interface SkLmsBatchHomeworkCnService {
     int updateByPrimaryKeySelective(SkLmsBatchHomeworkCn record);
 
     int updateByPrimaryKey(SkLmsBatchHomeworkCn record);
+
     // 根据homeworkID删除附件与作业的关系
     int deleteByHomeworkId(Integer homeworkId);
 }

@@ -33,7 +33,7 @@ public class SkProjectCategoryController {
     }
 
     @DeleteMapping("/{id}")
-    public Integer deleteProjectCategory(@PathVariable  Integer id) {
+    public Integer deleteProjectCategory(@PathVariable Integer id) {
         Integer deleteStatus = 0;
         try {
             deleteStatus = skProjectCategoryService.deleteByPrimaryKey(id);

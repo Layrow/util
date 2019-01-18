@@ -36,33 +36,36 @@ public class SkBbsReplyController {
 
     /**
      * 回帖信息
+     *
      * @param sectionId
      * @return
      */
     @PostMapping("/replyInfo")
-    public Map<Integer, List<Object>> replyInfo(@RequestParam  Integer sectionId){
+    public Map<Integer, List<Object>> replyInfo(@RequestParam Integer sectionId) {
         String s = skBbsReplyService.replyInfo(sectionId);
         Map<Integer, List<Object>> map = null;
-        Type type = new TypeToken< Map<Integer, List<Object>>>() {
+        Type type = new TypeToken<Map<Integer, List<Object>>>() {
         }.getType();
         Gson gson = new Gson();
-        if(s==null||s.isEmpty()){
+        if (s == null || s.isEmpty()) {
             return map;
         }
-        map= gson.fromJson(s,type);
+        map = gson.fromJson(s, type);
         return map;
 
     }
+
     /**
-    * 功能描述:添加一个回帖  * 测试成功
-    * @author huangwei
-    * @date :2018/12/04
-    * @params [skBbsReply]
-    * @return int
-    */
+     * 功能描述:添加一个回帖  * 测试成功
+     *
+     * @return int
+     * @author huangwei
+     * @date :2018/12/04
+     * @params [skBbsReply]
+     */
     @PostMapping
     public int insertSelective(@RequestBody SkBbsReply record, @RequestParam Integer rid) {
-        SkMemberIntegral integral =new SkMemberIntegral();
+        SkMemberIntegral integral = new SkMemberIntegral();
         integral.setUserId(rid);
         integral.setActions(IntegralActionsEnum.POST_REPLY.getAction());
         integral.setOperation(IntegralActionsEnum.POST_REPLY.getOperation());
@@ -73,141 +76,164 @@ public class SkBbsReplyController {
 
 
     }
+
     /**
-    * 功能描述:删除自己回复的评论
-    * @author huangwei
-    * @date :2018/12/04
-    * @params [id]
-    * @return int
-    */
+     * 功能描述:删除自己回复的评论
+     *
+     * @return int
+     * @author huangwei
+     * @date :2018/12/04
+     * @params [id]
+     */
     @DeleteMapping
-    public  int deletePrimaryKey(Integer id){
-        return  skBbsReplyService.deleteByPrimaryKey(id);
+    public int deletePrimaryKey(Integer id) {
+        return skBbsReplyService.deleteByPrimaryKey(id);
     }
+
     /**
-    * 功能描述:查询帖子的所有回复帖分页（排序）   *  测试成功
-    * @author huangwei
-    * @date :2018/12/04
-    * @params [topicId]
-    * @return java.util.List<com.niit.service.bbs.pojo.SkBbsReply>
-    */
+     * 功能描述:查询帖子的所有回复帖分页（排序）   *  测试成功
+     *
+     * @return java.util.List<com.niit.service.bbs.pojo.SkBbsReply>
+     * @author huangwei
+     * @date :2018/12/04
+     * @params [topicId]
+     */
     @GetMapping
-    public PageInfo<SkBbsReply> selectAllReply(Integer topicId,Integer currentPage,Integer pageSize){
+    public PageInfo<SkBbsReply> selectAllReply(Integer topicId, Integer currentPage, Integer pageSize) {
         PageInfo<SkBbsReply> pageInfo = skBbsReplyService.selectAllReply(topicId, currentPage, pageSize);
         return pageInfo;
     }
+
     @PostMapping("/dirtyReply")
-    public PageInfo<SkBbsReply> dirtyReply(Integer currentPage,Integer pageSize){
-        PageInfo<SkBbsReply> pageInfo = skBbsReplyService.selectAllDirtyReply( currentPage, pageSize);
+    public PageInfo<SkBbsReply> dirtyReply(Integer currentPage, Integer pageSize) {
+        PageInfo<SkBbsReply> pageInfo = skBbsReplyService.selectAllDirtyReply(currentPage, pageSize);
         return pageInfo;
     }
+
     /**
-    * 功能描述:查询所有回复数    *测试成功
-    * @author huangwei
-    * @date :2018/12/04
-    * @params [topicId]
-    * @return int
-    */
+     * 功能描述:查询所有回复数    *测试成功
+     *
+     * @return int
+     * @author huangwei
+     * @date :2018/12/04
+     * @params [topicId]
+     */
     @GetMapping("/count")
-    public String selectCount(Integer topicId){
+    public String selectCount(Integer topicId) {
 
         String s = skBbsReplyService.selectCount(topicId);
-        return  s;
+        return s;
 
     }
+
     /**
-    * 功能描述:获取最近回复时间和回复人  *  测试成功
-    * @author huangwei
-    * @date :2018/12/05
-    * @params [topicId]
-    * @return java.util.Map<java.lang.String,java.lang.Object>
-    */
+     * 功能描述:获取最近回复时间和回复人  *  测试成功
+     *
+     * @return java.util.Map<java.lang.String   ,   java.lang.Object>
+     * @author huangwei
+     * @date :2018/12/05
+     * @params [topicId]
+     */
     @GetMapping("/date")
-    public Map<String, Object> selectDate(Integer topicId){
+    public Map<String, Object> selectDate(Integer topicId) {
         Map<String, Object> map = skBbsReplyService.selectDate(topicId);
         return map;
     }
+
     /**
-    * 功能描述:批量删除回帖   *测试成功
-    * @author huangwei
-    * @date :2018/12/05
-    * @params [id]
-    * @return java.lang.String
-    */
+     * 功能描述:批量删除回帖   *测试成功
+     *
+     * @return java.lang.String
+     * @author huangwei
+     * @date :2018/12/05
+     * @params [id]
+     */
     @DeleteMapping("/batch")
-    public  String  deleteAd(HttpServletRequest request){
+    public String deleteAd(HttpServletRequest request) {
         String id = request.getParameter("id");
         skBbsReplyService.deleteAd(id);
         return "删除成功";
 
     }
+
     /**
-    * 功能描述:查询所有回复帖  *  成功
-    * @author huangwei
-    * @date :2018/12/05
-    * @params []
-    * @return java.util.List<com.niit.service.bbs.pojo.SkBbsReply>
-    */
+     * 功能描述:查询所有回复帖  *  成功
+     *
+     * @return java.util.List<com.niit.service.bbs.pojo.SkBbsReply>
+     * @author huangwei
+     * @date :2018/12/05
+     * @params []
+     */
     @GetMapping("/all")
-    public PageInfo<SkBbsReply> selectAll(Integer currentPage, Integer pageSize){
+    public PageInfo<SkBbsReply> selectAll(Integer currentPage, Integer pageSize) {
         PageInfo<SkBbsReply> pageInfo = skBbsReplyService.selectAll(currentPage, pageSize);
-        return  pageInfo;
+        return pageInfo;
     }
+
     /**
      * 功能描述:编辑修改
+     *
+     * @return int
      * @author huangwei
      * @date :2018/12/10
      * @params [record]
-     * @return int
      */
     @PutMapping
-    public  int updateSelective(@RequestBody SkBbsReply record){
+    public int updateSelective(@RequestBody SkBbsReply record) {
         return skBbsReplyService.updateByPrimaryKeySelective(record);
     }
+
     /**
      * 功能描述:批量审核
+     *
+     * @return void
      * @author huangwei
      * @date :2018/12/10
      * @params [id]
-     * @return void
      */
     @PutMapping("/batch")
-    public void  updateAd(String id){
+    public void updateAd(String id) {
         skBbsReplyService.updateAd(id);
 
     }
+
     /**
      * 功能描述:插询所有已经审核的方法
+     *
+     * @return java.util.List<com.niit.service.bbs.pojo.SkBbsReply>
      * @author huangwei
      * @date :2018/12/11
      * @params []
-     * @return java.util.List<com.niit.service.bbs.pojo.SkBbsReply>
      */
     @GetMapping("/status")
-    public PageInfo<SkBbsReply>  selectAllStatus(Integer currentPage, Integer pageSize){
-        PageInfo<SkBbsReply> skBbsReplies = skBbsReplyService.selectAllStatus(currentPage,pageSize);
+    public PageInfo<SkBbsReply> selectAllStatus(Integer currentPage, Integer pageSize) {
+        PageInfo<SkBbsReply> skBbsReplies = skBbsReplyService.selectAllStatus(currentPage, pageSize);
         return skBbsReplies;
 
     }
+
     @GetMapping("/NoStatus")
-    public PageInfo<SkBbsReply>  selectAllNoStatus(Integer currentPage, Integer pageSize){
-        return skBbsReplyService.selectAllNoStatus( currentPage,pageSize);
+    public PageInfo<SkBbsReply> selectAllNoStatus(Integer currentPage, Integer pageSize) {
+        return skBbsReplyService.selectAllNoStatus(currentPage, pageSize);
     }
+
     @GetMapping("/reply")
     public PageInfo<SkBbsReply> selectReply(Integer currentPage, Integer pageSize, String replyUserId) {
         PageInfo<SkBbsReply> pageInfo = skBbsReplyService.selectReply(currentPage, pageSize, replyUserId);
         return pageInfo;
     }
+
     @GetMapping("/replyAll")
-    public  Map<Integer, List<Object>>  selectAll(){
+    public Map<Integer, List<Object>> selectAll() {
         String s = skBbsReplyService.selectAll();
-        Map<Integer,List<Object>> map = null;
-        Type type = new TypeToken<Map<Integer,List<Object>>>(){}.getType();
+        Map<Integer, List<Object>> map = null;
+        Type type = new TypeToken<Map<Integer, List<Object>>>() {
+        }.getType();
         Gson gson = new Gson();
-        if(s.isEmpty()||s==null){
+        if (s.isEmpty() || s == null) {
             return map;
         }
-        map = gson.fromJson(s,type);
+        map = gson.fromJson(s, type);
         return map;
     }
 

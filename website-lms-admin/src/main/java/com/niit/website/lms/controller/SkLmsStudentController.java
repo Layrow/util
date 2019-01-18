@@ -49,7 +49,7 @@ public class SkLmsStudentController {
 
         PageInfo<SkLmsCoursewareCn> list = null;
         try {
-            list = skLmsStudentsService.selectCoursewareByBatch(batch_id,currentPage,pageSize);
+            list = skLmsStudentsService.selectCoursewareByBatch(batch_id, currentPage, pageSize);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -28,21 +28,21 @@ public class SkchannelArticleVideoServiceImpl implements SkchannelArticleVideoSe
     @Override
     public String selectVideoByCategoryId(String locale, Integer categoryId, Integer currentPage, Integer pageSize) {
         return restTemplate.getForObject(
-                "http://" + SERVICE_NAME + "/video/{locale}/{categoryId}/?currentPage=" + currentPage+"&pageSize=" +pageSize,
-                String.class,locale,categoryId);
+                "http://" + SERVICE_NAME + "/video/{locale}/{categoryId}/?currentPage=" + currentPage + "&pageSize=" + pageSize,
+                String.class, locale, categoryId);
     }
 
     @Override
     public List<SkChannelArticleVideoCn> selectCategory(String locale, Integer channelId) {
         return restTemplate.getForObject(
-                "http://" + SERVICE_NAME + "/skArticleCategoryCn/articleCategory?locale=" + locale+"&channelId=" + channelId,
-                List.class,locale);
+                "http://" + SERVICE_NAME + "/skArticleCategoryCn/articleCategory?locale=" + locale + "&channelId=" + channelId,
+                List.class, locale);
     }
 
     @Override
     public SkChannelArticleVideoCn selectByPrimaryKeyInfo(Integer id, String locale) {
         return restTemplate.getForObject(
-                "http://" + SERVICE_NAME + "/video/id?id=" + id+"&locale=" + locale,
+                "http://" + SERVICE_NAME + "/video/id?id=" + id + "&locale=" + locale,
                 SkChannelArticleVideoCn.class);
     }
 

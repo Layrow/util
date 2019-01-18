@@ -5,6 +5,7 @@ import com.niit.service.project.pojo.SkProjectComments;
 import com.niit.service.project.service.SkProjectCommentsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -97,10 +98,10 @@ public class SkProjectCommentsController {
 
     // 查询所有作品留言
     @GetMapping("/more")
-    public PageInfo<SkProjectComments> selectAllProjectComments(@RequestParam(required = false,defaultValue = "") Integer projectId,Integer currentPage,Integer pageSize) {
+    public PageInfo<SkProjectComments> selectAllProjectComments(@RequestParam(required = false, defaultValue = "") Integer projectId, Integer currentPage, Integer pageSize) {
         PageInfo<SkProjectComments> pageInfo = null;
         try {
-            pageInfo = skProjectCommentsService.selectAllProjectComment(projectId,currentPage, pageSize);
+            pageInfo = skProjectCommentsService.selectAllProjectComment(projectId, currentPage, pageSize);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -10,33 +10,40 @@ public interface SkBbsTopicMapper {
 
     /**
      * 模糊查询指定栏目下的帖子
+     *
      * @param title
      * @param sectionId
      * @param key
      * @return
      */
-    List<SkBbsTopic>  likeSelectInSection(@Param("title") String title, @Param("sectionId") Integer sectionId,@Param("key") String key);
+    List<SkBbsTopic> likeSelectInSection(@Param("title") String title, @Param("sectionId") Integer sectionId, @Param("key") String key);
 
     /**
      * 根据帖子Id找到用户的Id
+     *
      * @param id
      * @return
      */
     List<Integer> selectAllUserId(List<String> id);
+
     /**
      * 查询所有带脏词的帖子
+     *
      * @return
      */
-    List<SkBbsTopic>  selectAllDirty();
+    List<SkBbsTopic> selectAllDirty();
 
     /**
      * 删除栏目的时候,级联删除帖子
+     *
      * @param sectionId
      * @return
      */
     int deleteBySection(@Param(value = "list") List<String> sectionId);
+
     /**
      * 删除帖子根据帖子的主键Id
+     *
      * @param id
      * @return
      */
@@ -44,6 +51,7 @@ public interface SkBbsTopicMapper {
 
     /**
      * 管理员 批量删除 帖子
+     *
      * @param id
      * @return
      */
@@ -53,48 +61,56 @@ public interface SkBbsTopicMapper {
 
     /**
      * 发表帖子
-     * @param record  帖子对象
+     *
+     * @param record 帖子对象
      * @return
      */
     int insertSelective(SkBbsTopic record);
 
     /**
      * 更新帖子浏览量
-     * @param id 帖子主键
+     *
+     * @param id       帖子主键
      * @param newCount 新的浏览量
      * @return
      */
-    int updateViewCountByPrimaryKey(@Param(value = "id") Integer id,@Param(value = "newCount") Integer newCount);
+    int updateViewCountByPrimaryKey(@Param(value = "id") Integer id, @Param(value = "newCount") Integer newCount);
 
     /**
      * 分页显示所有的 帖子
+     *
      * @return
      */
     List<SkBbsTopic> listAllTopic();
 
     /**
      * 分页显示指定栏目下的帖子
-     * @param sectionId  指定栏目Id
+     *
+     * @param sectionId 指定栏目Id
      * @return
      */
-    List<SkBbsTopic>  listAllTopicInSection(Integer sectionId);
+    List<SkBbsTopic> listAllTopicInSection(Integer sectionId);
 
     /**
      * 分页 模糊查询
-     * @param title  查询关键字
-     * @param key  帖子的不同状态标示
+     *
+     * @param title 查询关键字
+     * @param key   帖子的不同状态标示
      * @return
      */
-    List<SkBbsTopic> likeSelectAll(@Param("title") String title,@Param("key") String key);
+    List<SkBbsTopic> likeSelectAll(@Param("title") String title, @Param("key") String key);
 
     /**
      * 分页查询,指定用户的所有发帖
+     *
      * @param userId 指定的用户Id
      * @return
      */
     List<SkBbsTopic> listAllTopicByOwner(String userId);
+
     /**
      * 实现帖子的批量审核,执行到此时,List集合内一定有数据
+     *
      * @param ids
      * @return
      */
@@ -102,6 +118,7 @@ public interface SkBbsTopicMapper {
 
     /**
      * 批量置顶
+     *
      * @param ids 需要置顶的帖子ID
      * @return
      */
@@ -109,13 +126,17 @@ public interface SkBbsTopicMapper {
 
     /**
      * 批量加精
+     *
      * @param ids
      * @return
      */
     boolean doEssence(List<String> ids);
+
     boolean doOffcial(List<String> ids);
+
     /**
      * 实现帖子的批量取消审核,执行到此时,List集合内一定有数据
+     *
      * @param ids
      * @return
      */
@@ -123,6 +144,7 @@ public interface SkBbsTopicMapper {
 
     /**
      * 批量取消置顶
+     *
      * @param ids 需要置顶的帖子ID
      * @return
      */
@@ -130,6 +152,7 @@ public interface SkBbsTopicMapper {
 
     /**
      * 批量取消加精
+     *
      * @param ids
      * @return
      */
@@ -137,6 +160,7 @@ public interface SkBbsTopicMapper {
 
     /**
      * 根据Id查询单个帖子
+     *
      * @param id
      * @return
      */
@@ -144,6 +168,7 @@ public interface SkBbsTopicMapper {
 
     /**
      * 修改 单个 帖子信息
+     *
      * @param record
      * @return
      */
@@ -153,9 +178,9 @@ public interface SkBbsTopicMapper {
 
     int updateByPrimaryKey(SkBbsTopic record);
 
-    List<SkBbsTopic>  selectReplyUserId(@Param("replyUserid") String replyUserId);
-    List<SkBbsTopic>  selectReplyUserIds(@Param("replyUserid") String replyUserId);
+    List<SkBbsTopic> selectReplyUserId(@Param("replyUserid") String replyUserId);
 
+    List<SkBbsTopic> selectReplyUserIds(@Param("replyUserid") String replyUserId);
 
 
 }

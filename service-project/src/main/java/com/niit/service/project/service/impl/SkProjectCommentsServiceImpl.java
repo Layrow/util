@@ -63,9 +63,9 @@ public class SkProjectCommentsServiceImpl implements SkProjectCommentsService {
 
     // 查询所有留言
     @Override
-    public PageInfo<SkProjectComments> selectAllProjectComment(Integer projectId,Integer currentPage,Integer pageSize) {
+    public PageInfo<SkProjectComments> selectAllProjectComment(Integer projectId, Integer currentPage, Integer pageSize) {
         PageInfo<SkProjectComments> pageInfo = null;
-        PageHelper.startPage(currentPage,pageSize);
+        PageHelper.startPage(currentPage, pageSize);
         List<SkProjectComments> list = skProjectCommentsMapper.selectAllProjectComment(projectId);
         pageInfo = new PageInfo<>(list);
         return pageInfo;

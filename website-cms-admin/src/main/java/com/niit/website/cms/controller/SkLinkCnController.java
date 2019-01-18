@@ -25,16 +25,16 @@ public class SkLinkCnController {
 
 
     /**
+     * @param skLinkCn
      * @Description 插入单条链接
-     * @author      yuwentao
-     * @param       skLinkCn
+     * @author yuwentao
      */
     @PostMapping(value = "/link")
     public Integer insert(@RequestBody SkLinkCn skLinkCn, @RequestParam String locale) {
 //        String locale=request.getParameter("locale");
         Integer insertStatus = 0;
         try {
-            insertStatus = skLinkCnService.insert(skLinkCn,locale);
+            insertStatus = skLinkCnService.insert(skLinkCn, locale);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -42,30 +42,31 @@ public class SkLinkCnController {
     }
 
     /**
+     * @param skLinkCn
      * @Description 更新单条链接
-     * @author      yuwentao
-     * @param       skLinkCn
+     * @author yuwentao
      */
     @PutMapping(value = "/link")
-    public Integer update(@RequestBody SkLinkCn skLinkCn,  @RequestParam String locale) {
+    public Integer update(@RequestBody SkLinkCn skLinkCn, @RequestParam String locale) {
         Integer updateStatus = 0;
         try {
-            updateStatus = skLinkCnService.updateByPrimaryKey(skLinkCn,locale);
+            updateStatus = skLinkCnService.updateByPrimaryKey(skLinkCn, locale);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return updateStatus;
     }
+
     /**
+     * @param skLinkCn
      * @Description 更新多条链接
-     * @author      yuwentao
-     * @param       skLinkCn
+     * @author yuwentao
      */
     @PutMapping(value = "/updateList")
-    public Integer updateList(@RequestBody List<SkLinkCn> list,  @RequestParam String locale) {
+    public Integer updateList(@RequestBody List<SkLinkCn> list, @RequestParam String locale) {
         Integer updateStatus = 0;
         try {
-            updateStatus = skLinkCnService.updateList(list,locale);
+            updateStatus = skLinkCnService.updateList(list, locale);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -78,11 +79,11 @@ public class SkLinkCnController {
      * @Description 分页查询
      * @author yuwentao
      */
-    @GetMapping(value="/link")
+    @GetMapping(value = "/link")
     public PageInfo<SkLinkCn> selectByPage(@RequestParam int currentPage, int pageSize, @RequestParam String locale) {
-        PageInfo<SkLinkCn> listInfo=null;
+        PageInfo<SkLinkCn> listInfo = null;
         try {
-            listInfo = skLinkCnService.selectByPage(currentPage,pageSize,locale);
+            listInfo = skLinkCnService.selectByPage(currentPage, pageSize, locale);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -90,16 +91,16 @@ public class SkLinkCnController {
     }
 
     /**
-     * @Description 批量更新多条链接
-     * @author yuwentao
      * @param updateList
      * @param locale
+     * @Description 批量更新多条链接
+     * @author yuwentao
      */
     @PutMapping(value = "/linklist")
     public Integer updateByList(@RequestBody List<SkLinkCn> updateList, @RequestParam String locale) {
         Integer updateStatus = 0;
         try {
-            updateStatus = skLinkCnService.updateByList(updateList,locale);
+            updateStatus = skLinkCnService.updateByList(updateList, locale);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -109,49 +110,53 @@ public class SkLinkCnController {
 
     /**
      * 删除操作
+     *
      * @param ids
      * @return
      */
     @DeleteMapping("/delLink")
     public String delete(@RequestParam String ids, @RequestParam String locale) {
-        skLinkCnService.deleteBatchLinkByPromaryKey(ids,locale);
+        skLinkCnService.deleteBatchLinkByPromaryKey(ids, locale);
         return ids;
     }
 
     /**
      * 检查操作
+     *
      * @param ids
      * @return
      */
     @PutMapping("/checkLink")
-    public String check(@RequestParam String ids,@RequestParam String locale) {
-        skLinkCnService.check(ids,locale);
+    public String check(@RequestParam String ids, @RequestParam String locale) {
+        skLinkCnService.check(ids, locale);
         return ids;
     }
 
     /**
-     *  分页模糊查询
+     * 分页模糊查询
+     *
      * @param currentPage 当前页
-     * @param pageSize 页面大小
-     * @param title 搜索关键字
-     * @param locale 语言
+     * @param pageSize    页面大小
+     * @param title       搜索关键字
+     * @param locale      语言
      * @return
      */
     @PostMapping("/link/likeSelectAll")
-    public PageInfo<SkLinkCn> likeSelectAll(int currentPage, int pageSize, String title,@RequestParam String locale){
-        return skLinkCnService.likeSelectAll(currentPage,pageSize,title,locale);
+    public PageInfo<SkLinkCn> likeSelectAll(int currentPage, int pageSize, String title, @RequestParam String locale) {
+        return skLinkCnService.likeSelectAll(currentPage, pageSize, title, locale);
     }
 
     /**
      * 分页模糊查询
+     *
      * @param currentPage
      * @param pageSize
      * @param locale
      * @return
      */
     @PostMapping("/link/listAllLink")
-    public PageInfo<SkLinkCn> listAllLink(int currentPage, int pageSize, @RequestParam String locale){
-        return skLinkCnService.listAllLink(currentPage,pageSize,locale);
+    public PageInfo<SkLinkCn> listAllLink(int currentPage, int pageSize, @RequestParam String locale) {
+        return skLinkCnService.listAllLink(currentPage, pageSize, locale);
     }
 }
 

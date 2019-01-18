@@ -159,7 +159,7 @@
         a.user_name,
         a.view_count,
         b.`name` category_name,
-        c.avatar,
+        c.avatar
         FROM
         sk_project a
         JOIN sk_project_category b ON a.category_id = b.id

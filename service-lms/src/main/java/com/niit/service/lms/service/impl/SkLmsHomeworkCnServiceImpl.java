@@ -255,6 +255,7 @@ public class SkLmsHomeworkCnServiceImpl implements SkLmsHomeworkCnService {
         List<String> timeList = new ArrayList<>();
         List<String> formatTimeList = new ArrayList<>();
         List<SkLmsHomeworkCn> skLmsHomeworkCnList = skLmsHomeworkCnMapper.selectHomeworkByBatchId(batchId);
+
         if (!skLmsHomeworkCnList.isEmpty()) {
             skLmsHomeworkCnList.forEach(homework -> {
                 Date time = homework.getHomeworkCreateTime();
@@ -265,11 +266,13 @@ public class SkLmsHomeworkCnServiceImpl implements SkLmsHomeworkCnService {
                 timeList.add(s);
                 formatTimeList.add(s1);
             });
-
+        }else{
+            return "";
         }
         map.put("skLmsHomeworkCnList", skLmsHomeworkCnList);
         map.put("timeList", timeList);
         map.put("timeList2", formatTimeList);
+
         Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
         return gson.toJson(map);
     }

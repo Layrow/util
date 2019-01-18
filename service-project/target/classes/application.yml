@@ -4,15 +4,16 @@ spring:
 
 
   datasource:
-    url: jdbc:mysql://localhost:3306/niit?serverTimezone=GMT
+    url: jdbc:mysql://222.85.147.249:3306/niit_smartkids?serverTimezone=GMT
     driver-class-name: com.mysql.jdbc.Driver
     username: root
-    password: 511946225
+    password: 1Hblsqt$
 #  datasource:
 #    driver-class-name: com.mysql.jdbc.Driver
 #    url: jdbc:mysql://localhost:3306/niit_samrtkids?useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=GMT%2B8&amp;useSSL=false
 #    username: root
 #    password: etoak
+
 
 server:
   port: 8087
@@ -36,6 +37,8 @@ server:
 
 mybatis:
   mapper-locations: classpath:mapping/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 eureka:
   instance:

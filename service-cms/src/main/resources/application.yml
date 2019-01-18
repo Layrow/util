@@ -3,10 +3,10 @@ spring:
     name: service-cms
 
   datasource:
-    url: jdbc:mysql://localhost:3306/niit?serverTimezone=GMT
+    url: jdbc:mysql://222.85.147.249:3306/niit_smartkids?serverTimezone=GMT
     driver-class-name: com.mysql.jdbc.Driver
     username: root
-    password: 511946225
+    password: 1Hblsqt$
 #  datasource:
 #    driver-class-name: com.mysql.jdbc.Driver
 #    url: jdbc:mysql://localhost:3306/niit?useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=GMT%2B8&amp;useSSL=false

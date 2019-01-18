@@ -51,4 +51,7 @@ public interface SkProjectMapper {
 
     // 查询某个用户的作品(创作、收藏、点赞)
     List<LinkedHashMap<String, Object>> selectProjectByUserId(Integer userId);
+
+    // 增加作品浏览量
+    int addProjectViewCount(int id);
 }

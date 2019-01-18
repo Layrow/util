@@ -23,7 +23,7 @@ public class SkProjectCommentsController {
     private SkProjectCommentsService skProjectCommentsService;
 
     // insert
-    @GetMapping
+    @PostMapping
     public Integer insertProjectComments(@RequestBody SkProjectComments skProjectComments) {
         Integer insertStatus = 0;
         try {

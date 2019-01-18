@@ -84,8 +84,8 @@ public class SkProjectServiceImpl implements SkProjectService {
     }
 
     /**
-     * @Description record-作品实体，userlikeId-哪位用户（用户ID）点赞了该作品，
-     * userlikeName点赞了该作品，operate是执行的那个更新操作
+     * @Description record-作品实体，operationUserId-哪位用户（用户ID）操作了该作品，
+     *              operationUserName操作(点赞、收藏)了该作品，operate是执行的那个更新操作
      * @Date 2018/12/25 11:02
      * @Param [record, userlikeId, userlikeName]
      * @Return void
@@ -203,5 +203,11 @@ public class SkProjectServiceImpl implements SkProjectService {
     @Override
     public String selectProjectByUserId(Integer userId) {
         return restTemplate.getForObject("http://" + SERVICE_NAME + "/project/user?userId=" + userId, String.class);
+    }
+
+
+    @Override
+    public void addProjectViewCount(int projectId) {
+        restTemplate.put("http://" + SERVICE_NAME + "/project/add_viewcount?projectId=" + projectId,projectId);
     }
 }

@@ -165,4 +165,15 @@ public class SkProjectController {
     public List selectProjectOperation(@RequestParam Integer user_id, @RequestParam Integer project_id) {
         return skProjectService.selectProjectOperation(user_id, project_id);
     }
+
+    @PutMapping("/add_viewcount")
+    public int addProjectViewCount(@RequestParam("projectId") int projectId) {
+        Integer addProjectViewCountStatus = 0;
+        try {
+            addProjectViewCountStatus = skProjectService.addProjectViewCount(projectId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return addProjectViewCountStatus;
+    }
 }

@@ -59,7 +59,7 @@ public class SkProjectController {
     @PutMapping
     public void updateProject(@RequestBody SkProject skProject, @RequestParam(value = "operationUserId", required = false) Integer operationUserId,
                               @RequestParam(value = "operationUserName", required = false) String operationUserName,
-                              @RequestParam(value = "operate", required = false, defaultValue = "other") String operate) {
+                              @RequestParam(value = "operate", required = false, defaultValue = "default") String operate) {
         try {
             skProjectService.updateByPrimaryKey(skProject, operationUserId, operationUserName, operate);
         } catch (Exception e) {
@@ -140,5 +140,11 @@ public class SkProjectController {
     @GetMapping("/user_operation")
     public List selectProjectOperation(Integer userId, Integer projectId) {
         return skProjectService.selectProjectOperation(userId, projectId);
+    }
+
+
+    @PutMapping("/add_viewcount")
+    public void addProjectViewCount(@RequestParam("projectId") int projectId) {
+        skProjectService.addProjectViewCount(projectId);
     }
 }

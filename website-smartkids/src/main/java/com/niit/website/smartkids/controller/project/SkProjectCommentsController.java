@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 
 /**
  * @ClassName SkProjectCommentsController
@@ -23,9 +24,11 @@ public class SkProjectCommentsController {
     private SkProjectCommentsService skProjectCommentsService;
 
     // insert
-    @GetMapping
+    @PostMapping
     public void insertProjectComments(@RequestBody SkProjectComments skProjectComments) {
         try {
+            skProjectComments.setAddtime(new Date());
+            skProjectComments.setStatus(1);
             skProjectCommentsService.insert(skProjectComments);
         } catch (Exception e) {
             e.printStackTrace();

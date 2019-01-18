@@ -47,4 +47,7 @@ public interface SkProjectService {
     // 查询个人作品
     String selectProjectByUserId(Integer userId);
 
+    void addProjectViewCount(int id);
+
+
 }

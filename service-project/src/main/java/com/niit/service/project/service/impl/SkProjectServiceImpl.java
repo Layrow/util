@@ -128,4 +128,11 @@ public class SkProjectServiceImpl implements SkProjectService {
         Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
         return gson.toJson(allPresonProjectInfo);
     }
+
+
+    // add project view_count
+    @Override
+    public int addProjectViewCount(int id) {
+        return skProjectMapper.addProjectViewCount(id);
+    }
 }

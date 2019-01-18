@@ -15,6 +15,16 @@ public class SkAd {
 
     private Integer status;
 
+    private String keycode;
+
+    public String getKeycode() {
+        return keycode;
+    }
+
+    public void setKeycode(String keycode) {
+        this.keycode = keycode;
+    }
+
     public Integer getId() {
         return id;
     }

@@ -160,15 +160,18 @@
         a.view_count,
         b.`name` category_name,
         c.avatar,
-        d.operation
         FROM
         sk_project a
         JOIN sk_project_category b ON a.category_id = b.id
         JOIN auth_user c ON a.user_id = c.uid
-        left join sk_member_notification_ops d on c.uid = d.user_id and a.id = d.project_id
         WHERE
         a.id = #{id,jdbcType=INTEGER}
     </select>
+
+    <!-- 增加作品的浏览数 -->
+    <update id="addProjectViewCount" parameterType="java.lang.Integer">
+    update sk_project s set view_count = view_count + 1 where s.id = #{id}
+    </update>
 
     <select id="selectProjectInfo" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         SELECT

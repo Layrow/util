@@ -6,19 +6,15 @@ spring:
     time-zone: GMT+8
 
   datasource:
+    url: jdbc:mysql://localhost:3306/niit?serverTimezone=GMT
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://118.178.227.169:3306/niit_samrtkids?useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=GMT%2B8&amp;useSSL=false
-    username: smartkids
-    password: niit1234
+    username: root
+    password: 511946225
 
 server:
   port: 8883
 
-  datasource:
-    url: jdbc:mysql://118.178.227.169:3306/niit_samrtkids?serverTimezone=GMT
-    driver-class-name: com.mysql.jdbc.Driver
-    username: smartkids
-    password: niit1234
+
   application:
     name: service-lms
   cloud:

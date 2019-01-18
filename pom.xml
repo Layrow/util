@@ -10,7 +10,6 @@
     <modules>
         <module>cloud-common</module>
         <module>cloud-eureka-server</module>
-        <module>cloud-admin</module>
         <module>service-cms</module>
         <module>service-project</module>
         <module>service-bbs</module>
@@ -20,6 +19,7 @@
         <module>website-smartkids</module>
         <module>service-member</module>
     </modules>
+
     <packaging>pom</packaging>
     <name>smartkids-parent</name>
     <description>smartkids parent pom</description>

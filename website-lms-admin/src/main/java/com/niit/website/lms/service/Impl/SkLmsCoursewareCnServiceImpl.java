@@ -1,5 +1,6 @@
 package com.niit.website.lms.service.Impl;
 
+import com.niit.website.lms.pojo.SkLmsCoursewareCn;
 import com.niit.website.lms.service.SkLmsCoursewareCnService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,11 @@ public class SkLmsCoursewareCnServiceImpl implements SkLmsCoursewareCnService {
     @Override
     public String selectAll(Integer facultyId, int currentPage, int pageSize, String courseware_title) {
         return restTemplate.getForObject("http://" + SERVICE_NAME + "/course?facultyId=" + facultyId + "&currentPage=" + currentPage + "&pageSize=" + pageSize + "&courseware_title=" + courseware_title, String.class);
+    }
+    @Override
+    public String insertCn(SkLmsCoursewareCn record) {
+
+        return   restTemplate.postForObject("http://"+SERVICE_NAME+"/course",record,String.class);
     }
 
     @Override

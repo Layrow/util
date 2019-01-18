@@ -2,6 +2,7 @@ package com.niit.website.lms.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.niit.website.lms.pojo.SkLmsCoursewareCn;
 import com.niit.website.lms.service.SkLmsCoursewareCnService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -67,11 +68,9 @@ public class SkLmsCoursewareCnController {
      * @params [url]
      */
     @PostMapping
-    public Integer insertSelectiveInfo(@RequestBody String url) {
+    public String insertSelectiveInfo(@RequestBody SkLmsCoursewareCn record) {
+        return ccs.insertCn(record);
 
-        System.out.println("**********" + url);
-        int i = ccs.insertSelective(url);
-        return i;
     }
 
     /**

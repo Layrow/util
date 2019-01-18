@@ -33,7 +33,13 @@ public class SkLmsCoursewareCnServiceImpl implements SkLmsCoursewareCnService {
     public int deleteByPrimaryKey(Integer id) {
         return sccm.deleteByPrimaryKey(id);
     }
+    @Override
+    public int insertCn(SkLmsCoursewareCn record) {
+        sccm.insertCn(record);
 
+        return record.getId();
+
+    }
     //查询所有
     @Override
     public String selectAll(Integer facultyId, int currentPage, int pageSize, String courseware_title) {

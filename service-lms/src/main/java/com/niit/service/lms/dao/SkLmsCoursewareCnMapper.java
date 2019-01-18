@@ -10,6 +10,8 @@ import java.util.List;
 public interface SkLmsCoursewareCnMapper {
     int deleteByPrimaryKey(Integer id);
 
+    int insertCn(SkLmsCoursewareCn record);
+
     int insert(SkLmsCoursewareCn record);
 
     int insertSelective(SkLmsCoursewareCn record);

@@ -1,5 +1,7 @@
 package com.niit.website.lms.service;
 
+import com.niit.website.lms.pojo.SkLmsCoursewareCn;
+
 /**
  * @Auther: huangwei
  * @Date: 2018/11/8 17:23
@@ -7,7 +9,7 @@ package com.niit.website.lms.service;
  */
 public interface SkLmsCoursewareCnService {
     int deleteByPrimaryKey(Integer id);
-
+    String insertCn(SkLmsCoursewareCn record);
     //模糊查询
     String selectAll(Integer facultyId, int currentPage, int pageSize, String courseware_title);
 

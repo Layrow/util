@@ -1,8 +1,13 @@
 package com.niit.service.lms.controller;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.niit.service.lms.pojo.SkLmsCoursewareCn;
 import com.niit.service.lms.service.SkLmsCoursewareCnService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
 
 /**
  * @Auther: huangwei
@@ -54,11 +59,7 @@ public class SkLmsCoursewareCnController {
      * @date :2018/11/15
      * @params [request]
      */
-    @PostMapping
-    public int insertSelectiveInfo(@RequestBody String url) {
-        int i = sccs.insertSelective(url);
-        return i;
-    }
+
 
     //根据老师插查询所有
     @GetMapping("/all")
@@ -77,6 +78,17 @@ public class SkLmsCoursewareCnController {
     @GetMapping("/allBatch")
     public String selectAllBatchWare(Integer batchId, int currentPage, int pageSize) {
         return sccs.selectAllBatchWare(batchId, currentPage, pageSize);
+    }
+
+    @PostMapping
+    public String insertSelectiveInfo(@RequestBody SkLmsCoursewareCn record) {
+
+        record.setCoursewareCreateTime(new Date());
+        record.setCoursewareStatus(1);
+        int i = sccs.insertCn(record);
+        Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
+        return gson.toJson(i);
+
     }
 }
 

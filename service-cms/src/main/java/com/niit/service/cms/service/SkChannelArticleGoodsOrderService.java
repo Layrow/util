@@ -25,4 +25,6 @@ public interface SkChannelArticleGoodsOrderService {
 
     Integer generateOrders(SkChannelArticleGoodsOrder record);
 
+    List<SkChannelArticleGoodsOrder> selectByUserId(Integer userId);
+
 }

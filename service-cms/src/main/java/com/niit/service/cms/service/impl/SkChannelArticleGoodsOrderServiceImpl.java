@@ -57,4 +57,9 @@ public class SkChannelArticleGoodsOrderServiceImpl implements SkChannelArticleGo
     public Integer generateOrders(SkChannelArticleGoodsOrder record) {
         return skChannelArticleGoodsOrderMapper.insertSelective(record);
     }
+
+    @Override
+    public List<SkChannelArticleGoodsOrder> selectByUserId(Integer userId) {
+        return skChannelArticleGoodsOrderMapper.selectByUserId(userId);
+    }
 }

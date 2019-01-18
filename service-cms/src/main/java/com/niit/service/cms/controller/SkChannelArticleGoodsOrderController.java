@@ -5,10 +5,13 @@ import com.google.gson.GsonBuilder;
 import com.niit.service.cms.pojo.SkChannelArticleGoodsCostumes;
 import com.niit.service.cms.pojo.SkChannelArticleGoodsOrder;
 import com.niit.service.cms.service.SkChannelArticleGoodsOrderService;
+import io.swagger.models.auth.In;
+import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @Description: java类作用描述
@@ -26,6 +29,16 @@ public class SkChannelArticleGoodsOrderController {
     @Autowired
     SkChannelArticleGoodsOrderService skChannelArticleGoodsOrderService;
 
+    @GetMapping("/goodids")
+    public String selectGoodsIdByUserId(Integer userId) {
+        List goodIds = skChannelArticleGoodsOrderService.selectByUserId(userId).stream().map(e -> e.getGoodsId()).collect(Collectors.toList());
+        if (goodIds == null) {
+            return "";
+        } else {
+            String json = JSONArray.toJSONString(goodIds);//把list转换成json格式的String类型
+            return json;
+        }
+    }
 
     @PostMapping
     public String generateOrders(@RequestBody SkChannelArticleGoodsOrder record) {
@@ -68,6 +81,7 @@ public class SkChannelArticleGoodsOrderController {
                     //把单个costume(造型)的信息放入costumes(造型)List
                     Map<String, Object> costumeMap = new LinkedHashMap<>();
                     costumeMap.put("costumeName", e.getCostumename());
+                    costumeMap.put("baseLayerID", e.getBaselayerid());
                     costumeMap.put("baseLayerMD5", e.getBaselayermd5());
                     costumeMap.put("bitmapResolution", e.getBitmapresolution());
                     costumeMap.put("rotationCenterX", e.getRotationcenterx());
@@ -82,9 +96,8 @@ public class SkChannelArticleGoodsOrderController {
             SkChannelArticleGoodsCostumes costume = list.stream().filter(e -> e.getGoodId() == i).findFirst().get();
 
             //标签，必须为List
-            //TODO 区分背景library与角色library
             List<String> tagList = new LinkedList<>();
-            tagList.add("mySpritesLibrary");
+            tagList.add("MySpritesLibrary");
 
             List<Integer> infoList = new LinkedList<>();
             //几个音频文件
@@ -94,6 +107,7 @@ public class SkChannelArticleGoodsOrderController {
             //？？？不知道第三个属性是什么意思
             infoList.add(1);
 
+            //TODO objName与name应该为goods的名字
             jsonMap.put("objName", costume.getCostumename());
             jsonMap.put("costumes", costumesList);
             jsonMap.put("currentCostumeIndex", costume.getCurrentcostumeindex());
@@ -140,13 +154,14 @@ public class SkChannelArticleGoodsOrderController {
         list.stream().forEach(e -> {
             Map<String, Object> resultMap = new LinkedHashMap<>();
             List<String> tagList = new LinkedList<>();
-            tagList.add("myBackdropsLibrary");
+            tagList.add("MyBackdropsLibrary");
+            tagList.add("fantasy");
 
-            resultMap.put("name",e.getCostumename());
-            resultMap.put("md5",e.getMd5());
-            resultMap.put("type",e.getType());
-            resultMap.put("tag",tagList);
-            resultMap.put("info",e.getInfo());
+            resultMap.put("name", e.getCostumename());
+            resultMap.put("md5", e.getMd5());
+            resultMap.put("type", e.getType());
+            resultMap.put("tags", tagList);
+            resultMap.put("info", e.getInfo());
 
             resultList.add(resultMap);
         });

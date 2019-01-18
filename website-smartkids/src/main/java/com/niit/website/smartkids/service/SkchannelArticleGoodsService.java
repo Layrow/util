@@ -19,6 +19,8 @@ public interface SkchannelArticleGoodsService {
     String checkIsOwned(Integer goodId,Integer userId);
     String easyLikeSelectAll(String keyword, Integer channelId, String locale);
 
+    String selectGoodIdsByUserId(Integer userId);
+
     //通过父类 拿到父类栏目的内容（商品、新闻）总数
     String getArticleCountByCategory(Integer channelId, String locale,String keyword);
 

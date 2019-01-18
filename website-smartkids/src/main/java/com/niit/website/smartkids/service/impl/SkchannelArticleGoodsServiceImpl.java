@@ -42,6 +42,11 @@ public class SkchannelArticleGoodsServiceImpl implements SkchannelArticleGoodsSe
     }
 
     @Override
+    public String selectGoodIdsByUserId(Integer userId) {
+        return restTemplate.getForObject("http://" + SERVICE_NAME + "/order_goods_costumes/goodids?userId="+userId,String.class);
+    }
+
+    @Override
     public String getArticleCountByCategory(Integer channelId, String locale,String keyword) {
         return restTemplate.getForObject("http://" + SERVICE_NAME + "/goods/main_category_article_count?channelId="+channelId+"&locale="+locale+"&keyword="+keyword,String.class);
     }

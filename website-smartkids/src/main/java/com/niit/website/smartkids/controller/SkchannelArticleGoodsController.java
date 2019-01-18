@@ -38,6 +38,13 @@ public class SkchannelArticleGoodsController {
     @Autowired
     MemberServiceIntegralmpl memberServiceIntegralmpl;
 
+    @GetMapping(value = "/purchased_goodids")
+    public String purchasedGoodIds(Integer userId) {
+            String json = skchannelArticleGoodsService.selectGoodIdsByUserId(userId);
+            return json;
+    }
+
+
     @PostMapping
     public String purchaseGoods(@RequestBody SkChannelArticleGoodsOrder record) {
         Integer userID = record.getPurchaserId();
@@ -77,7 +84,6 @@ public class SkchannelArticleGoodsController {
     public Map<String, Object> fuzzSearchAndMainCategory(String keyword, Integer channelId, String locale) {
         Map<String, Object> result = new LinkedHashMap<>();
         try {
-            Long time1 = System.currentTimeMillis();
             String mapString = skchannelArticleGoodsService.easyLikeSelectAll(keyword, channelId, locale);
             Type type = new TypeToken<Map<String, Object>>() {
             }.getType();
@@ -86,8 +92,6 @@ public class SkchannelArticleGoodsController {
                 return result;
             }
             result = gson.fromJson(mapString, type);
-            Long time2 = System.currentTimeMillis();
-            System.out.println("---------------------------------------" + (time2 - time1));
             return result;
         } catch (Exception e) {
             e.printStackTrace();
